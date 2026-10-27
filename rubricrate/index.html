@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Essay Rubric Score Calculator | RubricRate</title>
+<meta name="description" content="Score essays against a rubric: enter criterion scores 0-5, get an instant total, letter grade, improvement tips, and GPA mapping. Free rubric calculator.">
+<link rel="canonical" href="https://study.fixoraa.tech/rubricrate/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Essay Rubric Score Calculator | RubricRate">
+<meta property="og:description" content="Score essays against a rubric: enter criterion scores 0-5, get an instant total, letter grade, improvement tips, and GPA mapping. Free rubric calculator.">
+<meta property="og:url" content="https://study.fixoraa.tech/rubricrate/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "RubricRate",
+      "url": "https://study.fixoraa.tech/rubricrate/",
+      "applicationCategory": "Study Tools",
+      "operatingSystem": "Web",
+      "description": "Score essays against a rubric: enter criterion scores 0-5, get an instant total, letter grade, improvement tips, and GPA mapping. Free rubric calculator.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is the rubric total calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's the arithmetic mean: all criterion scores are added and divided by the number of criteria. With equal weights, four scores of 4, 3, 5, and 4 give exactly 4.0. Adding custom criteria extends the same mean over the larger set."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What score do I need for an A?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A mean of 4.5 or higher earns an A on this tool's scale. In practice, that means averaging between strong and excellent across criteria \u2014 typically no criterion below 4 and at least a couple at 5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do improvement tips only appear below 3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because that's where revision buys the most points. Moving a criterion from 2 to 3 is usually one focused fix away \u2014 a sharper thesis, one more piece of analyzed evidence \u2014 while moving from 4 to 5 takes disproportionately more work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I weight some criteria more than others?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if your assignment's rubric does. Most classroom rubrics weight criteria equally for transparency. If yours counts evidence double, mirror that in your own math \u2014 but for self-assessment, the equal-weight mean is the honest default."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I score my own essay without bias?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Score each criterion separately, harshly, and after a break from writing. Use the reverse-outline trick for organization, read aloud for language, and count actual evidence for the evidence score. Most students overrate by about half a point per criterion on first self-scores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the rubric score convert to GPA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The mean maps to a letter grade (A at 4.5+, B at 3.5+, C at 2.5+, D at 1.5+, F below), and each letter maps to grade points: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0. The GPA table in the tool highlights your row automatically."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F1F4FC; --surface:#FFFFFF; --accent:#1C4ED8; --accent-ink:#FFFFFF;
+  --ink:#1C1917; --muted:#57606E; --line:#D6DFF7;
+  --display:'Noto Serif',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.rr-wrap{font-family:'Noto Serif',Georgia,serif;background:#F1F4FC;color:#232A35;padding:56px 20px 80px;}
+.rr-hero{max-width:900px;margin:0 auto 34px;text-align:center;}
+.rr-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#1C4ED8,#3f6fe0);font-size:36px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(28,78,216,.25);}
+.rr-hero h1{font-size:clamp(30px,4.6vw,48px);line-height:1.08;margin:0 0 12px;font-weight:700;letter-spacing:-.01em;}
+.rr-tag{font-size:17px;color:#5B6472;margin:0;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6;font-family:Inter,system-ui,sans-serif;}
+.rr-grid{max-width:1080px;margin:0 auto;display:grid;gap:22px;}
+.rr-main{background:#FFFFFF;border:1px solid #D6DFF7;border-radius:24px;padding:34px 30px;box-shadow:0 16px 40px rgba(28,78,216,.08);display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:start;}
+.rr-main h2,.rr-card h2{font-size:21px;margin:0 0 14px;font-weight:700;}
+.rr-crit{margin-bottom:20px;}
+.rr-crit .rr-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-family:Inter,system-ui,sans-serif;}
+.rr-crit .rr-name{font-weight:600;font-size:15px;}
+.rr-crit .rr-val{font-weight:700;font-size:17px;color:#1C4ED8;}
+.rr-crit input[type=range]{width:100%;accent-color:#1C4ED8;height:28px;}
+.rr-crit .rr-scale{display:flex;justify-content:space-between;font-size:12px;color:#5B6472;font-family:Inter,system-ui,sans-serif;}
+.rr-addrow{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
+.rr-addrow input{flex:1;min-width:160px;box-sizing:border-box;padding:11px;font-size:15px;border:2px solid #D6DFF7;border-radius:12px;font-family:Inter,system-ui,sans-serif;color:#232A35;}
+.rr-addrow input:focus{outline:none;border-color:#1C4ED8;}
+.rr-addrow button{padding:11px 18px;border:none;border-radius:12px;background:#1C4ED8;color:#fff;font-family:Inter,system-ui,sans-serif;font-size:15px;font-weight:700;cursor:pointer;}
+.rr-score{text-align:center;background:#F1F4FC;border:1px solid #D6DFF7;border-radius:20px;padding:28px 18px;position:sticky;top:16px;}
+.rr-total{font-size:clamp(52px,7vw,80px);font-weight:700;line-height:1;color:#1C4ED8;}
+.rr-of{font-family:Inter,system-ui,sans-serif;font-size:14px;color:#5B6472;margin:4px 0 14px;}
+.rr-grade{display:inline-block;font-family:Inter,system-ui,sans-serif;font-size:26px;font-weight:800;border-radius:14px;padding:8px 26px;margin-bottom:10px;color:#fff;}
+.rr-grade.A{background:#166534;}.rr-grade.B{background:#4D7C0F;}.rr-grade.C{background:#A16207;}.rr-grade.D{background:#9A3412;}.rr-grade.F{background:#B91C1C;}
+.rr-gpaline{font-family:Inter,system-ui,sans-serif;font-size:14.5px;color:#5B6472;margin:0;}
+.rr-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.rr-card{background:#FFFFFF;border:1px solid #D6DFF7;border-radius:22px;padding:28px;box-shadow:0 10px 30px rgba(28,78,216,.06);}
+.rr-card p{font-family:Inter,system-ui,sans-serif;font-size:14.5px;color:#5B6472;line-height:1.6;margin:0 0 12px;}
+.rr-tips{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+.rr-tips li{background:#F7F1F3;border-left:4px solid #9A3412;border-radius:0 12px 12px 0;padding:12px 16px;font-family:Inter,system-ui,sans-serif;font-size:14.5px;line-height:1.6;}
+.rr-tips li strong{color:#9A3412;}
+.rr-tips .rr-good{background:#EFF6F1;border-left-color:#166534;}
+.rr-tips .rr-good strong{color:#166534;}
+.rr-gpa{width:100%;border-collapse:collapse;font-family:Inter,system-ui,sans-serif;font-size:14.5px;}
+.rr-gpa th,.rr-gpa td{padding:10px 8px;text-align:left;border-bottom:1px solid #D6DFF7;}
+.rr-gpa th{color:#5B6472;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;}
+.rr-gpa tr.hl td{background:#F1F4FC;font-weight:700;color:#1C4ED8;}
+@media (max-width:820px){.rr-main{grid-template-columns:1fr;}.rr-score{position:static;}.rr-cards{grid-template-columns:1fr;}.rr-wrap{padding:40px 14px 60px;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="RubricRate home">
+      <span class="fx-logo-tile" aria-hidden="true">📝</span>
+      <span class="fx-brand">RubricRate</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-blueprint" aria-label="RubricRate tool">
+<section class="rr-wrap">
+<div class="rr-hero">
+<div class="rr-logo" aria-hidden="true">📝</div>
+<h1>Essay Rubric Score Calculator</h1>
+<p class="rr-tag">Slide each criterion, get an instant total, a letter grade, and tips that target your weakest areas.</p>
+</div>
+<div class="rr-grid">
+<div class="rr-main">
+<div>
+<h2>Score each criterion (0–5)</h2>
+<div id="rr-crits"></div>
+<div class="rr-addrow"><input id="rr-newname" type="text" placeholder="Add your own criterion, e.g. Creativity"><button type="button" id="rr-add">Add criterion</button></div>
+</div>
+<div class="rr-score">
+<div class="rr-total" id="rr-total">–</div>
+<div class="rr-of">weighted total (equal weights)</div>
+<div><span class="rr-grade A" id="rr-grade">–</span></div>
+<p class="rr-gpaline" id="rr-gpa">Grade point: –</p>
+</div>
+</div>
+<div class="rr-cards">
+<div class="rr-card">
+<h2>Improvement tips</h2>
+<p>Targeted advice for every criterion scoring below 3.</p>
+<ul class="rr-tips" id="rr-tips"></ul>
+</div>
+<div class="rr-card">
+<h2>GPA mapping</h2>
+<p>How rubric totals convert to letter grades and grade points.</p>
+<table class="rr-gpa" id="rr-gpatable">
+<thead><tr><th>Score range</th><th>Grade</th><th>GPA</th></tr></thead>
+<tbody>
+<tr data-g="A"><td>4.5 – 5.0</td><td>A</td><td>4.0</td></tr>
+<tr data-g="B"><td>3.5 – 4.4</td><td>B</td><td>3.0</td></tr>
+<tr data-g="C"><td>2.5 – 3.4</td><td>C</td><td>2.0</td></tr>
+<tr data-g="D"><td>1.5 – 2.4</td><td>D</td><td>1.0</td></tr>
+<tr data-g="F"><td>0 – 1.4</td><td>F</td><td>0.0</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>What an Essay Rubric Really Measures</h2><p>A rubric is a contract between the writer and the grader: it names the criteria that matter, describes what each performance level looks like, and turns subjective judgment into something consistent. The four criteria in the calculator above — thesis, evidence, organization, and language — are the backbone of nearly every essay rubric used in schools and universities, because together they cover the complete job of an essay: <em>say something worth saying, prove it, structure it, and write it well.</em></p><p>Understanding the rubric before you write is the single highest-leverage study habit for essay assignments. Students who write "to the rubric" aren't gaming the system — they're doing exactly what the assignment asks. If thesis and evidence carry the most weight, your time belongs in the introduction and the body paragraphs, not in polishing transitions. The calculator above weights all criteria equally, which mirrors the most common classroom design, but the real lesson is diagnostic: your total is only as strong as your weakest criterion, and the tips panel tells you exactly where that is.</p><h2>How Rubric Scores Become Grades</h2><p>The math is simple: add the criterion scores and divide by the number of criteria — the arithmetic mean. Four criteria scoring 4, 3, 5, and 4 give (4+3+5+4)/4 = 4.0. No rounding tricks, no hidden weights. That mean then maps to a letter grade through thresholds, and the letter maps to grade points for GPA math. The mini-table above shows the standard mapping used by this tool.</p><p>Why the mean and not a weighted total? Equal weighting is the default in most classroom rubrics because it keeps grading transparent: students can see instantly that each criterion matters the same. Some rubrics do weight — a research paper might count evidence double — and if yours does, the honest move is to mirror those weights. But for self-assessment, the equal-weight mean is the right starting point: it's the number your teacher most likely computed, and it's the number that tells you where to revise.</p><h3>Score-to-grade mapping</h3><table><thead><tr><th>Mean score</th><th>Letter</th><th>GPA</th><th>What it means</th></tr></thead><tbody><tr><td>4.5 – 5.0</td><td>A</td><td>4.0</td><td>Excellent: publishable-quality work</td></tr><tr><td>3.5 – 4.4</td><td>B</td><td>3.0</td><td>Strong: clear argument, minor gaps</td></tr><tr><td>2.5 – 3.4</td><td>C</td><td>2.0</td><td>Satisfactory: meets basics, needs depth</td></tr><tr><td>1.5 – 2.4</td><td>D</td><td>1.0</td><td>Weak: major criteria unmet</td></tr><tr><td>0 – 1.4</td><td>F</td><td>0.0</td><td>Failing: requirements not addressed</td></tr></tbody></table><h2>Reading Your Own Essay Like a Grader</h2><p>Self-scoring feels awkward until you learn the grader's eye. Read the essay once without a pen, then score each criterion separately — never score holistically first, because the halo effect (one good paragraph coloring everything) corrupts the total. For <strong>thesis</strong>, ask: could a reasonable person disagree with my claim, and does it include a reason? For <strong>evidence</strong>, count: does every body paragraph contain concrete support, and do I explain what each piece proves? For <strong>organization</strong>, outline backwards: write down what each paragraph actually does, and check the sequence makes sense. For <strong>language</strong>, read aloud: your ear catches what your eye forgives.</p><p>Score harshly on the first pass. Students typically overrate their own work by half a point per criterion — the "I know what I meant" discount. The tips above trigger at scores below 3 precisely because that's the zone where targeted revision buys the most points: moving evidence from 2 to 3 is usually one good example and two sentences of analysis away.</p><h2>The Four Criteria, Deepened</h2><p><strong>Thesis (the claim).</strong> A 5-point thesis is arguable, specific, and reasoned — it takes a position and gives the essay its marching orders. A 3-point thesis is clear but safe: true, but nobody would argue otherwise. A 1-point thesis is missing or merely announces the topic. The fastest upgrade: add the because-clause. "Remote work is good" becomes "Remote work boosts productivity because flexibility and focus improve output" — and suddenly the essay has a plan.</p><p><strong>Evidence (the proof).</strong> Graders distinguish three levels: assertion (no support), illustration (examples without analysis), and argument (examples plus explanation of what they prove). Most student essays stall at illustration — plenty of quotes, no commentary. The fix is the "so what" sentence after every piece of evidence: one sentence explaining what the example proves about your thesis. That single habit routinely lifts evidence scores a full point.</p><p><strong>Organization (the structure).</strong> Strong organization is invisible: the reader never wonders why this paragraph follows that one. Check three things — an introduction that ends in the thesis, body paragraphs each doing exactly one job, and transitions that state the relationship between ideas ("by contrast," "more importantly," "this explains why"). If you can reshuffle two body paragraphs without damage, the order isn't doing argumentative work yet.</p><p><strong>Language (the craft).</strong> This criterion rewards clarity over decoration. Short sentences for key claims, varied rhythm, precise verbs, zero filler ("very," "really," "in today's society"). Read the draft aloud at half speed: every stumble marks a sentence to rewrite. A 5 in language doesn't require beautiful prose — it requires prose that never gets in the argument's way.</p><h2>Using the Tips Panel as a Revision Plan</h2><p>The improvement tips above aren't generic advice — they're sequenced by payoff. Revision has an order of operations, and doing it backwards wastes hours. First fix the thesis, because every other change depends on knowing the claim. Then fix organization, because evidence placed in a broken structure still reads as broken. Then strengthen evidence, paragraph by paragraph. Polish language last: there's no point perfecting sentences you might delete.</p><ul><li><strong>Revision pass 1 — thesis:</strong> rewrite the thesis until it passes the arguable/specific/reasoned test. Adjust the introduction to land on it.</li><li><strong>Revision pass 2 — structure:</strong> reverse-outline the draft; move, merge, or cut paragraphs until each does one job in a logical order.</li><li><strong>Revision pass 3 — evidence:</strong> add the missing "so what" sentences; replace weak examples with stronger ones.</li><li><strong>Revision pass 4 — language:</strong> read aloud, cut filler, vary sentences, fix grammar.</li></ul><p>Four passes, one criterion each, and re-score after every pass in the calculator. Watching the total climb is not just satisfying — it's feedback that teaches you what good writing actually consists of.</p><h2>Custom Criteria and Real Classroom Rubrics</h2><p>The "add criterion" input exists because real rubrics vary. AP and IB rubrics add criteria like sophistication and complexity; creative assignments add originality; research papers add citation and source quality. Add whatever your assignment names, score it honestly, and the total adapts — the mean simply divides by the new count. One caution: adding criteria dilutes the original four, so only add criteria your actual rubric includes. Self-grading against an imaginary rubric is how students "improve" scores without improving essays.</p><p>Teachers use this tool in reverse: score a sample essay in front of the class, narrating each decision. Students who watch a teacher move evidence from 3 to 4 — and hear exactly which sentence earned it — internalize the standard faster than any handout can teach. The rubric stops being a mystery and becomes what it should be: a shared language for talking about quality.</p><h2>Rubrics in Standardized Testing</h2><p>The rubrics you've met in class have famous cousins. AP exams score essays on 6-point rubrics with rows for thesis, evidence and commentary, and sophistication — a bonus point awarded for nuance, not just correctness. IB extended essays use criterion-based assessment across focus, knowledge, critical thinking, and presentation. The SAT essay (before its retirement) used a 2–8 scale across reading, analysis, and writing. All of them share the same DNA as the four criteria above: claim, support, structure, expression.</p><p>What changes at scale is calibration. A classroom teacher knows your trajectory; an AP reader sees your essay for four minutes and never learns your name. Standardized rubrics are therefore brutally explicit about what earns each point — "1 point: thesis responds to the prompt with a defensible position" — because hundreds of readers must agree. The takeaway for students: write so that a stranger can score you in minutes. Put the thesis where it belongs, label your evidence's job in the prose itself, and make the structure visible. Essays that are easy to score tend to score well, because clarity and quality correlate.</p><h2>Building Your Own Rubric</h2><p>Teachers and team leads: writing a rubric before the assignment exists is the best assignment design you'll ever do. Start with 3 to 5 criteria — more than five and grading becomes unmanageable, fewer than three and the feedback is too coarse. For each criterion, describe 3 performance levels in concrete, observable language: what does a 5 <em>look like on the page</em>, not what does it feel like. "Uses at least three credible sources, each followed by analysis" beats "good use of sources" every time.</p><p>Then do the uncomfortable step: score two sample papers yourself and check that the rubric produces the grades you intended. If a strong paper scores a C, the rubric is wrong, not the paper — descriptors are almost always harsher than their authors realize. Share the rubric with students on day one; a rubric revealed at grading time is a gotcha, not a guide. And revisit it yearly: the criteria that mattered for last year's assignment may not match this year's learning goals.</p><h2>From Rubric Scores to GPA Reality</h2><p>The GPA mini-table translates your essay into the currency colleges use. A 4.0 essay (A) contributes fully; a 3.0 (B) contributes three-quarters. But the deeper lesson is marginal: in most courses, the difference between a B+ and an A- essay is one criterion moved one point — usually evidence or thesis. That's a revision afternoon, not a rewrite.</p><p>Track your criterion scores across essays in a simple log: date, assignment, four numbers. Patterns emerge fast — the student who scores 2 on organization every time doesn't have a writing problem, they have an outlining problem, and it's fixable in a week. The rubric is a mirror; the calculator just holds it steady. Use it before you submit, not after — the points are cheapest when the draft is still warm.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How is the rubric total calculated?</summary><p>It's the arithmetic mean: all criterion scores are added and divided by the number of criteria. With equal weights, four scores of 4, 3, 5, and 4 give exactly 4.0. Adding custom criteria extends the same mean over the larger set.</p></details>
+<details><summary>What score do I need for an A?</summary><p>A mean of 4.5 or higher earns an A on this tool's scale. In practice, that means averaging between strong and excellent across criteria — typically no criterion below 4 and at least a couple at 5.</p></details>
+<details><summary>Why do improvement tips only appear below 3?</summary><p>Because that's where revision buys the most points. Moving a criterion from 2 to 3 is usually one focused fix away — a sharper thesis, one more piece of analyzed evidence — while moving from 4 to 5 takes disproportionately more work.</p></details>
+<details><summary>Should I weight some criteria more than others?</summary><p>Only if your assignment's rubric does. Most classroom rubrics weight criteria equally for transparency. If yours counts evidence double, mirror that in your own math — but for self-assessment, the equal-weight mean is the honest default.</p></details>
+<details><summary>How do I score my own essay without bias?</summary><p>Score each criterion separately, harshly, and after a break from writing. Use the reverse-outline trick for organization, read aloud for language, and count actual evidence for the evidence score. Most students overrate by about half a point per criterion on first self-scores.</p></details>
+<details><summary>How does the rubric score convert to GPA?</summary><p>The mean maps to a letter grade (A at 4.5+, B at 3.5+, C at 2.5+, D at 1.5+, F below), and each letter maps to grade points: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0. The GPA table in the tool highlights your row automatically.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">RubricRate</div>
+    <p>RubricRate turns four criterion scores into an instant total, letter grade, and personalized improvement tips — with custom criteria and GPA mapping.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function rubricScore(scores){return scores.reduce(function(a,b){return a+b;},0)/scores.length;}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){
+var critsEl=document.getElementById('rr-crits'),totalEl=document.getElementById('rr-total'),gradeEl=document.getElementById('rr-grade'),gpaEl=document.getElementById('rr-gpa'),tipsEl=document.getElementById('rr-tips'),newNameEl=document.getElementById('rr-newname'),addBtn=document.getElementById('rr-add'),gpaTable=document.getElementById('rr-gpatable');
+var TIPS={'Thesis':'Sharpen your thesis: make it arguable, specific, and give it a because-clause your paragraphs can prove.','Evidence':'Strengthen evidence: add concrete examples, data, or quotations — and explain what each one proves.','Organization':'Fix organization: give every paragraph one job, open with a topic sentence, and use transitions between ideas.','Language':'Polish language: vary sentence length, cut filler words, and read the draft aloud to catch awkward phrasing.'};
+function defaultTip(name){return 'Raise "'+name+'": study strong examples, get feedback on a draft, and revise with one focused pass on this criterion.';}
+var criteria=[{name:'Thesis',score:4},{name:'Evidence',score:3},{name:'Organization',score:4},{name:'Language',score:4}];
+function gradeFor(s){if(s>=4.5)return 'A';if(s>=3.5)return 'B';if(s>=2.5)return 'C';if(s>=1.5)return 'D';return 'F';}
+function gpaFor(g){return {A:'4.0',B:'3.0',C:'2.0',D:'1.0',F:'0.0'}[g];}
+function render(){if(!critsEl)return;var scores=criteria.map(function(c){return c.score;});var total=rubricScore(scores);var g=gradeFor(total);
+if(totalEl)totalEl.textContent=total.toFixed(2);
+if(gradeEl){gradeEl.textContent=g;gradeEl.className='rr-grade '+g;}
+if(gpaEl)gpaEl.textContent='Grade point: '+gpaFor(g)+' ('+g+')';
+if(tipsEl){tipsEl.innerHTML='';var weak=criteria.filter(function(c){return c.score<3;});
+if(!weak.length){var li=document.createElement('li');li.className='rr-good';var st=document.createElement('strong');st.textContent='All criteria at 3 or above. ';li.appendChild(st);li.appendChild(document.createTextNode('Polish your strongest criterion next — excellence compounds faster than repair.'));tipsEl.appendChild(li);}
+weak.forEach(function(c){var li=document.createElement('li');var st=document.createElement('strong');st.textContent=c.name+' ('+c.score+'/5): ';li.appendChild(st);li.appendChild(document.createTextNode(TIPS[c.name]||defaultTip(c.name)));tipsEl.appendChild(li);});}
+if(gpaTable){var rows=gpaTable.querySelectorAll('tbody tr');rows.forEach(function(r){r.classList.toggle('hl',r.getAttribute('data-g')===g);});}}
+function buildCrits(){if(!critsEl)return;critsEl.innerHTML='';criteria.forEach(function(c,idx){var wrap=document.createElement('div');wrap.className='rr-crit';
+var row=document.createElement('div');row.className='rr-row';var nm=document.createElement('span');nm.className='rr-name';nm.textContent=c.name;var val=document.createElement('span');val.className='rr-val';val.textContent=c.score.toFixed(1);row.appendChild(nm);row.appendChild(val);
+var inp=document.createElement('input');inp.type='range';inp.min='0';inp.max='5';inp.step='0.5';inp.value=String(c.score);inp.setAttribute('aria-label',c.name+' score');
+inp.addEventListener('input',function(){c.score=parseFloat(inp.value);val.textContent=c.score.toFixed(1);render();});
+var scale=document.createElement('div');scale.className='rr-scale';scale.innerHTML='<span>0 · absent</span><span>5 · excellent</span>';
+wrap.appendChild(row);wrap.appendChild(inp);wrap.appendChild(scale);critsEl.appendChild(wrap);});render();}
+if(addBtn)addBtn.addEventListener('click',function(){var n=newNameEl?newNameEl.value.trim():'';if(!n)return;criteria.push({name:n,score:3});if(newNameEl)newNameEl.value='';buildCrits();});
+buildCrits();});}
+
+</script>
+</body>
+</html>
