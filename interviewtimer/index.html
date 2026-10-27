@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STAR Method Interview Timer | InterviewTimer</title>
+<meta name="description" content="STAR method interview timer: split minutes across Situation, Task, Action, Result with pacing alerts, a question bank, and answer notes. Free tool.">
+<link rel="canonical" href="https://study.fixoraa.tech/interviewtimer/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="STAR Method Interview Timer | InterviewTimer">
+<meta property="og:description" content="STAR method interview timer: split minutes across Situation, Task, Action, Result with pacing alerts, a question bank, and answer notes. Free tool.">
+<meta property="og:url" content="https://study.fixoraa.tech/interviewtimer/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "InterviewTimer",
+      "url": "https://study.fixoraa.tech/interviewtimer/",
+      "applicationCategory": "Career Tools",
+      "operatingSystem": "Web",
+      "description": "STAR method interview timer: split minutes across Situation, Task, Action, Result with pacing alerts, a question bank, and answer notes. Free tool.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long should a STAR answer be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with 2 minutes. Most interviewers expect a STAR answer between 90 seconds and 3 minutes \u2014 long enough for real detail, short enough to hold attention. Use 1 minute for rapid screening rounds and up to 5 for final-round deep dives."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should I split my time across the STAR sections?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The widely recommended split is 10% Situation, 20% Task, 50% Action, 20% Result. The Action section gets half your time because it is the part that proves what you personally did \u2014 the timer above computes these splits automatically from your total minutes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I write out my full answer or just notes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bullet points, not scripts. Write one line per section plus your key number or result. Memorizing a script sounds robotic and falls apart under follow-up questions; bullets keep you natural while the timer keeps you on pace."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the timer says I'm still in Situation when I should be in Action?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Move on. One bridging sentence \u2014 'To cut to what I did...' \u2014 then jump to the Action section. The timer's phase alerts exist precisely to catch this moment; a strong action section always beats a complete backstory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many STAR stories do I need to prepare?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Five to seven versatile stories. One good story \u2014 a stalled project, a hard deadline, a difficult stakeholder \u2014 can answer many different questions if you frame it right. Time each story at two minutes until the pacing is automatic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why practice with a timer instead of just rehearsing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because almost everyone misjudges speaking time. The setup that feels like 20 seconds in your head takes a minute out loud, and the Action section gets squeezed. A visible countdown with section alerts trains you to self-edit in real time, which is the actual skill being tested."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F6F3FA; --surface:#FFFFFF; --accent:#6A3FB5; --accent-ink:#FFFFFF;
+  --ink:#23272F; --muted:#5B6472; --line:#E4DCF1;
+  --display:'Cairo',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.it-wrap{font-family:'Cairo',Inter,system-ui,sans-serif;background:#F6F3FA;color:#23272F;padding:56px 20px 72px;}.it-hero{max-width:820px;margin:0 auto 34px;text-align:center;}.it-logo{width:76px;height:76px;margin:0 auto 18px;border-radius:22px;background:linear-gradient(135deg,#6A3FB5,#a78bfa);font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(106,63,181,.25);}.it-hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 12px;letter-spacing:-.02em;font-weight:800;line-height:1.1;}.it-tag{font-size:18px;color:#5B6472;margin:0;}.it-card{max-width:820px;margin:0 auto 22px;background:#FFFFFF;border:1px solid #E4DCF1;border-radius:26px;padding:38px;box-shadow:0 24px 60px rgba(106,63,181,.10);}.it-row{display:flex;gap:16px;flex-wrap:wrap;align-items:end;margin-bottom:22px;}.it-field{flex:1;min-width:200px;}.it-field label{display:block;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:#5B6472;margin-bottom:8px;}.it-field input,.it-field select,.it-field textarea{width:100%;padding:13px 14px;font-size:16px;border:2px solid #E4DCF1;border-radius:14px;font-family:inherit;color:#23272F;background:#F6F3FA;box-sizing:border-box;}.it-field input:focus,.it-field select:focus,.it-field textarea:focus{outline:none;border-color:#6A3FB5;}.it-sec{display:grid;grid-template-columns:170px 1fr 90px;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;margin-bottom:8px;border:2px solid transparent;transition:border-color .2s,background .2s;}.it-sec.active{border-color:#6A3FB5;background:#F6F3FA;}.it-secname{font-weight:800;font-size:14.5px;}.it-secname small{display:block;font-weight:600;color:#5B6472;font-size:12px;}.it-track{height:16px;background:#EFEAF7;border-radius:999px;overflow:hidden;}.it-fill{height:100%;width:0;border-radius:999px;background:#6A3FB5;transition:width .3s;}.it-fill-s{background:#c4b5fd;}.it-fill-t{background:#a78bfa;}.it-fill-a{background:#6A3FB5;}.it-fill-r{background:#4c2d95;}.it-secmin{text-align:right;font-weight:800;font-size:14px;color:#5B6472;}.it-timer{text-align:center;margin:26px 0;padding:26px;border:2px dashed #E4DCF1;border-radius:20px;background:#F6F3FA;}.it-clock{font-size:64px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;}.it-phase{margin:10px 0 18px;font-size:16px;color:#5B6472;font-weight:600;min-height:24px;}.it-phase strong{color:#6A3FB5;}.it-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}.it-btns button{padding:13px 26px;font-size:16px;font-weight:800;border-radius:14px;border:none;cursor:pointer;font-family:inherit;min-height:52px;}.it-start{background:#6A3FB5;color:#FFFFFF;}.it-pause{background:#FFFFFF;color:#6A3FB5;border:2px solid #6A3FB5;}.it-reset{background:transparent;color:#5B6472;border:2px solid #E4DCF1;}.it-sub{font-size:20px;font-weight:800;margin:28px 0 6px;}.it-msub{color:#5B6472;font-size:14.5px;margin:0 0 14px;}.it-notes textarea{min-height:140px;resize:vertical;line-height:1.6;}.it-wc{font-weight:700;color:#6A3FB5;font-size:13px;margin-left:8px;}.it-qrow{display:flex;gap:10px;flex-wrap:wrap;}.it-qrow select{flex:1;min-width:200px;}.it-qrow button{padding:13px 20px;background:#6A3FB5;color:#fff;border:none;border-radius:14px;font-weight:800;cursor:pointer;font-family:inherit;min-height:52px;}@media (max-width:600px){.it-card{padding:26px 18px;}.it-sec{grid-template-columns:110px 1fr 64px;}.it-secname{font-size:12.5px;}.it-clock{font-size:52px;}.it-wrap{padding:40px 14px 56px;}.it-qrow button{width:100%;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="InterviewTimer home">
+      <span class="fx-logo-tile" aria-hidden="true">⏱️</span>
+      <span class="fx-brand">InterviewTimer</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-field-notes" aria-label="InterviewTimer tool">
+<section class='it-wrap'><div class='it-hero'><div class='it-logo' aria-hidden='true'>⏱️</div><h1>STAR Method Interview Timer</h1><p class='it-tag'>Pace every STAR answer: Situation 10%, Task 20%, Action 50%, Result 20%.</p></div><div class='it-card'><div class='it-row'><div class='it-field'><label for='it-minutes'>Total answer time (minutes)</label><input id='it-minutes' type='number' min='0.5' max='30' step='0.5' value='2'></div></div><div class='it-sec' data-k='s'><span class='it-secname'>S · Situation<small>Set the scene briefly</small></span><div class='it-track'><div class='it-fill it-fill-s' id='it-fill-s'></div></div><span class='it-secmin' id='it-min-s'></span></div><div class='it-sec' data-k='t'><span class='it-secname'>T · Task<small>Your responsibility</small></span><div class='it-track'><div class='it-fill it-fill-t' id='it-fill-t'></div></div><span class='it-secmin' id='it-min-t'></span></div><div class='it-sec' data-k='a'><span class='it-secname'>A · Action<small>What YOU did — half your time</small></span><div class='it-track'><div class='it-fill it-fill-a' id='it-fill-a'></div></div><span class='it-secmin' id='it-min-a'></span></div><div class='it-sec' data-k='r'><span class='it-secname'>R · Result<small>Outcome + lesson</small></span><div class='it-track'><div class='it-fill it-fill-r' id='it-fill-r'></div></div><span class='it-secmin' id='it-min-r'></span></div><div class='it-timer'><div class='it-clock' id='it-clock'>02:00</div><div class='it-phase' id='it-phase'>Press Start and speak your answer out loud.</div><div class='it-btns'><button class='it-start' id='it-start' type='button'>Start</button><button class='it-pause' id='it-pause' type='button'>Pause</button><button class='it-reset' id='it-reset' type='button'>Reset</button></div></div><p class='it-sub'>Question bank</p><p class='it-msub'>Pick a classic behavioral question, add it to your notes, and time your answer.</p><div class='it-qrow'><div class='it-field'><label for='it-q'>Choose a question</label><select id='it-q'><option>Tell me about a time you handled a difficult stakeholder.</option><option>Describe a project that failed. What did you do?</option><option>Give an example of when you had to learn something fast.</option><option>Tell me about a disagreement with a manager and how you resolved it.</option><option>Describe a time you improved a process.</option><option>Tell me about a time you worked under a tight deadline.</option><option>Give an example of leading without formal authority.</option><option>Describe a conflict within a team and your role in resolving it.</option></select></div><button id='it-addq' type='button'>Add to notes</button></div><p class='it-sub'>Answer recorder</p><p class='it-msub'>One bullet per section works best — scripts sound robotic, bullets sound confident.</p><div class='it-field it-notes'><label for='it-notes'>Your outline <span class='it-wc' id='it-wc'>0 words</span></label><textarea id='it-notes' placeholder='S: ...&#10;T: ...&#10;A: ...&#10;R: ...'></textarea></div></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>What the STAR Method Is</h2><p>STAR stands for <strong>Situation, Task, Action, Result</strong> — a four-part structure for answering behavioral interview questions. Instead of rambling through a story or freezing up, you give the interviewer a compact narrative with a beginning, a middle, and an ending. The <strong>Situation</strong> sets the scene: where you were, what was happening, and why it mattered. The <strong>Task</strong> explains your specific responsibility inside that situation. The <strong>Action</strong> describes what you personally did, step by step — this is the heart of your answer. The <strong>Result</strong> closes the loop with what happened, ideally with a number attached, plus what you learned.</p><p>Recruiters love STAR because it forces evidence. Anyone can claim to be a great problem solver; far fewer can walk through a real problem they solved, the choices they made, and the measurable outcome. The method also makes answers comparable: when every candidate answers in the same structure, the interviewer can actually tell who performed and who is hand-waving. That is exactly why pacing matters — a STAR answer that spends ninety seconds on the situation and ten seconds on the action fails the test no matter how good the story is.</p><h2>Why Two Minutes Is the Magic Number</h2><p>Interview coaches converge on one piece of advice: keep a STAR answer between <strong>90 seconds and 3 minutes</strong>. Shorter than a minute and you sound like you are hiding something. Longer than three minutes and the interviewer's attention drifts — they start checking the clock, and you lose the crispness that made the story good. Two minutes is the sweet spot for most roles: long enough to include real detail, short enough to hold attention.</p><p>This is where a timer changes everything. Practicing without one, almost everyone misjudges time: the setup feels quick in your head but eats a minute in speech, while the action section — the part that actually sells you — gets squeezed into fifteen seconds. A visible countdown with section alerts trains the opposite habit. You learn what forty seconds of speaking actually feels like, and you start self-editing in real time.</p><h2>The 10-20-50-20 Split</h2><p>The most reliable pacing rule for STAR answers is a fixed proportion: <strong>10% Situation, 20% Task, 50% Action, 20% Result</strong>. The logic is simple — interviewers care least about background and most about what you did. Half your time belongs to the Action section. Here is what the split looks like at common answer lengths:</p><table><thead><tr><th>Total answer</th><th>Situation (10%)</th><th>Task (20%)</th><th>Action (50%)</th><th>Result (20%)</th></tr></thead><tbody><tr><td>1 minute</td><td>6 sec</td><td>12 sec</td><td>30 sec</td><td>12 sec</td></tr><tr><td>2 minutes</td><td>12 sec</td><td>24 sec</td><td>60 sec</td><td>24 sec</td></tr><tr><td>3 minutes</td><td>18 sec</td><td>36 sec</td><td>90 sec</td><td>36 sec</td></tr><tr><td>5 minutes</td><td>30 sec</td><td>60 sec</td><td>150 sec</td><td>60 sec</td></tr><tr><td>10 minutes</td><td>1 min</td><td>2 min</td><td>5 min</td><td>2 min</td></tr></tbody></table><p>The proportions stay constant no matter the total. That is why the timer above computes the split from whatever total you enter — the math never changes, only the minutes do. Enter your target length, and the four bars show exactly how long each section gets.</p><h2>How to Practice With the Timer</h2><ul><li><strong>Pick a question</strong> from the built-in question bank, or paste in one from the job description you are targeting.</li><li><strong>Set your total minutes.</strong> Start with 2 minutes. That is the length most interviewers expect.</li><li><strong>Draft bullet notes</strong> in the answer recorder — not a script, just one line per section. Reading a script sounds robotic; bullets keep you natural.</li><li><strong>Start the timer and speak out loud.</strong> The phase banner tells you which section you should be in. If it flips to Action and you are still setting the scene, wrap up the background in one sentence and move on.</li><li><strong>Review the word count and pacing.</strong> If you consistently finish the Situation with 40% of your time gone, your setup is too long. Cut it, don't stretch the total.</li><li><strong>Repeat with the same question.</strong> The second run is almost always 20–30% tighter. That compression is the skill you are building.</li></ul><h2>Section-by-Section Playbook</h2><h3>S — Situation (10%)</h3><p>Two or three sentences, maximum. Name the company or context, the stakes, and the moment things went sideways. Bad: a five-minute history of the department. Good: <em>"At my last company, our biggest client threatened to leave two weeks before renewal because onboarding had stalled."</em> That is one sentence, and the interviewer already understands the pressure.</p><h3>T — Task (20%)</h3><p>State what was on <em>your</em> plate, not the team's. <em>"I owned the onboarding workstream and had to get them live without slipping the renewal date."</em> This section bridges background and action — keep it to two or three sentences. If you catch yourself describing other people's jobs, you have drifted; steer back to your responsibility.</p><h3>A — Action (50%)</h3><p>This is the section that wins offers, so give it half your time. Walk through what you did in sequence, and make the <em>decisions</em> visible: what options did you consider, why did you pick this one, what did you do first? Use "I" language relentlessly. Interviewers mentally downgrade answers full of "we" because they cannot tell what you contributed. Three to five concrete steps is the right density for a two-minute answer.</p><h3>R — Result (20%)</h3><p>Close with the outcome and make it measurable: revenue saved, time cut, error rate down, satisfaction up. Then add one line of reflection — what you would do differently or what the experience taught you. The reflection line matters more than candidates think: it signals self-awareness, which is half of what behavioral interviews assess.</p><h2>Mistakes That Kill Good Stories</h2><ul><li><strong>Front-loading the setup.</strong> The classic failure: 90 seconds of context, then a rushed "and then we fixed it." If your Situation bar is the longest, rewrite.</li><li><strong>The "we" fog.</strong> Teamwork is great, but the interviewer is hiring you, not the team. Every action sentence should survive the "could I tell what <em>you</em> did?" test.</li><li><strong>No numbers.</strong> "Improved things a lot" is forgettable. "Cut onboarding time from 6 weeks to 11 days" is a story the interviewer repeats in the hiring debrief.</li><li><strong>Skipping the lesson.</strong> Ending at the result leaves the story flat. One sentence of reflection turns an anecdote into evidence of growth.</li><li><strong>Practicing silently.</strong> Thinking through an answer is not rehearsal. Time only counts when you are speaking out loud, which is why the countdown exists.</li></ul><h2>Questions Worth Rehearsing</h2><p>You do not need fifty stories — you need <strong>five to seven versatile ones</strong> you can bend to fit most questions. Start with these high-frequency prompts from the question bank:</p><ul><li>Tell me about a time you handled a difficult stakeholder.</li><li>Describe a project that failed. What did you do?</li><li>Give an example of when you had to learn something fast.</li><li>Tell me about a disagreement with a manager and how you resolved it.</li><li>Describe a time you improved a process.</li><li>Tell me about a time you worked under a tight deadline.</li><li>Give an example of leading without formal authority.</li></ul><p>Notice that one story — say, the stalled client onboarding — can answer at least four of these. Build your story bank around versatility, and time each one at two minutes until the pacing feels automatic.</p><h2>What Interviewers Are Really Scoring</h2><p>Behind the polite nodding, interviewers score a short list of signals. <strong>Ownership</strong> — did you drive the outcome or watch it happen? <strong>Judgment</strong> — were your choices reasonable under the constraints? <strong>Complexity</strong> — was the situation genuinely hard, or are you dressing up routine work? <strong>Impact</strong> — did anything actually change, and can you prove it? And <strong>self-awareness</strong> — do you know what you would do differently?</p><p>Pacing feeds every one of these. A candidate who rations time well looks organized; one who rambles looks like they cannot prioritize. The timer is not just a practice aid — it is training the exact executive function the interview measures.</p><h2>Adapting the Split to Short and Long Answers</h2><p>The 10-20-50-20 ratio holds, but emphasis shifts at the extremes. For a <strong>60-second answer</strong> (common in rapid-fire screening rounds), merge Situation and Task into a single 18-second opener and keep the Action tight at 30 seconds — you are giving the highlight reel, not the documentary. For a <strong>5-minute deep dive</strong> (typical in final rounds or case-style interviews), the Action section can absorb sub-structure: problem diagnosis, options considered, execution, and obstacles overcome each get their own beat within the 50%. The Result section at longer lengths should include second-order effects — not just what happened, but what changed permanently because of it.</p><h2>From Notes to Delivery</h2><p>The answer recorder is deliberately a notes field, not a teleprompter. Research on interview performance is consistent: candidates who memorize scripts sound flat and panic when interrupted, while candidates who rehearse from bullet points sound confident and adapt when the interviewer probes deeper. Use the notes to capture your one-line-per-section outline and your key number, then look away from the screen and speak. Time yourself, check the pacing alerts, tighten the outline, and repeat. After three timed runs, most people find their answer lands within ten seconds of target without conscious effort — and that is the point at which you are ready for the real thing.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How long should a STAR answer be?</summary><p>Start with 2 minutes. Most interviewers expect a STAR answer between 90 seconds and 3 minutes — long enough for real detail, short enough to hold attention. Use 1 minute for rapid screening rounds and up to 5 for final-round deep dives.</p></details>
+<details><summary>How should I split my time across the STAR sections?</summary><p>The widely recommended split is 10% Situation, 20% Task, 50% Action, 20% Result. The Action section gets half your time because it is the part that proves what you personally did — the timer above computes these splits automatically from your total minutes.</p></details>
+<details><summary>Should I write out my full answer or just notes?</summary><p>Bullet points, not scripts. Write one line per section plus your key number or result. Memorizing a script sounds robotic and falls apart under follow-up questions; bullets keep you natural while the timer keeps you on pace.</p></details>
+<details><summary>What if the timer says I&#x27;m still in Situation when I should be in Action?</summary><p>Move on. One bridging sentence — 'To cut to what I did...' — then jump to the Action section. The timer's phase alerts exist precisely to catch this moment; a strong action section always beats a complete backstory.</p></details>
+<details><summary>How many STAR stories do I need to prepare?</summary><p>Five to seven versatile stories. One good story — a stalled project, a hard deadline, a difficult stakeholder — can answer many different questions if you frame it right. Time each story at two minutes until the pacing is automatic.</p></details>
+<details><summary>Why practice with a timer instead of just rehearsing?</summary><p>Because almost everyone misjudges speaking time. The setup that feels like 20 seconds in your head takes a minute out loud, and the Action section gets squeezed. A visible countdown with section alerts trains you to self-edit in real time, which is the actual skill being tested.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">InterviewTimer</div>
+    <p>InterviewTimer splits your minutes across Situation, Task, Action, and Result with a live countdown that alerts you as each section elapses.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function starSplit(total){return {s:total*0.1,t:total*0.2,a:total*0.5,r:total*0.2};}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var wrap=document.querySelector('.it-wrap');if(!wrap)return;function $(id){return document.getElementById(id);}var minIn=$('it-minutes'),clock=$('it-clock'),phase=$('it-phase');var btnStart=$('it-start'),btnPause=$('it-pause'),btnReset=$('it-reset');var notes=$('it-notes'),wc=$('it-wc'),qsel=$('it-q'),addq=$('it-addq');if(!minIn||!clock||!phase)return;var SECDEF=[{k:'s',name:'Situation',tip:'Set the scene in one or two sentences, then move on.'},{k:'t',name:'Task',tip:'State what was on YOUR plate.'},{k:'a',name:'Action',tip:'Walk through what you did, step by step. Use "I" language.'},{k:'r',name:'Result',tip:'Give the measurable outcome, then one line of reflection.'}];var totalSec=120,remainSec=120,timerId=null;function totalMin(){var t=parseFloat(minIn.value);return (t>0)?t:2;}function fmt(sec){sec=Math.max(0,Math.round(sec));var m=Math.floor(sec/60),s=sec%60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;}function renderBars(){var sp=starSplit(totalMin());var tot=sp.s+sp.t+sp.a+sp.r;if(tot<=0)tot=1;var map={s:'it-fill-s',t:'it-fill-t',a:'it-fill-a',r:'it-fill-r'};var lab={s:'it-min-s',t:'it-min-t',a:'it-min-a',r:'it-min-r'};['s','t','a','r'].forEach(function(k){var f=$(map[k]),l=$(lab[k]);if(f)f.style.width=(sp[k]/tot*100)+'%';if(l)l.textContent=sp[k].toFixed(1)+' min';});}function sectionAt(elapsedSec){var t=totalMin()*60;var f=elapsedSec/t;if(f<0.1)return 0;if(f<0.3)return 1;if(f<0.8)return 2;return 3;}function markActive(idx){var rows=wrap.querySelectorAll('.it-sec');for(var i=0;i<rows.length;i++){if(rows[i].classList)rows[i].classList.toggle('active',i===idx);}}function tick(){if(remainSec<=0){stopTimer();if(phase)phase.innerHTML='<strong>Time.</strong> Wrap up your Result in one sentence.';markActive(3);return;}remainSec--;if(clock)clock.textContent=fmt(remainSec);var idx=sectionAt(totalMin()*60-remainSec);markActive(idx);var d=SECDEF[idx];if(phase)phase.innerHTML='Now: <strong>'+d.name+'</strong> — '+d.tip;}function stopTimer(){if(timerId){clearInterval(timerId);timerId=null;}}function resetTimer(){stopTimer();totalSec=Math.round(totalMin()*60);remainSec=totalSec;if(clock)clock.textContent=fmt(remainSec);markActive(-1);if(phase)phase.textContent='Press Start and speak your answer out loud.';}if(btnStart)btnStart.addEventListener('click',function(){if(timerId)return;if(remainSec<=0)resetTimer();renderBars();timerId=setInterval(tick,1000);tick();});if(btnPause)btnPause.addEventListener('click',function(){stopTimer();if(phase)phase.textContent='Paused — press Start to resume.';});if(btnReset)btnReset.addEventListener('click',resetTimer);minIn.addEventListener('change',function(){resetTimer();renderBars();});minIn.addEventListener('input',renderBars);function updateWc(){if(!notes||!wc)return;var t=notes.value.trim();wc.textContent=(t? t.split(/\s+/).length:0)+' words';}if(notes)notes.addEventListener('input',updateWc);if(addq&&qsel&&notes)addq.addEventListener('click',function(){var q=qsel.value;notes.value=(notes.value?notes.value.replace(/\s+$/,'')+'\n\n':'')+'Q: '+q+'\nS: \nT: \nA: \nR: ';updateWc();notes.focus();});renderBars();resetTimer();updateWc();});}
+</script>
+</body>
+</html>
