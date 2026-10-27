@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/deckdash/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeckDash — Free Flashcard Maker with Leitner Spaced Repetition</title>
+<meta name="description" content="DeckDash is a free flashcard maker with the Leitner spaced-repetition system. Create decks, study with smart flashcards, import/export CSV & JSON, and print your cards — no signup required.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --teal:#0F766E; --teal-dark:#0B5E58; --coral:#F97316; --coral-dark:#EA6A0A; --cream:#FAF4E6; --ink:#27312F; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Inter',system-ui,sans-serif; background:var(--cream); color:var(--ink); }
+  .font-display { font-family:'Fraunces',Georgia,serif; }
+  /* 3D flip card */
+  .flip { perspective:1200px; }
+  .flip-inner { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s cubic-bezier(.4,.1,.2,1); }
+  .flip.flipped .flip-inner { transform:rotateY(180deg); }
+  .flip-face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:1rem; overflow:hidden; }
+  .flip-back { transform:rotateY(180deg); }
+  /* paper texture dots for desk vibe */
+  .desk-bg { background-image:radial-gradient(rgba(15,118,110,.08) 1.5px, transparent 1.5px); background-size:22px 22px; }
+  .card-shadow { box-shadow:0 10px 25px -8px rgba(15,118,110,.25), 0 3px 8px -2px rgba(0,0,0,.08); }
+  .btn-teal { background:var(--teal); color:#fff; }
+  .btn-teal:hover { background:var(--teal-dark); }
+  .btn-coral { background:var(--coral); color:#fff; }
+  .btn-coral:hover { background:var(--coral-dark); }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:#efe7d3; }
+  ::-webkit-scrollbar-thumb { background:var(--teal); border-radius:8px; }
+  /* print */
+  #print-view { display:none; }
+  @media print {
+    .no-print { display:none !important; }
+    #print-view { display:block !important; }
+    body { background:#fff !important; }
+    .print-card { page-break-inside:avoid; break-inside:avoid; border:2px solid #333; border-radius:10px; padding:14px; margin-bottom:12px; }
+    .print-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is DeckDash really free? Do I need to sign up?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. DeckDash is completely free with unlimited decks and unlimited cards. There is no signup, no account, no paywall and no watermark. Everything runs in your browser and your data is stored in your browser's local storage." } },
+    { "@type": "Question", "name": "What is the Leitner system and how does it work in DeckDash?", "acceptedAnswer": { "@type": "Answer", "text": "The Leitner system, invented by Sebastian Leitner in 1972, sorts flashcards into numbered boxes. Every card starts in Box 1. When you answer correctly during a study session, the card moves to the next box and is reviewed less often (after 1, 3, 7, 14 and 30 days). When you answer incorrectly, the card drops back to Box 1 so you see it again soon. DeckDash automates this entire process." } },
+    { "@type": "Question", "name": "How do I import flashcards from Excel or Google Sheets?", "acceptedAnswer": { "@type": "Answer", "text": "Export your spreadsheet as a CSV file with two columns (front, back), open DeckDash, choose a deck, click Import / Export, paste the CSV text and click Import. DeckDash also imports and exports JSON, so you can back up your whole library and move it between devices." } },
+    { "@type": "Question", "name": "Where is my flashcard data stored? Is it private?", "acceptedAnswer": { "@type": "Answer", "text": "Your decks and cards are stored only in your own browser's localStorage on your device. Nothing is uploaded to any server, so your study data stays completely private. Use the JSON export feature to create backups." } },
+    { "@type": "Question", "name": "Can I print my flashcards from DeckDash?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Open any deck and click the Print button. DeckDash generates a clean, print-friendly layout of all your cards with front and back sides, ready to cut out or review on paper." } },
+    { "@type": "Question", "name": "How often should I study a deck, and what does 'due' mean?", "acceptedAnswer": { "@type": "Answer", "text": "A card becomes 'due' when its scheduled review interval has passed. Box 1 cards are due daily, while cards in higher boxes wait 3, 7, 14 or 30 days. Studying just your due cards each day — usually 10 to 20 minutes — is the most efficient way to lock knowledge into long-term memory." } }
+  ]
+}
+</script>
+</head>
+<body id="top" class="min-h-screen">
+
+<!-- Sticky header -->
+<header class="no-print sticky top-0 z-40 shadow-md" style="background:#0F766E">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 text-white">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="6" y="4" width="18" height="24" rx="3" fill="#FAF4E6" transform="rotate(8 15 16)"/>
+        <rect x="6" y="4" width="18" height="24" rx="3" fill="#F97316" transform="rotate(-6 15 16)"/>
+        <rect x="6" y="4" width="18" height="24" rx="3" fill="#FAF4E6"/>
+        <circle cx="15" cy="14" r="5" fill="#0F766E"/>
+        <rect x="10" y="21" width="10" height="2.4" rx="1.2" fill="#0F766E"/>
+      </svg>
+      <span class="font-display font-black text-2xl tracking-tight">DeckDash</span>
+    </a>
+    <nav class="flex items-center gap-1 sm:gap-2 text-sm font-semibold">
+      <a href="#top" class="text-white/90 hover:text-white px-3 py-2 rounded-lg hover:bg-white/10 transition">Home</a>
+      <a href="https://fixoraa.tech" class="text-white/90 hover:text-white px-3 py-2 rounded-lg hover:bg-white/10 transition">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- TOP AD -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOOL ============ -->
+<main class="no-print mx-auto max-w-6xl px-4 sm:px-6 py-8 desk-bg rounded-3xl mt-4">
+  <div class="text-center max-w-2xl mx-auto mb-8">
+    <span class="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-white px-4 py-1.5 rounded-full shadow" style="background:#F97316">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      Unlimited Free Usage
+    </span>
+    <h1 class="font-display font-black text-4xl sm:text-5xl mt-4" style="color:#0F766E">Your Study Desk</h1>
+    <p class="mt-3 text-base sm:text-lg text-stone-600">Make flashcards online, study them with the proven <strong>Leitner spaced-repetition system</strong>, and import, export or print your decks. No signup — everything stays in your browser.</p>
+  </div>
+
+  <div id="app" class="grid gap-6 lg:grid-cols-[290px_1fr] items-start">
+
+    <!-- ===== Deck sidebar ===== -->
+    <aside class="rounded-2xl bg-white card-shadow border border-stone-200/70 overflow-hidden">
+      <div class="px-5 py-4 flex items-center justify-between" style="background:#0F766E">
+        <h2 class="font-display font-bold text-lg text-white">My Decks</h2>
+        <span id="deck-count" class="text-xs font-bold bg-white/20 text-white px-2.5 py-1 rounded-full">0</span>
+      </div>
+      <div class="p-4">
+        <div id="deck-list" class="space-y-2 max-h-80 overflow-y-auto pr-1"></div>
+        <div class="mt-4 pt-4 border-t border-dashed border-stone-300">
+          <label class="text-xs font-bold uppercase tracking-wider text-stone-500" for="new-deck-name">New deck</label>
+          <div class="flex gap-2 mt-2">
+            <input id="new-deck-name" type="text" maxlength="80" placeholder="e.g. Spanish verbs"
+              class="flex-1 min-w-0 rounded-xl border-2 border-stone-200 px-3 py-2 text-sm focus:outline-none focus:border-teal-700">
+            <button id="btn-add-deck" class="btn-teal font-bold text-sm px-4 py-2 rounded-xl transition shrink-0">Add</button>
+          </div>
+          <p id="deck-error" class="hidden text-xs font-semibold mt-2" style="color:#DC2626"></p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== Deck workspace ===== -->
+    <section class="rounded-2xl bg-white card-shadow border border-stone-200/70 overflow-hidden min-w-0">
+      <div id="deck-empty" class="p-10 text-center">
+        <div class="text-6xl mb-4">🗂️</div>
+        <h2 class="font-display font-bold text-2xl" style="color:#0F766E">No decks yet</h2>
+        <p class="text-stone-500 mt-2 max-w-md mx-auto">Create your first deck from the sidebar, or load a sample deck to see how the Leitner system works.</p>
+        <button id="btn-sample" class="btn-coral font-bold px-6 py-2.5 rounded-xl mt-5 transition">Load sample deck</button>
+      </div>
+
+      <div id="deck-view" class="hidden">
+        <div class="px-5 sm:px-6 py-5 border-b border-stone-200/70" style="background:linear-gradient(135deg,#0F766E 0%,#14968c 100%)">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="min-w-0">
+              <h2 id="deck-name" class="font-display font-bold text-2xl text-white truncate"></h2>
+              <p id="deck-sub" class="text-teal-50/90 text-sm mt-1"></p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button id="btn-rename" class="text-xs font-bold bg-white/15 hover:bg-white/25 text-white px-3 py-2 rounded-lg transition">Rename</button>
+              <button id="btn-delete-deck" class="text-xs font-bold bg-white/15 hover:bg-red-500 text-white px-3 py-2 rounded-lg transition">Delete</button>
+            </div>
+          </div>
+          <div id="box-strip" class="grid grid-cols-5 gap-2 mt-4"></div>
+        </div>
+
+        <div class="p-5 sm:p-6">
+          <div class="flex flex-wrap gap-2.5">
+            <button id="btn-study" class="btn-teal font-extrabold px-5 py-2.5 rounded-xl transition shadow">▶ Study now</button>
+            <button id="btn-toggle-add" class="font-bold px-5 py-2.5 rounded-xl border-2 transition" style="border-color:#F97316;color:#F97316">＋ Add card</button>
+            <button id="btn-io" class="font-bold px-5 py-2.5 rounded-xl border-2 border-stone-300 text-stone-600 hover:border-teal-700 hover:text-teal-800 transition">⇄ Import / Export</button>
+            <button id="btn-print" class="font-bold px-5 py-2.5 rounded-xl border-2 border-stone-300 text-stone-600 hover:border-teal-700 hover:text-teal-800 transition">🖨 Print</button>
+          </div>
+          <p id="study-hint" class="text-sm text-stone-500 mt-3"></p>
+
+          <!-- add card form -->
+          <div id="add-form" class="hidden mt-5 rounded-2xl p-5 border-2 border-dashed" style="border-color:#0F766E55;background:#0F766E08">
+            <h3 class="font-bold text-lg mb-3" style="color:#0F766E">New flashcard</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-bold uppercase tracking-wider text-stone-500" for="card-front">Front (question)</label>
+                <textarea id="card-front" rows="3" maxlength="2000" placeholder="e.g. What is the capital of Japan?"
+                  class="mt-1 w-full rounded-xl border-2 border-stone-200 px-3 py-2 text-sm focus:outline-none focus:border-teal-700"></textarea>
+              </div>
+              <div>
+                <label class="text-xs font-bold uppercase tracking-wider text-stone-500" for="card-back">Back (answer)</label>
+                <textarea id="card-back" rows="3" maxlength="2000" placeholder="e.g. Tokyo"
+                  class="mt-1 w-full rounded-xl border-2 border-stone-200 px-3 py-2 text-sm focus:outline-none focus:border-teal-700"></textarea>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mt-3">
+              <button id="btn-save-card" class="btn-teal font-bold px-6 py-2 rounded-xl transition">Save card</button>
+              <button id="btn-cancel-add" class="text-sm font-semibold text-stone-500 hover:text-stone-700">Cancel</button>
+              <p id="card-error" class="hidden text-xs font-semibold" style="color:#DC2626"></p>
+            </div>
+          </div>
+
+          <!-- edit card form -->
+          <div id="edit-form" class="hidden mt-5 rounded-2xl p-5 border-2 border-dashed" style="border-color:#F9731655;background:#F9731608">
+            <h3 class="font-bold text-lg mb-3" style="color:#F97316">Edit flashcard</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-bold uppercase tracking-wider text-stone-500" for="edit-front">Front (question)</label>
+                <textarea id="edit-front" rows="3" maxlength="2000" class="mt-1 w-full rounded-xl border-2 border-stone-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-500"></textarea>
+              </div>
+              <div>
+                <label class="text-xs font-bold uppercase tracking-wider text-stone-500" for="edit-back">Back (answer)</label>
+                <textarea id="edit-back" rows="3" maxlength="2000" class="mt-1 w-full rounded-xl border-2 border-stone-200 px-3 py-2 text-sm focus:outline-none focus:border-orange-500"></textarea>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mt-3">
+              <button id="btn-update-card" class="btn-coral font-bold px-6 py-2 rounded-xl transition">Update card</button>
+              <button id="btn-cancel-edit" class="text-sm font-semibold text-stone-500 hover:text-stone-700">Cancel</button>
+              <p id="edit-error" class="hidden text-xs font-semibold" style="color:#DC2626"></p>
+            </div>
+          </div>
+
+          <!-- cards list -->
+          <h3 class="font-bold text-lg mt-7 mb-3 flex items-center gap-2">
+            <span style="color:#0F766E">Cards</span>
+            <span id="card-count" class="text-xs font-bold bg-stone-100 text-stone-600 px-2.5 py-1 rounded-full">0</span>
+          </h3>
+          <div id="card-list" class="space-y-3"></div>
+          <div id="cards-empty" class="hidden text-center py-10 rounded-2xl border-2 border-dashed border-stone-200">
+            <div class="text-5xl mb-3">🃏</div>
+            <p class="font-semibold text-stone-600">This deck has no cards yet.</p>
+            <p class="text-sm text-stone-400 mt-1">Add your first card above, or import a CSV from Excel / Google Sheets.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- how it works strip -->
+  <div class="grid sm:grid-cols-3 gap-4 mt-8">
+    <div class="bg-white rounded-2xl p-5 card-shadow border border-stone-200/70">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black" style="background:#0F766E">1</div>
+      <h3 class="font-bold mt-3">Make decks &amp; cards</h3>
+      <p class="text-sm text-stone-500 mt-1">Create unlimited decks and add question/answer cards. Import from CSV or JSON in seconds.</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 card-shadow border border-stone-200/70">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black" style="background:#F97316">2</div>
+      <h3 class="font-bold mt-3">Study with Leitner boxes</h3>
+      <p class="text-sm text-stone-500 mt-1">Correct answers move cards to higher boxes with longer intervals; wrong answers drop back to Box 1.</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 card-shadow border border-stone-200/70">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black" style="background:#0F766E">3</div>
+      <h3 class="font-bold mt-3">Export, print, repeat</h3>
+      <p class="text-sm text-stone-500 mt-1">Back up as CSV or JSON, or print your deck for paper revision. Your data never leaves your browser.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ============ STUDY OVERLAY ============ -->
+<div id="study-overlay" class="no-print hidden fixed inset-0 z-50 overflow-y-auto" style="background:rgba(20,28,26,.92)">
+  <div class="min-h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-lg">
+      <div id="study-active">
+        <div class="flex items-center justify-between mb-3">
+          <span id="study-progress-label" class="text-cream text-sm font-bold" style="color:#FAF4E6">Card 1 of 10</span>
+          <button id="btn-end-study" class="text-sm font-bold px-3 py-1.5 rounded-lg transition" style="background:#ffffff22;color:#FAF4E6">✕ End session</button>
+        </div>
+        <div class="h-2.5 rounded-full bg-white/15 overflow-hidden mb-5">
+          <div id="study-progress" class="h-full rounded-full transition-all duration-300" style="width:0%;background:#F97316"></div>
+        </div>
+        <div id="study-boxes" class="flex gap-1.5 mb-5"></div>
+        <div id="flip-card" class="flip cursor-pointer select-none" style="height:300px">
+          <div class="flip-inner">
+            <div class="flip-face flex flex-col items-center justify-center text-center p-6 sm:p-8" style="background:#FAF4E6">
+              <span class="text-[11px] font-extrabold uppercase tracking-[0.2em] mb-3" style="color:#F97316">Question</span>
+              <p id="study-front" class="font-display font-bold text-2xl sm:text-3xl leading-snug"></p>
+              <span class="mt-5 text-xs font-semibold text-stone-400">Tap card to reveal answer ↻</span>
+            </div>
+            <div class="flip-face flip-back flex flex-col items-center justify-center text-center p-6 sm:p-8" style="background:#0F766E">
+              <span class="text-[11px] font-extrabold uppercase tracking-[0.2em] mb-3 text-teal-100">Answer</span>
+              <p id="study-back" class="font-display font-bold text-2xl sm:text-3xl leading-snug text-white"></p>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mt-5">
+          <button id="btn-wrong" disabled class="btn-coral font-extrabold py-3.5 rounded-2xl text-lg transition disabled:opacity-40 disabled:cursor-not-allowed shadow-lg">✗ Still learning</button>
+          <button id="btn-right" disabled class="btn-teal font-extrabold py-3.5 rounded-2xl text-lg transition disabled:opacity-40 disabled:cursor-not-allowed shadow-lg" style="background:#14968c">✓ I knew it</button>
+        </div>
+        <p class="text-center text-xs mt-4" style="color:#FAF4E699">Flip the card first, then grade yourself honestly.</p>
+      </div>
+      <div id="study-summary" class="hidden text-center rounded-3xl p-8" style="background:#FAF4E6">
+        <div class="text-6xl mb-4">🎉</div>
+        <h2 class="font-display font-black text-3xl" style="color:#0F766E">Session complete</h2>
+        <div class="grid grid-cols-3 gap-3 mt-6">
+          <div class="rounded-2xl bg-white p-4 card-shadow"><div id="sum-total" class="font-black text-3xl" style="color:#0F766E">0</div><div class="text-xs font-bold text-stone-500 uppercase tracking-wide mt-1">Reviewed</div></div>
+          <div class="rounded-2xl bg-white p-4 card-shadow"><div id="sum-right" class="font-black text-3xl" style="color:#0F766E">0</div><div class="text-xs font-bold text-stone-500 uppercase tracking-wide mt-1">Correct</div></div>
+          <div class="rounded-2xl bg-white p-4 card-shadow"><div id="sum-acc" class="font-black text-3xl" style="color:#F97316">0%</div><div class="text-xs font-bold text-stone-500 uppercase tracking-wide mt-1">Accuracy</div></div>
+        </div>
+        <p id="sum-note" class="text-sm text-stone-500 mt-5"></p>
+        <div class="flex flex-wrap justify-center gap-3 mt-6">
+          <button id="btn-again" class="btn-teal font-bold px-6 py-2.5 rounded-xl transition">Study again</button>
+          <button id="btn-back-desk" class="font-bold px-6 py-2.5 rounded-xl border-2 border-stone-300 text-stone-600 hover:border-teal-700 transition">Back to desk</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ IMPORT / EXPORT MODAL ============ -->
+<div id="io-modal" class="no-print hidden fixed inset-0 z-50 overflow-y-auto" style="background:rgba(20,28,26,.85)">
+  <div class="min-h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl rounded-3xl overflow-hidden card-shadow" style="background:#FAF4E6">
+      <div class="px-6 py-4 flex items-center justify-between" style="background:#0F766E">
+        <h2 class="font-display font-bold text-xl text-white">Import / Export</h2>
+        <button id="btn-io-close" class="text-white/80 hover:text-white text-2xl leading-none px-2">×</button>
+      </div>
+      <div class="p-6">
+        <div class="flex gap-2 mb-4">
+          <button id="tab-csv" class="font-bold text-sm px-5 py-2 rounded-xl transition">CSV</button>
+          <button id="tab-json" class="font-bold text-sm px-5 py-2 rounded-xl transition">JSON</button>
+        </div>
+        <p id="io-desc" class="text-sm text-stone-500 mb-3"></p>
+        <textarea id="io-text" rows="10" spellcheck="false"
+          class="w-full rounded-xl border-2 border-stone-200 px-4 py-3 text-xs font-mono focus:outline-none focus:border-teal-700 bg-white"></textarea>
+        <p id="io-error" class="hidden text-sm font-semibold mt-2" style="color:#DC2626"></p>
+        <p id="io-ok" class="hidden text-sm font-semibold mt-2" style="color:#0F766E"></p>
+        <div class="flex flex-wrap gap-2.5 mt-4">
+          <button id="btn-download" class="btn-teal font-bold px-5 py-2.5 rounded-xl transition text-sm">⬇ Download file</button>
+          <button id="btn-import" class="btn-coral font-bold px-5 py-2.5 rounded-xl transition text-sm">⬆ Import from text</button>
+          <button id="btn-export-all" class="font-bold px-5 py-2.5 rounded-xl border-2 border-stone-300 text-stone-600 hover:border-teal-700 transition text-sm">Export all decks (JSON)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- print-only view -->
+<div id="print-view" aria-hidden="true"></div>
+
+<!-- BOTTOM AD -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+<!-- ARTICLE_START -->
+<article class="no-print mx-auto max-w-4xl px-4 sm:px-6 py-12">
+  <div class="prose-like text-stone-700 leading-relaxed">
+    <h2 class="font-display font-black text-3xl sm:text-4xl mb-6" style="color:#0F766E">The Complete Guide to Flashcards, the Leitner System, and Spaced Repetition</h2>
+
+    <p class="mb-5">Flashcards are one of the oldest study tools in existence, and modern cognitive science keeps confirming what good students have always suspected: they work remarkably well. Whether you want to make flashcards online for a language exam, memorize anatomy terms, prepare for a job interview, or learn the capitals of the world, a well-built flashcard deck can move facts from shaky short-term memory into durable long-term knowledge. This guide explains why flashcards work, how the Leitner system turns a simple stack of cards into an intelligent spaced-repetition machine, and how to get the most out of a free flashcard maker like DeckDash.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">Why flashcards work: the science of active recall</h3>
+    <p class="mb-5">Most people study by re-reading notes or highlighting textbooks. Psychologists call this <em>passive review</em>, and decades of research show it is one of the least effective ways to learn. Flashcards force the opposite: <strong>active recall</strong>. When you look at the front of a card and try to produce the answer before flipping it, you are practicing retrieval — the exact skill you need in an exam, a conversation, or a real-world situation.</p>
+    <p class="mb-5">The <strong>testing effect</strong> is one of the most replicated findings in learning science: the act of trying to recall information strengthens the memory trace far more than simply seeing the information again. A famous 2011 study published in <em>Science</em> showed that students who practiced retrieval remembered significantly more a week later than students who spent the same time re-studying. Every time you flip a flashcard, you are running a tiny experiment on your own memory — and each successful retrieval makes the next one easier.</p>
+    <p class="mb-5">Flashcards also give you instant, honest feedback. There is no hiding behind a highlighted paragraph. You either knew the answer or you did not. That clarity is uncomfortable but powerful: it tells you exactly where to spend your next ten minutes of study time instead of wasting an hour on material you already know.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">The forgetting curve and spaced repetition</h3>
+    <p class="mb-5">In the 1880s, German psychologist Hermann Ebbinghaus discovered the <strong>forgetting curve</strong>: after learning something new, we forget it at a predictable, exponential rate. Within 24 hours, most people lose the majority of what they learned unless they review it. But Ebbinghaus also found the antidote. Each time you successfully recall information just as you are about to forget it, the forgetting curve flattens. The memory lasts longer, and the next review can wait even longer.</p>
+    <p class="mb-5">This is the principle of <strong>spaced repetition</strong>: review material at increasing intervals rather than all at once. Cramming the night before an exam produces a steep, fragile memory spike that collapses within days. Spacing the same total study time across days or weeks produces slower initial gains but far stronger long-term retention. Spaced repetition is not about studying more — it is about studying at the right moments.</p>
+    <p class="mb-5">The challenge has always been scheduling: which cards do you review today, and which can wait? Doing it by hand with paper cards is tedious. That is exactly the problem the Leitner system solves.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">What is the Leitner system?</h3>
+    <p class="mb-5">The Leitner system was invented in 1972 by German science journalist <strong>Sebastian Leitner</strong>, who described it in his book <em>So lernt man lernen</em> ("How to Learn to Learn"). It is beautifully simple. You sort your flashcards into a series of numbered boxes — traditionally five — and the box a card sits in determines how often you see it.</p>
+    <p class="mb-5">Every new card starts in <strong>Box 1</strong>. During a study session, you go through the cards that are due. If you answer a card correctly, it is <strong>promoted</strong> to the next box, where it will wait longer before its next review. If you answer incorrectly, it is <strong>demoted</strong> all the way back to Box 1, so you encounter it again soon. Cards you consistently know climb to the highest box and are reviewed rarely; cards you struggle with stay in the low boxes and get frequent practice.</p>
+    <p class="mb-5">In DeckDash, the intervals follow a classic Leitner schedule: Box 1 cards are reviewed <strong>daily</strong>, Box 2 every <strong>3 days</strong>, Box 3 every <strong>7 days</strong>, Box 4 every <strong>14 days</strong>, and Box 5 every <strong>30 days</strong>. Answer a Box 5 card correctly and it stays mastered with only a monthly check-in. Miss a Box 4 card and it drops straight back to daily practice until you truly know it. The system automatically concentrates your effort where it matters most — on the material you have not yet learned — instead of making you re-drill cards you already know cold.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">Leitner vs. other study methods</h3>
+    <p class="mb-5">How does the Leitner system compare with popular alternatives? Against <strong>cramming</strong>, there is no contest: cramming wins for a test tomorrow morning, but spaced repetition wins for anything you need to remember next month. Against <strong>re-reading notes</strong>, flashcards with Leitner scheduling win because they add active recall and honest self-testing on top of spacing.</p>
+    <p class="mb-5">Compared with algorithm-heavy systems like <strong>SM-2</strong> (the algorithm behind Anki and SuperMemo), Leitner is simpler and more transparent. SM-2 calculates a precise "easiness factor" per card and schedules reviews down to the day using a mathematical formula. It is powerful, but many learners find its scheduling opaque and its software intimidating. The Leitner box system achieves most of the benefit with a mental model anyone can grasp in thirty seconds: right answer, move up; wrong answer, back to box one. For most students, that simplicity means they actually stick with it — and consistency beats algorithmic perfection every time.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">How to make effective flashcards</h3>
+    <p class="mb-5">A spaced-repetition system is only as good as the cards you feed it. Follow these evidence-based rules and your decks will be dramatically more effective:</p>
+    <ul class="list-disc pl-6 mb-5 space-y-2">
+      <li><strong>One idea per card.</strong> "What are the three branches of the US government?" is a bad card — it tests three facts at once. Split it into three cards. Atomic cards give the Leitner system clean right/wrong signals.</li>
+      <li><strong>Ask questions, don't just label.</strong> "Mitochondria → powerhouse of the cell" is okay; "Which organelle produces most of the cell's ATP?" is better. Frame fronts as genuine questions.</li>
+      <li><strong>Keep cards short.</strong> If the front is a paragraph, you are testing reading comprehension, not memory. Aim for one sentence on the front and a few words on the back.</li>
+      <li><strong>Use concrete examples.</strong> Abstract definitions are hard to recall. Pair "opportunity cost" with a vivid example and the concept sticks.</li>
+      <li><strong>Make your own cards.</strong> The act of deciding what goes on the front and back is itself a powerful study session. Imported decks are convenient, but self-made cards win on retention.</li>
+      <li><strong>Add mnemonics and images.</strong> A silly mental image or acronym on the back of a card can rescue a stubborn fact that keeps falling back to Box 1.</li>
+    </ul>
+    <p class="mb-5">Equally important: <strong>grade yourself honestly</strong>. The Leitner system depends on accurate signals. If you peeked, hesitated for a minute, or got it "half right," mark it wrong. A card that drops to Box 1 costs you a few extra reviews; a card that undeservedly climbs to Box 5 costs you the knowledge.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">How to study flashcards online with DeckDash</h3>
+    <p class="mb-5">DeckDash is a free flashcard maker that runs entirely in your browser — no signup, no account, no paywall. Here is the workflow it was designed around:</p>
+    <ol class="list-decimal pl-6 mb-5 space-y-2">
+      <li><strong>Create a deck</strong> for each subject, chapter, or language. Deck names like "Biology – Chapter 4" keep things organized.</li>
+      <li><strong>Add cards</strong> with a front (question) and back (answer). Already have a list in Excel or Google Sheets? Export it as CSV and paste it into the Import panel — DeckDash handles quoted commas and multi-line text.</li>
+      <li><strong>Study the due cards.</strong> Click "Study now" and DeckDash shows only the cards whose review interval has elapsed, starting with Box 1. Tap the card to flip it with a 3D animation, then grade yourself: "I knew it" promotes the card, "Still learning" sends it back to Box 1.</li>
+      <li><strong>Watch the boxes fill.</strong> The box statistics strip shows your progress at a glance. Over days and weeks, cards migrate from Box 1 toward Box 5 as you master them.</li>
+      <li><strong>Back up and print.</strong> Export any deck as CSV or JSON for safekeeping, or hit Print for a clean paper layout of your cards.</li>
+    </ol>
+    <p class="mb-5">Because everything is stored in your browser's <strong>localStorage</strong>, your decks load instantly and work offline. Nothing is uploaded to a server, which means your study data is completely private. The trade-off is that your decks live on one device and browser, so use the JSON export regularly as a backup — it takes five seconds and protects weeks of work.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">Building a daily study habit</h3>
+    <p class="mb-5">The Leitner system rewards consistency more than marathon sessions. Studying <strong>due cards for 10–20 minutes a day</strong> beats a three-hour weekend cram for long-term retention. DeckDash makes this easy: the "due" count tells you exactly how much work is waiting, and most daily sessions are short because well-learned cards only surface every week or month.</p>
+    <p class="mb-5">A few habit tips from learning research: study at the same time each day to build a routine; tackle new cards when your energy is highest and save reviews for low-energy moments; and cap new cards per day (10–20 is plenty) so your future due queue stays manageable. If life interrupts you for a week, don't panic — just work through the backlog a little at a time. The Leitner system is forgiving: cards you truly knew will climb back up quickly.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">Who benefits from flashcards and spaced repetition?</h3>
+    <p class="mb-5"><strong>Language learners</strong> were the original power users: vocabulary is the perfect flashcard material, and Leitner intervals mirror how words fade without practice. <strong>Medical and nursing students</strong> use spaced repetition for anatomy, pharmacology, and pathology — fields where the volume of facts overwhelms any other method. <strong>Law and bar-exam candidates</strong> drill doctrines and case holdings. <strong>Programmers</strong> memorize syntax, keyboard shortcuts, and system-design concepts. <strong>Job seekers</strong> rehearse interview questions and answers. Even <strong>trivia lovers</strong> and <strong>exam prep for school subjects</strong> like history dates, chemistry formulas, and math identities fit the format perfectly.</p>
+    <p class="mb-5">In short: if it can be phrased as a question with a definite answer, it belongs on a flashcard. And if you want to remember it for longer than a week, it belongs in a Leitner box system rather than a static list.</p>
+
+    <h3 class="font-display font-bold text-2xl mt-10 mb-4" style="color:#0F766E">Flashcards without signup: why it matters</h3>
+    <p class="mb-5">Many flashcard apps without signup are rare — most demand an account before you can create a single card, then lock features like import, export, or printing behind subscriptions. DeckDash takes the opposite approach: every feature is available the moment the page loads. For students on shared computers, in classrooms, or in regions where creating accounts is a hassle, a no-signup flashcard app removes the last bit of friction between "I should study" and actually studying.</p>
+    <p class="mb-5">Start today: create a deck, add ten cards, and run your first study session. Then come back tomorrow and notice how the Leitner system already knows which cards you need to see. That quiet, automatic prioritization — showing you the right card at the right time — is the entire magic of spaced repetition, and it is free, unlimited, and waiting on your study desk above.</p>
+  </div>
+</article>
+<!-- ARTICLE_END -->
+
+<section class="no-print mx-auto max-w-4xl px-4 sm:px-6 pb-14">
+  <h2 class="font-display font-black text-3xl mb-6 text-center" style="color:#0F766E">Frequently Asked Questions</h2>
+  <div class="space-y-3" id="faq-list">
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">Is DeckDash really free? Do I need to sign up?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">Yes — DeckDash is completely free with unlimited decks and unlimited cards. There is no signup, no account, no paywall, and no watermark. Everything runs in your browser and your data is stored in your browser's local storage.</p>
+    </details>
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">What is the Leitner system and how does it work in DeckDash?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">The Leitner system, invented by Sebastian Leitner in 1972, sorts flashcards into numbered boxes. Every card starts in Box 1. When you answer correctly during a study session, the card moves to the next box and is reviewed less often (after 1, 3, 7, 14, and 30 days). When you answer incorrectly, the card drops back to Box 1 so you see it again soon. DeckDash automates this entire process.</p>
+    </details>
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">How do I import flashcards from Excel or Google Sheets?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">Export your spreadsheet as a CSV file with two columns (front, back), open DeckDash, choose a deck, click Import / Export, paste the CSV text, and click Import. DeckDash also imports and exports JSON, so you can back up your whole library and move it between devices.</p>
+    </details>
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">Where is my flashcard data stored? Is it private?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">Your decks and cards are stored only in your own browser's localStorage on your device. Nothing is uploaded to any server, so your study data stays completely private. Use the JSON export feature to create backups.</p>
+    </details>
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">Can I print my flashcards from DeckDash?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">Yes. Open any deck and click the Print button. DeckDash generates a clean, print-friendly layout of all your cards with front and back sides, ready to cut out or review on paper.</p>
+    </details>
+    <details class="faq-item bg-white rounded-2xl card-shadow border border-stone-200/70 px-5 py-4">
+      <summary class="font-bold cursor-pointer" style="color:#0F766E">How often should I study a deck, and what does "due" mean?</summary>
+      <p class="text-sm text-stone-600 mt-2 leading-relaxed">A card becomes "due" when its scheduled review interval has passed. Box 1 cards are due daily, while cards in higher boxes wait 3, 7, 14, or 30 days. Studying just your due cards each day — usually 10 to 20 minutes — is the most efficient way to lock knowledge into long-term memory.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="no-print border-t border-stone-200/70 py-8" style="background:#0F766E">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <span class="font-display font-black text-xl text-white">DeckDash</span>
+    <p class="text-sm text-teal-100/80 text-center">Free flashcard maker with Leitner spaced repetition. Your data never leaves your browser.</p>
+    <nav class="flex gap-4 text-sm font-semibold">
+      <a href="#top" class="text-teal-100/80 hover:text-white">Home</a>
+      <a href="https://fixoraa.tech" class="text-teal-100/80 hover:text-white">More Tools</a>
+    </nav>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<script>
+/*__PURE_START__*/
+
+/* DeckDash pure logic library — no DOM, no localStorage, no network.
+ * Inlined verbatim into deckdash.html at build time between
+ * __PURE_START__ / __PURE_END__ markers so Node tests exercise the
+ * actually-shipped code.
+ */
+'use strict';
+
+var DAY_MS = 86400000;
+var MAX_BOX = 5;
+var BOX_INTERVAL_DAYS = { 1: 1, 2: 3, 3: 7, 4: 14, 5: 30 };
+var MAX_NAME_LEN = 80;
+var MAX_CARD_LEN = 2000;
+
+var _idCounter = 0;
+function newId() {
+  _idCounter += 1;
+  return 'dd' + Date.now().toString(36) + '-' + _idCounter.toString(36) +
+    Math.floor(Math.random() * 1296).toString(36);
+}
+
+function normalizeText(s) {
+  return String(s == null ? '' : s).replace(/\r\n?/g, '\n').trim();
+}
+
+function validateDeckName(name) {
+  var t = normalizeText(name);
+  if (!t) return 'Deck name cannot be empty.';
+  if (t.length > MAX_NAME_LEN) return 'Deck name must be ' + MAX_NAME_LEN + ' characters or less.';
+  return null;
+}
+
+/* ---------- deck CRUD ---------- */
+
+function newDeck(name) {
+  var err = validateDeckName(name);
+  if (err) throw new Error(err);
+  var now = Date.now();
+  return { id: newId(), name: normalizeText(name), cards: [], createdAt: now, updatedAt: now };
+}
+
+function renameDeck(deck, name) {
+  var err = validateDeckName(name);
+  if (err) throw new Error(err);
+  deck.name = normalizeText(name);
+  deck.updatedAt = Date.now();
+  return deck;
+}
+
+function removeDeck(decks, id) {
+  for (var i = 0; i < decks.length; i++) {
+    if (decks[i].id === id) { decks.splice(i, 1); return true; }
+  }
+  return false;
+}
+
+function findDeck(decks, id) {
+  for (var i = 0; i < decks.length; i++) {
+    if (decks[i].id === id) return decks[i];
+  }
+  return null;
+}
+
+/* ---------- card CRUD ---------- */
+
+function newCard(front, back) {
+  var f = normalizeText(front);
+  var b = normalizeText(back);
+  if (!f) throw new Error('Card front text is required.');
+  if (!b) throw new Error('Card back text is required.');
+  if (f.length > MAX_CARD_LEN || b.length > MAX_CARD_LEN) {
+    throw new Error('Card text must be ' + MAX_CARD_LEN + ' characters or less.');
+  }
+  return { id: newId(), front: f, back: b, box: 1, reps: 0, nextReview: 0, createdAt: Date.now() };
+}
+
+function addCardToDeck(deck, front, back) {
+  var c = newCard(front, back);
+  deck.cards.push(c);
+  deck.updatedAt = Date.now();
+  return c;
+}
+
+function findCard(deck, id) {
+  for (var i = 0; i < deck.cards.length; i++) {
+    if (deck.cards[i].id === id) return deck.cards[i];
+  }
+  return null;
+}
+
+function updateCard(card, front, back) {
+  var f = normalizeText(front);
+  var b = normalizeText(back);
+  if (!f) throw new Error('Card front text is required.');
+  if (!b) throw new Error('Card back text is required.');
+  if (f.length > MAX_CARD_LEN || b.length > MAX_CARD_LEN) {
+    throw new Error('Card text must be ' + MAX_CARD_LEN + ' characters or less.');
+  }
+  card.front = f;
+  card.back = b;
+  return card;
+}
+
+function removeCardFromDeck(deck, id) {
+  for (var i = 0; i < deck.cards.length; i++) {
+    if (deck.cards[i].id === id) { deck.cards.splice(i, 1); deck.updatedAt = Date.now(); return true; }
+  }
+  return false;
+}
+
+/* ---------- Leitner spaced repetition ---------- */
+
+function boxIntervalDays(box) {
+  var b = Math.max(1, Math.min(MAX_BOX, Math.floor(box) || 1));
+  return BOX_INTERVAL_DAYS[b];
+}
+
+/* correct -> advance one box (max 5), schedule next review.
+ * wrong   -> back to box 1, due again now. */
+function gradeCard(card, correct, now) {
+  if (now == null) now = Date.now();
+  if (correct) {
+    card.box = Math.min(MAX_BOX, (card.box || 1) + 1);
+    card.reps = (card.reps || 0) + 1;
+    card.nextReview = now + boxIntervalDays(card.box) * DAY_MS;
+  } else {
+    card.box = 1;
+    card.nextReview = now;
+  }
+  card.lastGradedAt = now;
+  return card;
+}
+
+function isDue(card, now) {
+  if (now == null) now = Date.now();
+  return (card.nextReview || 0) <= now;
+}
+
+/* Due cards, box 1 first (they need the most practice), then oldest. */
+function dueCards(deck, now) {
+  if (now == null) now = Date.now();
+  return deck.cards
+    .filter(function (c) { return isDue(c, now); })
+    .sort(function (a, b) { return ((a.box || 1) - (b.box || 1)) || (a.createdAt - b.createdAt); });
+}
+
+function boxStats(deck, now) {
+  if (now == null) now = Date.now();
+  var s = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, total: 0, due: 0 };
+  deck.cards.forEach(function (c) {
+    var b = Math.max(1, Math.min(MAX_BOX, c.box || 1));
+    s[String(b)] += 1;
+    s.total += 1;
+    if (isDue(c, now)) s.due += 1;
+  });
+  return s;
+}
+
+function deckSummary(deck, now) {
+  if (now == null) now = Date.now();
+  var st = boxStats(deck, now);
+  var next = null;
+  deck.cards.forEach(function (c) {
+    if (!isDue(c, now) && (next == null || c.nextReview < next)) next = c.nextReview;
+  });
+  return {
+    total: st.total, due: st.due,
+    boxes: { 1: st['1'], 2: st['2'], 3: st['3'], 4: st['4'], 5: st['5'] },
+    nextDueAt: next
+  };
+}
+
+function dueLabel(nextDueAt, now) {
+  if (now == null) now = Date.now();
+  if (nextDueAt == null) return 'Nothing scheduled';
+  var ms = nextDueAt - now;
+  if (ms <= 0) return 'Due now';
+  var mins = Math.round(ms / 60000);
+  if (mins < 60) return 'Due in ' + mins + ' min' + (mins === 1 ? '' : 's');
+  var hrs = Math.round(mins / 60);
+  if (hrs < 48) return 'Due in ' + hrs + ' hour' + (hrs === 1 ? '' : 's');
+  var days = Math.round(hrs / 24);
+  return 'Due in ' + days + ' day' + (days === 1 ? '' : 's');
+}
+
+function sessionSummary(results) {
+  var right = 0;
+  results.forEach(function (r) { if (r.correct) right += 1; });
+  var total = results.length;
+  return {
+    total: total, right: right, wrong: total - right,
+    accuracy: total ? Math.round((100 * right) / total) : 0
+  };
+}
+
+/* ---------- CSV ---------- */
+
+function csvEscape(field) {
+  var s = String(field == null ? '' : field);
+  if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+/* Small RFC-4180-ish parser: quoted fields, escaped quotes, embedded newlines. */
+function parseCSV(text) {
+  var t = String(text == null ? '' : text).replace(/^\uFEFF/, '');
+  var rows = [], row = [], field = '', inQuotes = false;
+  for (var i = 0; i < t.length; i++) {
+    var ch = t[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (t[i + 1] === '"') { field += '"'; i += 1; }
+        else inQuotes = false;
+      } else {
+        field += ch;
+      }
+    } else if (ch === '"') {
+      inQuotes = true;
+    } else if (ch === ',') {
+      row.push(field); field = '';
+    } else if (ch === '\n') {
+      row.push(field); rows.push(row); row = []; field = '';
+    } else if (ch === '\r') {
+      /* handled by \n */
+    } else {
+      field += ch;
+    }
+  }
+  row.push(field);
+  rows.push(row);
+  if (rows.length && rows[rows.length - 1].length === 1 && rows[rows.length - 1][0] === '') rows.pop();
+  return rows;
+}
+
+function looksLikeHeader(row) {
+  if (!row || row.length < 2) return false;
+  var a = row[0].trim().toLowerCase();
+  var b = row[1].trim().toLowerCase();
+  var fronts = ['front', 'question', 'term', 'word'];
+  var backs = ['back', 'answer', 'definition', 'meaning'];
+  return fronts.indexOf(a) !== -1 && backs.indexOf(b) !== -1;
+}
+
+function cardsToCSV(cards) {
+  var lines = ['front,back,box'];
+  cards.forEach(function (c) {
+    lines.push(csvEscape(c.front) + ',' + csvEscape(c.back) + ',' + csvEscape(c.box || 1));
+  });
+  return lines.join('\n');
+}
+
+/* Import rows -> card-shaped data (box clamped 1..5). Skips blank/invalid rows. */
+function csvToCards(text) {
+  var rows = parseCSV(text);
+  if (rows.length && looksLikeHeader(rows[0])) rows = rows.slice(1);
+  var cards = [];
+  rows.forEach(function (r) {
+    var front = normalizeText(r[0] || '');
+    var back = normalizeText(r[1] || '');
+    if (!front && !back) return;
+    var box = parseInt(r[2], 10);
+    if (!(box >= 1 && box <= MAX_BOX)) box = 1;
+    try {
+      var c = newCard(front, back);
+      c.box = box;
+      cards.push(c);
+    } catch (e) { /* skip invalid row */ }
+  });
+  return cards;
+}
+
+/* ---------- JSON ---------- */
+
+function plainCard(c) {
+  return {
+    front: c.front, back: c.back, box: c.box || 1,
+    reps: c.reps || 0, nextReview: c.nextReview || 0, createdAt: c.createdAt
+  };
+}
+
+function deckToJSON(deck) {
+  return JSON.stringify({ app: 'DeckDash', version: 1, deck: { name: deck.name, cards: deck.cards.map(plainCard) } }, null, 2);
+}
+
+function libraryToJSON(decks) {
+  return JSON.stringify({
+    app: 'DeckDash', version: 1,
+    decks: decks.map(function (d) { return { name: d.name, cards: d.cards.map(plainCard) }; })
+  }, null, 2);
+}
+
+function hydrateCard(rc) {
+  if (!rc || typeof rc.front !== 'string' || typeof rc.back !== 'string') return null;
+  try {
+    var c = newCard(rc.front, rc.back);
+    var box = parseInt(rc.box, 10);
+    c.box = (box >= 1 && box <= MAX_BOX) ? box : 1;
+    c.reps = Math.max(0, parseInt(rc.reps, 10) || 0);
+    c.nextReview = Math.max(0, Number(rc.nextReview) || 0);
+    if (rc.createdAt) c.createdAt = Number(rc.createdAt) || c.createdAt;
+    return c;
+  } catch (e) {
+    return null;
+  }
+}
+
+function hydrateDeck(d) {
+  if (!d || typeof d.name !== 'string') throw new Error('Deck is missing a name.');
+  if (!Array.isArray(d.cards)) throw new Error('Deck "' + d.name + '" has no cards array.');
+  var deck = newDeck(d.name);
+  d.cards.forEach(function (rc) {
+    var c = hydrateCard(rc);
+    if (c) deck.cards.push(c);
+  });
+  return deck;
+}
+
+/* Accepts single-deck JSON ({deck:{...}} or bare {name,cards}) or a
+ * library JSON ({decks:[...]}). Returns an array of deck objects. */
+function importJSON(text) {
+  var obj;
+  try { obj = JSON.parse(text); }
+  catch (e) { throw new Error('Invalid JSON: ' + e.message); }
+  if (!obj || typeof obj !== 'object') throw new Error('JSON does not contain an object.');
+  if (Array.isArray(obj.decks)) {
+    var decks = obj.decks.map(hydrateDeck);
+    if (!decks.length) throw new Error('Library JSON contains no decks.');
+    return decks;
+  }
+  var d = obj.deck ? obj.deck : obj;
+  return [hydrateDeck(d)];
+}
+
+/* ---------- misc ---------- */
+
+function sampleDeck() {
+  var d = newDeck('Sample: World Capitals');
+  var pairs = [
+    ['France', 'Paris'],
+    ['Japan', 'Tokyo'],
+    ['Brazil', 'Brasília'],
+    ['Canada', 'Ottawa'],
+    ['Egypt', 'Cairo'],
+    ['Australia', 'Canberra']
+  ];
+  pairs.forEach(function (p) { addCardToDeck(d, p[0], p[1]); });
+  return d;
+}
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+
+/*__PURE_END__*/
+</script>
+<script>
+/* DeckDash app shell — DOM, localStorage, study session. Not part of pure tests. */
+(function () {
+'use strict';
+
+var LS_KEY = 'deckdash-library-v1';
+var BOX_LABELS = { 1: 'Daily', 2: 'Every 3 days', 3: 'Every 7 days', 4: 'Every 14 days', 5: 'Every 30 days' };
+var BOX_COLORS = { 1: '#F97316', 2: '#E8933C', 3: '#C9A44A', 4: '#3D9A92', 5: '#0F766E' };
+
+var decks = [];
+var activeDeckId = null;
+var editingCardId = null;
+var ioFormat = 'csv';
+var sess = null;
+
+function $(id) { return document.getElementById(id); }
+function now() { return Date.now(); }
+function activeDeck() { return findDeck(decks, activeDeckId); }
+
+/* ---------- persistence ---------- */
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(decks)); } catch (e) { /* storage full/blocked */ }
+}
+function load() {
+  try {
+    var raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      var arr = JSON.parse(raw);
+      if (Array.isArray(arr)) {
+        decks = arr.filter(function (d) { return d && typeof d.name === 'string' && Array.isArray(d.cards); });
+        decks.forEach(function (d) {
+          d.cards = d.cards.filter(function (c) { return c && typeof c.front === 'string' && typeof c.back === 'string'; });
+          d.cards.forEach(function (c) {
+            c.box = Math.max(1, Math.min(5, c.box || 1));
+            c.reps = c.reps || 0; c.nextReview = c.nextReview || 0;
+            if (!c.id) c.id = newId();
+          });
+          if (!d.id) d.id = newId();
+        });
+      }
+    }
+  } catch (e) { decks = []; }
+  if (!decks.length) { decks = [sampleDeck()]; save(); }
+  if (!findDeck(decks, activeDeckId)) activeDeckId = decks[0].id;
+}
+
+/* ---------- rendering ---------- */
+function boxBadge(b) {
+  return '<span class="text-[11px] font-extrabold uppercase tracking-wider text-white px-2 py-1 rounded-lg" style="background:' + BOX_COLORS[b] + '">Box ' + b + '</span>';
+}
+
+function renderDeckList() {
+  var list = $('deck-list');
+  list.innerHTML = '';
+  if (!decks.length) {
+    list.innerHTML = '<p class="text-sm text-stone-400 text-center py-6">No decks yet.<br>Create one below.</p>';
+  }
+  decks.forEach(function (d) {
+    var s = deckSummary(d, now());
+    var btn = document.createElement('button');
+    btn.className = 'w-full text-left rounded-xl px-3.5 py-3 border-2 transition ' +
+      (d.id === activeDeckId ? 'border-teal-700 bg-teal-50 shadow-sm' : 'border-stone-200 bg-white hover:border-teal-600');
+    btn.innerHTML =
+      '<div class="font-bold text-sm truncate" style="color:#27312F">' + escapeHtml(d.name) + '</div>' +
+      '<div class="text-xs mt-1 ' + (s.due > 0 ? 'font-bold' : 'text-stone-400') + '" ' +
+      (s.due > 0 ? 'style="color:#F97316"' : '') + '>' +
+      s.total + ' card' + (s.total === 1 ? '' : 's') + ' · ' + s.due + ' due</div>';
+    btn.onclick = (function (id) { return function () { activeDeckId = id; editingCardId = null; renderAll(); }; })(d.id);
+    list.appendChild(btn);
+  });
+  $('deck-count').textContent = decks.length;
+}
+
+function renderBoxStrip() {
+  var d = activeDeck();
+  var strip = $('box-strip');
+  strip.innerHTML = '';
+  if (!d) return;
+  var s = deckSummary(d, now());
+  for (var b = 1; b <= 5; b++) {
+    var cell = document.createElement('div');
+    cell.className = 'rounded-xl bg-white/95 px-2 py-2.5 text-center shadow-sm';
+    cell.innerHTML =
+      '<div class="text-[10px] font-extrabold uppercase tracking-wider" style="color:' + BOX_COLORS[b] + '">Box ' + b + '</div>' +
+      '<div class="font-black text-xl leading-tight" style="color:#27312F">' + s.boxes[b] + '</div>' +
+      '<div class="text-[10px] text-stone-500 leading-tight">' + BOX_LABELS[b] + '</div>';
+    strip.appendChild(cell);
+  }
+}
+
+function renderDeckView() {
+  var d = activeDeck();
+  var empty = $('deck-empty'), view = $('deck-view');
+  if (!d) { empty.classList.remove('hidden'); view.classList.add('hidden'); return; }
+  empty.classList.add('hidden'); view.classList.remove('hidden');
+
+  $('deck-name').textContent = d.name;
+  var s = deckSummary(d, now());
+  var sub = s.total + ' card' + (s.total === 1 ? '' : 's') + ' · ' + s.due + ' due now';
+  if (s.due === 0 && s.total > 0) sub += ' · next review ' + dueLabel(s.nextDueAt, now()).replace('Due in ', 'in ').replace('Due now', 'now');
+  $('deck-sub').textContent = sub;
+  renderBoxStrip();
+
+  $('btn-study').innerHTML = s.due > 0
+    ? '▶ Study now (' + s.due + ' due)'
+    : '▶ Study now';
+  $('study-hint').textContent = s.total === 0
+    ? 'Add cards to this deck to start studying with the Leitner system.'
+    : (s.due > 0
+        ? s.due + ' card' + (s.due === 1 ? ' is' : 's are') + ' due for review. Cards you miss drop back to Box 1; cards you know climb to higher boxes.'
+        : 'All caught up! ' + (s.nextDueAt ? 'Next review ' + dueLabel(s.nextDueAt, now()).toLowerCase() + '.' : ''));
+
+  $('card-count').textContent = s.total;
+  var list = $('card-list');
+  list.innerHTML = '';
+  $('cards-empty').classList.toggle('hidden', s.total > 0);
+  d.cards.forEach(function (c) {
+    var due = isDue(c, now());
+    var row = document.createElement('div');
+    row.className = 'rounded-xl border-2 border-stone-200 bg-white p-4 hover:border-teal-600 transition';
+    row.innerHTML =
+      '<div class="flex items-center justify-between gap-2 mb-2">' +
+        '<div class="flex items-center gap-2">' + boxBadge(Math.max(1, Math.min(5, c.box || 1))) +
+        (due ? '<span class="text-[11px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-lg bg-orange-100" style="color:#F97316">Due</span>' : '') +
+        '</div>' +
+        '<div class="flex gap-1.5 shrink-0">' +
+          '<button data-act="edit" data-id="' + c.id + '" class="text-xs font-bold px-2.5 py-1.5 rounded-lg border border-stone-300 text-stone-500 hover:border-teal-700 hover:text-teal-800 transition">Edit</button>' +
+          '<button data-act="del" data-id="' + c.id + '" class="text-xs font-bold px-2.5 py-1.5 rounded-lg border border-stone-300 text-stone-500 hover:border-red-500 hover:text-red-600 transition">Delete</button>' +
+        '</div>' +
+      '</div>' +
+      '<p class="font-semibold text-sm whitespace-pre-wrap break-words">' + escapeHtml(c.front) + '</p>' +
+      '<p class="text-sm text-stone-500 mt-1 whitespace-pre-wrap break-words">' + escapeHtml(c.back) + '</p>';
+    list.appendChild(row);
+  });
+}
+
+function renderAll() { renderDeckList(); renderDeckView(); }
+
+/* ---------- deck actions ---------- */
+function showDeckError(msg) {
+  var el = $('deck-error');
+  if (!msg) { el.classList.add('hidden'); return; }
+  el.textContent = msg; el.classList.remove('hidden');
+}
+function addDeck() {
+  var input = $('new-deck-name');
+  try {
+    var d = newDeck(input.value);
+    decks.push(d); activeDeckId = d.id; editingCardId = null;
+    input.value = ''; showDeckError(null); save(); renderAll();
+  } catch (e) { showDeckError(e.message); }
+}
+function deleteActiveDeck() {
+  var d = activeDeck();
+  if (!d) return;
+  if (!confirm('Delete deck "' + d.name + '" and all its ' + d.cards.length + ' cards? This cannot be undone.')) return;
+  removeDeck(decks, d.id);
+  activeDeckId = decks.length ? decks[0].id : null;
+  editingCardId = null; save(); renderAll();
+}
+function renameActiveDeck() {
+  var d = activeDeck();
+  if (!d) return;
+  var h = $('deck-name');
+  var input = document.createElement('input');
+  input.value = d.name; input.maxLength = 80;
+  input.className = 'font-display font-bold text-2xl text-white bg-white/15 rounded-lg px-2 py-1 w-full max-w-xs focus:outline-none';
+  var done = false;
+  function commit(saveIt) {
+    if (done) return; done = true;
+    if (saveIt) {
+      try { renameDeck(d, input.value); save(); }
+      catch (e) { alert(e.message); }
+    }
+    renderAll();
+  }
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') commit(true);
+    if (e.key === 'Escape') commit(false);
+  });
+  input.addEventListener('blur', function () { commit(true); });
+  h.textContent = ''; h.appendChild(input);
+  input.focus(); input.select();
+}
+
+/* ---------- card actions ---------- */
+function showCardError(elId, msg) {
+  var el = $(elId);
+  if (!msg) { el.classList.add('hidden'); return; }
+  el.textContent = msg; el.classList.remove('hidden');
+}
+function saveNewCard() {
+  var d = activeDeck();
+  if (!d) return;
+  try {
+    addCardToDeck(d, $('card-front').value, $('card-back').value);
+    $('card-front').value = ''; $('card-back').value = '';
+    showCardError('card-error', null); save(); renderAll();
+    $('card-front').focus();
+  } catch (e) { showCardError('card-error', e.message); }
+}
+function openEditForm(id) {
+  var d = activeDeck();
+  var c = d && findCard(d, id);
+  if (!c) return;
+  editingCardId = id;
+  $('edit-front').value = c.front; $('edit-back').value = c.back;
+  showCardError('edit-error', null);
+  $('edit-form').classList.remove('hidden');
+  $('edit-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  $('edit-front').focus();
+}
+function saveEditCard() {
+  var d = activeDeck();
+  var c = d && findCard(d, editingCardId);
+  if (!c) return;
+  try {
+    updateCard(c, $('edit-front').value, $('edit-back').value);
+    editingCardId = null;
+    $('edit-form').classList.add('hidden');
+    showCardError('edit-error', null); save(); renderAll();
+  } catch (e) { showCardError('edit-error', e.message); }
+}
+function deleteCard(id) {
+  var d = activeDeck();
+  if (!d) return;
+  if (!confirm('Delete this card?')) return;
+  removeCardFromDeck(d, id);
+  if (editingCardId === id) { editingCardId = null; $('edit-form').classList.add('hidden'); }
+  save(); renderAll();
+}
+
+/* ---------- study session ---------- */
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+function startStudy() {
+  var d = activeDeck();
+  if (!d || !d.cards.length) return;
+  var queue = shuffle(dueCards(d, now()).slice());
+  if (!queue.length) {
+    var s = deckSummary(d, now());
+    $('study-hint').textContent = 'All caught up! ' + (s.nextDueAt ? 'Next review ' + dueLabel(s.nextDueAt, now()).toLowerCase() + '.' : '');
+    $('study-hint').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  sess = { deckId: d.id, queue: queue, idx: 0, results: [], requeued: {}, flipped: false };
+  $('study-active').classList.remove('hidden');
+  $('study-summary').classList.add('hidden');
+  $('study-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderStudyCard();
+}
+function renderStudyCard() {
+  var card = sess.queue[sess.idx];
+  sess.flipped = false;
+  $('flip-card').classList.remove('flipped');
+  $('study-front').textContent = card.front;
+  $('study-back').textContent = card.back;
+  $('btn-wrong').disabled = true;
+  $('btn-right').disabled = true;
+  var total = sess.queue.length;
+  $('study-progress-label').textContent = 'Card ' + (sess.idx + 1) + ' of ' + total;
+  $('study-progress').style.width = Math.round((100 * sess.idx) / total) + '%';
+  var d = findDeck(decks, sess.deckId);
+  var boxes = $('study-boxes');
+  boxes.innerHTML = '';
+  if (d) {
+    var s = deckSummary(d, now());
+    for (var b = 1; b <= 5; b++) {
+      var pill = document.createElement('div');
+      pill.className = 'flex-1 rounded-lg text-center py-1.5 text-[11px] font-extrabold text-white';
+      pill.style.background = BOX_COLORS[b];
+      pill.style.opacity = s.boxes[b] > 0 ? '1' : '0.35';
+      pill.textContent = 'B' + b + ' · ' + s.boxes[b];
+      pill.title = 'Box ' + b + ': ' + s.boxes[b] + ' cards (' + BOX_LABELS[b] + ')';
+      boxes.appendChild(pill);
+    }
+  }
+}
+function flipCard() {
+  if (!sess || sess.flipped) return;
+  sess.flipped = true;
+  $('flip-card').classList.add('flipped');
+  $('btn-wrong').disabled = false;
+  $('btn-right').disabled = false;
+}
+function gradeCurrent(correct) {
+  if (!sess || !sess.flipped) return;
+  var card = sess.queue[sess.idx];
+  gradeCard(card, correct, now());
+  sess.results.push({ correct: correct });
+  if (!correct && !sess.requeued[card.id] && sess.queue.length < 200) {
+    sess.requeued[card.id] = true;
+    sess.queue.push(card); /* classic Leitner: missed cards return later in this session */
+  }
+  save();
+  sess.idx += 1;
+  if (sess.idx >= sess.queue.length) endSession();
+  else renderStudyCard();
+}
+function endSession() {
+  var sum = sessionSummary(sess.results);
+  $('sum-total').textContent = sum.total;
+  $('sum-right').textContent = sum.right;
+  $('sum-acc').textContent = sum.accuracy + '%';
+  $('sum-note').textContent = sum.accuracy === 100
+    ? 'Flawless! Every card moves up a Leitner box.'
+    : (sum.accuracy >= 70
+        ? 'Good work. Missed cards dropped back to Box 1 for extra practice.'
+        : 'Tough session — the Leitner system will keep those cards in Box 1 until they stick. Keep going!');
+  $('study-active').classList.add('hidden');
+  $('study-summary').classList.remove('hidden');
+  sess = null;
+  renderAll();
+}
+function closeStudy() {
+  sess = null;
+  $('study-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+  renderAll();
+}
+
+/* ---------- import / export ---------- */
+function openIO() {
+  var d = activeDeck();
+  if (!d) return;
+  ioFormat = 'csv';
+  syncIOTabs();
+  refreshIOText();
+  $('io-error').classList.add('hidden');
+  $('io-ok').classList.add('hidden');
+  $('io-modal').classList.remove('hidden');
+}
+function syncIOTabs() {
+  var on = 'font-bold text-sm px-5 py-2 rounded-xl transition text-white';
+  var off = 'font-bold text-sm px-5 py-2 rounded-xl transition bg-stone-200 text-stone-600 hover:bg-stone-300';
+  $('tab-csv').className = ioFormat === 'csv' ? on : off;
+  $('tab-json').className = ioFormat === 'json' ? on : off;
+  if (ioFormat === 'csv') $('tab-csv').style.background = '#0F766E';
+  else $('tab-csv').style.background = '';
+  if (ioFormat === 'json') $('tab-json').style.background = '#0F766E';
+  else $('tab-json').style.background = '';
+  $('io-desc').textContent = ioFormat === 'csv'
+    ? 'CSV with columns front, back, box. Paste spreadsheet data below to import, or copy what is here as a backup.'
+    : 'JSON backup of this deck. Paste DeckDash JSON below to import, or copy what is here as a backup.';
+  $('btn-download').textContent = ioFormat === 'csv' ? '⬇ Download .csv' : '⬇ Download .json';
+}
+function refreshIOText() {
+  var d = activeDeck();
+  if (!d) return;
+  $('io-text').value = ioFormat === 'csv' ? cardsToCSV(d.cards) : deckToJSON(d);
+}
+function ioMessage(okId, errId, msg) {
+  var okEl = $(okId), errEl = $(errId);
+  if (!msg) { okEl.classList.add('hidden'); errEl.classList.add('hidden'); return; }
+  if (msg.ok) { okEl.textContent = msg.text; okEl.classList.remove('hidden'); errEl.classList.add('hidden'); }
+  else { errEl.textContent = msg.text; errEl.classList.remove('hidden'); okEl.classList.add('hidden'); }
+}
+function downloadFile(filename, text, mime) {
+  var blob = new Blob([text], { type: mime });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+}
+function safeFilename(name) {
+  return String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'deck';
+}
+function doDownload() {
+  var d = activeDeck();
+  if (!d) return;
+  var base = safeFilename(d.name);
+  if (ioFormat === 'csv') downloadFile(base + '.csv', cardsToCSV(d.cards), 'text/csv');
+  else downloadFile(base + '.json', deckToJSON(d), 'application/json');
+  ioMessage('io-ok', 'io-error', { ok: true, text: 'Download started.' });
+}
+function doImport() {
+  var d = activeDeck();
+  if (!d) return;
+  var text = $('io-text').value;
+  try {
+    if (ioFormat === 'csv') {
+      var cards = csvToCards(text);
+      if (!cards.length) throw new Error('No valid cards found. Need at least a front and back per row.');
+      cards.forEach(function (c) { d.cards.push(c); });
+      d.updatedAt = now(); save(); renderAll(); refreshIOText();
+      ioMessage('io-ok', 'io-error', { ok: true, text: 'Imported ' + cards.length + ' card' + (cards.length === 1 ? '' : 's') + ' into "' + d.name + '".' });
+    } else {
+      var imported = importJSON(text);
+      if (imported.length === 1 && imported[0].name === d.name) {
+        imported[0].cards.forEach(function (c) { d.cards.push(c); });
+        d.updatedAt = now();
+        ioMessage('io-ok', 'io-error', { ok: true, text: 'Imported ' + imported[0].cards.length + ' cards into "' + d.name + '".' });
+      } else {
+        imported.forEach(function (nd) { decks.push(nd); });
+        activeDeckId = imported[0].id;
+        ioMessage('io-ok', 'io-error', { ok: true, text: 'Imported ' + imported.length + ' deck' + (imported.length === 1 ? '' : 's') + '.' });
+      }
+      save(); renderAll();
+    }
+  } catch (e) {
+    ioMessage('io-ok', 'io-error', { ok: false, text: e.message });
+  }
+}
+function doExportAll() {
+  downloadFile('deckdash-library.json', libraryToJSON(decks), 'application/json');
+  ioMessage('io-ok', 'io-error', { ok: true, text: 'Library backup download started.' });
+}
+
+/* ---------- print ---------- */
+function doPrint() {
+  var d = activeDeck();
+  if (!d || !d.cards.length) return;
+  var html = '<div style="font-family:Georgia,serif;max-width:800px;margin:0 auto;color:#222">' +
+    '<h1 style="font-size:26px;margin:0 0 4px">' + escapeHtml(d.name) + '</h1>' +
+    '<p style="color:#666;font-size:13px;margin:0 0 18px">' + d.cards.length + ' flashcards · printed from DeckDash</p>' +
+    '<div class="print-grid">';
+  d.cards.forEach(function (c, i) {
+    html += '<div class="print-card">' +
+      '<div style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#0F766E">CARD ' + (i + 1) + ' · FRONT</div>' +
+      '<div style="font-size:15px;font-weight:600;margin:6px 0 10px;white-space:pre-wrap">' + escapeHtml(c.front) + '</div>' +
+      '<div style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#F97316">BACK</div>' +
+      '<div style="font-size:15px;margin-top:6px;white-space:pre-wrap">' + escapeHtml(c.back) + '</div>' +
+      '</div>';
+  });
+  html += '</div></div>';
+  $('print-view').innerHTML = html;
+  window.print();
+}
+
+/* ---------- events ---------- */
+function wire() {
+  $('btn-add-deck').onclick = addDeck;
+  $('new-deck-name').addEventListener('keydown', function (e) { if (e.key === 'Enter') addDeck(); });
+  $('btn-sample').onclick = function () {
+    var names = {};
+    decks.forEach(function (d) { names[d.name] = true; });
+    var s = sampleDeck();
+    if (names[s.name]) s.name += ' (2)';
+    decks.push(s); activeDeckId = s.id; save(); renderAll();
+  };
+  $('btn-delete-deck').onclick = deleteActiveDeck;
+  $('btn-rename').onclick = renameActiveDeck;
+  $('btn-study').onclick = startStudy;
+  $('btn-toggle-add').onclick = function () {
+    $('add-form').classList.toggle('hidden');
+    $('edit-form').classList.add('hidden');
+    if (!$('add-form').classList.contains('hidden')) $('card-front').focus();
+  };
+  $('btn-save-card').onclick = saveNewCard;
+  $('btn-cancel-add').onclick = function () { $('add-form').classList.add('hidden'); showCardError('card-error', null); };
+  $('btn-update-card').onclick = saveEditCard;
+  $('btn-cancel-edit').onclick = function () { editingCardId = null; $('edit-form').classList.add('hidden'); };
+  $('card-front').addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') saveNewCard();
+  });
+
+  $('card-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    if (btn.getAttribute('data-act') === 'edit') openEditForm(btn.getAttribute('data-id'));
+    else deleteCard(btn.getAttribute('data-id'));
+  });
+
+  $('flip-card').onclick = flipCard;
+  $('btn-wrong').onclick = function () { gradeCurrent(false); };
+  $('btn-right').onclick = function () { gradeCurrent(true); };
+  $('btn-end-study').onclick = closeStudy;
+  $('btn-back-desk').onclick = closeStudy;
+  $('btn-again').onclick = function () { closeStudy(); startStudy(); };
+  document.addEventListener('keydown', function (e) {
+    if ($('study-overlay').classList.contains('hidden') || !sess) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flipCard(); }
+    if (sess.flipped && (e.key === '1' || e.key === 'ArrowLeft')) gradeCurrent(false);
+    if (sess.flipped && (e.key === '2' || e.key === 'ArrowRight')) gradeCurrent(true);
+    if (e.key === 'Escape') closeStudy();
+  });
+
+  $('btn-io').onclick = openIO;
+  $('btn-io-close').onclick = function () { $('io-modal').classList.add('hidden'); };
+  $('io-modal').addEventListener('click', function (e) { if (e.target === $('io-modal')) $('io-modal').classList.add('hidden'); });
+  $('tab-csv').onclick = function () { ioFormat = 'csv'; syncIOTabs(); refreshIOText(); };
+  $('tab-json').onclick = function () { ioFormat = 'json'; syncIOTabs(); refreshIOText(); };
+  $('btn-download').onclick = doDownload;
+  $('btn-import').onclick = doImport;
+  $('btn-export-all').onclick = doExportAll;
+
+  $('btn-print').onclick = doPrint;
+}
+
+/* ---------- init ---------- */
+load();
+wire();
+renderAll();
+
+})();
+</script>
+</body>
+</html>
