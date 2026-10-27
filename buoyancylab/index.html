@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buoyancy Force Calculator — Archimedes Principle | BuoyancyLab</title>
+<meta name="description" content="Calculate buoyant force from fluid density and displaced volume, compare freshwater and saltwater, and check whether an object floats or sinks.">
+<link rel="canonical" href="https://study.fixoraa.tech/buoyancylab/">
+<meta property="og:title" content="Buoyancy Force Calculator — Archimedes Principle | BuoyancyLab">
+<meta property="og:description" content="Calculate buoyant force from fluid density and displaced volume, compare freshwater and saltwater, and check whether an object floats or sinks.">
+<meta property="og:url" content="https://study.fixoraa.tech/buoyancylab/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "BuoyancyLab", "url": "https://study.fixoraa.tech/buoyancylab/", "applicationCategory": "Utilities", "operatingSystem": "Web", "description": "Calculate buoyant force from fluid density and displaced volume, compare freshwater and saltwater, and check whether an object floats or sinks.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Archimedes' principle?", "acceptedAnswer": {"@type": "Answer", "text": "The buoyant force on an immersed object equals the weight of the fluid it displaces: Fb = \u03c1Vg, where \u03c1 is fluid density, V is displaced volume, and g is gravity."}},
+{"@type": "Question", "name": "How do you calculate buoyant force?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply fluid density by displaced volume by gravity. For 0.5 m\u00b3 in freshwater: 1000 \u00d7 0.5 \u00d7 9.81 = 4,905 N."}},
+{"@type": "Question", "name": "Why do ships float but nails sink?", "acceptedAnswer": {"@type": "Answer", "text": "A ship encloses air, so its average density is below water's. A nail's density is steel's full density, above water's, so it sinks."}},
+{"@type": "Question", "name": "Is buoyancy stronger in seawater than freshwater?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, by about 2.5%. Seawater's density of 1,025 kg/m\u00b3 gives a larger buoyant force than freshwater's 1,000 kg/m\u00b3 for the same volume."}},
+{"@type": "Question", "name": "What is apparent weight in water?", "acceptedAnswer": {"@type": "Answer", "text": "An object's weight minus the buoyant force. A 100 N rock displacing 2 litres of water appears to weigh about 80.4 N underwater."}},
+{"@type": "Question", "name": "Does buoyancy work in air too?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hot air balloons rise because warm air inside is less dense than the surrounding air, so the displaced air weighs more than the balloon's contents."}}]}]}
+</script>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:'Sora',sans-serif;line-height:1.6}
+a{color:inherit} input,select,button,textarea{font:inherit}
+
+body{background:#EFF6FF;color:#1E3A8A}
+.site-header{background:#DBEAFE;border-bottom:3px solid #1D4ED8}.header-inner{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:44px;height:44px;background:#1D4ED8;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:22px}
+.brand-name{font-size:28px;font-weight:700;color:#1E3A8A}
+.btn-nav{display:inline-block;padding:8px 16px;border:2px solid #1D4ED8;border-radius:999px;text-decoration:none;font-weight:700;color:#1E3A8A}.badge{display:inline-block;background:#FEF08A;color:#713F12;padding:6px 12px;border-radius:999px;font-weight:700;font-size:13px}
+.hero{max-width:1000px;margin:0 auto;padding:36px 20px 8px}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#1E3A8A;margin:0}.hero-sub{font-size:17px;color:#1E40AF}
+.tool-wrap{max-width:1000px;margin:0 auto;padding:16px 20px}
+.shutter{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}@media(max-width:700px){.shutter{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid #BFDBFE;border-radius:16px;box-shadow:0 4px 18px rgba(29,78,216,.08);padding:22px}
+.panel h2{color:#1E3A8A;margin-top:0}.field{margin-bottom:14px}.field label{display:block;font-weight:700;margin-bottom:4px}.field input,.field select{width:100%;padding:11px 12px;border:1.5px solid #93C5FD;border-radius:10px}
+.btn-main{background:#1D4ED8;color:#fff;border:0;padding:13px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-size:16px}.btn-ghost{background:#fff;color:#1E3A8A;border:2px solid #1D4ED8;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+.result{margin-top:16px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:16px;font-size:17px}
+.water{font-size:56px;text-align:center}.error{color:#991B1B;font-weight:700}.muted{color:#3B5BA9;font-size:14px}
+.article{max-width:1000px;margin:0 auto;padding:24px 20px}.article h2{color:#1E3A8A}.article h3{color:#1D4ED8}
+.faq{max-width:1000px;margin:0 auto;padding:0 20px 30px}.faq h2{color:#1E3A8A}.faq details{background:#fff;border:1px solid #BFDBFE;border-radius:12px;padding:14px 16px;margin-bottom:10px}.faq summary{font-weight:700;cursor:pointer}
+.site-footer{background:#1E3A8A;color:#DBEAFE;text-align:center;padding:28px 20px}.site-footer a{color:#DBEAFE;font-weight:700}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner">
+<div class="brand"><span class="brand-mark">🛟</span><span class="brand-name">BuoyancyLab</span></div>
+<nav class="header-nav"><a class="btn-nav" href="https://fixoraa.tech">Home</a><a class="btn-nav" href="https://fixoraa.tech">More Tools</a><span class="badge">Unlimited Free Usage</span></nav>
+</div></header>
+<main>
+<section class="hero"><h1>Buoyancy Force Calculator — Archimedes Principle</h1><p class="hero-sub">Archimedes' principle: the upward buoyant force equals the weight of the fluid displaced. Enter fluid, volume, and weight to get the force and the float-or-sink verdict.</p></section>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="tool-wrap"><div class="shutter">
+<div class="panel"><h2>Buoyant Force Calculator</h2>
+<div class="field"><label for="by-fluid">Fluid</label><select id="by-fluid"><option value="1000">Freshwater — 1000 kg/m³</option><option value="1025">Seawater — 1025 kg/m³</option><option value="800">Oil — 800 kg/m³</option><option value="13600">Mercury — 13600 kg/m³</option></select></div>
+<div class="field"><label for="by-vol">Displaced volume (m³)</label><input id="by-vol" type="number" min="0" step="any" placeholder="e.g. 0.5"></div>
+<div class="field"><label for="by-weight">Object's weight in air (N) — optional, for float/sink verdict</label><input id="by-weight" type="number" min="0" step="any" placeholder="e.g. 4000"></div>
+<button class="btn-main" onclick="byCalc()">Calculate buoyant force</button>
+<div id="by-out" class="result" aria-live="polite">Enter a volume and press Calculate.</div>
+<p id="by-err" class="error" role="alert"></p></div>
+<div class="panel"><div class="water">🌊</div><h2 style="text-align:center">Compare Fluids</h2>
+<p class="muted">The same 0.5 m³ volume displaced in each fluid gives very different upward forces. Try it below.</p>
+<p><button class="btn-ghost" onclick="byCompare()">Compare all fluids (0.5 m³)</button></p>
+<div id="by-compare" class="muted"></div>
+<h2 style="margin-top:20px">Apparent Weight</h2><p class="muted">An object weighed in water seems lighter by exactly the buoyant force. Enter a weight above to see its apparent weight in the chosen fluid.</p></div>
+</div></section>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<article class="article"><h2>Archimedes' Principle</h2>
+<p>When an object is immersed in a fluid, the fluid pushes back with an upward force called the buoyant force. Archimedes' principle states that this force equals the weight of the fluid displaced by the object. If a submerged block displaces half a cubic metre of freshwater, it displaces five hundred kilograms of water, whose weight is five hundred times nine point eight one, or four thousand nine hundred and five newtons. That upward push is present whether the object floats or sinks, and it is the entire explanation of buoyancy.</p>
+<p>The principle is usually written as Fb = ρVg, where ρ is the fluid's density, V is the volume of fluid displaced, and g is gravitational acceleration. The formula reveals the three levers that control buoyancy: a denser fluid pushes harder, a larger displaced volume pushes harder, and stronger gravity pushes harder. It also explains a famous story: Archimedes, asked to test whether a crown was pure gold without damaging it, realised in his bath that the water his body displaced could reveal the crown's volume, and therefore its density, without melting it down. The exclamation attributed to him, Eureka, has become the universal cry of discovery.</p>
+<h2>Why Things Float or Sink</h2>
+<p>An object floats when the buoyant force can balance its weight before it is fully submerged. As it sinks deeper, it displaces more fluid, so the buoyant force grows; if the force equals the object's weight while part of it is still above the surface, it stops sinking and floats with part submerged. The fraction submerged equals the ratio of the object's density to the fluid's density: an object with half water's density floats half submerged. If the object is denser than the fluid, even full submersion cannot produce enough buoyant force to balance its weight, and it sinks to the bottom, where it rests with an apparent weight equal to its real weight minus the buoyant force.</p>
+<p>This is why a steel ship floats and a steel nail sinks, despite being made of the same material. The ship's hull encloses a large volume of air, so the ship's average density — total mass divided by total volume including the enclosed air — is less than water's density. The nail has no enclosed air, so its average density is steel's full density. Shape matters only through the volume it encloses: a flat steel plate displaces little water and sinks, while the same plate folded into a boat shape displaces far more and floats.</p>
+<h2>Freshwater Versus Saltwater</h2>
+<p>Seawater is denser than freshwater, about one thousand and twenty-five kilograms per cubic metre against one thousand, because of its dissolved salts. The difference is small — two and a half percent — but it has real consequences. Ships float slightly higher in the ocean than in a river, and must be loaded more carefully for river passages; the Plimsoll line painted on a ship's hull marks different safe loading levels for freshwater, seawater, and tropical waters. Swimmers notice it too: floating in the Dead Sea, whose salinity pushes its density to about one thousand two hundred and forty kilograms per cubic metre, is almost effortless, because the buoyant force is nearly a quarter larger than in freshwater.</p>
+<p>Submarines exploit density differences deliberately. By flooding ballast tanks with water, a submarine raises its average density above the surrounding water and sinks; by blowing the tanks out with compressed air, it lowers its density and rises. Fish do the same with a gas-filled swim bladder, adjusting its volume to hover at a chosen depth without swimming. In both cases, buoyancy is not a fixed property of the object but a controlled balance between weight and displaced fluid.</p>
+<h2>Apparent Weight and Underwater Weighing</h2>
+<p>An object immersed in water seems lighter than in air, by exactly the buoyant force. A rock weighing one hundred newtons in air and displacing two litres of water experiences a buoyant force of about nineteen point six newtons, so a scale held underwater reads about eighty point four newtons. This apparent weight loss is the basis of hydrostatic weighing, a method for measuring body composition and material density: weigh an object in air, weigh it submerged, and the difference gives the weight of displaced water, hence its volume, hence its density.</p>
+<p>The same effect explains why heavy objects feel manageable in a swimming pool and why physiotherapists use water for rehabilitation: buoyancy unloads joints while still allowing movement against resistance. It also explains a common surprise: a person can lift a submerged boulder that would be impossible to move on land, but the moment it breaks the surface, the buoyant help vanishes and the full weight returns. Many back injuries in and around water happen at exactly that transition.</p>
+<h2>Buoyancy in Air</h2>
+<p>Buoyancy applies to gases as well as liquids, though the forces are far smaller because air is about eight hundred times less dense than water. A hot air balloon works because heating the air inside the envelope lowers its density below the surrounding air; the displaced cool air weighs more than the warm air inside, and the difference lifts the balloon. Helium balloons work the same way with a gas that is inherently less dense than air. Even ordinary objects experience a tiny buoyant force in air, which precision balances must correct for — a kilogram of feathers and a kilogram of lead weigh the same in a vacuum, but in air the feathers' larger volume displaces more air and they appear very slightly lighter.</p>
+<p>Weather balloons, airships, and even dust motes drifting in sunlight are all governed by the same balance of weight and displaced fluid. The atmosphere itself is a fluid ocean, and we live at its bottom, buoyed almost imperceptibly by the air around us.</p>
+<h2>Engineering With Buoyancy</h2>
+<p>Engineers design with buoyancy everywhere. Ships' hulls are shaped to displace enough water while minimising drag, and their stability depends on the relationship between the centre of buoyancy and the centre of gravity: if a ship heels, the centre of buoyancy shifts, and a well-designed hull produces a righting force that brings it back upright. Offshore platforms, floating bridges, and pontoons all rely on calculated displacement, with safety margins for waves, cargo, and changing water density.</p>
+<p>Hydrometers, the simple floating instruments used by brewers, winemakers, and battery technicians, are pure Archimedes in action: a weighted glass float sinks deeper in a less dense liquid and rides higher in a denser one, and a printed scale reads the density directly. From ancient crowns to modern ships, the principle has not changed in over two thousand years — only the precision with which we apply it.</p>
+<h2>Using This Calculator</h2>
+<p>Choose your fluid, enter the displaced volume in cubic metres, and optionally the object's weight in air. The calculator returns the buoyant force in newtons, the mass of fluid displaced, the apparent weight in the fluid, and a float-or-sink verdict when a weight is given. Use the comparison feature to see how the same volume behaves in freshwater, seawater, oil, and mercury, and you will have an intuitive feel for Archimedes' principle that no formula alone can give.</p><h2>Testing Buoyancy at Home</h2>
+<p>A kitchen sink is a perfectly good buoyancy laboratory. Weigh a small waterproof object on a kitchen scale, then weigh it again while it hangs submerged in water from a string, taking care that it does not touch the bottom or sides. The difference between the two readings is the buoyant force expressed as a weight, and dividing by gravity gives the force in newtons. Repeat with objects of different sizes and materials, and with salty water instead of fresh, and you will see Archimedes' principle emerge from your own measurements: the apparent weight loss always equals the weight of the water displaced, regardless of what the object is made of, as long as it is fully submerged.</p></article>
+<section class="faq"><h2>Frequently Asked Questions</h2><details><summary>What is Archimedes&#x27; principle?</summary><p>The buoyant force on an immersed object equals the weight of the fluid it displaces: Fb = ρVg, where ρ is fluid density, V is displaced volume, and g is gravity.</p></details>
+<details><summary>How do you calculate buoyant force?</summary><p>Multiply fluid density by displaced volume by gravity. For 0.5 m³ in freshwater: 1000 × 0.5 × 9.81 = 4,905 N.</p></details>
+<details><summary>Why do ships float but nails sink?</summary><p>A ship encloses air, so its average density is below water&#x27;s. A nail&#x27;s density is steel&#x27;s full density, above water&#x27;s, so it sinks.</p></details>
+<details><summary>Is buoyancy stronger in seawater than freshwater?</summary><p>Yes, by about 2.5%. Seawater&#x27;s density of 1,025 kg/m³ gives a larger buoyant force than freshwater&#x27;s 1,000 kg/m³ for the same volume.</p></details>
+<details><summary>What is apparent weight in water?</summary><p>An object&#x27;s weight minus the buoyant force. A 100 N rock displacing 2 litres of water appears to weigh about 80.4 N underwater.</p></details>
+<details><summary>Does buoyancy work in air too?</summary><p>Yes. Hot air balloons rise because warm air inside is less dense than the surrounding air, so the displaced air weighs more than the balloon&#x27;s contents.</p></details>
+</section>
+</main>
+<footer class="site-footer">
+<p class="footer-brand">BuoyancyLab — Calculate buoyant force from fluid density and displaced volume, compare freshwater and saltwater, and check whether an object floats or sinks.</p>
+<p class="footer-about">A free, no-signup web tool that runs entirely in your browser.</p>
+<p class="footer-links"><a href="https://fixoraa.tech">Home</a> · <a href="https://fixoraa.tech">More Tools</a></p>
+<p class="footer-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a></p>
+</footer>
+<script>
+function buoyantForce(rho,V,g){return rho*V*(g||9.81);}
+function byCalc(){var rho=parseFloat(document.getElementById('by-fluid').value);var V=parseFloat(document.getElementById('by-vol').value);var w=parseFloat(document.getElementById('by-weight').value);var err=document.getElementById('by-err');err.textContent='';
+if(isNaN(V)||V<0){err.textContent='Please enter a valid non-negative displaced volume.';return;}
+var F=buoyantForce(rho,V,9.81);var mass=rho*V;var out='<strong>Buoyant force: '+F.toFixed(1)+' N</strong><br>Fluid displaced: '+mass.toFixed(1)+' kg<br>Formula: Fb = '+rho+' × '+V+' × 9.81 = '+F.toFixed(1)+' N';
+if(!isNaN(w)&&w>=0){var app=w-F;out+='<br>Apparent weight in fluid: '+app.toFixed(1)+' N<br><strong>'+(F>=w?'It floats — buoyant force balances its weight before full submersion.':'It sinks — weight exceeds the maximum buoyant force.')+'</strong>';}
+document.getElementById('by-out').innerHTML=out;}
+function byCompare(){var V=0.5;var fluids=[[1000,'Freshwater'],[1025,'Seawater'],[800,'Oil'],[13600,'Mercury']];document.getElementById('by-compare').innerHTML=fluids.map(function(f){return f[1]+': '+buoyantForce(f[0],V,9.81).toFixed(0)+' N';}).join('<br>');}
+</script>
+</body>
+</html>
