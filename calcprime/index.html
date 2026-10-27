@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/calcprime/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalcPrime — Free Scientific Calculator with Trig, Logs & History Tape</title>
+<meta name="description" content="CalcPrime is a free online scientific calculator with a safe expression parser, trigonometry, logarithms, powers, roots, DEG/RAD toggle, a history tape and full keyboard support. No signup, unlimited use.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Space Grotesk', system-ui, sans-serif; background: #14171b; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .graphite-panel {
+    background: linear-gradient(160deg, #23272e 0%, #1b1e24 55%, #171a1f 100%);
+    border: 1px solid #31363f;
+    box-shadow: 0 24px 60px -18px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .display-glow {
+    background: linear-gradient(180deg, #0d2b33 0%, #0a2129 100%);
+    border: 1px solid #164e5e;
+    box-shadow: inset 0 2px 14px rgba(0,0,0,.55), inset 0 0 32px rgba(34,211,238,.07);
+  }
+  .key {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    border-radius: 0.75rem;
+    border: 1px solid #33383f;
+    background: linear-gradient(180deg, #2b2f36, #23262c);
+    color: #e5e9ee;
+    box-shadow: 0 3px 0 #101215, inset 0 1px 0 rgba(255,255,255,.06);
+    transition: transform .05s ease, background .15s ease, box-shadow .05s ease;
+    user-select: none;
+    cursor: pointer;
+  }
+  .key:hover { background: linear-gradient(180deg, #343941, #282c33); }
+  .key:active { transform: translateY(2px); box-shadow: 0 1px 0 #101215; }
+  .key:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }
+  .key-fn { color: #7dd3e8; font-size: .82rem; background: linear-gradient(180deg, #262b33, #1f232a); }
+  .key-op { color: #22d3ee; font-weight: 600; }
+  .key-eq {
+    background: linear-gradient(180deg, #22d3ee, #0ea5c6);
+    color: #06222b; font-weight: 700; border-color: #0e7490;
+    box-shadow: 0 3px 0 #083f4d, 0 0 18px rgba(34,211,238,.35);
+  }
+  .key-eq:hover { background: linear-gradient(180deg, #4adef5, #14b8d8); }
+  .key-danger { color: #fda4af; }
+  .tape-scroll::-webkit-scrollbar { width: 6px; }
+  .tape-scroll::-webkit-scrollbar-thumb { background: #33383f; border-radius: 3px; }
+  .tape-item { border-bottom: 1px dashed #33383f; }
+  .tape-item:last-child { border-bottom: none; }
+  .mode-pill { transition: all .15s ease; }
+  .mode-on { background: #22d3ee; color: #06222b; font-weight: 700; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  .shake { animation: shake .3s ease; }
+</style>
+<script id="lib-calcprime">/* CalcPrime — safe scientific expression engine.
+   Hand-written tokenizer + recursive-descent parser. Never uses eval or Function. */
+var CalcPrimeLib = (function () {
+  'use strict';
+
+  var CONSTANTS = {
+    pi: Math.PI,
+    tau: Math.PI * 2,
+    e: Math.E,
+    phi: 1.618033988749895
+  };
+
+  var FUNCTIONS = ['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sinh', 'cosh', 'tanh',
+    'ln', 'log', 'log2', 'sqrt', 'cbrt', 'exp', 'abs', 'floor', 'ceil', 'round'];
+
+  function isDigit(c) { return c >= '0' && c <= '9'; }
+  function isAlpha(c) { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
+
+  function tokenize(input) {
+    var tokens = [];
+    var i = 0;
+    var s = String(input == null ? '' : input);
+    while (i < s.length) {
+      var c = s[i];
+      if (c === ' ' || c === '\t' || c === '\n' || c === '\r') { i++; continue; }
+      if (isDigit(c) || (c === '.' && isDigit(s[i + 1] || ''))) {
+        var num = '';
+        var dotSeen = false;
+        while (i < s.length && (isDigit(s[i]) || s[i] === '.')) {
+          if (s[i] === '.') { if (dotSeen) break; dotSeen = true; }
+          num += s[i]; i++;
+        }
+        // scientific notation exponent
+        if (i < s.length && (s[i] === 'e' || s[i] === 'E') &&
+            (isDigit(s[i + 1] || '') || ((s[i + 1] === '+' || s[i + 1] === '-') && isDigit(s[i + 2] || '')))) {
+          num += s[i]; i++;
+          if (s[i] === '+' || s[i] === '-') { num += s[i]; i++; }
+          while (i < s.length && isDigit(s[i])) { num += s[i]; i++; }
+        }
+        var val = parseFloat(num);
+        if (!isFinite(val)) throw new Error('Number out of range: ' + num);
+        tokens.push({ type: 'num', value: val });
+        continue;
+      }
+      if (isAlpha(c)) {
+        var name = '';
+        while (i < s.length && (isAlpha(s[i]) || isDigit(s[i]))) { name += s[i]; i++; }
+        var lower = name.toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(CONSTANTS, lower)) {
+          tokens.push({ type: 'num', value: CONSTANTS[lower], name: lower });
+        } else if (FUNCTIONS.indexOf(lower) !== -1) {
+          tokens.push({ type: 'func', value: lower });
+        } else {
+          throw new Error('Unknown name: ' + name);
+        }
+        continue;
+      }
+      if ('+-*/%^'.indexOf(c) !== -1) { tokens.push({ type: 'op', value: c }); i++; continue; }
+      if (c === '(') { tokens.push({ type: 'lparen' }); i++; continue; }
+      if (c === ')') { tokens.push({ type: 'rparen' }); i++; continue; }
+      if (c === '!') { tokens.push({ type: 'bang' }); i++; continue; }
+      if (c === '√') { tokens.push({ type: 'func', value: 'sqrt' }); i++; continue; }
+      if (c === 'π') { tokens.push({ type: 'num', value: Math.PI, name: 'pi' }); i++; continue; }
+      throw new Error('Unexpected character: ' + c);
+    }
+    return tokens;
+  }
+
+  function factorial(n) {
+    if (n < 0) throw new Error('Factorial is not defined for negative numbers');
+    if (Math.floor(n) !== n) {
+      // Gamma function for non-integers (Lanczos approximation)
+      return gamma(n + 1);
+    }
+    if (n > 170) throw new Error('Factorial result is too large');
+    var r = 1;
+    for (var k = 2; k <= n; k++) r *= k;
+    return r;
+  }
+
+  function gamma(z) {
+    var p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+      771.32342877765313, -176.61502916214059, 12.507343278686905,
+      -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+    z -= 1;
+    var x = p[0];
+    for (var i = 1; i < p.length; i++) x += p[i] / (z + i);
+    var t = z + p.length - 1.5;
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+  }
+
+  function applyFunction(name, x, angleMode) {
+    var deg = angleMode === 'deg';
+    var toRad = function (v) { return deg ? v * Math.PI / 180 : v; };
+    var fromRad = function (v) { return deg ? v * 180 / Math.PI : v; };
+    switch (name) {
+      case 'sin': return Math.sin(toRad(x));
+      case 'cos': return Math.cos(toRad(x));
+      case 'tan': {
+        var a = toRad(x);
+        if (deg && Math.abs(((x % 180) + 180) % 180 - 90) < 1e-12) throw new Error('tan is undefined at 90 degrees');
+        return Math.tan(a);
+      }
+      case 'asin':
+        if (x < -1 || x > 1) throw new Error('asin is only defined between -1 and 1');
+        return fromRad(Math.asin(x));
+      case 'acos':
+        if (x < -1 || x > 1) throw new Error('acos is only defined between -1 and 1');
+        return fromRad(Math.acos(x));
+      case 'atan': return fromRad(Math.atan(x));
+      case 'sinh': return Math.sinh(x);
+      case 'cosh': return Math.cosh(x);
+      case 'tanh': return Math.tanh(x);
+      case 'ln':
+        if (x <= 0) throw new Error('ln is only defined for positive numbers');
+        return Math.log(x);
+      case 'log':
+        if (x <= 0) throw new Error('log is only defined for positive numbers');
+        return Math.log10(x);
+      case 'log2':
+        if (x <= 0) throw new Error('log2 is only defined for positive numbers');
+        return Math.log2(x);
+      case 'sqrt':
+        if (x < 0) throw new Error('Square root of a negative number');
+        return Math.sqrt(x);
+      case 'cbrt': return Math.cbrt(x);
+      case 'exp': return Math.exp(x);
+      case 'abs': return Math.abs(x);
+      case 'floor': return Math.floor(x);
+      case 'ceil': return Math.ceil(x);
+      case 'round': return Math.round(x);
+      default: throw new Error('Unknown function: ' + name);
+    }
+  }
+
+  /* Grammar (recursive descent):
+     expr    := term (('+'|'-') term)*
+     term    := unary (('*'|'/'|'%') unary | implicit unary)*
+     unary   := ('-'|'+') unary | power
+     power   := postfix ('^' unary)?        (right-associative)
+     postfix := primary ('!')*
+     primary := number | '(' expr ')' | func '(' expr ')' | func primary
+  */
+  function evaluate(input, angleMode) {
+    var mode = angleMode === 'rad' ? 'rad' : 'deg';
+    var tokens = tokenize(input);
+    if (tokens.length === 0) throw new Error('Nothing to calculate — type an expression first');
+    var pos = 0;
+
+    function peek() { return tokens[pos]; }
+    function next() { return tokens[pos++]; }
+    function expect(type, what) {
+      var t = next();
+      if (!t || t.type !== type) throw new Error('Expected ' + what);
+      return t;
+    }
+
+    function parseExpr() {
+      var v = parseTerm();
+      while (peek() && peek().type === 'op' && (peek().value === '+' || peek().value === '-')) {
+        var op = next().value;
+        var rhs = parseTerm();
+        v = op === '+' ? v + rhs : v - rhs;
+      }
+      return v;
+    }
+
+    function parseTerm() {
+      var v = parseUnary();
+      while (peek()) {
+        var t = peek();
+        if (t.type === 'op' && (t.value === '*' || t.value === '/' || t.value === '%')) {
+          var op = next().value;
+          var rhs = parseUnary();
+          if (op === '*') v = v * rhs;
+          else if (op === '/') {
+            if (rhs === 0) throw new Error('Division by zero');
+            v = v / rhs;
+          } else {
+            if (rhs === 0) throw new Error('Modulo by zero');
+            v = v % rhs;
+          }
+        } else if (t.type === 'num' || t.type === 'lparen' || t.type === 'func') {
+          // implicit multiplication: 2(3+1), 2pi, 3sin(30)
+          v = v * parseUnary();
+        } else break;
+      }
+      return v;
+    }
+
+    function parseUnary() {
+      var t = peek();
+      if (t && t.type === 'op' && (t.value === '-' || t.value === '+')) {
+        next();
+        var v = parseUnary();
+        return t.value === '-' ? -v : v;
+      }
+      return parsePower();
+    }
+
+    function parsePower() {
+      var base = parsePostfix();
+      var t = peek();
+      if (t && t.type === 'op' && t.value === '^') {
+        next();
+        var exp = parseUnary(); // right-associative, allows 2^-3
+        if (base < 0 && Math.floor(exp) !== exp) throw new Error('Negative base with a fractional power');
+        if (base === 0 && exp < 0) throw new Error('Zero cannot be raised to a negative power');
+        return Math.pow(base, exp);
+      }
+      return base;
+    }
+
+    function parsePostfix() {
+      var v = parsePrimary();
+      while (peek() && peek().type === 'bang') {
+        next();
+        v = factorial(v);
+      }
+      return v;
+    }
+
+    function parsePrimary() {
+      var t = next();
+      if (!t) throw new Error('Expression ended unexpectedly');
+      if (t.type === 'num') return t.value;
+      if (t.type === 'lparen') {
+        var v = parseExpr();
+        expect('rparen', 'a closing parenthesis');
+        return v;
+      }
+      if (t.type === 'func') {
+        var arg;
+        if (peek() && peek().type === 'lparen') {
+          next();
+          arg = parseExpr();
+          expect('rparen', 'a closing parenthesis after ' + t.value);
+        } else {
+          arg = parsePostfix();
+        }
+        return applyFunction(t.value, arg, mode);
+      }
+      if (t.type === 'rparen') throw new Error('Unexpected closing parenthesis');
+      if (t.type === 'op') throw new Error('Unexpected operator: ' + t.value);
+      throw new Error('Unexpected token in expression');
+    }
+
+    var result = parseExpr();
+    if (pos < tokens.length) throw new Error('Unexpected extra input — check parentheses and operators');
+    if (typeof result !== 'number' || isNaN(result)) throw new Error('That expression does not produce a number');
+    if (!isFinite(result)) throw new Error('Result is too large to display');
+    return result;
+  }
+
+  function formatResult(n) {
+    if (typeof n !== 'number' || isNaN(n)) return 'Error';
+    if (n === 0) return '0';
+    var abs = Math.abs(n);
+    var rounded = Math.round(n * 1e12) / 1e12;
+    if (Number.isInteger(rounded) && abs < 1e16) return String(rounded);
+    if (abs >= 1e12 || abs < 1e-9) {
+      return n.toExponential(8).replace(/(\.\d*?)0+e/, '$1e').replace(/\.e/, 'e');
+    }
+    var s = String(Math.round(n * 1e10) / 1e10);
+    return s;
+  }
+
+  function memoryOps(mem, op, current) {
+    mem = typeof mem === 'number' && isFinite(mem) ? mem : 0;
+    current = typeof current === 'number' && isFinite(current) ? current : 0;
+    switch (op) {
+      case 'add': return mem + current;
+      case 'sub': return mem - current;
+      case 'clear': return 0;
+      case 'recall': return mem;
+      default: throw new Error('Unknown memory operation: ' + op);
+    }
+  }
+
+  return {
+    evaluate: evaluate,
+    tokenize: tokenize,
+    factorial: factorial,
+    formatResult: formatResult,
+    memoryOps: memoryOps,
+    CONSTANTS: CONSTANTS,
+    FUNCTIONS: FUNCTIONS.slice()
+  };
+})();
+
+if (typeof module !== 'undefined' && module.exports) { module.exports = CalcPrimeLib; }
+</script>
+</head>
+<body id="top" class="text-slate-200 min-h-screen antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 backdrop-blur-md" style="background:rgba(20,23,27,.88); border-bottom:1px solid #2b2f36;">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-lg font-bold mono" style="background:linear-gradient(135deg,#22d3ee,#0ea5c6); color:#06222b; box-shadow:0 0 16px rgba(34,211,238,.4);">√x</span>
+      <span class="text-xl font-700 font-bold tracking-tight text-white">Calc<span style="color:#22d3ee;">Prime</span></span>
+    </a>
+    <nav class="flex items-center gap-1 sm:gap-2 text-sm">
+      <a href="#top" class="px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition">Home</a>
+      <a href="https://fixoraa.tech" class="px-3 py-2 rounded-lg font-medium transition" style="color:#22d3ee;">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="mx-auto max-w-6xl px-4 sm:px-6 pt-8 pb-2 text-center">
+  <h1 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">The Scientific Calculator That <span style="color:#22d3ee;">Thinks in Expressions</span></h1>
+  <p class="mt-3 text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Type or tap a full expression — <span class="mono text-cyan-300">sin(30) + √(16) × 2^5</span> — and CalcPrime parses it safely, step by order of operations. No eval, no uploads, no nonsense.</p>
+  <div class="mt-4 flex items-center justify-center gap-3 flex-wrap">
+    <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style="background:rgba(34,211,238,.12); color:#67e8f9; border:1px solid rgba(34,211,238,.35);">✦ Unlimited Free Usage</span>
+    <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full text-slate-300" style="background:rgba(255,255,255,.04); border:1px solid #2b2f36;">No signup · No watermark</span>
+    <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full text-slate-300" style="background:rgba(255,255,255,.04); border:1px solid #2b2f36;">⌨ Full keyboard support</span>
+  </div>
+</section>
+
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Calculator -->
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-6">
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-6 items-start">
+
+    <!-- Calculator body -->
+    <section class="graphite-panel rounded-3xl p-4 sm:p-6" aria-label="Scientific calculator">
+      <!-- Display -->
+      <div id="displayBox" class="display-glow rounded-2xl px-4 sm:px-5 pt-4 pb-3">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex rounded-lg overflow-hidden text-[11px] mono" style="border:1px solid #164e5e;" role="group" aria-label="Angle mode">
+            <button id="modeDeg" class="mode-pill mode-on px-2.5 py-1 text-cyan-200" type="button">DEG</button>
+            <button id="modeRad" class="mode-pill px-2.5 py-1 text-cyan-200/60" type="button">RAD</button>
+          </div>
+          <span id="memIndicator" class="mono text-[11px] text-cyan-300/80 hidden">M = <span id="memValue">0</span></span>
+          <span class="mono text-[11px] text-cyan-200/50">CalcPrime fx-7</span>
+        </div>
+        <div id="prevLine" class="mono text-right text-cyan-200/50 text-sm h-5 mt-2 truncate" aria-hidden="true"></div>
+        <input id="exprInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+          class="mono w-full bg-transparent text-right text-3xl sm:text-4xl font-semibold text-cyan-50 placeholder-cyan-100/25 focus:outline-none py-1"
+          placeholder="0" aria-label="Expression input">
+        <div class="flex items-center justify-between gap-2 mt-1">
+          <p id="msgLine" class="text-xs text-rose-300 min-h-[1rem]" role="status"></p>
+          <p class="mono text-right text-cyan-200/70 text-sm truncate">Preview: <span id="previewOut">—</span></p>
+        </div>
+      </div>
+
+      <!-- Memory row -->
+      <div class="grid grid-cols-5 gap-2 mt-4" role="group" aria-label="Memory keys">
+        <button class="key key-fn py-2" data-mem="clear" type="button">MC</button>
+        <button class="key key-fn py-2" data-mem="recall" type="button">MR</button>
+        <button class="key key-fn py-2" data-mem="add" type="button">M+</button>
+        <button class="key key-fn py-2" data-mem="sub" type="button">M−</button>
+        <button class="key key-fn py-2" id="copyBtn" type="button">Copy</button>
+      </div>
+
+      <!-- Function pad -->
+      <div class="grid grid-cols-5 gap-2 mt-2" role="group" aria-label="Scientific functions">
+        <button class="key key-fn py-2.5" data-ins="sin(" type="button">sin</button>
+        <button class="key key-fn py-2.5" data-ins="cos(" type="button">cos</button>
+        <button class="key key-fn py-2.5" data-ins="tan(" type="button">tan</button>
+        <button class="key key-fn py-2.5" data-ins="ln(" type="button">ln</button>
+        <button class="key key-fn py-2.5" data-ins="log(" type="button">log</button>
+
+        <button class="key key-fn py-2.5" data-ins="asin(" type="button">sin⁻¹</button>
+        <button class="key key-fn py-2.5" data-ins="acos(" type="button">cos⁻¹</button>
+        <button class="key key-fn py-2.5" data-ins="atan(" type="button">tan⁻¹</button>
+        <button class="key key-fn py-2.5" data-ins="sqrt(" type="button">√</button>
+        <button class="key key-fn py-2.5" data-ins="^2" type="button">x²</button>
+
+        <button class="key key-fn py-2.5" data-ins="^" type="button">xʸ</button>
+        <button class="key key-fn py-2.5" data-ins="exp(" type="button">eˣ</button>
+        <button class="key key-fn py-2.5" data-ins="abs(" type="button">|x|</button>
+        <button class="key key-fn py-2.5" data-ins="!" type="button">n!</button>
+        <button class="key key-fn py-2.5" data-ins="^(-1)" type="button">1/x</button>
+
+        <button class="key key-fn py-2.5" data-ins="pi" type="button">π</button>
+        <button class="key key-fn py-2.5" data-ins="e" type="button">e</button>
+        <button class="key key-fn py-2.5" id="ansBtn" type="button">Ans</button>
+        <button class="key key-fn py-2.5" data-ins="(" type="button">(</button>
+        <button class="key key-fn py-2.5" data-ins=")" type="button">)</button>
+      </div>
+
+      <!-- Main pad -->
+      <div class="grid grid-cols-4 gap-2 mt-2" role="group" aria-label="Number pad">
+        <button class="key key-danger py-3.5 text-lg" id="clearBtn" type="button">C</button>
+        <button class="key key-danger py-3.5 text-lg" id="backBtn" type="button">⌫</button>
+        <button class="key key-op py-3.5 text-lg" data-ins="%" type="button">mod</button>
+        <button class="key key-op py-3.5 text-lg" data-ins="/" type="button">÷</button>
+
+        <button class="key py-3.5 text-lg" data-ins="7" type="button">7</button>
+        <button class="key py-3.5 text-lg" data-ins="8" type="button">8</button>
+        <button class="key py-3.5 text-lg" data-ins="9" type="button">9</button>
+        <button class="key key-op py-3.5 text-lg" data-ins="*" type="button">×</button>
+
+        <button class="key py-3.5 text-lg" data-ins="4" type="button">4</button>
+        <button class="key py-3.5 text-lg" data-ins="5" type="button">5</button>
+        <button class="key py-3.5 text-lg" data-ins="6" type="button">6</button>
+        <button class="key key-op py-3.5 text-lg" data-ins="-" type="button">−</button>
+
+        <button class="key py-3.5 text-lg" data-ins="1" type="button">1</button>
+        <button class="key py-3.5 text-lg" data-ins="2" type="button">2</button>
+        <button class="key py-3.5 text-lg" data-ins="3" type="button">3</button>
+        <button class="key key-op py-3.5 text-lg" data-ins="+" type="button">+</button>
+
+        <button class="key py-3.5 text-lg" id="negBtn" type="button">±</button>
+        <button class="key py-3.5 text-lg" data-ins="0" type="button">0</button>
+        <button class="key py-3.5 text-lg" data-ins="." type="button">.</button>
+        <button class="key key-eq py-3.5 text-lg" id="eqBtn" type="button">=</button>
+      </div>
+
+      <p class="mt-4 text-[11px] text-slate-500 leading-relaxed">Keyboard: type digits, <span class="mono">+ − * / ^ % ( ) .</span> directly · <span class="mono">Enter</span> = equals · <span class="mono">Backspace</span> deletes · <span class="mono">Esc</span> clears · type function names like <span class="mono">sin(</span>, <span class="mono">sqrt(</span>, <span class="mono">log(</span> and constants <span class="mono">pi</span>, <span class="mono">e</span>. Implicit multiplication works too: try <span class="mono text-cyan-300/80">2pi</span> or <span class="mono text-cyan-300/80">3(4+5)</span>.</p>
+    </section>
+
+    <!-- History tape -->
+    <aside class="graphite-panel rounded-3xl p-5" aria-label="History tape">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-white flex items-center gap-2"><span aria-hidden="true">🧾</span> History Tape</h2>
+        <button id="clearHistoryBtn" class="text-xs px-2.5 py-1.5 rounded-lg text-rose-300 hover:bg-rose-400/10 transition" type="button">Clear tape</button>
+      </div>
+      <p class="text-[11px] text-slate-500 mt-1">Tap any result to reuse it. Saved on this device only.</p>
+      <div id="tapeList" class="tape-scroll mt-3 max-h-[430px] overflow-y-auto pr-1"></div>
+      <p id="tapeEmpty" class="text-sm text-slate-500 py-8 text-center">No calculations yet.<br>Your tape will print here.</p>
+    </aside>
+  </div>
+
+  <!-- Quick reference strip -->
+  <section class="grid sm:grid-cols-3 gap-4 mt-6">
+    <div class="rounded-2xl p-5" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <h3 class="font-semibold text-white text-sm">Order of operations, handled</h3>
+      <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Parentheses first, then factorials and powers, then × ÷ mod, then + −. Powers are right-associative, so <span class="mono text-cyan-300">2^3^2</span> correctly means 2^(3²) = 512.</p>
+    </div>
+    <div class="rounded-2xl p-5" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <h3 class="font-semibold text-white text-sm">DEG or RAD — your call</h3>
+      <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">School geometry lives in degrees; calculus lives in radians. Flip the toggle on the display and every trig key follows it instantly, including the inverse functions.</p>
+    </div>
+    <div class="rounded-2xl p-5" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <h3 class="font-semibold text-white text-sm">Safe by design</h3>
+      <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Your expression is read by a hand-written parser — never by JavaScript's eval. Nothing you type can run as code, and nothing leaves your browser.</p>
+    </div>
+  </section>
+</main>
+
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+
+<!-- SEO article -->
+<article class="mx-auto max-w-4xl px-4 sm:px-6 py-10" id="guide">
+  <h2 class="text-2xl sm:text-3xl font-bold text-white">Scientific Calculator Guide: Expressions, Trigonometry, Logarithms and More</h2>
+  <p class="mt-4 text-slate-400 leading-relaxed">A scientific calculator is the workhorse of mathematics, science and engineering. Long after the four-function calculator of primary school has been retired, the scientific model keeps going: it handles trigonometry for geometry and physics, logarithms for growth and decay, powers and roots for everything from compound interest to signal processing, and full multi-step expressions where the order of operations matters as much as the numbers themselves. CalcPrime brings that entire toolkit into your browser as a free, expression-based calculator: instead of pressing an equals sign after every tiny step, you type the whole calculation the way you would write it on paper, and the machine evaluates it in one pass, correctly, every time.</p>
+  <p class="mt-4 text-slate-400 leading-relaxed">That expression-first design is the biggest practical difference between CalcPrime and the basic calculator bundled with your phone. Consider a typical homework problem: find the value of sin(30°) multiplied by the square root of sixteen, then add two to the fifth power. On a step-by-step calculator you would compute each fragment separately, write down or memorise the intermediate answers, and then combine them — three chances to mis-key a digit and silently corrupt the final result. On CalcPrime you type the single expression <span class="mono text-cyan-300">sin(30) + sqrt(16) * 2^5</span>, watch the live preview update as you type, and press equals once. The parser resolves the parentheses, applies each function, raises the power, multiplies, and only then adds — exactly the sequence a teacher would demand on paper.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">How the safe expression parser works</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">Many quick-and-dirty web calculators cheat: they hand your typed expression to JavaScript's built-in eval function and let the language itself do the maths. That is fast to build but genuinely dangerous, because eval will happily execute any code it is given, not just arithmetic. CalcPrime never does this. Instead, every expression passes through a purpose-built tokenizer that breaks your input into numbers, operators, function names and parentheses, followed by a recursive-descent parser that understands the grammar of mathematics: addition and subtraction at the lowest precedence, multiplication, division and modulo above them, unary minus, then powers (which associate to the right, so 2^3^2 means 2^(3²)), then factorials, then function calls and parenthesised groups at the top. If anything in your input does not fit that grammar — an unbalanced bracket, a stray operator, an unknown name — the parser stops with a plain-language explanation of what went wrong instead of a cryptic failure or, worse, a wrong answer presented with confidence.</p>
+  <p class="mt-3 text-slate-400 leading-relaxed">The parser also understands the conveniences mathematicians actually use. Multiplication can be implicit: <span class="mono text-cyan-300">2pi</span>, <span class="mono text-cyan-300">3(4+5)</span> and <span class="mono text-cyan-300">5sin(30)</span> all work without an explicit times sign. Constants pi, e, tau and the golden ratio phi are recognised by name, and numbers may be written in scientific notation such as <span class="mono text-cyan-300">1.6e-19</span> for the charge of an electron. Domain errors are caught and explained rather than hidden: the square root of a negative number, the logarithm of zero, division by zero and the arcsine of a value outside the range from minus one to one each produce a specific, helpful message so you can fix the input rather than guess at the problem.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">Trigonometry with a DEG/RAD toggle</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">Trigonometry is where calculator settings cause the most silent disasters. The sine of 30 is 0.5 when the angle is measured in degrees, but the sine of 30 radians is approximately −0.988 — a completely different answer from the same three keystrokes. Countless exam marks have been lost to a calculator left in the wrong mode. CalcPrime puts the DEG/RAD toggle directly on the display, always visible, so the active mode is never a mystery. In DEG mode, the sine, cosine and tangent keys interpret their input as degrees and the inverse functions return degrees; in RAD mode everything switches to radians, the natural unit for calculus, wave physics and advanced engineering. The hyperbolic functions — sinh, cosh and tanh, available through the exp and function keys by typing their names — are unaffected by the toggle, as they should be, since hyperbolic functions take dimensionless inputs rather than angles.</p>
+  <p class="mt-3 text-slate-400 leading-relaxed">The function set covers the full school and undergraduate syllabus: sin, cos and tan with their inverses asin, acos and atan; the natural logarithm ln and the base-10 logarithm log, plus log2 for computing and information theory; square roots and cube roots (the cube root happily accepts negative inputs, returning −2 for the cube root of −8); the exponential function eˣ; absolute value; and rounding helpers floor, ceil and round for discrete maths and programming work. The factorial key handles the counting problems of probability and combinatorics, and because CalcPrime uses the gamma function behind the scenes, it even evaluates factorials of non-integers — 0.5! returns approximately 0.886, the famous square root of pi divided by two.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">Powers, roots and the quiet power of exponents</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">The xʸ key is arguably the hardest-working key on any scientific calculator. Compound interest is a power: a principal growing at five percent for ten years is multiplied by 1.05^10. Population growth, radioactive decay, bacterial cultures, Moore's law, earthquake energy scales and decibel calculations are all powers or their inverses, the roots and logarithms. CalcPrime treats exponentiation with the respect it deserves: the operator is right-associative to match mathematical convention, it binds more tightly than multiplication, and a negative exponent typed directly after the caret — <span class="mono text-cyan-300">2^-3</span> for one eighth — works without forcing you to add parentheses. The dedicated x² key squares in two taps, the 1/x key takes a reciprocal instantly, and any root can be built as a fractional power, so the fifth root of 32 is simply <span class="mono text-cyan-300">32^(1/5)</span>.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">The history tape: your working, preserved</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">Accountants' adding machines printed a paper tape so every figure could be audited later; CalcPrime revives that idea digitally. Every completed calculation is printed to the history tape beside the calculator with its full expression and result, newest at the top. Made a mistake three steps ago? Scroll the tape, spot it, and tap any earlier result to drop it straight back into the display as the starting point of a correction. The tape persists in your browser's local storage, so it survives a closed tab or a restarted laptop, and it never leaves your device — clearing it is a single tap when you want a fresh sheet. For students, the tape doubles as a record of working that can be checked against an answer key; for professionals, it is an audit trail for estimates, conversions and quick verifications done throughout the day.</p>
+  <p class="mt-3 text-slate-400 leading-relaxed">Alongside the tape, the classic memory keys MC, MR, M+ and M− hold a single running value across calculations — ideal when you are accumulating a total from several separate expressions, such as pricing a bill of materials line by line. The Ans key recalls the most recent result, which makes chained work natural: compute a radius, press equals, then continue typing an expression that begins with Ans to turn that radius into an area and then a volume, each stage verified before the next begins.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">Full keyboard support for people who type faster than they tap</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">On a desktop or laptop, reaching for the mouse to click calculator buttons is pure friction. CalcPrime is fully keyboard-driven: focus the display and type your expression exactly as you would write it, function names included — <span class="mono text-cyan-300">atan(1)</span>, <span class="mono text-cyan-300">log(1000)</span>, <span class="mono text-cyan-300">sqrt(2)/2</span>. Enter evaluates, Backspace edits, Escape clears, and the standard operator keys all map to their mathematical meanings, with the caret key producing powers. Because the input is a genuine text field, you can also paste an expression copied from a document, a spreadsheet or a problem sheet, evaluate it in place, and copy the result back out with the Copy button. For long problem sets and data-entry-heavy work, this turns the calculator from a pointing exercise into a proper typing tool.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">Who CalcPrime is for</h3>
+  <p class="mt-3 text-slate-400 leading-relaxed">Students meet CalcPrime's feature set in stages: square roots and powers in early secondary school, trigonometry and logarithms a year or two later, inverse functions and radians at the threshold of calculus. Engineers and technicians use the same keys for phasors, tolerances and exponential derating. Programmers reach for log2, modulo and the rounding functions. Finance-minded users model growth with powers and solve for doubling times with logarithms. What unites them is the need for an answer they can trust, produced by a tool that shows its working, respects mathematical convention, explains its errors and costs nothing. That is the calculator on this page: free without limits, private by architecture, and precise by design.</p>
+
+  <h3 class="text-xl font-semibold text-white mt-8">Frequently asked questions</h3>
+  <div class="mt-4 space-y-3">
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">Is CalcPrime really free to use?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">Yes. CalcPrime offers unlimited free usage with no signup, no paywall and no watermark. Every function — trigonometry, logarithms, powers, roots, the history tape and memory keys — is available to everyone, as often as needed.</p>
+    </details>
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">What is the difference between DEG and RAD mode?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">DEG mode measures angles in degrees, so sin(30) equals 0.5. RAD mode measures angles in radians, so sin(30) is about −0.988. Use degrees for school geometry and everyday angles; use radians for calculus, waves and advanced engineering. The toggle on the display always shows which mode is active.</p>
+    </details>
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">How do I calculate a power or a root?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">Use the xʸ key or the ^ symbol: 2^10 gives 1024, and the x² key squares any value in two taps. For roots, use the √ key for square roots, or write any root as a fractional power — the fifth root of 32 is 32^(1/5), which equals 2.</p>
+    </details>
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">Is my data private? Does anything get uploaded?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">Completely private. CalcPrime evaluates every expression locally in your browser with its own parser — there are no backend calls and nothing you type is uploaded or stored on a server. Your history tape is kept only in your own browser's local storage, and you can clear it at any time.</p>
+    </details>
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">Can I use my physical keyboard with CalcPrime?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">Yes, full keyboard support is built in. Type digits, operators, parentheses and even function names like sin(, sqrt( and log( directly into the display. Press Enter to evaluate, Backspace to delete the last character and Escape to clear the expression.</p>
+    </details>
+    <details class="rounded-xl p-4" style="background:#1b1e24; border:1px solid #2b2f36;">
+      <summary class="font-medium text-white cursor-pointer">Why does CalcPrime show an error for some expressions?</summary>
+      <p class="text-sm text-slate-400 mt-2 leading-relaxed">Some operations have no real-number answer: division by zero, the square root or logarithm of a negative number, and the arcsine of a value beyond −1 to 1. Instead of crashing or guessing, CalcPrime explains exactly which rule was broken so you can correct the expression and try again.</p>
+    </details>
+  </div>
+</article>
+
+<footer class="border-t" style="border-color:#2b2f36;">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+    <p>CalcPrime — the free scientific calculator with a history tape. Built for students, engineers and the incurably curious.</p>
+    <p class="mono">sin(30) + √(16) × 2^5 = 128.5</p>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is CalcPrime really free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. CalcPrime offers unlimited free usage with no signup, no paywall and no watermark. Every function — trigonometry, logarithms, powers, roots, the history tape and memory keys — is available to everyone, as often as needed." } },
+    { "@type": "Question", "name": "What is the difference between DEG and RAD mode?", "acceptedAnswer": { "@type": "Answer", "text": "DEG mode measures angles in degrees, so sin(30) equals 0.5. RAD mode measures angles in radians, so sin(30) is about −0.988. Use degrees for school geometry and everyday angles; use radians for calculus, waves and advanced engineering. The toggle on the display always shows which mode is active." } },
+    { "@type": "Question", "name": "How do I calculate a power or a root?", "acceptedAnswer": { "@type": "Answer", "text": "Use the xʸ key or the ^ symbol: 2^10 gives 1024, and the x² key squares any value in two taps. For roots, use the √ key for square roots, or write any root as a fractional power — the fifth root of 32 is 32^(1/5), which equals 2." } },
+    { "@type": "Question", "name": "Is my data private? Does anything get uploaded?", "acceptedAnswer": { "@type": "Answer", "text": "Completely private. CalcPrime evaluates every expression locally in your browser with its own parser — there are no backend calls and nothing you type is uploaded or stored on a server. Your history tape is kept only in your own browser's local storage, and you can clear it at any time." } },
+    { "@type": "Question", "name": "Can I use my physical keyboard with CalcPrime?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, full keyboard support is built in. Type digits, operators, parentheses and even function names like sin(, sqrt( and log( directly into the display. Press Enter to evaluate, Backspace to delete the last character and Escape to clear the expression." } },
+    { "@type": "Question", "name": "Why does CalcPrime show an error for some expressions?", "acceptedAnswer": { "@type": "Answer", "text": "Some operations have no real-number answer: division by zero, the square root or logarithm of a negative number, and the arcsine of a value beyond −1 to 1. Instead of crashing or guessing, CalcPrime explains exactly which rule was broken so you can correct the expression and try again." } }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var input = document.getElementById('exprInput');
+  var prevLine = document.getElementById('prevLine');
+  var previewOut = document.getElementById('previewOut');
+  var msgLine = document.getElementById('msgLine');
+  var displayBox = document.getElementById('displayBox');
+  var tapeList = document.getElementById('tapeList');
+  var tapeEmpty = document.getElementById('tapeEmpty');
+  var memIndicator = document.getElementById('memIndicator');
+  var memValue = document.getElementById('memValue');
+  var modeDeg = document.getElementById('modeDeg');
+  var modeRad = document.getElementById('modeRad');
+
+  var angleMode = 'deg';
+  var lastAns = 0;
+  var hasAns = false;
+  var memory = 0;
+  var justEvaluated = false;
+  var history = [];
+  try { history = JSON.parse(localStorage.getItem('calcprime-history') || '[]'); if (!Array.isArray(history)) history = []; } catch (e) { history = []; }
+
+  function setMsg(t) { msgLine.textContent = t || ''; }
+
+  function currentValue() {
+    var v = parseFloat(input.value);
+    if (isFinite(v) && input.value.trim() !== '') return v;
+    try { return CalcPrimeLib.evaluate(input.value, angleMode); } catch (e) { return 0; }
+  }
+
+  function updatePreview() {
+    var expr = input.value.trim();
+    if (!expr) { previewOut.textContent = '—'; return; }
+    try {
+      var v = CalcPrimeLib.evaluate(expr, angleMode);
+      previewOut.textContent = CalcPrimeLib.formatResult(v);
+    } catch (e) { previewOut.textContent = '···'; }
+  }
+
+  function insertText(text) {
+    if (justEvaluated && /^[0-9.($a-z]/.test(text) && !/^[+\-*/%^)]/.test(text)) {
+      input.value = '';
+    }
+    justEvaluated = false;
+    var start = input.selectionStart != null ? input.selectionStart : input.value.length;
+    var end = input.selectionEnd != null ? input.selectionEnd : input.value.length;
+    input.value = input.value.slice(0, start) + text + input.value.slice(end);
+    var caret = start + text.length;
+    input.focus();
+    try { input.setSelectionRange(caret, caret); } catch (e) {}
+    setMsg('');
+    updatePreview();
+  }
+
+  function renderTape() {
+    tapeList.innerHTML = '';
+    tapeEmpty.style.display = history.length ? 'none' : 'block';
+    history.forEach(function (h) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'tape-item w-full text-left py-2.5 px-1 hover:bg-white/5 rounded transition';
+      var e = document.createElement('div');
+      e.className = 'mono text-xs text-slate-400 truncate';
+      e.textContent = h.expr + '  ·  ' + h.mode.toUpperCase();
+      var r = document.createElement('div');
+      r.className = 'mono text-lg text-cyan-300 font-medium truncate';
+      r.textContent = '= ' + h.result;
+      row.appendChild(e); row.appendChild(r);
+      row.title = 'Tap to reuse this result';
+      row.addEventListener('click', function () { insertText(h.result); });
+      tapeList.appendChild(row);
+    });
+  }
+
+  function saveTape() {
+    try { localStorage.setItem('calcprime-history', JSON.stringify(history.slice(0, 60))); } catch (e) {}
+  }
+
+  function doEquals() {
+    var expr = input.value.trim();
+    if (!expr) { setMsg('Type an expression first — for example 2+3*4.'); return; }
+    try {
+      var v = CalcPrimeLib.evaluate(expr, angleMode);
+      var formatted = CalcPrimeLib.formatResult(v);
+      prevLine.textContent = expr + ' =';
+      history.unshift({ expr: expr, result: formatted, mode: angleMode });
+      if (history.length > 60) history.length = 60;
+      saveTape(); renderTape();
+      lastAns = v; hasAns = true;
+      input.value = formatted;
+      justEvaluated = true;
+      setMsg('');
+      previewOut.textContent = formatted;
+      input.focus();
+      try { input.select(); } catch (e) {}
+    } catch (err) {
+      setMsg(err.message || 'That expression could not be evaluated.');
+      displayBox.classList.remove('shake'); void displayBox.offsetWidth; displayBox.classList.add('shake');
+    }
+  }
+
+  function setMode(m) {
+    angleMode = m;
+    modeDeg.classList.toggle('mode-on', m === 'deg');
+    modeRad.classList.toggle('mode-on', m === 'rad');
+    modeDeg.classList.toggle('text-cyan-200/60', m !== 'deg');
+    modeRad.classList.toggle('text-cyan-200/60', m !== 'rad');
+    updatePreview();
+  }
+  modeDeg.addEventListener('click', function () { setMode('deg'); });
+  modeRad.addEventListener('click', function () { setMode('rad'); });
+
+  document.querySelectorAll('[data-ins]').forEach(function (btn) {
+    btn.addEventListener('click', function () { insertText(btn.getAttribute('data-ins')); });
+  });
+
+  document.querySelectorAll('[data-mem]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var op = btn.getAttribute('data-mem');
+      if (op === 'recall') {
+        insertText(CalcPrimeLib.formatResult(memory));
+        return;
+      }
+      memory = CalcPrimeLib.memoryOps(memory, op, currentValue());
+      memValue.textContent = CalcPrimeLib.formatResult(memory);
+      memIndicator.classList.toggle('hidden', memory === 0);
+      setMsg(op === 'clear' ? 'Memory cleared.' : (op === 'add' ? 'Added to memory.' : 'Subtracted from memory.'));
+      input.focus();
+    });
+  });
+
+  document.getElementById('eqBtn').addEventListener('click', doEquals);
+  document.getElementById('clearBtn').addEventListener('click', function () {
+    input.value = ''; prevLine.textContent = ''; justEvaluated = false; setMsg(''); updatePreview(); input.focus();
+  });
+  document.getElementById('backBtn').addEventListener('click', function () {
+    var start = input.selectionStart != null ? input.selectionStart : input.value.length;
+    var end = input.selectionEnd != null ? input.selectionEnd : input.value.length;
+    if (start === end && start > 0) { input.value = input.value.slice(0, start - 1) + input.value.slice(end); start--; }
+    else { input.value = input.value.slice(0, start) + input.value.slice(end); }
+    justEvaluated = false;
+    input.focus();
+    try { input.setSelectionRange(start, start); } catch (e) {}
+    updatePreview();
+  });
+  document.getElementById('negBtn').addEventListener('click', function () {
+    var v = input.value.trim();
+    if (!v) { insertText('-'); return; }
+    if (v.charAt(0) === '-') input.value = v.slice(1); else input.value = '-(' + v + ')';
+    justEvaluated = false; updatePreview(); input.focus();
+  });
+  document.getElementById('ansBtn').addEventListener('click', function () {
+    if (!hasAns) { setMsg('No previous answer yet — calculate something first.'); return; }
+    insertText(CalcPrimeLib.formatResult(lastAns));
+  });
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var val = previewOut.textContent !== '—' && previewOut.textContent !== '···' ? previewOut.textContent : input.value;
+    if (!val) { setMsg('Nothing to copy yet.'); return; }
+    function done() { setMsg('Copied: ' + val); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(val).then(done, function () { setMsg('Copy failed — select the display text manually.'); });
+    } else { setMsg('Copy is not available in this browser.'); }
+  });
+  document.getElementById('clearHistoryBtn').addEventListener('click', function () {
+    history = []; saveTape(); renderTape(); setMsg('History tape cleared.');
+  });
+
+  input.addEventListener('input', function () { justEvaluated = false; setMsg(''); updatePreview(); });
+  input.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') { ev.preventDefault(); doEquals(); }
+    else if (ev.key === 'Escape') { input.value = ''; prevLine.textContent = ''; setMsg(''); updatePreview(); }
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter' && document.activeElement !== input && !/INPUT|TEXTAREA|BUTTON/.test((document.activeElement || {}).tagName || '')) {
+      ev.preventDefault(); input.focus(); doEquals();
+    }
+  });
+
+  renderTape();
+  updatePreview();
+  input.focus();
+})();
+</script>
+</body>
+</html>
