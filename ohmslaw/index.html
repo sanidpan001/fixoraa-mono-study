@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohm's Law Calculator — V, I, R &amp; Power | OhmsLaw</title>
+<meta name="description" content="Ohm's law wheel solving V, I, R and power, plus LED resistor mode.">
+<link rel="canonical" href="https://study.fixoraa.tech/ohmslaw/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ohm's Law Calculator — V, I, R &amp; Power | OhmsLaw">
+<meta property="og:description" content="Ohm's law wheel solving V, I, R and power, plus LED resistor mode.">
+<meta property="og:url" content="https://study.fixoraa.tech/ohmslaw/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "OhmsLaw",
+      "url": "https://study.fixoraa.tech/ohmslaw/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "description": "Ohm's law wheel solving V, I, R and power, plus LED resistor mode.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is Ohm's law in simple terms?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Voltage equals current times resistance (V = I × R). Push twice the current through the same resistor and you need twice the voltage; double the resistance at the same voltage and the current halves. Power adds the fourth variable: P = V × I." } },
+        { "@type": "Question", "name": "How do I calculate a resistor for an LED?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Subtract the LED's forward voltage from the supply voltage, then divide by the desired current: R = (Vs − Vf) / I. For a 9 V supply, 2 V LED and 20 mA current, R = 7 / 0.02 = 350 Ω — use the nearest standard 360 Ω resistor rated for at least 0.25 W." } },
+        { "@type": "Question", "name": "How do I find power if I only know voltage and resistance?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use P = V² / R. A 12 V supply across a 6 Ω load dissipates 144 / 6 = 24 W. This form is handy because it skips calculating the current first — but always size components for the resulting wattage." } },
+        { "@type": "Question", "name": "Can I use Ohm's law for AC circuits?",
+          "acceptedAnswer": { "@type": "Answer", "text": "For purely resistive AC loads (heaters, incandescent bulbs), yes — use RMS voltage and current and the same formulas apply. With capacitors or inductors, resistance becomes impedance (Z), which adds phase shift; the magnitudes still follow V = I × Z." } },
+        { "@type": "Question", "name": "Why did my resistor burn out even though the ohms were right?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The resistance was right but the power rating was too low. A resistor dropping significant voltage at real current converts P = V × I watts to heat. Always choose a power rating at least double the calculated dissipation — the LED mode above flags this automatically." } },
+        { "@type": "Question", "name": "What does the Ohm's law wheel show?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The wheel organizes all twelve forms of the V/I/R/P relationships into four quadrants. Cover the value you want: the other two visible values in its quadrant give the formula. V = I×R sits beside P = V×I, so every combination of two knowns maps to the remaining two." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#E1F9EB; --surface:#FFFFFF; --tint:#D2F4E0;
+  --accent:#147B3D; --accent-deep:#193364; --accent-ink:#FFFFFF;
+  --ink:#1B2740; --muted:#5A6A86; --line:#C4D0E8;
+  --display:'Chivo',system-ui,sans-serif; --body:'Chivo',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+.fx-container{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+.fx-header{background:var(--surface);border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50}
+.fx-header .fx-container{display:flex;align-items:center;gap:14px;padding:12px 20px;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.fx-tile{width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--accent) 0 25%,var(--accent-deep) 0 50%,var(--accent) 0 75%,var(--accent-deep) 0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;border:3px solid var(--tint)}
+.fx-name{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.fx-nav{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:9px 18px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;border:2px solid var(--accent);color:var(--accent)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-badge{display:inline-block;padding:7px 14px;border-radius:999px;background:var(--tint);color:var(--accent-deep);font-weight:700;font-size:13px;border:1.5px solid var(--accent)}
+/* hero */
+.ol-hero{padding:44px 0 6px}
+.ol-eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.ol-hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin-bottom:12px}
+.ol-hero p{font-size:18px;color:var(--muted);max-width:660px}
+/* lab */
+.ol-lab{margin:28px 0 10px;background:var(--surface);border:2px solid var(--line);border-radius:22px;overflow:hidden}
+.ol-modes{display:flex;border-bottom:2px solid var(--line)}
+.ol-modes button{flex:1;font:inherit;font-weight:700;font-size:15px;padding:16px;background:var(--tint);border:0;border-right:2px solid var(--line);cursor:pointer;color:var(--accent-deep)}
+.ol-modes button:last-child{border-right:0}
+.ol-modes button.on{background:var(--accent);color:#fff}
+.ol-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ol-left{padding:28px;border-right:2px dashed var(--line)}
+.ol-right{padding:28px;background:linear-gradient(180deg,#FCFDFF,var(--bg));display:flex;flex-direction:column;align-items:center}
+.ol-field{margin-bottom:18px}
+.ol-field label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.ol-field label .hint{font-weight:400;color:var(--muted);font-size:13px}
+.ol-knowns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ol-known{border:2px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.ol-known select{font:inherit;font-weight:800;font-size:16px;border:0;color:var(--accent);background:transparent;cursor:pointer;margin-bottom:6px}
+.ol-known input{font:inherit;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:10px;color:var(--ink)}
+.ol-known input:focus{outline:3px solid var(--tint);border-color:var(--accent)}
+.ol-known .unit{font-size:12px;color:var(--muted);margin-top:6px;display:block}
+.ol-wheel{width:100%;max-width:340px}
+.ol-wheel svg{width:100%;height:auto;display:block}
+.ol-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:18px}
+.ol-card{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px 16px;text-align:center}
+.ol-card .k{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ol-card .v{font-size:24px;font-weight:800;color:var(--accent-deep);margin-top:4px}
+.ol-card.hero{background:var(--accent);border-color:var(--accent)}
+.ol-card.hero .k{color:#cdd9f2}
+.ol-card.hero .v{color:#fff;font-size:28px}
+.ol-formula{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
+.ol-led{display:none;width:100%}
+.ol-ledrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.ol-led .ol-field{margin-bottom:0}
+.ol-ledresult{background:var(--accent);color:#fff;border-radius:16px;padding:22px;text-align:center;margin-top:6px}
+.ol-ledresult .r{font-size:34px;font-weight:800}
+.ol-ledresult .d{font-size:14px;margin-top:6px;opacity:.95}
+/* article */
+.article-sec{margin:40px 0;max-width:780px}
+.article-sec h2{font-size:24px;letter-spacing:-.02em;margin:34px 0 12px;font-weight:800}
+.article-sec p{margin-bottom:14px;color:#2b3a55}
+.article-sec ul,.article-sec ol{margin:0 0 14px 22px;color:#2b3a55}
+.article-sec li{margin-bottom:6px}
+/* faq */
+.faq-sec{margin:36px 0;max-width:780px}
+.faq-sec h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
+.faq-sec details{background:var(--surface);border:2px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-sec summary{padding:16px 18px;font-weight:700;cursor:pointer;list-style:none;font-size:16px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary:hover{color:var(--accent)}
+.faq-sec details[open] summary{border-bottom:2px solid var(--line);color:var(--accent)}
+.faq-sec details p{padding:14px 18px;color:#2b3a55;font-size:15px}
+/* footer */
+.fx-footer{background:#101c33;color:#d9e4f7;margin-top:44px;padding:40px 0 34px}
+.fx-footer .fx-brand{font-size:22px;font-weight:800;margin-bottom:8px;color:#fff}
+.fx-footer p{font-size:15px;color:#a3b6d6;max-width:640px;margin-bottom:14px}
+.fx-footer nav{display:flex;gap:18px;margin-bottom:16px}
+.fx-footer nav a{color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid var(--accent)}
+.fx-credit{font-size:14px!important}
+.fx-credit a{color:#9db9ec;font-weight:700}
+@media(max-width:760px){
+  .ol-grid{grid-template-columns:1fr}
+  .ol-left{border-right:0;border-bottom:2px dashed var(--line)}
+  .fx-nav{margin-left:0}
+  .ol-ledrow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container">
+    <a class="fx-logo" href="https://study.fixoraa.tech/ohmslaw/" aria-label="OhmsLaw home">
+      <span class="fx-tile" aria-hidden="true">&#937;</span>
+      <span class="fx-name">OhmsLaw</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="ol-hero">
+    <span class="ol-eyebrow">circuit lab &middot; V = IR</span>
+    <h1>Ohm's Law Calculator — V, I, R &amp; Power</h1>
+    <p>Enter any two values and the wheel solves the other two — voltage, current, resistance and power. Flip to LED mode for the series resistor every project needs.</p>
+  </section>
+
+  <section class="ol-lab" aria-label="OhmsLaw tool">
+    <div class="ol-modes" role="tablist" aria-label="Calculator mode">
+      <button type="button" class="on" data-m="wheel" role="tab">Ohm's law wheel</button>
+      <button type="button" data-m="led" role="tab">LED resistor</button>
+    </div>
+    <div class="ol-grid" id="ol-wheelpane">
+      <div class="ol-left">
+        <div class="ol-field">
+          <label>Two known values <span class="hint">— pick what you measured</span></label>
+          <div class="ol-knowns">
+            <div class="ol-known">
+              <select id="ol-k1" aria-label="First known quantity">
+                <option value="V" selected>Voltage (V)</option>
+                <option value="I">Current (I)</option>
+                <option value="R">Resistance (R)</option>
+                <option value="P">Power (P)</option>
+              </select>
+              <input type="number" id="ol-v1" value="12" step="any" aria-label="First known value">
+              <span class="unit" id="ol-u1">volts</span>
+            </div>
+            <div class="ol-known">
+              <select id="ol-k2" aria-label="Second known quantity">
+                <option value="V">Voltage (V)</option>
+                <option value="I" selected>Current (I)</option>
+                <option value="R">Resistance (R)</option>
+                <option value="P">Power (P)</option>
+              </select>
+              <input type="number" id="ol-v2" value="2" step="any" aria-label="Second known value">
+              <span class="unit" id="ol-u2">amps</span>
+            </div>
+          </div>
+        </div>
+        <p class="ol-formula" id="ol-formula">Using V = I &times; R and P = V &times; I</p>
+      </div>
+      <div class="ol-right" aria-live="polite">
+        <div class="ol-wheel">
+          <svg viewBox="0 0 300 300" role="img" aria-label="Ohm's law wheel">
+            <circle cx="150" cy="150" r="132" fill="#fff" stroke="#147B3D" stroke-width="5"/>
+            <path d="M150 150 L150 18 A132 132 0 0 1 282 150 Z" fill="#D2F4E0"/>
+            <path d="M150 150 L282 150 A132 132 0 0 1 150 282 Z" fill="#F4F7FD"/>
+            <path d="M150 150 L150 282 A132 132 0 0 1 18 150 Z" fill="#D2F4E0"/>
+            <path d="M150 150 L18 150 A132 132 0 0 1 150 18 Z" fill="#F4F7FD"/>
+            <line x1="150" y1="18" x2="150" y2="282" stroke="#147B3D" stroke-width="3"/>
+            <line x1="18" y1="150" x2="282" y2="150" stroke="#147B3D" stroke-width="3"/>
+            <text x="216" y="92" text-anchor="middle" font-size="26" font-weight="800" fill="#147B3D">V</text>
+            <text x="216" y="114" text-anchor="middle" font-size="12" fill="#5A6A86">V=I&#215;R</text>
+            <text x="216" y="208" text-anchor="middle" font-size="26" font-weight="800" fill="#147B3D">I</text>
+            <text x="216" y="230" text-anchor="middle" font-size="12" fill="#5A6A86">I=V/R</text>
+            <text x="84" y="208" text-anchor="middle" font-size="26" font-weight="800" fill="#147B3D">R</text>
+            <text x="84" y="230" text-anchor="middle" font-size="12" fill="#5A6A86">R=V/I</text>
+            <text x="84" y="92" text-anchor="middle" font-size="26" font-weight="800" fill="#147B3D">P</text>
+            <text x="84" y="114" text-anchor="middle" font-size="12" fill="#5A6A86">P=V&#215;I</text>
+            <circle cx="150" cy="150" r="34" fill="#147B3D"/>
+            <text x="150" y="159" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">&#937;</text>
+          </svg>
+        </div>
+        <div class="ol-cards">
+          <div class="ol-card"><div class="k">Voltage</div><div class="v" id="ol-rV">12 V</div></div>
+          <div class="ol-card"><div class="k">Current</div><div class="v" id="ol-rI">2 A</div></div>
+          <div class="ol-card"><div class="k">Resistance</div><div class="v" id="ol-rR">6 &#937;</div></div>
+          <div class="ol-card hero"><div class="k">Power</div><div class="v" id="ol-rP">24 W</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ol-grid" id="ol-ledpane" style="display:none">
+      <div class="ol-left">
+        <div class="ol-ledrow">
+          <div class="ol-field"><label>Supply voltage (V)</label><div class="ol-known"><input type="number" id="ol-vs" value="9" step="any"><span class="unit">volts DC</span></div></div>
+          <div class="ol-field"><label>LED forward voltage (V)</label><div class="ol-known"><input type="number" id="ol-vf" value="2" step="any"><span class="unit">typ. 1.8–3.3 V</span></div></div>
+          <div class="ol-field"><label>LED current (mA)</label><div class="ol-known"><input type="number" id="ol-if" value="20" step="any"><span class="unit">typ. 20 mA</span></div></div>
+        </div>
+        <p class="ol-formula">R = (V<sub>s</sub> &minus; V<sub>f</sub>) / I &nbsp;&middot;&nbsp; P = I&sup2;R</p>
+      </div>
+      <div class="ol-right" aria-live="polite">
+        <div class="ol-led" style="display:block">
+          <div class="ol-ledresult">
+            <div class="r" id="ol-ledr">360 &#937;</div>
+            <div class="d" id="ol-ledd">Exact 350 &#937; &middot; dissipates 0.14 W &middot; use &frac14; W or higher</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-sec" aria-label="Guide">
+    <h2>What Ohm's Law Actually Says</h2>
+    <p>In 1827 Georg Ohm found that for most conductors, the current flowing through is directly proportional to the voltage across it. The constant of proportionality is resistance: <strong>V = I × R</strong>. Double the voltage across the same resistor and twice the current flows. Double the resistance at the same voltage and the current halves. It is the single most-used equation in electronics — every circuit calculation either is Ohm's law or contains it.</p>
+    <p>Power completes the picture. Electrical power — the rate at which energy is converted to heat, light or motion — is <strong>P = V × I</strong>. Combine the two and you get the full family of twelve relationships the wheel above organizes: V = √(PR), I = √(P/R), R = V²/P, P = I²R, and so on. Any two of the four quantities determine the other two. The calculator applies exactly that logic: tell it what you know, and it fills in the rest.</p>
+    <h2>Reading the Wheel</h2>
+    <p>The classic teaching aid divides a circle into four quadrants — V, I, R and P. To find any value, cover it and read the formula formed by its neighbors: covering V leaves I × R; covering I leaves V / R; covering R leaves V / I; covering P leaves V × I, I²R or V²/R depending on which pair you know. Electricians have carried laminated versions of this wheel for a century because it turns every two-knowns problem into a one-step lookup.</p>
+    <p>Three derived forms deserve special attention because they skip the middleman. <strong>P = V² / R</strong> tells you the heat in a resistor from voltage alone — the reason a 120 V heater element is built the way it is. <strong>P = I²R</strong> explains why power lines run at enormous voltage: for a given delivered power, higher voltage means lower current, and losses scale with the <em>square</em> of current. <strong>R = P / I²</strong> works backwards from a known dissipation to the resistance that causes it.</p>
+    <h2>Worked Example: The 12-Volt Load</h2>
+    <p>Say you measure 12 V across a load drawing 2 A. Resistance is V / I = 6 Ω, and power is V × I = 24 W — the calculator's default example. Now reverse it: you have a 100 W, 4 Ω speaker. What voltage drives it to full power? V = √(PR) = √(400) = 20 V, and the current is V / R = 5 A (or P / V = 5 A — both agree, as they must). Checking a result two ways is the habit that separates working circuits from smoking ones.</p>
+    <p>Watch the units. Milliamps must become amps before multiplying: 20 mA is 0.02 A. Kilo-ohms are 1,000 Ω. A milliwatt is 0.001 W. Nine out of ten "Ohm's law doesn't work" complaints on hobbyist forums are unit slips, not physics failures. The calculator keeps everything in base units internally, so what you see is what the math says.</p>
+    <h2>The LED Resistor: Ohm's Law in Action</h2>
+    <p>Light-emitting diodes are the classic application. An LED is not a resistor — once its forward voltage is reached, it will pass as much current as the supply offers, destroying itself in milliseconds. The series resistor's job is to drop the <em>excess</em> voltage at the desired current: <strong>R = (Vs − Vf) / I</strong>.</p>
+    <p>Take the standard case: 9 V supply, red LED with Vf = 2 V, target current 20 mA. The resistor must drop 7 V at 0.02 A, so R = 350 Ω. Resistors come in standard E12 values, so you pick <strong>360 Ω</strong> — the actual current becomes 7 / 360 = 19.4 mA, close enough that no eye can tell. Then check power: P = I²R = 0.0004 × 350 ≈ 0.14 W, so a common ¼ W resistor runs with comfortable margin. The calculator's LED mode does all of this, including the standard-value rounding and the power-rating advice.</p>
+    <p>Forward voltages to memorize: red ~1.8–2.2 V, green and yellow ~2–2.4 V, blue and white ~3–3.4 V. When in doubt, check the LED's datasheet — running a blue LED at a red LED's resistor value is a classic beginner mistake.</p>
+    <h2>Series and Parallel: Quick Rules</h2>
+    <p>Ohm's law governs each resistor, and two rules govern how they combine. In <strong>series</strong>, resistances add (R = R₁ + R₂), current is the same everywhere, and voltage divides proportionally. In <strong>parallel</strong>, conductances add (1/R = 1/R₁ + 1/R₂), voltage is the same everywhere, and current divides inversely with resistance. Two 6 Ω resistors in series are 12 Ω; in parallel they are 3 Ω.</p>
+    <p>The power rating trap lives here: two ¼ W resistors in series can handle ½ W <em>total</em>, but each still sees only its share of the voltage. If one resistor in a series pair drops most of the voltage, it dissipates most of the power — size each resistor for its own dissipation, not the average.</p>
+    <h2>Safety: Respect the Current</h2>
+    <p>Ohm's law also explains why mains voltage is dangerous and a car battery (usually) is not. Your body's resistance — roughly 1,000–100,000 Ω depending on skin moisture — across 12 V passes about a milliamp: unpleasant tingle territory. Across 120 V mains it passes tens of milliamps, well into the range that disrupts the heart. It is the <em>current</em> that harms, but the <em>voltage</em> and <em>resistance</em> decide the current — which is exactly what V = IR says.</p>
+    <p>Practical rules: never work on live mains, fuse every project at the supply, and remember that a "12 V, 10 A" supply can deliver the full 10 A into a short — the load's resistance, not the supply's label, sets the current, up to the supply's limit. When a resistor smells hot, it is dissipating more than its rating: power down and recalculate with P = I²R before touching it.</p>
+    <h2>Measuring: Trust but Verify</h2>
+    <p>A ten-dollar multimeter closes the loop between calculation and reality. Measure voltage <em>across</em> the component (meter in parallel), current <em>through</em> the branch (meter in series, circuit broken to insert it), and resistance with the circuit <em>powered off</em> (the meter supplies its own tiny test current). If measured values disagree with the calculator, suspect the usual culprits: a dying battery lowering Vs, resistor tolerance (gold band = ±5%), or meter burden voltage on low-current ranges.</p>
+    <p>Build the habit the pros use: calculate first, then measure, then reconcile any difference. The calculator gives you the prediction; the meter gives you the truth; the gap between them is where the learning — and the debugging — happens.</p>
+    <h2>Troubleshooting With Ohm's Law</h2>
+    <p>Most circuit debugging is Ohm's law applied backwards. <strong>Symptom: a voltage that sags under load.</strong> Measure the supply with the load disconnected, then connected. If 12 V becomes 9 V, something with resistance is in series — a weak battery (internal resistance rising as it dies), an undersized wire, or a bad connection. The 3 V drop across the culprit at the measured current gives its resistance directly: R = V/I. Corroded battery terminals showing 0.5 Ω at 6 A drop 3 V and dissipate 18 W as heat — which is why they get hot.</p>
+    <p><strong>Symptom: a fuse that keeps blowing.</strong> The current exceeds the rating, so either the load resistance is too low (a partial short) or the voltage too high. Measure the load's resistance cold and compute the expected current; if the math says 2 A and the fuse sees 10 A, hunt for the short with the meter's continuity beeper, section by section. <strong>Symptom: an LED that is dim.</strong> Measure the voltage across its series resistor — if most of the supply appears there, the resistor is too large (or the supply too weak); the current is simply V_resistor/R. Each measurement turns a mystery into arithmetic.</p>
+    <h2>Voltage Dividers: the Useful Fraction</h2>
+    <p>Two resistors in series split the voltage proportionally: Vout = Vin × R₂/(R₁+R₂). This <strong>voltage divider</strong> is everywhere — volume knobs (potentiometers), sensor interfaces, reference voltages. The catch beginners miss: the divider equation assumes <em>no load</em> on the output. Connect a load comparable to R₂ and it parallels R₂, lowering the effective resistance and dragging Vout down. The rule of thumb: keep the load at least 10× R₂, or buffer the output with an op-amp follower. The calculator's wheel mode solves divider currents instantly — total current is Vin/(R₁+R₂), and each resistor's dissipation is I²R, which sizes their wattage.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+    <details><summary>What is Ohm's law in simple terms?</summary><p>Voltage equals current times resistance (V = I × R). Push twice the current through the same resistor and you need twice the voltage; double the resistance at the same voltage and the current halves. Power adds the fourth variable: P = V × I.</p></details>
+    <details><summary>How do I calculate a resistor for an LED?</summary><p>Subtract the LED's forward voltage from the supply voltage, then divide by the desired current: R = (Vs − Vf) / I. For a 9 V supply, 2 V LED and 20 mA current, R = 7 / 0.02 = 350 Ω — use the nearest standard 360 Ω resistor rated for at least 0.25 W.</p></details>
+    <details><summary>How do I find power if I only know voltage and resistance?</summary><p>Use P = V² / R. A 12 V supply across a 6 Ω load dissipates 144 / 6 = 24 W. This form is handy because it skips calculating the current first — but always size components for the resulting wattage.</p></details>
+    <details><summary>Can I use Ohm's law for AC circuits?</summary><p>For purely resistive AC loads (heaters, incandescent bulbs), yes — use RMS voltage and current and the same formulas apply. With capacitors or inductors, resistance becomes impedance (Z), which adds phase shift; the magnitudes still follow V = I × Z.</p></details>
+    <details><summary>Why did my resistor burn out even though the ohms were right?</summary><p>The resistance was right but the power rating was too low. A resistor dropping significant voltage at real current converts P = V × I watts to heat. Always choose a power rating at least double the calculated dissipation — the LED mode above flags this automatically.</p></details>
+    <details><summary>What does the Ohm's law wheel show?</summary><p>The wheel organizes all twelve forms of the V/I/R/P relationships into four quadrants. Cover the value you want: the other two visible values in its quadrant give the formula. V = I×R sits beside P = V×I, so every combination of two knowns maps to the remaining two.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">OhmsLaw</div>
+    <p>OhmsLaw solves the V / I / R / P wheel from any two knowns and sizes LED series resistors with standard values and power ratings.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+(function(){
+var UNITS = {V:'volts', I:'amps', R:'ohms', P:'watts'};
+function fmt(n){ if(!isFinite(n)) return '—'; if(n!==0&&(Math.abs(n)>=1e9||Math.abs(n)<1e-6)) return n.toExponential(2);
+  var a=Math.abs(n); var d = a>=100?1 : a>=1?2 : 3;
+  return n.toLocaleString('en-US',{maximumFractionDigits:d}); }
+function eng(n,u){ if(!isFinite(n)) return '—'; var a=Math.abs(n);
+  if(a>=1e6) return fmt(n/1e6)+' M'+u; if(a>=1e3) return fmt(n/1e3)+' k'+u;
+  if(a>0&&a<1) return fmt(n*1e3)+' m'+u; return fmt(n)+' '+u; }
+var $=function(id){return document.getElementById(id);};
+function solve(){
+  var k1=$('ol-k1').value, k2=$('ol-k2').value;
+  var v1=parseFloat($('ol-v1').value), v2=parseFloat($('ol-v2').value);
+  $('ol-u1').textContent=UNITS[k1]; $('ol-u2').textContent=UNITS[k2];
+  if(k1===k2){ $('ol-formula').textContent='Pick two different quantities.'; return; }
+  if(!(v1>0)||!(v2>0)){ $('ol-formula').textContent='Enter positive values for both knowns.'; return; }
+  var V,I,R,P,known={}; known[k1]=v1; known[k2]=v2;
+  var f='';
+  if(known.V!==undefined&&known.I!==undefined){V=known.V;I=known.I;R=V/I;P=V*I;f='R = V / I, P = V × I';}
+  else if(known.V!==undefined&&known.R!==undefined){V=known.V;R=known.R;I=V/R;P=V*I;f='I = V / R, P = V × I';}
+  else if(known.V!==undefined&&known.P!==undefined){V=known.V;P=known.P;I=P/V;R=V/I;f='I = P / V, R = V / I';}
+  else if(known.I!==undefined&&known.R!==undefined){I=known.I;R=known.R;V=I*R;P=V*I;f='V = I × R, P = V × I';}
+  else if(known.I!==undefined&&known.P!==undefined){I=known.I;P=known.P;V=P/I;R=V/I;f='V = P / I, R = V / I';}
+  else if(known.R!==undefined&&known.P!==undefined){R=known.R;P=known.P;I=Math.sqrt(P/R);V=I*R;f='I = √(P / R), V = I × R';}
+  $('ol-rV').textContent=eng(V,'V'); $('ol-rI').textContent=eng(I,'A');
+  $('ol-rR').textContent=eng(R,'Ω'); $('ol-rP').textContent=eng(P,'W');
+  $('ol-formula').textContent='Using '+f;
+}
+function solveLED(){
+  var vs=parseFloat($('ol-vs').value), vf=parseFloat($('ol-vf').value), imA=parseFloat($('ol-if').value);
+  if(!(vs>0)||!(vf>=0)||!(imA>0)){ $('ol-ledr').textContent='—'; return; }
+  if(vf>=vs){ $('ol-ledr').textContent='—'; $('ol-ledd').textContent='Supply must exceed the LED forward voltage.'; return; }
+  var i=imA/1000, rExact=(vs-vf)/i;
+  var E12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
+  var mag=Math.pow(10,Math.floor(Math.log10(rExact))), best=E12[0]*mag, bd=1e18;
+  E12.forEach(function(e){ var c=e*mag; if(c>=rExact){ var d=c-rExact; if(d<bd){bd=d;best=c;} } });
+  if(bd===1e18) best=10*mag;
+  var p=i*i*rExact, rec = p<=0.125?'¼ W':p<=0.25?'½ W':p<=0.5?'1 W':'2 W+';
+  $('ol-ledr').textContent=eng(best,'Ω');
+  $('ol-ledd').textContent='Exact '+eng(rExact,'Ω')+' · dissipates '+eng(p,'W')+' · use '+rec+' or higher';
+}
+document.querySelectorAll('.ol-modes button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.ol-modes button').forEach(function(x){x.classList.toggle('on',x===b);});
+    var m=b.getAttribute('data-m');
+    $('ol-wheelpane').style.display=m==='wheel'?'grid':'none';
+    $('ol-ledpane').style.display=m==='led'?'grid':'none';
+  });
+});
+['ol-k1','ol-k2','ol-v1','ol-v2'].forEach(function(id){ $(id).addEventListener('input',solve); $(id).addEventListener('change',solve); });
+['ol-vs','ol-vf','ol-if'].forEach(function(id){ $(id).addEventListener('input',solveLED); });
+solve(); solveLED();
+})();
+</script>
+</body>
+</html>
