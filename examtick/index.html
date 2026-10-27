@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Countdown Timer + Revision Planner — Free | ExamTick</title>
+<meta name="description" content="Free exam countdown timer with live ticking clock plus a revision planner that turns chapters and days into a daily target. No signup.">
+<link rel="canonical" href="https://study.fixoraa.tech/examtick/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Exam Countdown Timer + Revision Planner — Free | ExamTick">
+<meta property="og:description" content="Free exam countdown timer with live ticking clock plus a revision planner that turns chapters and days into a daily target. No signup.">
+<meta property="og:url" content="https://study.fixoraa.tech/examtick/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "ExamTick",
+      "url": "https://study.fixoraa.tech/examtick/",
+      "applicationCategory": "Education Tools",
+      "operatingSystem": "Web",
+      "description": "Free exam countdown timer with live ticking clock plus a revision planner that turns chapters and days into a daily target. No signup.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the exam countdown work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your exam's name and date, and the tool shows days, hours, minutes and seconds ticking live until the paper starts. The nearest upcoming exam is shown big at the top automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I track multiple exams at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes \u2014 add as many exams as you like. Each gets its own countdown plate, color-coded by urgency (blue for distant, amber under 30 days, red under 7 days), and the closest one drives the main countdown."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the revision planner calculate my daily target?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter total chapters, completed chapters, your exam date, and minutes per chapter. The planner computes chapters per day and daily minutes, then gives an intensity verdict from Relaxed to Danger zone so you know if the plan is realistic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the chapters-per-day formula?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Chapters per day = chapters remaining \u00f7 days remaining. Daily minutes = chapters per day \u00d7 your minutes per chapter. Under 1 chapter/day is relaxed, 1\u20132 is steady, 2\u20134 is intense, and over 4 is the danger zone \u2014 the plan needs cutting or rescheduling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my exam list saved if I close the page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your exams are saved in your browser automatically (local storage), so reopening the page keeps every countdown ticking. Nothing is uploaded \u2014 there is no account and no cloud."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if the planner says I'm in the danger zone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cut scope intelligently (drop the lowest weight\u00d7weakness chapters), find real extra minutes by naming their source, switch to active recall which is 2\u20133\u00d7 more efficient than re-reading, or move the date if it's flexible. Don't just 'try harder' \u2014 effort doesn't fix arithmetic."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F2F5FA; --surface:#FFFFFF; --accent:#1D4ED8; --accent-ink:#FFFFFF;
+  --ink:#16233A; --muted:#5A6B85; --line:#D9E1EE;
+  --display:'Chakra Petch',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.et-wrap{background-color:#F2F5FA;background-image:linear-gradient(#E3E9F4 1px,transparent 1px),linear-gradient(90deg,#E3E9F4 1px,transparent 1px);background-size:30px 30px;padding:56px 18px 72px;color:#16233A;}.et-inner{max-width:1080px;margin:0 auto;}.et-head{text-align:center;margin-bottom:30px;}.et-eyebrow{font-family:'Chakra Petch',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#1D4ED8;font-weight:700;}.et-logo{font-size:46px;margin-top:6px;}.et-head h1{font-family:'Chakra Petch',sans-serif;font-size:clamp(32px,5vw,50px);margin:10px 0 8px;letter-spacing:-.01em;}.et-tag{color:#5A6B85;font-size:17px;margin:0;}.et-hero{background:#fff;border:1px solid #D9E1EE;border-radius:10px;box-shadow:0 12px 30px rgba(22,35,58,.08);margin-bottom:22px;overflow:hidden;}.et-hero-top{padding:12px 20px;border-bottom:1px dashed #D9E1EE;display:flex;justify-content:space-between;font-family:'Chakra Petch',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#5A6B85;font-weight:700;}.et-hero-top .fig{color:#1D4ED8;}.et-dim{height:26px;position:relative;background:repeating-linear-gradient(90deg,#D9E1EE 0 1px,transparent 1px 40px);border-bottom:1px solid #D9E1EE;}.et-dim::after{content:'SCALE 1:1 — LIVE';position:absolute;right:12px;top:4px;font-family:'Chakra Petch',sans-serif;font-size:10px;letter-spacing:.18em;color:#5A6B85;}.et-count{display:flex;justify-content:center;gap:14px;padding:30px 16px 8px;flex-wrap:wrap;}.et-cell{text-align:center;min-width:104px;}.et-digits{font-family:'Chakra Petch',sans-serif;font-size:clamp(44px,7vw,68px);font-weight:700;color:#1D4ED8;font-variant-numeric:tabular-nums;line-height:1;background:#F2F5FA;border:1px solid #D9E1EE;border-radius:8px;padding:10px 8px;}.et-unit{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5A6B85;font-weight:700;margin-top:8px;font-family:'Chakra Petch',sans-serif;}.et-examname{text-align:center;font-size:17px;font-weight:600;padding:6px 16px 26px;color:#16233A;}.et-examname span{color:#5A6B85;font-weight:400;font-size:14px;}.et-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}@media(max-width:860px){.et-grid{grid-template-columns:1fr;}}.et-card{background:#fff;border:1px solid #D9E1EE;border-radius:10px;box-shadow:0 8px 22px rgba(22,35,58,.06);}.et-card-h{padding:14px 18px;border-bottom:1px dashed #D9E1EE;font-family:'Chakra Petch',sans-serif;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#5A6B85;font-weight:700;display:flex;justify-content:space-between;}.et-card-h .fig{color:#1D4ED8;}.et-card-b{padding:18px;}.et-field{margin-bottom:14px;}.et-field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5A6B85;margin-bottom:7px;}.et-field input{width:100%;padding:12px;border:1.5px solid #D9E1EE;border-radius:8px;font-size:15.5px;font-family:'Inter',sans-serif;box-sizing:border-box;color:#16233A;background:#fff;}.et-field input:focus{outline:none;border-color:#1D4ED8;}.et-row{display:flex;gap:10px;}.et-row .et-field{flex:1;}.et-btn{background:#1D4ED8;color:#fff;border:none;border-radius:8px;padding:13px 24px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Chakra Petch',sans-serif;width:100%;}.et-btn:hover{filter:brightness(1.08);}.et-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}.et-presets button{border:1px solid #D9E1EE;background:#F2F5FA;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;color:#5A6B85;font-family:'Inter',sans-serif;}.et-presets button:hover{border-color:#1D4ED8;color:#1D4ED8;}.et-plates{display:grid;gap:10px;margin-top:16px;}.et-plate{border:1px solid #D9E1EE;border-left:6px solid #1D4ED8;border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#fff;}.et-plate.amber{border-left-color:#D97706;}.et-plate.red{border-left-color:#DC2626;}.et-plate.past{opacity:.55;border-left-color:#9AA7BC;}.et-plate .nm{font-weight:700;font-size:15.5px;}.et-plate .dt{font-size:13px;color:#5A6B85;}.et-plate .cd{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:15px;color:#1D4ED8;white-space:nowrap;}.et-plate.amber .cd{color:#D97706;}.et-plate.red .cd{color:#DC2626;}.et-del{background:none;border:none;color:#9AA7BC;font-size:18px;cursor:pointer;padding:4px 8px;}.et-del:hover{color:#DC2626;}.et-empty{color:#5A6B85;font-size:14px;padding:6px 0;}.et-plan-out{display:none;margin-top:16px;border:1px dashed #1D4ED8;border-radius:8px;padding:16px;background:#F2F5FA;}.et-plan-out.show{display:block;}.et-big{font-family:'Chakra Petch',sans-serif;font-size:44px;font-weight:700;color:#1D4ED8;line-height:1.1;}.et-big small{font-size:15px;color:#5A6B85;font-weight:600;}.et-badge{display:inline-block;font-family:'Chakra Petch',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin:8px 0;color:#fff;background:#1D4ED8;}.et-badge.amber{background:#D97706;}.et-badge.red{background:#DC2626;}.et-badge.green{background:#15803D;}.et-spec{margin-top:10px;font-size:14.5px;}.et-spec div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #D9E1EE;}.et-spec div span:first-child{color:#5A6B85;}.et-spec div span:last-child{font-weight:700;}.et-note{font-size:13px;color:#5A6B85;line-height:1.6;margin-top:10px;}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="ExamTick home">
+      <span class="fx-logo-tile" aria-hidden="true">⏳</span>
+      <span class="fx-brand">ExamTick</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-blueprint" aria-label="ExamTick tool">
+<section class='et-wrap'><div class='et-inner'><div class='et-head'><div class='et-eyebrow'>Fig. 03 — Countdown Schematic</div><div class='et-logo' aria-hidden='true'>⏳</div><h1>Exam Countdown Timer</h1><p class='et-tag'>Every second visible. Every chapter planned.</p></div><div class='et-hero'><div class='et-hero-top'><span class='fig'>CD-01</span><span>Nearest exam — live</span></div><div class='et-dim'></div><div class='et-count' role='timer' aria-label='Countdown to nearest exam'><div class='et-cell'><div class='et-digits' id='et-d'>–</div><div class='et-unit'>Days</div></div><div class='et-cell'><div class='et-digits' id='et-h'>–</div><div class='et-unit'>Hours</div></div><div class='et-cell'><div class='et-digits' id='et-m'>–</div><div class='et-unit'>Minutes</div></div><div class='et-cell'><div class='et-digits' id='et-s'>–</div><div class='et-unit'>Seconds</div></div></div><div class='et-examname' id='et-examname'>Add your first exam below to start the clock.</div></div><div class='et-grid'><div class='et-card'><div class='et-card-h'><span class='fig'>EX-02</span><span>Your exams</span></div><div class='et-card-b'><div class='et-row'><div class='et-field' style='flex:2'><label for='et-name'>Exam name</label><input id='et-name' type='text' placeholder='e.g. Physics final' maxlength='50'></div><div class='et-field' style='flex:1.4'><label for='et-date'>Date</label><input id='et-date' type='date'></div></div><button class='et-btn' id='et-add' type='button'>+ Add exam</button><div class='et-presets' style='margin-top:12px'><span style='font-size:13px;color:#5A6B85;align-self:center'>Quick add:</span><button type='button' data-etp='7'>+7 days</button><button type='button' data-etp='30'>+30 days</button><button type='button' data-etp='60'>+60 days</button><button type='button' data-etp='90'>+90 days</button></div><div class='et-plates' id='et-plates'></div><p class='et-empty' id='et-empty'>No exams yet — add one above. Your list is saved in this browser automatically.</p></div></div><div class='et-card'><div class='et-card-h'><span class='fig'>PL-03</span><span>Revision planner</span></div><div class='et-card-b'><div class='et-row'><div class='et-field'><label for='et-total'>Total chapters</label><input id='et-total' type='number' min='1' max='500' value='40'></div><div class='et-field'><label for='et-done'>Completed</label><input id='et-done' type='number' min='0' max='500' value='12'></div></div><div class='et-row'><div class='et-field'><label for='et-pdate'>Exam date</label><input id='et-pdate' type='date'></div><div class='et-field'><label for='et-minch'>Min / chapter</label><input id='et-minch' type='number' min='5' max='600' value='45'></div></div><button class='et-btn' id='et-plan' type='button'>Calculate my daily target</button><div class='et-plan-out' id='et-planout'><div class='et-big'><span id='et-cpd'>–</span> <small>chapters / day</small></div><div><span class='et-badge' id='et-badge'>–</span></div><p class='et-note' id='et-verdict'></p><div class='et-spec'><div><span>Chapters remaining</span><span id='et-rem'>–</span></div><div><span>Days remaining</span><span id='et-days'>–</span></div><div><span>Daily revision time</span><span id='et-dmin'>–</span></div><div><span>Weekly target</span><span id='et-week'>–</span></div></div><p class='et-note'>Tip: reserve the last day for review only — re-run the plan over days − 1 to see if it still holds.</p></div></div></div></div></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Why a Countdown Changes How You Study</h2><p>A deadline you can't see is a deadline you can't feel. 'The exam is sometime in May' produces a very different Tuesday than 'the exam is in 23 days, 7 hours, 14 minutes.' That difference has a name: <strong>Parkinson's Law</strong> — work expands to fill the time available. A live, ticking countdown shrinks the available time in your perception to its true size, and vague 'I'll study later' plans collapse into concrete daily targets. This isn't motivational fluff; it's the same mechanism that makes visible clocks improve performance in timed tests. When the seconds are literally ticking, procrastination has nowhere to hide.</p><p>The second effect is planning honesty. Most students plan revision by feel: 'I'll finish the syllabus, then revise.' The countdown plus the revision planner replaces feel with arithmetic: chapters remaining ÷ days remaining = chapters per day. If that number is 0.7, you're in the safe zone. If it's 5.2, no amount of optimism will save the plan — you need to cut scope, move the date, or start today with ruthless prioritization. Seeing the impossible number early is the kindest thing a tool can do for you.</p><h2>The Revision Math, Step by Step</h2><p>The planner runs on three inputs and produces the only number that matters:</p><ol><li><strong>Days until the exam</strong> — counted from today to the paper date. The tool computes this from the calendar so there's no off-by-one optimism.</li><li><strong>Chapters remaining</strong> — total syllabus chapters minus completed ones. Be brutal here: a chapter you 'kind of read' is not completed.</li><li><strong>Minutes per chapter</strong> — your realistic pace, not your best day's pace. Time yourself on two chapters and average them.</li></ol><p>From these: <strong>chapters per day = remaining ÷ days</strong>, and <strong>daily minutes = chapters per day × minutes per chapter</strong>. The intensity verdict interprets the result:</p><table><thead><tr><th>Chapters / day</th><th>Verdict</th><th>What it means</th></tr></thead><tbody><tr><td>Under 1</td><td>Relaxed</td><td>Safe zone. Use the slack for depth, past papers, and real rest.</td></tr><tr><td>1 – 2</td><td>Steady</td><td>Optimal focus pace. This is where most successful plans live.</td></tr><tr><td>2 – 4</td><td>Intense</td><td>High intensity. Prioritize ruthlessly; weak topics first.</td></tr><tr><td>Over 4</td><td>Danger zone</td><td>Not realistic. Cut scope, reschedule, or start impossibly early.</td></tr></tbody></table><p>These bands come from observing real revision plans: above ~4 chapters a day, retention collapses because there's no time for the second pass that actually fixes knowledge. A plan in the danger zone isn't a plan — it's a wish.</p><h2>Planning for Multiple Exams</h2><p>Real exam seasons are never one paper. Add every exam as its own plate — each gets a live countdown, urgency-coded by distance: blue for distant, amber under 30 days, red under 7. The nearest exam drives the hero countdown automatically. For the planner, run the math per subject and stack the daily minutes: Physics needs 50 min/day, Chemistry 40, Maths 60 — that's 150 minutes of revision daily, which immediately tells you whether your schedule is feasible. Students who do this stacking exercise almost always discover the same thing: the plan they 'felt good about' required 6 hours a day they don't have. Better to learn it from arithmetic in October than from panic in March.</p><p>Order matters too. When days are short, sequence subjects by <strong>weight × weakness</strong>: high-weight, low-mastery subjects get the morning sessions when focus is freshest. Low-weight, high-mastery subjects get the leftover slots. The countdown doesn't sequence for you, but it makes the sequencing unavoidable — which is the point.</p><h2>Buffer Days: The Most Skipped Step</h2><p>Every plan needs buffer, and almost no plan has it. Reserve the last 1–2 days before each paper for <strong>mixed practice and error review only</strong> — no new chapters. New material the day before an exam has terrible ROI: it displaces consolidation of everything else and spikes anxiety. In the planner, this means computing your daily target over (days − 1) instead of days. If that pushes you into the danger zone, the plan was already too tight — the buffer just revealed it. Professional project managers call this the planning fallacy; students call it 'I'll catch up on the weekend.' The buffer day is how you beat it.</p><h2>Urgency Without Panic: Using the Colors</h2><p>The urgency coding is deliberate psychology. <strong>Blue (30+ days)</strong> is for building: steady pace, deep understanding, the unglamorous work that actually determines grades. <strong>Amber (7–30 days)</strong> is for sharpening: past papers, timed practice, weak-topic surgery. <strong>Red (under 7 days)</strong> is for consolidating: review sheets, error logs, sleep. Each phase has a different job, and the most common failure mode is doing red-phase work (cramming new chapters) during the blue phase, then having nothing left to consolidate. Let the color tell you which phase you're in, and match your tactics to it.</p><h2>What If You Start Late?</h2><p>Enter your real numbers — don't soften them. If the verdict says danger zone, you have exactly four levers, in order of effectiveness:</p><ol><li><strong>Cut scope intelligently.</strong> Rank chapters by (exam weight × your weakness) and drop the bottom 20%. A plan that finishes 80% of the syllabus with retention beats a plan that 'covers' 100% with none.</li><li><strong>Increase daily minutes honestly.</strong> Can you actually find 90 more minutes? Name the source — which leisure activity, which commute, which morning. 'Somehow' is not a source.</li><li><strong>Compress minutes per chapter.</strong> Switch from re-reading to active recall: close the book, write what you remember, check. It's 2–3× more time-efficient than highlighting.</li><li><strong>Move the date, if possible.</strong> For flexible deadlines (certifications, entrance slots), a two-week delay that moves you from danger to steady is worth more than two weeks of panicked cramming.</li></ol><p>What doesn't work: keeping the same plan and 'trying harder.' Effort doesn't fix arithmetic.</p><h2>Daily Targets vs Weekly Targets</h2><p>The planner gives a daily chapters-per-day number, but real weeks have uneven days — school, coaching, life. Convert the daily target into a <strong>weekly</strong> one (chapters/day × 7) and distribute across your actual free days. A 1.5/day target is 10.5 chapters a week: maybe 2 on each of four weekdays and 1.25 across the weekend. Weekly targets survive bad Tuesdays; daily targets shatter on them. Check every Sunday: chapters done vs weekly target. Behind by more than one week? Re-run the planner with updated numbers — plans are living documents, not suicide pacts.</p><h2>Spaced Repetition Inside the Countdown</h2><p>Finishing chapters once is not knowing them. The forgetting curve (Ebbinghaus) says unreviewed knowledge decays within days — so bolt a review cycle onto the countdown: every chapter gets recalled at <strong>1 day, 7 days, and 21 days</strong> after first study. In practice this means reserving ~20% of daily minutes for reviewing old chapters, not just advancing. Students who do this consistently outperform those who simply 'cover more,' because exams test retained knowledge, not covered pages. When the countdown is short, compress to two passes (next-day + pre-exam week) rather than skipping review entirely.</p><h2>Exam-Day Logistics the Countdown Can't Do</h2><p>The tool counts time; you handle the rest. In the final 48 hours: confirm the venue and reporting time, pack admit card / ID / stationery the night before, sleep a full night (an all-nighter costs more in recall than it gains in coverage — this is well replicated), eat normally, and arrive early. During the paper: scan the whole paper first, allocate minutes per mark, answer your strongest section first to bank confidence, and never leave a paper early without re-checking. None of this is glamorous. All of it beats an extra hour of midnight cramming.</p><h2>A Worked Example: 40 Chapters, 21 Days</h2><p>Take the planner for a real spin. Imagine 40 chapters total, 12 done, 28 remaining, and the paper in 21 days. Timed honestly, one chapter takes about 45 minutes. The planner computes 28 ÷ 21 = 1.33 chapters per day — a <strong>Steady</strong> verdict — and 1.33 × 45 ≈ 60 minutes of revision daily, with a weekly target of 9.3 chapters. Reserve the last day for review only and re-run over 20 days: 1.4 chapters/day, still steady, fitting inside a 90-minute daily budget. Two weeks later, 8 more chapters are done but 3 days were lost to a school event: 20 remaining ÷ 7 days = 2.86 — <strong>Intense</strong>. Cutting the four lowest-weight chapters drops it to 2.29. Still intense, but survivable with active recall. That is the planner doing its job: not motivation, just arithmetic, refreshed weekly.</p><h2>Common Countdown Mistakes</h2><ul><li><strong>Planning in 'study days' but living in calendar days.</strong> If you study 5 days a week, 8 weeks is 40 study days, not 56. The planner counts calendar days — discount for your real rhythm.</li><li><strong>Counting the exam day as a study day.</strong> It's not. Neither is the travel day before it, really.</li><li><strong>Ignoring difficulty variance.</strong> 'Minutes per chapter' is an average; hard chapters take 2×. Add a 1.2× difficulty multiplier mentally for technical subjects.</li><li><strong>One plan for the whole season.</strong> Re-run the numbers weekly. A plan that was steady in week 1 can be danger-zone by week 4 if you slipped.</li><li><strong>Watching the seconds to feel productive.</strong> The ticking clock is a nudge, not a study method. Close the tab and open the book.</li></ul>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How does the exam countdown work?</summary><p>Enter your exam's name and date, and the tool shows days, hours, minutes and seconds ticking live until the paper starts. The nearest upcoming exam is shown big at the top automatically.</p></details>
+<details><summary>Can I track multiple exams at once?</summary><p>Yes — add as many exams as you like. Each gets its own countdown plate, color-coded by urgency (blue for distant, amber under 30 days, red under 7 days), and the closest one drives the main countdown.</p></details>
+<details><summary>How does the revision planner calculate my daily target?</summary><p>Enter total chapters, completed chapters, your exam date, and minutes per chapter. The planner computes chapters per day and daily minutes, then gives an intensity verdict from Relaxed to Danger zone so you know if the plan is realistic.</p></details>
+<details><summary>What is the chapters-per-day formula?</summary><p>Chapters per day = chapters remaining ÷ days remaining. Daily minutes = chapters per day × your minutes per chapter. Under 1 chapter/day is relaxed, 1–2 is steady, 2–4 is intense, and over 4 is the danger zone — the plan needs cutting or rescheduling.</p></details>
+<details><summary>Is my exam list saved if I close the page?</summary><p>Your exams are saved in your browser automatically (local storage), so reopening the page keeps every countdown ticking. Nothing is uploaded — there is no account and no cloud.</p></details>
+<details><summary>What should I do if the planner says I&#x27;m in the danger zone?</summary><p>Cut scope intelligently (drop the lowest weight×weakness chapters), find real extra minutes by naming their source, switch to active recall which is 2–3× more efficient than re-reading, or move the date if it's flexible. Don't just 'try harder' — effort doesn't fix arithmetic.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">ExamTick</div>
+    <p>ExamTick counts down to your exams in days, hours and seconds, then turns your remaining syllabus into a daily revision target with an honest intensity verdict.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function daysUntil(fromStr,toStr){var ms=Date.parse(toStr+'T00:00:00Z')-Date.parse(fromStr+'T00:00:00Z');return Math.round(ms/86400000);}
+function etDayStr(dt){var p=function(x){return (x<10?'0':'')+x;};return dt.getFullYear()+'-'+p(dt.getMonth()+1)+'-'+p(dt.getDate());}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var KEY='examtick_exams';function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}function save(e){try{localStorage.setItem(KEY,JSON.stringify(e));}catch(x){}}var exams=load();var nameEl=document.getElementById('et-name'),dateEl=document.getElementById('et-date'),plates=document.getElementById('et-plates'),emptyEl=document.getElementById('et-empty');if(!nameEl)return;var today=etDayStr(new Date());dateEl.value=today;document.getElementById('et-pdate').value=today;function urgency(days){if(days<0)return'past';if(days<7)return'red';if(days<30)return'amber';return'';}function urgencyLabel(days){if(days<0)return'Done';if(days===0)return'Today!';if(days===1)return'1 day left';return days+' days left';}function render(){var t=etDayStr(new Date());exams.sort(function(a,b){return a.date<b.date?-1:1;});var html='';for(var i=0;i<exams.length;i++){var e=exams[i];var d=daysUntil(t,e.date);var u=urgency(d);html+='<div class=\'et-plate '+u+'\'><div><div class=\'nm\'>'+String(e.name).replace(/</g,'&lt;')+'</div><div class=\'dt\'>'+e.date+'</div></div><div style=\'display:flex;align-items:center;gap:6px\'><span class=\'cd\'>'+urgencyLabel(d)+'</span><button class=\'et-del\' type=\'button\' data-etdel=\''+i+'\' aria-label=\'Delete exam\'>×</button></div></div>';}plates.innerHTML=html;emptyEl.style.display=exams.length?'none':'block';var dels=plates.querySelectorAll('[data-etdel]');for(var q=0;q<dels.length;q++){dels[q].addEventListener('click',function(){exams.splice(Number(this.getAttribute('data-etdel')),1);save(exams);render();});}}document.getElementById('et-add').addEventListener('click',function(){var nm=nameEl.value.trim()||'My exam';var dt=dateEl.value||etDayStr(new Date());exams.push({name:nm,date:dt});save(exams);nameEl.value='';render();});var presets=document.querySelectorAll('[data-etp]');for(var pi=0;pi<presets.length;pi++){presets[pi].addEventListener('click',function(){var n=Number(this.getAttribute('data-etp'));var dt=new Date();dt.setDate(dt.getDate()+n);var nm=nameEl.value.trim()||('Exam in '+n+' days');exams.push({name:nm,date:etDayStr(dt)});save(exams);nameEl.value='';render();});}function tick(){var now=new Date();var t=etDayStr(now);var upcoming=null;for(var i=0;i<exams.length;i++){if(exams[i].date>=t&&(!upcoming||exams[i].date<upcoming.date))upcoming=exams[i];}var D=document.getElementById('et-d'),H=document.getElementById('et-h'),M=document.getElementById('et-m'),S=document.getElementById('et-s'),nm=document.getElementById('et-examname');if(!upcoming){D.textContent=H.textContent=M.textContent=S.textContent='–';nm.textContent='Add your first exam below to start the clock.';return;}var target=new Date(upcoming.date+'T00:00:00');var diff=Math.max(0,target-now);var dd=Math.floor(diff/86400000),hh=Math.floor(diff/3600000)%24,mm=Math.floor(diff/60000)%60,ss=Math.floor(diff/1000)%60;var p=function(x){return (x<10?'0':'')+x;};D.textContent=dd;H.textContent=p(hh);M.textContent=p(mm);S.textContent=p(ss);nm.innerHTML='<b>'+String(upcoming.name).replace(/</g,'&lt;')+'</b> <span>· '+upcoming.date+'</span>';}setInterval(tick,1000);tick();function intensity(cpd){if(cpd<1)return['Relaxed','green','Safe zone — use the slack for depth, past papers, and real rest.'];if(cpd<=2)return['Steady','green','Optimal focus pace. This is where most successful revision plans live.'];if(cpd<=4)return['Intense','amber','High intensity — prioritize ruthlessly, weak and high-weight topics first.'];return['Danger zone','red','Over 4 chapters a day is not realistic — cut scope, find more minutes, or move the date.'];}document.getElementById('et-plan').addEventListener('click',function(){var total=Math.max(1,Number(document.getElementById('et-total').value)||1);var done=Math.max(0,Number(document.getElementById('et-done').value)||0);var pdate=document.getElementById('et-pdate').value||etDayStr(new Date());var minch=Math.max(5,Number(document.getElementById('et-minch').value)||45);var rem=Math.max(0,total-done);var days=Math.max(1,daysUntil(etDayStr(new Date()),pdate));var cpd=rem/days;var dmin=Math.round(cpd*minch);var iv=intensity(cpd);document.getElementById('et-cpd').textContent=cpd.toFixed(2);var badge=document.getElementById('et-badge');badge.textContent=iv[0];badge.className='et-badge '+iv[1];document.getElementById('et-verdict').textContent=iv[2];document.getElementById('et-rem').textContent=rem+' chapters';document.getElementById('et-days').textContent=days+' days';document.getElementById('et-dmin').textContent=dmin+' min/day';document.getElementById('et-week').textContent=(cpd*7).toFixed(1)+' chapters/week';document.getElementById('et-planout').classList.add('show');});render();});}
+</script>
+</body>
+</html>
