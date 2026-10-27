@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/cornellcraft/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CornellCraft — Living Cornell Notes Studio | Free Cornell Notes Template &amp; Generator</title>
+<meta name="description" content="CornellCraft is a free living Cornell notes studio: a beautiful Cornell notes template and generator with cue-hide self-test flashcards, auto-saved multi-page notebooks, row-linked cue/note pairs, print export, and review-due reminders. Unlimited free usage, no signup.">
+<meta name="keywords" content="cornell notes template, cornell notes generator, cornell note taking method, cornell notes app, cue column notes, self test flashcards">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { --bg:#f8f7f4; --primary:#2563eb; --accent:#f43f5e; }
+  body { background:var(--bg); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .serif { font-family: Georgia, "Times New Roman", serif; }
+  .paper { background:#fffdf9; box-shadow: 0 1px 2px rgba(30,30,40,.06), 0 12px 32px -12px rgba(30,30,60,.18); border:1px solid #e9e4d8; }
+  .ruled { background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(37,99,235,.14) 31px, rgba(37,99,235,.14) 32px); }
+  .cue-cell { background:#fbf7ef; }
+  .row-active .cue-cell, .row-active .note-cell { background:#eef4ff !important; box-shadow: inset 3px 0 0 var(--primary); }
+  .cell { background:transparent; resize:none; outline:none; width:100%; }
+  .cell:focus { background:#fff; }
+  .margin-line { border-right:2px solid rgba(244,63,94,.55); }
+  .btn-primary { background:var(--primary); color:#fff; }
+  .btn-primary:hover { background:#1d4ed8; }
+  .btn-accent { background:var(--accent); color:#fff; }
+  .btn-accent:hover { background:#e11d48; }
+  .tab-active { background:var(--primary) !important; color:#fff !important; border-color:var(--primary) !important; }
+  .flash-hidden { display:none; }
+  @media print { .no-print { display:none !important; } body { background:#fff; } }
+  .faq summary { cursor:pointer; }
+  details.faq { border:1px solid #e9e4d8; border-radius:.75rem; background:#fffdf9; padding:1rem 1.25rem; }
+  details.faq summary { font-weight:600; color:#1e293b; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  details.faq summary::before { content:"+ "; color:var(--primary); font-weight:700; }
+  details.faq[open] summary::before { content:"– "; }
+  .toast { transition: opacity .4s ease; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Cornell note taking method?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The Cornell note taking method, developed by Walter Pauk at Cornell University in the 1950s, divides each notes page into three sections: a wide notes column on the right for capturing ideas during class, a narrow cue column on the left for keywords and self-test questions added afterwards, and a summary strip at the bottom. Its five steps \u2014 Record, Reduce, Recite, Reflect, Review \u2014 turn passive note-taking into active studying." }
+    },
+    {
+      "@type": "Question",
+      "name": "How wide should the cue column be in a Cornell notes template?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The classic layout gives the cue column about 30% of the page width (roughly 2.5 inches on US Letter paper) and the notes column about 70%. The summary area takes the bottom 2 inches. This ratio matters: a cue column that is too wide invites copying notes into it, which defeats its purpose as a compact question bank." }
+    },
+    {
+      "@type": "Question",
+      "name": "What should go in the cue column versus the notes column?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The notes column holds what you capture during a lecture: facts, explanations, diagrams, and examples, written concisely. The cue column is filled in afterwards with keywords, main ideas, and \u2014 most powerfully \u2014 questions that the adjacent notes answer. When you later hide the notes column, each cue becomes a flashcard prompt for retrieval practice." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I write a good Cornell summary?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Write your summary after filling in the cues, without looking at your notes first. In two or three sentences, state the page's big idea, the two or three most important supporting details, and the implication or likely exam angle. If you cannot summarize the page, treat that as a signal to re-study it rather than as a writing problem." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Cornell note taking method actually work for exams?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes \u2014 because it packages three evidence-backed strategies: retrieval practice (self-testing from the cue column), elaboration (writing cues and summaries in your own words), and spaced repetition (reviewing pages at increasing intervals). Students who use all five R's consistently outperform those who merely re-read notes, especially on exams that test understanding rather than memorization." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is CornellCraft free, and where are my notes stored?",
+      "acceptedAnswer": { "@type": "Answer", "text": "CornellCraft is completely free with unlimited usage \u2014 no signup, no paywall, no watermark. Your notebook is auto-saved to your browser's localStorage on your own device; nothing is uploaded to any server. You can print or export any page to PDF whenever you want a paper copy." }
+    }
+  ]
+}
+</script>
+</head>
+<body class="text-slate-800 antialiased">
+
+<!-- Sticky header -->
+<header class="no-print sticky top-0 z-50 border-b border-[#e9e4d8]" style="background:rgba(248,247,244,.92); backdrop-filter:blur(10px);">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="6" y="4" width="28" height="32" rx="3" fill="#fffdf9" stroke="#2563eb" stroke-width="2.5"/>
+        <line x1="6" y1="12" x2="34" y2="12" stroke="#2563eb" stroke-width="2.5"/>
+        <line x1="17" y1="12" x2="17" y2="30" stroke="#f43f5e" stroke-width="2"/>
+        <line x1="22" y1="18" x2="30" y2="18" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="22" y1="23" x2="30" y2="23" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="serif text-2xl font-bold tracking-tight text-slate-900">Cornell<span style="color:#2563eb">Craft</span></span>
+    </a>
+    <nav class="flex items-center gap-5 text-sm font-medium">
+      <a href="#top" class="text-slate-600 hover:text-[#2563eb] transition-colors">Home</a>
+      <a href="https://fixoraa.tech" class="text-slate-600 hover:text-[#2563eb] transition-colors">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-10 pb-2 text-center">
+    <h1 class="serif text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight">Living Cornell Notes Studio</h1>
+    <p class="mt-3 text-slate-600 max-w-2xl mx-auto text-lg">Take notes in the classic three-pane Cornell layout, self-test with cue-hide flashcards, and let your multi-page notebook save itself — free forever.</p>
+    <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-[#e9e4d8] bg-white px-4 py-1.5 text-sm font-semibold text-slate-700 shadow-sm">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Unlimited Free Usage <span class="font-normal text-slate-500">— no signup, no paywall, no watermark</span>
+    </div>
+  </section>
+
+  <!-- TOP AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ================= TOOL ================= -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-6 py-8" aria-label="Cornell notes studio">
+    <div class="paper rounded-2xl overflow-hidden">
+
+      <!-- Notebook toolbar -->
+      <div class="no-print px-5 sm:px-7 pt-6 pb-4 border-b border-[#eee9db]">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <label for="subjectInput" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Subject</label>
+            <input id="subjectInput" type="text" placeholder="e.g. Biology" class="rounded-lg border border-[#e2dccb] bg-white px-3 py-2 text-sm w-36 focus:ring-2 focus:ring-[#2563eb] focus:outline-none" autocomplete="off">
+            <button id="addSubjectBtn" type="button" class="btn-primary rounded-lg px-3 py-2 text-sm font-semibold">Add</button>
+          </div>
+          <div id="subjectTabs" class="flex flex-wrap gap-2" role="tablist" aria-label="Subjects"></div>
+          <div class="ml-auto flex items-center gap-2">
+            <button id="newPageBtn" type="button" class="rounded-lg border-2 border-[#2563eb] text-[#2563eb] px-3 py-1.5 text-sm font-semibold hover:bg-blue-50">+ New page</button>
+            <button id="deletePageBtn" type="button" class="rounded-lg border border-[#f3c2cc] text-[#f43f5e] px-3 py-1.5 text-sm font-semibold hover:bg-rose-50">Delete page</button>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center gap-2 overflow-x-auto pb-1">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 shrink-0">Pages</span>
+          <div id="pageTabs" class="flex gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Page header: topic + actions -->
+      <div class="no-print px-5 sm:px-7 py-4 border-b border-[#eee9db] bg-[#faf8f2]">
+        <div class="flex flex-wrap items-center gap-3">
+          <input id="topicInput" type="text" placeholder="Page topic — e.g. Photosynthesis, Lecture 4" class="serif flex-1 min-w-[220px] rounded-lg border border-[#e2dccb] bg-white px-4 py-2.5 text-xl font-semibold focus:ring-2 focus:ring-[#2563eb] focus:outline-none" autocomplete="off">
+          <button id="btnSelfTest" type="button" class="btn-accent rounded-lg px-4 py-2.5 text-sm font-bold shadow-sm">🎴 Self-test</button>
+          <button id="btnPrint" type="button" class="btn-primary rounded-lg px-4 py-2.5 text-sm font-bold shadow-sm">🖨 Print / PDF</button>
+          <button id="btnMarkReviewed" type="button" class="rounded-lg border-2 border-emerald-600 text-emerald-700 px-4 py-2 text-sm font-bold hover:bg-emerald-50">✓ Mark reviewed</button>
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div class="flex items-center gap-2">
+            <span id="reviewBadge" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold"></span>
+            <span id="reviewHint" class="text-xs text-slate-500"></span>
+          </div>
+          <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Completeness</span>
+            <div class="flex-1 h-2.5 rounded-full bg-[#eee9db] overflow-hidden max-w-[220px]">
+              <div id="completenessBar" class="h-full rounded-full transition-all duration-500" style="width:0%; background:linear-gradient(90deg,#2563eb,#f43f5e);"></div>
+            </div>
+            <span id="completenessPct" class="text-sm font-bold text-slate-700">0%</span>
+          </div>
+          <span id="saveState" class="text-xs text-slate-400 ml-auto">✓ Saved</span>
+        </div>
+      </div>
+
+      <!-- Cornell sheet -->
+      <div id="cornellSheet" class="px-5 sm:px-7 py-6">
+        <div class="rounded-xl overflow-hidden border border-[#ddd6c2]">
+          <div class="grid grid-cols-1 md:grid-cols-[32%_1fr]">
+            <div class="margin-line px-4 py-2 bg-[#fbf7ef] text-xs font-bold uppercase tracking-[0.15em] text-[#b3541e]">Cues &amp; questions</div>
+            <div class="px-4 py-2 bg-[#f4f8ff] text-xs font-bold uppercase tracking-[0.15em] text-[#2563eb] border-t md:border-t-0 border-[#ddd6c2]">Notes</div>
+          </div>
+          <div id="sheetRows"></div>
+          <div class="border-t-2 border-slate-800 bg-[#faf8f2]">
+            <div class="px-4 pt-3 text-xs font-bold uppercase tracking-[0.15em] text-slate-500">Summary</div>
+            <textarea id="summaryInput" rows="3" placeholder="Sum up this page in 2–3 sentences — the single most powerful review step." class="cell serif px-4 pb-4 pt-1 text-[15px] leading-relaxed text-slate-800 placeholder:text-slate-400"></textarea>
+          </div>
+        </div>
+        <div class="no-print mt-4 flex items-center gap-3">
+          <button id="addRowBtn" type="button" class="rounded-lg border-2 border-dashed border-[#b9c6ea] text-[#2563eb] px-4 py-2 text-sm font-semibold hover:bg-blue-50 w-full">+ Add cue / note row</button>
+        </div>
+        <p id="emptySheetMsg" class="no-print hidden mt-6 text-center text-slate-500">This page is empty. Add a topic above, then write cues on the left and notes on the right.</p>
+      </div>
+
+      <!-- Self-test flashcard overlay -->
+      <div id="flashWrap" class="flash-hidden no-print px-5 sm:px-7 pb-8">
+        <div class="rounded-2xl border-2 border-[#2563eb] bg-white p-6 sm:p-8 text-center shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <span id="cardCount" class="text-xs font-bold uppercase tracking-widest text-slate-500">Card 1 of 1</span>
+            <button id="btnEndTest" type="button" class="text-sm font-semibold text-slate-500 hover:text-[#f43f5e]">End test ✕</button>
+          </div>
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#2563eb] mb-2">Cue — recall the notes, then reveal</div>
+          <div id="cardCue" class="serif text-2xl sm:text-3xl font-bold text-slate-900 min-h-[3.5rem] flex items-center justify-center px-2"></div>
+          <div id="cardNoteWrap" class="flash-hidden mt-5 rounded-xl bg-[#f4f8ff] border border-[#cdd9f7] p-5 text-left">
+            <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#f43f5e] mb-2">Notes</div>
+            <div id="cardNote" class="text-slate-800 leading-relaxed whitespace-pre-wrap"></div>
+          </div>
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <button id="btnReveal" type="button" class="btn-primary rounded-lg px-5 py-2.5 text-sm font-bold">Reveal notes</button>
+            <button id="btnPrevCard" type="button" class="rounded-lg border border-[#e2dccb] px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">← Prev</button>
+            <button id="btnNextCard" type="button" class="rounded-lg border border-[#e2dccb] px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Next →</button>
+          </div>
+          <div id="gradeRow" class="flash-hidden mt-5 flex items-center justify-center gap-3">
+            <span class="text-sm text-slate-600 font-medium">Did you recall it?</span>
+            <button id="btnUnknown" type="button" class="btn-accent rounded-lg px-5 py-2 text-sm font-bold">Not quite</button>
+            <button id="btnKnown" type="button" class="rounded-lg bg-emerald-600 text-white px-5 py-2 text-sm font-bold hover:bg-emerald-700">Got it ✓</button>
+          </div>
+          <div id="testScore" class="flash-hidden mt-6 rounded-xl bg-[#faf8f2] border border-[#e9e4d8] p-5"></div>
+        </div>
+      </div>
+
+    </div>
+    <div id="toast" class="toast no-print fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-slate-900 text-white text-sm font-medium px-5 py-2.5 shadow-xl opacity-0 pointer-events-none z-50"></div>
+  </section>
+  <!-- =============== /TOOL =============== -->
+
+  <!-- BOTTOM AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+
+  <!-- Pure logic library (inlined at build time) -->
+  <script id="v3-cornellcraft-cornell-notes-studio-lib">
+/*
+ * CornellCraft — Living Cornell Notes Studio
+ * Pure logic module. NO document/window access, no side effects.
+ * Covers: page model, completeness scoring, review-due calc,
+ * self-test deck, notebook collection helpers, print-export builder.
+ */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  } else {
+    root.CornellCraft = api;
+  }
+})(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  var uidCounter = 0;
+
+  /** Deterministic-enough unique id for rows/pages (pure function of prefix + counter + random). */
+  function uid(prefix) {
+    uidCounter += 1;
+    return (prefix || 'id') + '-' + Date.now().toString(36) + '-' + uidCounter + '-' +
+      Math.floor(Math.random() * 1e6).toString(36);
+  }
+
+  function isNonEmptyString(v) {
+    return typeof v === 'string' && v.trim().length > 0;
+  }
+
+  /** Create one blank Cornell row (a row-linked cue + note pair). */
+  function createRow() {
+    return { id: uid('row'), cue: '', note: '' };
+  }
+
+  /** Create a fresh Cornell page. */
+  function createPage(topic, subject) {
+    var now = Date.now();
+    var page = {
+      id: uid('page'),
+      topic: typeof topic === 'string' ? topic : '',
+      subject: typeof subject === 'string' ? subject : 'General',
+      createdAt: now,
+      updatedAt: now,
+      lastReviewedAt: null,
+      reviewCount: 0,
+      summary: '',
+      rows: []
+    };
+    for (var i = 0; i < 5; i++) page.rows.push(createRow());
+    return page;
+  }
+
+  /** Append a blank row to a page. Returns the new row (mutates page). */
+  function addRow(page) {
+    if (!page || !Array.isArray(page.rows)) return null;
+    var row = createRow();
+    page.rows.push(row);
+    page.updatedAt = Date.now();
+    return row;
+  }
+
+  /** Remove a row by id. Returns true if removed. */
+  function removeRow(page, rowId) {
+    if (!page || !Array.isArray(page.rows)) return false;
+    for (var i = 0; i < page.rows.length; i++) {
+      if (page.rows[i].id === rowId) {
+        page.rows.splice(i, 1);
+        page.updatedAt = Date.now();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function findRow(page, rowId) {
+    if (!page || !Array.isArray(page.rows)) return null;
+    for (var i = 0; i < page.rows.length; i++) {
+      if (page.rows[i].id === rowId) return page.rows[i];
+    }
+    return null;
+  }
+
+  /** Update one cell ('cue' or 'note') of a row. Returns true on success. */
+  function updateCell(page, rowId, field, value) {
+    if (field !== 'cue' && field !== 'note') return false;
+    var row = findRow(page, rowId);
+    if (!row) return false;
+    row[field] = typeof value === 'string' ? value : '';
+    page.updatedAt = Date.now();
+    return true;
+  }
+
+  /** Replace the page summary. */
+  function setSummary(page, text) {
+    if (!page) return false;
+    page.summary = typeof text === 'string' ? text : '';
+    page.updatedAt = Date.now();
+    return true;
+  }
+
+  /** Set the page topic/subject. */
+  function setPageMeta(page, topic, subject) {
+    if (!page) return false;
+    if (typeof topic === 'string') page.topic = topic;
+    if (typeof subject === 'string' && subject.trim().length > 0) page.subject = subject;
+    page.updatedAt = Date.now();
+    return true;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Completeness scoring                                               */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * completeness(page) -> { percent, filled, total, cuesFilled, notesFilled, rows, summaryFilled }
+   * A "section" is each row's cue, each row's note, plus the page summary.
+   * percent = round(100 * filled / total). Empty page (no rows, no summary) -> 0%.
+   */
+  function completeness(page) {
+    var result = {
+      percent: 0, filled: 0, total: 0,
+      cuesFilled: 0, notesFilled: 0, rows: 0, summaryFilled: false
+    };
+    if (!page || !Array.isArray(page.rows)) return result;
+    result.rows = page.rows.length;
+    result.total = page.rows.length * 2 + 1; // cue + note per row + summary
+    var cues = 0, notes = 0;
+    for (var i = 0; i < page.rows.length; i++) {
+      if (isNonEmptyString(page.rows[i].cue)) cues++;
+      if (isNonEmptyString(page.rows[i].note)) notes++;
+    }
+    result.cuesFilled = cues;
+    result.notesFilled = notes;
+    result.summaryFilled = isNonEmptyString(page.summary);
+    result.filled = cues + notes + (result.summaryFilled ? 1 : 0);
+    result.percent = result.total > 0 ? Math.round(100 * result.filled / result.total) : 0;
+    return result;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Review-due (spaced repetition)                                     */
+  /* ------------------------------------------------------------------ */
+
+  /** Spaced-repetition intervals in days, indexed by completed review count. */
+  var REVIEW_INTERVALS = [1, 3, 7, 14, 30];
+
+  /** Interval in days for the next review given how many reviews were done. */
+  function nextReviewInterval(reviewCount) {
+    var n = typeof reviewCount === 'number' && reviewCount >= 0 ? Math.floor(reviewCount) : 0;
+    return REVIEW_INTERVALS[Math.min(n, REVIEW_INTERVALS.length - 1)];
+  }
+
+  /**
+   * reviewStatus(page, nowMs) ->
+   * { status: 'never'|'not-due'|'due'|'overdue', daysSince, intervalDays, dueInDays }
+   * - never: page has never been reviewed.
+   * - due: daysSince >= intervalDays.
+   * - overdue: daysSince >= intervalDays * 2.
+   * - not-due: otherwise; dueInDays = ceil(intervalDays - daysSince).
+   */
+  function reviewStatus(page, nowMs) {
+    var now = typeof nowMs === 'number' ? nowMs : Date.now();
+    var out = { status: 'never', daysSince: null, intervalDays: nextReviewInterval(0), dueInDays: 0 };
+    if (!page) return out;
+    var interval = nextReviewInterval(page.reviewCount || 0);
+    out.intervalDays = interval;
+    if (page.lastReviewedAt == null) return out;
+    var daysSince = (now - page.lastReviewedAt) / 86400000;
+    out.daysSince = daysSince;
+    if (daysSince >= interval * 2) {
+      out.status = 'overdue';
+    } else if (daysSince >= interval) {
+      out.status = 'due';
+    } else {
+      out.status = 'not-due';
+      out.dueInDays = Math.ceil(interval - daysSince);
+    }
+    return out;
+  }
+
+  /** Record a review at nowMs: bumps reviewCount and lastReviewedAt. */
+  function markReviewed(page, nowMs) {
+    if (!page) return false;
+    var now = typeof nowMs === 'number' ? nowMs : Date.now();
+    page.lastReviewedAt = now;
+    page.reviewCount = (typeof page.reviewCount === 'number' ? page.reviewCount : 0) + 1;
+    page.updatedAt = now;
+    return true;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Self-test (cue-hide flashcard) deck                                */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * buildDeck(page) -> [{ rowId, cue, note }] for rows that have at least
+   * a cue or a note. Order is stable (page order).
+   */
+  function buildDeck(page) {
+    if (!page || !Array.isArray(page.rows)) return [];
+    var deck = [];
+    for (var i = 0; i < page.rows.length; i++) {
+      var r = page.rows[i];
+      if (isNonEmptyString(r.cue) || isNonEmptyString(r.note)) {
+        deck.push({ rowId: r.id, cue: r.cue || '', note: r.note || '' });
+      }
+    }
+    return deck;
+  }
+
+  /** Move within a deck with wraparound. dir = +1 | -1. */
+  function nextCardIndex(current, total, dir) {
+    if (!total || total <= 0) return 0;
+    var step = dir === -1 ? -1 : 1;
+    return (((current + step) % total) + total) % total;
+  }
+
+  /**
+   * gradeSession(results) -> { total, known, pct }
+   * results: array of booleans (true = user knew the card).
+   */
+  function gradeSession(results) {
+    var total = Array.isArray(results) ? results.length : 0;
+    var known = 0;
+    if (Array.isArray(results)) {
+      for (var i = 0; i < results.length; i++) if (results[i] === true) known++;
+    }
+    return { total: total, known: known, pct: total > 0 ? Math.round(100 * known / total) : 0 };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Notebook collection                                                */
+  /* ------------------------------------------------------------------ */
+
+  /** createNotebook() -> { pages: {id: page}, order: [ids] } */
+  function createNotebook() {
+    return { pages: {}, order: [] };
+  }
+
+  function addPageToNotebook(nb, page) {
+    if (!nb || !page || !page.id) return false;
+    if (!nb.pages[page.id]) nb.order.push(page.id);
+    nb.pages[page.id] = page;
+    return true;
+  }
+
+  function getPageFromNotebook(nb, pageId) {
+    if (!nb || !nb.pages) return null;
+    return nb.pages[pageId] || null;
+  }
+
+  function deletePageFromNotebook(nb, pageId) {
+    if (!nb || !nb.pages || !nb.pages[pageId]) return false;
+    delete nb.pages[pageId];
+    nb.order = nb.order.filter(function (id) { return id !== pageId; });
+    return true;
+  }
+
+  /** listSubjects(nb) -> sorted unique subject names with page counts. */
+  function listSubjects(nb) {
+    var map = {};
+    if (nb && nb.order) {
+      for (var i = 0; i < nb.order.length; i++) {
+        var p = nb.pages[nb.order[i]];
+        if (p) {
+          var s = p.subject || 'General';
+          map[s] = (map[s] || 0) + 1;
+        }
+      }
+    }
+    return Object.keys(map).sort().map(function (name) {
+      return { name: name, count: map[name] };
+    });
+  }
+
+  /** listPages(nb, subject) -> pages for a subject, newest first. */
+  function listPages(nb, subject) {
+    var out = [];
+    if (nb && nb.order) {
+      for (var i = 0; i < nb.order.length; i++) {
+        var p = nb.pages[nb.order[i]];
+        if (p && (subject == null || p.subject === subject)) out.push(p);
+      }
+    }
+    out.sort(function (a, b) { return b.createdAt - a.createdAt; });
+    return out;
+  }
+
+  /**
+   * validatePage(page) -> array of error strings (empty = valid).
+   * Guards data loaded from localStorage.
+   */
+  function validatePage(page) {
+    var errors = [];
+    if (!page || typeof page !== 'object') return ['Page is not an object.'];
+    if (!isNonEmptyString(page.id)) errors.push('Missing page id.');
+    if (!Array.isArray(page.rows)) {
+      errors.push('Rows must be an array.');
+    } else {
+      for (var i = 0; i < page.rows.length; i++) {
+        var r = page.rows[i];
+        if (!r || typeof r !== 'object') { errors.push('Row ' + i + ' is not an object.'); continue; }
+        if (!isNonEmptyString(r.id)) errors.push('Row ' + i + ' is missing an id.');
+        if (typeof r.cue !== 'string') errors.push('Row ' + i + ' cue must be a string.');
+        if (typeof r.note !== 'string') errors.push('Row ' + i + ' note must be a string.');
+      }
+    }
+    if (typeof page.summary !== 'string') errors.push('Summary must be a string.');
+    return errors;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Print-export builder                                               */
+  /* ------------------------------------------------------------------ */
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function nl2br(s) {
+    return escapeHtml(s).replace(/\r?\n/g, '<br>');
+  }
+
+  function formatDate(ms) {
+    if (ms == null) return '';
+    var d = new Date(ms);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  /**
+   * buildPrintHtml(page, opts) -> standalone printable HTML string
+   * (Cornell three-pane layout, ink-friendly, A4-friendly).
+   */
+  function buildPrintHtml(page, opts) {
+    var o = opts || {};
+    var brand = typeof o.brand === 'string' ? o.brand : 'CornellCraft';
+    var p = page || { topic: '', subject: '', rows: [], summary: '' };
+    var rows = Array.isArray(p.rows) ? p.rows : [];
+    var topic = isNonEmptyString(p.topic) ? p.topic : 'Untitled notes';
+    var subject = isNonEmptyString(p.subject) ? p.subject : 'General';
+    var dateStr = formatDate(p.createdAt);
+
+    var body = '';
+    for (var i = 0; i < rows.length; i++) {
+      var cue = nl2br(rows[i].cue || '');
+      var note = nl2br(rows[i].note || '');
+      if (!isNonEmptyString(rows[i].cue) && !isNonEmptyString(rows[i].note)) continue;
+      body += '<tr>' +
+        '<td class="cue">' + (cue || '&nbsp;') + '</td>' +
+        '<td class="note">' + (note || '&nbsp;') + '</td>' +
+        '</tr>';
+    }
+    if (!body) {
+      body = '<tr><td class="cue">&nbsp;</td><td class="note">&nbsp;</td></tr>';
+    }
+
+    return '<!DOCTYPE html>\n' +
+      '<html lang="en">\n<head>\n<meta charset="UTF-8">\n' +
+      '<title>' + escapeHtml(topic) + ' — Cornell Notes | ' + escapeHtml(brand) + '</title>\n' +
+      '<style>\n' +
+      '  * { box-sizing: border-box; }\n' +
+      '  body { font-family: Georgia, "Times New Roman", serif; color: #1a1a1a; margin: 0; padding: 32px; }\n' +
+      '  .sheet { max-width: 800px; margin: 0 auto; border: 1px solid #999; }\n' +
+      '  .head { padding: 16px 20px; border-bottom: 2px solid #1a1a1a; }\n' +
+      '  .head h1 { font-size: 22px; margin: 0 0 4px; }\n' +
+      '  .head .meta { font-size: 12px; color: #555; }\n' +
+      '  table.cornell { width: 100%; border-collapse: collapse; }\n' +
+      '  table.cornell td { border: 1px solid #999; vertical-align: top; padding: 10px 12px; font-size: 14px; line-height: 1.55; }\n' +
+      '  td.cue { width: 32%; background: #fbfbf8; }\n' +
+      '  .summary { padding: 16px 20px; border-top: 2px solid #1a1a1a; }\n' +
+      '  .summary h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 8px; color: #555; }\n' +
+      '  .summary p { font-size: 14px; line-height: 1.6; margin: 0; }\n' +
+      '  .foot { text-align: center; font-size: 10px; color: #999; margin-top: 16px; }\n' +
+      '  @media print { body { padding: 0; } .sheet { border: none; } .foot { display: none; } }\n' +
+      '</style>\n</head>\n<body>\n' +
+      '<div class="sheet">\n' +
+      '  <div class="head">\n' +
+      '    <h1>' + escapeHtml(topic) + '</h1>\n' +
+      '    <div class="meta">' + escapeHtml(subject) + (dateStr ? ' &middot; ' + escapeHtml(dateStr) : '') + '</div>\n' +
+      '  </div>\n' +
+      '  <table class="cornell">\n' +
+      '    <tbody>' + body + '</tbody>\n' +
+      '  </table>\n' +
+      '  <div class="summary">\n' +
+      '    <h2>Summary</h2>\n' +
+      '    <p>' + (isNonEmptyString(p.summary) ? nl2br(p.summary) : '&nbsp;') + '</p>\n' +
+      '  </div>\n' +
+      '</div>\n' +
+      '<div class="foot">Made with ' + escapeHtml(brand) + '</div>\n' +
+      '</body>\n</html>';
+  }
+
+  /* ------------------------------------------------------------------ */
+
+  return {
+    uid: uid,
+    createRow: createRow,
+    createPage: createPage,
+    addRow: addRow,
+    removeRow: removeRow,
+    findRow: findRow,
+    updateCell: updateCell,
+    setSummary: setSummary,
+    setPageMeta: setPageMeta,
+    completeness: completeness,
+    REVIEW_INTERVALS: REVIEW_INTERVALS.slice(),
+    nextReviewInterval: nextReviewInterval,
+    reviewStatus: reviewStatus,
+    markReviewed: markReviewed,
+    buildDeck: buildDeck,
+    nextCardIndex: nextCardIndex,
+    gradeSession: gradeSession,
+    createNotebook: createNotebook,
+    addPageToNotebook: addPageToNotebook,
+    getPageFromNotebook: getPageFromNotebook,
+    deletePageFromNotebook: deletePageFromNotebook,
+    listSubjects: listSubjects,
+    listPages: listPages,
+    validatePage: validatePage,
+    escapeHtml: escapeHtml,
+    buildPrintHtml: buildPrintHtml
+  };
+});
+
+</script>
+
+  <!-- ================= SEO ARTICLE ================= -->
+  <article class="mx-auto max-w-4xl px-4 sm:px-6 py-10 text-slate-700 leading-relaxed" aria-label="About the Cornell note taking method">
+    <h2 class="serif text-3xl font-bold text-slate-900 mb-4">The Cornell Note Taking Method: A Complete Guide</h2>
+    <p class="mb-4">Few study techniques have survived as long — or helped as many students — as the <strong>cornell note taking method</strong>. Developed in the 1950s at Cornell University, it turns an ordinary notebook page into a small learning machine: one column for capturing ideas, one column for questioning them, and a summary strip that forces you to distill what matters. Whether you use a printable <strong>cornell notes template</strong>, a digital <strong>cornell notes generator</strong> like CornellCraft, or a plain ruled notebook, the method works the same way. This guide explains the layout, the science behind it, and how to squeeze every point of value out of your pages.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">What Is the Cornell Note Taking Method?</h3>
+    <p class="mb-4">The Cornell note taking method was created by Walter Pauk, an education professor at Cornell University, and popularized in his 1962 book <em>How to Study in College</em>. Pauk noticed that students who simply transcribed lectures word-for-word remembered very little. His fix was structural: divide every page into three zones — a wide <strong>notes column</strong> on the right (about 70% of the width), a narrow <strong>cue column</strong> on the left (about 30%), and a <strong>summary area</strong> at the bottom (roughly the last two inches of the page). Notes go on the right during class; cues and summaries are added afterwards, which is where the real learning happens.</p>
+    <p class="mb-4">The genius of the format is that it separates <em>recording</em> from <em>thinking</em>. During a lecture you focus on capturing the flow of ideas. Later — ideally within 24 hours — you revisit the page, pull key terms and questions into the cue column, and write a two-to-three sentence summary. That second pass converts passive notes into an active study system, and it takes only ten minutes per page.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">The Anatomy of a Cornell Page</h3>
+    <p class="mb-4">Every Cornell notes template, paper or digital, has the same three panes. The <strong>notes column</strong> on the right is your capture zone. Write in phrases, not full sentences; use abbreviations, arrows, and diagrams. Leave white space between ideas so you can add clarifications later. Messy is fine here — this column is raw material, not a final product.</p>
+    <p class="mb-4">The <strong>cue column</strong> on the left is the engine of the whole method. After class, read through your notes and add keywords, main ideas, dates, formulas, or — best of all — <em>questions</em>. "What causes the seasons?" is a far better cue than "seasons," because it primes your brain to retrieve an answer rather than merely recognize a word. When you later cover the notes column and quiz yourself from the cues alone, you are doing retrieval practice, one of the most evidence-backed study strategies in cognitive science.</p>
+    <p class="mb-4">The <strong>summary</strong> at the bottom is the final filter. In two or three sentences, answer: what was this page really about? If you cannot summarize it, you do not understand it yet — and that is useful information. Summaries also make review brutally efficient: before an exam you can read fifty summaries in the time it would take to re-read five full pages of notes.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">The 5 R's: Record, Reduce, Recite, Reflect, Review</h3>
+    <p class="mb-4">Pauk described the method as five steps, the <strong>5 R's</strong>. <strong>Record:</strong> during the lecture, capture meaningful facts and ideas in the notes column, as concisely as possible. <strong>Reduce:</strong> after class, distill the notes into cues and questions in the left column. <strong>Recite:</strong> cover the notes column with your hand or a sheet of paper, read each cue aloud, and explain the answer from memory — in your own words, not the lecturer's. <strong>Reflect:</strong> ask yourself how these ideas connect to what you already know, where they might apply, and what still confuses you. <strong>Review:</strong> revisit your summaries regularly, spacing sessions out over days and weeks rather than cramming.</p>
+    <p class="mb-4">Most students skip straight from Record to Review and wonder why the method "doesn't work for them." The magic lives in the middle three steps. Reduce forces you to identify what matters; Recite builds durable memory through retrieval; Reflect builds the mental connections that turn facts into understanding. A Cornell notes generator that supports cue-hiding and self-testing — like the flashcard mode in CornellCraft — exists precisely to make the Recite step frictionless.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">Why the Cornell Method Actually Works</h3>
+    <p class="mb-4">The method's staying power is not nostalgia; it aligns with what learning science has confirmed repeatedly. <strong>Retrieval practice</strong> — pulling information out of memory — strengthens retention far more than re-reading. Covering the notes column and answering your own cues is retrieval practice in its purest form. <strong>Elaboration</strong> — connecting new ideas to existing knowledge — happens naturally when you write questions and summaries in your own words. And <strong>spaced repetition</strong> — reviewing at increasing intervals — is exactly what review-due reminders automate: look at a page one day later, then three days, then a week, and it sticks.</p>
+    <p class="mb-4">There is also a subtler benefit: the layout makes the <em>quality</em> of your notes visible. A page with an empty cue column is a page you captured but never processed. A page with no summary is a page you never distilled. That visual honesty — which a completeness meter can quantify — nudges you to finish the job instead of mistaking highlighting for learning.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">How to Write Cues That Make Self-Testing Easy</h3>
+    <p class="mb-4">Good cues share three traits. First, they are <strong>specific</strong>: "formula for kinetic energy" beats "energy." Second, many are <strong>questions</strong>: interrogative cues trigger recall, while single keywords often trigger only recognition. Third, they are <strong>aligned</strong> with the notes beside them — each cue should point at exactly the note row it summarizes, which is why row-linked cue/note pairs matter. When cue and note drift apart, self-testing becomes guesswork.</p>
+    <p class="mb-4">Aim for five to ten cues per page. Fewer and you are skimming; many more and each cue becomes too narrow to be useful. Mix question types: definitions ("What is…?"), comparisons ("How does X differ from Y?"), causes ("Why does…?"), and applications ("When would you use…?"). Vocabulary-heavy subjects lean on definitions; concept-heavy subjects lean on why and how questions.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">How to Write a Summary Worth Re-Reading</h3>
+    <p class="mb-4">A strong Cornell summary is not a list of everything on the page — it is the page's <em>thesis</em>. Try this recipe: sentence one states the big idea; sentence two gives the two or three most important supporting details; sentence three notes the implication, the exception, or the thing most likely to appear on the test. Write it without looking at your notes first, then check and correct. If your first draft is just a longer version of the notes column, you are summarizing the wrong thing — zoom out one level.</p>
+    <p class="mb-4">Summaries pay compound interest. A month later, reading thirty summaries takes twenty minutes and rebuilds the skeleton of an entire course. Students who skip summaries almost always regret it at exam time, when they face a mountain of raw notes with no map.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">Using Cornell Notes for Exam Preparation</h3>
+    <p class="mb-4">When exams approach, your Cornell notebook becomes a question bank. The workflow: hide the notes column, work through the cue column card by card, and mark each cue as known or unknown. Spend your remaining time only on the unknowns — this is triage studying, and it beats re-reading everything by a wide margin. After each self-test round, update your cues: rephrase the ones you stumbled on, split cues that hid two ideas, and delete cues you have fully mastered.</p>
+    <p class="mb-4">Space your review sessions. Cognitive research converges on intervals of roughly 1, 3, 7, 14, and 30 days for durable retention. Reviewing a page the night before the exam after ignoring it for a month is cramming, not spacing — the schedule only works if the early reviews happen. A review-due badge that tells you which pages are due today removes the planning overhead entirely.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">Common Mistakes (and How to Avoid Them)</h3>
+    <p class="mb-4"><strong>Mistake one: transcribing instead of noting.</strong> If your notes column reads like a court transcript, you are recording words, not ideas. Listen for structure — definitions, examples, contrasts, conclusions — and capture those. <strong>Mistake two: filling cues during the lecture.</strong> Cues written live are just more transcription. Leave the left column blank until afterwards; the delay is the point. <strong>Mistake three: never writing the summary.</strong> Treat an unsummarized page as unfinished homework. <strong>Mistake four: re-reading instead of reciting.</strong> Reading feels productive and accomplishes little. Cover, recall, check — every time. <strong>Mistake five: one giant notebook with no subjects.</strong> Organize pages by subject so review sessions stay focused; a single chronological pile becomes unnavigable by mid-semester.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">Paper vs. Digital: Cornell Notes Template or Cornell Notes Generator?</h3>
+    <p class="mb-4">Paper has real advantages: handwriting slows you down in a good way, diagrams are effortless, and there are no notifications. But paper notebooks cannot remind you which pages are due for review, cannot hide the notes column with one tap for self-testing, and cannot be searched. A printable cornell notes template splits the difference — print a stack, write by hand, and keep the tactile benefits.</p>
+    <p class="mb-4">A digital cornell notes generator adds the features paper cannot: automatic saving so a lost notebook never loses your semester, instant reorganization by subject, one-tap cue-hiding flashcards, completeness tracking that shows which pages still need summaries, spaced-repetition badges, and clean print export when you want the paper feel back. The best choice depends on your habits — many students take notes by hand and use a digital tool for review and self-testing.</p>
+
+    <h3 class="serif text-2xl font-bold text-slate-900 mt-8 mb-3">Why CornellCraft</h3>
+    <p class="mb-4">CornellCraft was built as a <em>living</em> Cornell studio, not a static template. Your notebook auto-saves every keystroke to your own browser — nothing is uploaded anywhere. Cue and note rows stay linked, so self-testing always quizzes the right pair. The completeness meter tells you at a glance which pages still need cues or a summary. Review-due badges run a spaced-repetition schedule (1, 3, 7, 14, 30 days) so you always know what to revise today. And when you need paper, one click produces a clean, print-optimized Cornell page. It is free, unlimited, and asks for nothing in return — the method deserves tools as thoughtful as it is.</p>
+  </article>
+  <!-- =============== /SEO ARTICLE =============== -->
+
+  <!-- ================= FAQs ================= -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 pb-12" aria-label="Frequently asked questions">
+    <h2 class="serif text-3xl font-bold text-slate-900 mb-6">Frequently Asked Questions</h2>
+    <div class="space-y-3">
+      <details class="faq">
+        <summary>What is the Cornell note taking method?</summary>
+        <p class="mt-2 text-slate-600">The Cornell note taking method, developed by Walter Pauk at Cornell University in the 1950s, divides each notes page into three sections: a wide notes column on the right for capturing ideas during class, a narrow cue column on the left for keywords and self-test questions added afterwards, and a summary strip at the bottom. Its five steps — Record, Reduce, Recite, Reflect, Review — turn passive note-taking into active studying.</p>
+      </details>
+      <details class="faq">
+        <summary>How wide should the cue column be in a Cornell notes template?</summary>
+        <p class="mt-2 text-slate-600">The classic layout gives the cue column about 30% of the page width (roughly 2.5 inches on US Letter paper) and the notes column about 70%. The summary area takes the bottom 2 inches. This ratio matters: a cue column that is too wide invites copying notes into it, which defeats its purpose as a compact question bank.</p>
+      </details>
+      <details class="faq">
+        <summary>What should go in the cue column versus the notes column?</summary>
+        <p class="mt-2 text-slate-600">The notes column holds what you capture during a lecture: facts, explanations, diagrams, and examples, written concisely. The cue column is filled in afterwards with keywords, main ideas, and — most powerfully — questions that the adjacent notes answer. When you later hide the notes column, each cue becomes a flashcard prompt for retrieval practice.</p>
+      </details>
+      <details class="faq">
+        <summary>How do I write a good Cornell summary?</summary>
+        <p class="mt-2 text-slate-600">Write your summary after filling in the cues, without looking at your notes first. In two or three sentences, state the page's big idea, the two or three most important supporting details, and the implication or likely exam angle. If you cannot summarize the page, treat that as a signal to re-study it rather than as a writing problem.</p>
+      </details>
+      <details class="faq">
+        <summary>Does the Cornell note taking method actually work for exams?</summary>
+        <p class="mt-2 text-slate-600">Yes — because it packages three evidence-backed strategies: retrieval practice (self-testing from the cue column), elaboration (writing cues and summaries in your own words), and spaced repetition (reviewing pages at increasing intervals). Students who use all five R's consistently outperform those who merely re-read notes, especially on exams that test understanding rather than memorization.</p>
+      </details>
+      <details class="faq">
+        <summary>Is CornellCraft free, and where are my notes stored?</summary>
+        <p class="mt-2 text-slate-600">CornellCraft is completely free with unlimited usage — no signup, no paywall, no watermark. Your notebook is auto-saved to your browser's localStorage on your own device; nothing is uploaded to any server. You can print or export any page to PDF whenever you want a paper copy.</p>
+      </details>
+    </div>
+  </section>
+  <!-- =============== /FAQs =============== -->
+</main>
+
+<!-- Footer -->
+<footer class="no-print border-t border-[#e9e4d8] mt-4">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="serif text-lg font-bold text-slate-900">Cornell<span style="color:#2563eb">Craft</span></span>
+      <span class="text-sm text-slate-500">— Living Cornell Notes Studio</span>
+    </div>
+    <nav class="flex items-center gap-5 text-sm font-medium">
+      <a href="#top" class="text-slate-600 hover:text-[#2563eb]">Home</a>
+      <a href="https://fixoraa.tech" class="text-slate-600 hover:text-[#2563eb]">More Tools</a>
+    </nav>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<!-- UI wiring (separate from the pure lib) -->
+<script>
+(function () {
+  'use strict';
+  var C = window.CornellCraft;
+  var LS_KEY = 'cornellcraft-notebook-v3';
+
+  function $(id) { return document.getElementById(id); }
+
+  var state = {
+    nb: C.createNotebook(),
+    activePageId: null,
+    subject: 'General',
+    deck: [],
+    cardIdx: 0,
+    revealed: false,
+    results: [],
+    saveTimer: null
+  };
+
+  /* ---------- persistence ---------- */
+  function persist() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state.nb)); } catch (e) {}
+    var el = $('saveState');
+    el.textContent = '✓ Saved ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+  function scheduleSave() {
+    clearTimeout(state.saveTimer);
+    $('saveState').textContent = 'Saving…';
+    state.saveTimer = setTimeout(persist, 600);
+  }
+  function loadNotebook() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY); } catch (e) {}
+    if (!raw) return;
+    try {
+      var data = JSON.parse(raw);
+      if (!data || typeof data !== 'object' || !data.pages || !Array.isArray(data.order)) return;
+      var ok = C.createNotebook();
+      data.order.forEach(function (id) {
+        var p = data.pages[id];
+        if (p && C.validatePage(p).length === 0) C.addPageToNotebook(ok, p);
+      });
+      state.nb = ok;
+    } catch (e) {}
+  }
+
+  /* ---------- toast ---------- */
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.style.opacity = '0'; }, 2200);
+  }
+
+  /* ---------- helpers ---------- */
+  function activePage() { return C.getPageFromNotebook(state.nb, state.activePageId); }
+  function esc(s) { return C.escapeHtml(s); }
+
+  /* ---------- subjects ---------- */
+  function renderSubjects() {
+    var wrap = $('subjectTabs');
+    wrap.innerHTML = '';
+    var subjects = C.listSubjects(state.nb);
+    var names = subjects.map(function (s) { return s.name; });
+    if (names.indexOf('General') === -1) names.unshift('General');
+    if (names.indexOf(state.subject) === -1) state.subject = names[0] || 'General';
+    names.forEach(function (name) {
+      var count = 0;
+      subjects.forEach(function (s) { if (s.name === name) count = s.count; });
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rounded-full border border-[#e2dccb] bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:border-[#2563eb]' + (name === state.subject ? ' tab-active' : '');
+      b.textContent = name + (count ? ' (' + count + ')' : '');
+      b.setAttribute('role', 'tab');
+      b.onclick = function () { state.subject = name; renderAll(); };
+      wrap.appendChild(b);
+    });
+  }
+
+  /* ---------- page tabs ---------- */
+  function renderPageTabs() {
+    var wrap = $('pageTabs');
+    wrap.innerHTML = '';
+    var pages = C.listPages(state.nb, state.subject);
+    if (pages.length === 0) {
+      wrap.innerHTML = '<span class="text-xs text-slate-400 italic py-1.5">No pages yet — click “+ New page”.</span>';
+      return;
+    }
+    pages.forEach(function (p) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      var label = p.topic && p.topic.trim() ? p.topic.trim() : 'Untitled page';
+      b.className = 'shrink-0 rounded-lg border px-3 py-1.5 text-xs font-semibold ' +
+        (p.id === state.activePageId ? 'tab-active border-[#2563eb]' : 'border-[#e2dccb] bg-white text-slate-600 hover:border-[#2563eb]');
+      b.textContent = label.length > 28 ? label.slice(0, 27) + '…' : label;
+      b.title = label;
+      b.onclick = function () { state.activePageId = p.id; closeTest(); renderAll(); };
+      wrap.appendChild(b);
+    });
+  }
+
+  /* ---------- review badge ---------- */
+  function renderReview() {
+    var p = activePage();
+    var badge = $('reviewBadge'), hint = $('reviewHint');
+    if (!p) { badge.style.display = 'none'; hint.textContent = ''; return; }
+    badge.style.display = '';
+    var st = C.reviewStatus(p, Date.now());
+    var styles = {
+      'never':   'background:#fef3c7; color:#92400e;',
+      'not-due': 'background:#dcfce7; color:#166534;',
+      'due':     'background:#ffedd5; color:#9a3412;',
+      'overdue': 'background:#ffe4e6; color:#9f1239;'
+    };
+    var labels = {
+      'never': '✎ Not reviewed yet',
+      'not-due': '✓ On track',
+      'due': '⏰ Review due',
+      'overdue': '⚠ Overdue review'
+    };
+    badge.style.cssText += styles[st.status];
+    badge.textContent = labels[st.status];
+    if (st.status === 'never') hint.textContent = 'Self-test or mark reviewed to start spaced repetition.';
+    else if (st.status === 'not-due') hint.textContent = 'Next review in ' + st.dueInDays + ' day' + (st.dueInDays === 1 ? '' : 's') + ' · interval ' + st.intervalDays + 'd';
+    else hint.textContent = Math.floor(st.daysSince) + ' days since last review · interval ' + st.intervalDays + 'd';
+  }
+
+  /* ---------- completeness ---------- */
+  function renderCompleteness() {
+    var p = activePage();
+    var c = p ? C.completeness(p) : { percent: 0, cuesFilled: 0, notesFilled: 0, rows: 0, summaryFilled: false };
+    $('completenessBar').style.width = c.percent + '%';
+    $('completenessPct').textContent = c.percent + '%';
+    $('completenessPct').title = c.cuesFilled + '/' + c.rows + ' cues · ' + c.notesFilled + '/' + c.rows + ' notes · summary ' + (c.summaryFilled ? 'done' : 'missing');
+  }
+
+  /* ---------- sheet rows (row-linked cue/note pairs) ---------- */
+  function renderSheet() {
+    var p = activePage();
+    var wrap = $('sheetRows');
+    wrap.innerHTML = '';
+    $('topicInput').value = p ? p.topic : '';
+    $('summaryInput').value = p ? p.summary : '';
+    if (!p) { $('emptySheetMsg').classList.remove('hidden'); renderCompleteness(); return; }
+    $('emptySheetMsg').classList.add('hidden');
+    p.rows.forEach(function (row) {
+      var div = document.createElement('div');
+      div.className = 'grid grid-cols-1 md:grid-cols-[32%_1fr] border-t border-[#ddd6c2] group';
+      div.dataset.rowId = row.id;
+
+      var cueWrap = document.createElement('div');
+      cueWrap.className = 'cue-cell margin-line px-4 py-2';
+      var cue = document.createElement('textarea');
+      cue.className = 'cell cue-cell text-[14px] leading-[32px] text-slate-800 placeholder:text-slate-400';
+      cue.rows = 2; cue.placeholder = 'Cue or question…'; cue.value = row.cue;
+      cue.setAttribute('aria-label', 'Cue');
+      cueWrap.appendChild(cue);
+
+      var noteWrap = document.createElement('div');
+      noteWrap.className = 'note-cell ruled px-4 py-2 relative border-t md:border-t-0 border-[#e5e0d0]';
+      var note = document.createElement('textarea');
+      note.className = 'cell ruled text-[14px] leading-[32px] text-slate-800 placeholder:text-slate-400 bg-transparent';
+      note.rows = 2; note.placeholder = 'Notes…'; note.value = row.note;
+      note.setAttribute('aria-label', 'Notes');
+      noteWrap.appendChild(note);
+
+      var del = document.createElement('button');
+      del.type = 'button'; del.title = 'Remove row'; del.textContent = '✕';
+      del.className = 'no-print absolute top-1 right-1 w-6 h-6 rounded-full text-[11px] text-slate-300 hover:text-white hover:bg-[#f43f5e] opacity-0 group-hover:opacity-100 transition';
+      del.onclick = function () {
+        if (C.removeRow(p, row.id)) { scheduleSave(); renderAll(); toast('Row removed'); }
+      };
+      noteWrap.appendChild(del);
+
+      function link(on) { div.classList.toggle('row-active', on); }
+      [cue, note].forEach(function (ta) {
+        ta.addEventListener('focus', function () { link(true); });
+        ta.addEventListener('blur', function () { link(false); });
+        ta.addEventListener('mouseenter', function () { link(true); });
+        ta.addEventListener('mouseleave', function () { if (document.activeElement !== ta) link(false); });
+      });
+      cue.addEventListener('input', function () { C.updateCell(p, row.id, 'cue', cue.value); scheduleSave(); renderCompleteness(); });
+      note.addEventListener('input', function () { C.updateCell(p, row.id, 'note', note.value); scheduleSave(); renderCompleteness(); });
+
+      div.appendChild(cueWrap);
+      div.appendChild(noteWrap);
+      wrap.appendChild(div);
+    });
+    renderCompleteness();
+    renderReview();
+  }
+
+  /* ---------- self-test ---------- */
+  function openTest() {
+    var p = activePage();
+    if (!p) { toast('Create a page first.'); return; }
+    var deck = C.buildDeck(p);
+    if (deck.length === 0) { toast('Add some cues or notes first — the deck is empty.'); return; }
+    state.deck = deck; state.cardIdx = 0; state.revealed = false; state.results = [];
+    $('cornellSheet').classList.add('flash-hidden');
+    $('flashWrap').classList.remove('flash-hidden');
+    $('testScore').classList.add('flash-hidden');
+    renderCard();
+    $('flashWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function closeTest() {
+    state.deck = []; state.results = [];
+    $('flashWrap').classList.add('flash-hidden');
+    $('cornellSheet').classList.remove('flash-hidden');
+  }
+  function renderCard() {
+    var deck = state.deck;
+    if (!deck.length) return;
+    var card = deck[state.cardIdx];
+    $('cardCount').textContent = 'Card ' + (state.cardIdx + 1) + ' of ' + deck.length;
+    $('cardCue').textContent = card.cue || '(no cue — recall the notes)';
+    $('cardNote').textContent = card.note || '(no notes for this cue)';
+    state.revealed = false;
+    $('cardNoteWrap').classList.add('flash-hidden');
+    $('gradeRow').classList.add('flash-hidden');
+    $('btnReveal').classList.remove('flash-hidden');
+  }
+  function revealCard() {
+    state.revealed = true;
+    $('cardNoteWrap').classList.remove('flash-hidden');
+    $('gradeRow').classList.remove('flash-hidden');
+    $('btnReveal').classList.add('flash-hidden');
+  }
+  function gradeCurrent(known) {
+    state.results.push(known === true);
+    if (state.cardIdx === state.deck.length - 1) { finishTest(); return; }
+    state.cardIdx = C.nextCardIndex(state.cardIdx, state.deck.length, 1);
+    renderCard();
+  }
+  function finishTest() {
+    var g = C.gradeSession(state.results);
+    var box = $('testScore');
+    box.classList.remove('flash-hidden');
+    var msg = g.pct >= 80 ? 'Excellent recall — this page is sticking.' :
+              g.pct >= 50 ? 'Solid progress. Re-test the ones you missed.' :
+                            'Tough round — review the notes column, then test again.';
+    box.innerHTML =
+      '<div class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-1">Session score</div>' +
+      '<div class="serif text-4xl font-bold" style="color:#2563eb">' + g.pct + '%</div>' +
+      '<div class="text-sm text-slate-600 mt-1">' + g.known + ' of ' + g.total + ' cards recalled · ' + esc(msg) + '</div>' +
+      '<button id="btnTestReviewed" type="button" class="mt-3 rounded-lg bg-emerald-600 text-white px-4 py-2 text-sm font-bold hover:bg-emerald-700">✓ Count as review</button>';
+    $('btnTestReviewed').onclick = function () {
+      var p = activePage();
+      if (p && C.markReviewed(p, Date.now())) { scheduleSave(); renderReview(); toast('Review recorded — next due in ' + C.nextReviewInterval(p.reviewCount) + ' days'); }
+    };
+    $('gradeRow').classList.add('flash-hidden');
+    $('btnReveal').classList.add('flash-hidden');
+  }
+
+  /* ---------- render all ---------- */
+  function renderAll() {
+    renderSubjects();
+    renderPageTabs();
+    renderSheet();
+  }
+
+  /* ---------- actions ---------- */
+  function ensurePage() {
+    var p = activePage();
+    if (p) return p;
+    var np = C.createPage('', state.subject);
+    C.addPageToNotebook(state.nb, np);
+    state.activePageId = np.id;
+    scheduleSave();
+    renderAll();
+    return np;
+  }
+
+  $('addSubjectBtn').onclick = function () {
+    var v = $('subjectInput').value.trim();
+    if (!v) { toast('Type a subject name first.'); return; }
+    state.subject = v;
+    $('subjectInput').value = '';
+    renderAll();
+    toast('Subject “' + v + '” selected');
+  };
+  $('subjectInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('addSubjectBtn').click(); });
+
+  $('newPageBtn').onclick = function () {
+    var p = C.createPage('', state.subject);
+    C.addPageToNotebook(state.nb, p);
+    state.activePageId = p.id;
+    closeTest();
+    scheduleSave();
+    renderAll();
+    $('topicInput').focus();
+    toast('New page created');
+  };
+
+  $('deletePageBtn').onclick = function () {
+    var p = activePage();
+    if (!p) { toast('No page to delete.'); return; }
+    var label = p.topic && p.topic.trim() ? '“' + p.topic.trim() + '”' : 'this untitled page';
+    if (!window.confirm('Delete ' + label + '? This cannot be undone.')) return;
+    C.deletePageFromNotebook(state.nb, p.id);
+    var rest = C.listPages(state.nb, state.subject);
+    state.activePageId = rest.length ? rest[0].id : null;
+    scheduleSave();
+    renderAll();
+    toast('Page deleted');
+  };
+
+  $('topicInput').addEventListener('input', function () {
+    var p = ensurePage();
+    C.setPageMeta(p, $('topicInput').value, state.subject);
+    scheduleSave();
+    renderPageTabs();
+  });
+
+  $('summaryInput').addEventListener('input', function () {
+    var p = ensurePage();
+    C.setSummary(p, $('summaryInput').value);
+    scheduleSave();
+    renderCompleteness();
+  });
+
+  $('addRowBtn').onclick = function () {
+    var p = ensurePage();
+    C.addRow(p);
+    scheduleSave();
+    renderSheet();
+    var rows = $('sheetRows').children;
+    if (rows.length) {
+      var ta = rows[rows.length - 1].querySelector('textarea');
+      if (ta) ta.focus();
+    }
+  };
+
+  $('btnPrint').onclick = function () {
+    var p = activePage();
+    if (!p) { toast('Create a page first.'); return; }
+    var html = C.buildPrintHtml(p, { brand: 'CornellCraft' });
+    var w = window.open('', '_blank');
+    if (!w) { toast('Pop-up blocked — allow pop-ups to print.'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(function () { w.print(); }, 400);
+  };
+
+  $('btnMarkReviewed').onclick = function () {
+    var p = activePage();
+    if (!p) { toast('Create a page first.'); return; }
+    C.markReviewed(p, Date.now());
+    scheduleSave();
+    renderReview();
+    toast('Review recorded — next due in ' + C.nextReviewInterval(p.reviewCount) + ' days');
+  };
+
+  $('btnSelfTest').onclick = openTest;
+  $('btnEndTest').onclick = closeTest;
+  $('btnReveal').onclick = revealCard;
+  $('btnKnown').onclick = function () { gradeCurrent(true); };
+  $('btnUnknown').onclick = function () { gradeCurrent(false); };
+  $('btnPrevCard').onclick = function () { state.cardIdx = C.nextCardIndex(state.cardIdx, state.deck.length, -1); renderCard(); };
+  $('btnNextCard').onclick = function () { state.cardIdx = C.nextCardIndex(state.cardIdx, state.deck.length, 1); renderCard(); };
+
+  /* ---------- init ---------- */
+  loadNotebook();
+  var first = C.listPages(state.nb, null);
+  if (first.length) {
+    state.activePageId = first[0].id;
+    state.subject = first[0].subject || 'General';
+  } else {
+    var seed = C.createPage('Sample: The Cornell Method', 'General');
+    C.updateCell(seed, seed.rows[0].id, 'cue', 'Who created the Cornell method?');
+    C.updateCell(seed, seed.rows[0].id, 'note', 'Walter Pauk, education professor at Cornell University, 1950s.');
+    C.updateCell(seed, seed.rows[1].id, 'cue', 'What are the 5 R\'s?');
+    C.updateCell(seed, seed.rows[1].id, 'note', 'Record, Reduce, Recite, Reflect, Review.');
+    C.setSummary(seed, 'The Cornell method splits a page into cues, notes, and a summary to turn passive note-taking into active recall.');
+    C.addPageToNotebook(state.nb, seed);
+    state.activePageId = seed.id;
+    state.subject = 'General';
+    persist();
+  }
+  renderAll();
+})();
+</script>
+
+</body>
+</html>
