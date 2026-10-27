@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capacitor RC Calculator — Time Constant &amp; Charging | CapacitorLab</title>
+<meta name="description" content="Calculate the RC time constant, charging and discharging curves, stored energy, and time to full charge for any resistor-capacitor circuit.">
+<link rel="canonical" href="https://study.fixoraa.tech/capacitorlab/">
+<meta property="og:title" content="Capacitor RC Calculator — Time Constant &amp; Charging | CapacitorLab">
+<meta property="og:description" content="Calculate the RC time constant, charging and discharging curves, stored energy, and time to full charge for any resistor-capacitor circuit.">
+<meta property="og:url" content="https://study.fixoraa.tech/capacitorlab/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "CapacitorLab", "url": "https://study.fixoraa.tech/capacitorlab/", "applicationCategory": "Utilities", "operatingSystem": "Web", "description": "Calculate the RC time constant, charging and discharging curves, stored energy, and time to full charge for any resistor-capacitor circuit.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the RC time constant?", "acceptedAnswer": {"@type": "Answer", "text": "\u03c4 = R \u00d7 C. After one time constant, a charging capacitor reaches about 63.2% of the supply voltage; after five time constants it is about 99.3% charged."}},
+{"@type": "Question", "name": "How long does a capacitor take to fully charge?", "acceptedAnswer": {"@type": "Answer", "text": "Engineers treat five time constants (5\u03c4) as fully charged. For a 1 k\u03a9 resistor and 100 \u00b5F capacitor, \u03c4 = 0.1 s, so full charge takes about 0.5 s."}},
+{"@type": "Question", "name": "What is the charging formula?", "acceptedAnswer": {"@type": "Answer", "text": "V(t) = V0(1 \u2212 e^(\u2212t/\u03c4)) for charging, and V(t) = V0\u00b7e^(\u2212t/\u03c4) for discharging, where V0 is the supply voltage."}},
+{"@type": "Question", "name": "How much energy does a capacitor store?", "acceptedAnswer": {"@type": "Answer", "text": "E = \u00bdCV\u00b2. A 100 \u00b5F capacitor at 5 V stores 1.25 millijoules. Energy grows with the square of voltage."}},
+{"@type": "Question", "name": "Can a capacitor stay charged after power is off?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Large capacitors can hold a dangerous charge long after switch-off. Discharge them through a resistor before handling."}},
+{"@type": "Question", "name": "Why does charging slow down over time?", "acceptedAnswer": {"@type": "Answer", "text": "As the capacitor's voltage rises, less voltage remains across the resistor, so current falls and charging slows \u2014 producing the exponential curve."}}]}]}
+</script>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:'Archivo',sans-serif;line-height:1.6}
+a{color:inherit} input,select,button,textarea{font:inherit}
+
+body{background:#FAF9F6;color:#431407}
+.site-header{background:#FFEDD5;border-bottom:3px solid #C2410C}.header-inner{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:44px;height:44px;background:#C2410C;color:#fff;border-radius:8px;display:grid;place-items:center;font-size:20px}
+.brand-name{font-size:28px;font-weight:700;color:#7C2D12}
+.btn-nav{display:inline-block;padding:8px 16px;border:2px solid #C2410C;border-radius:999px;text-decoration:none;font-weight:700;color:#7C2D12}.badge{display:inline-block;background:#FEF08A;color:#713F12;padding:6px 12px;border-radius:999px;font-weight:700;font-size:13px}
+.hero{max-width:1000px;margin:0 auto;padding:36px 20px 8px}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#7C2D12;margin:0}.hero-sub{font-size:17px;color:#9A3412}
+.tool-wrap{max-width:1000px;margin:0 auto;padding:16px 20px}
+.spec{background:#fff;border:1px solid #FED7AA;border-left:8px solid #C2410C;border-radius:10px;box-shadow:0 4px 18px rgba(194,65,12,.08);padding:24px}
+.spec h2{color:#7C2D12;margin-top:0}.field{margin-bottom:14px}.field label{display:block;font-weight:700;margin-bottom:4px}.field input,.field select{width:100%;padding:11px 12px;border:1.5px solid #FDBA74;border-radius:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.btn-main{background:#C2410C;color:#fff;border:0;padding:13px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-size:16px}.btn-ghost{background:#fff;color:#7C2D12;border:2px solid #C2410C;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+.result{margin-top:16px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:16px;font-size:17px}
+table{width:100%;border-collapse:collapse;margin-top:12px}th,td{border:1px solid #FED7AA;padding:8px 10px;text-align:left}th{background:#FFEDD5;color:#7C2D12}
+.error{color:#991B1B;font-weight:700}.muted{color:#8A4A26;font-size:14px}
+.article{max-width:1000px;margin:0 auto;padding:24px 20px}.article h2{color:#7C2D12}.article h3{color:#C2410C}
+.faq{max-width:1000px;margin:0 auto;padding:0 20px 30px}.faq h2{color:#7C2D12}.faq details{background:#fff;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:10px}.faq summary{font-weight:700;cursor:pointer}
+.site-footer{background:#7C2D12;color:#FFEDD5;text-align:center;padding:28px 20px}.site-footer a{color:#FFEDD5;font-weight:700}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner">
+<div class="brand"><span class="brand-mark">⏚</span><span class="brand-name">CapacitorLab</span></div>
+<nav class="header-nav"><a class="btn-nav" href="https://fixoraa.tech">Home</a><a class="btn-nav" href="https://fixoraa.tech">More Tools</a><span class="badge">Unlimited Free Usage</span></nav>
+</div></header>
+<main>
+<section class="hero"><h1>Capacitor RC Calculator — Time Constant &amp; Charging</h1><p class="hero-sub">One resistor, one capacitor, one number that rules them both: τ = R × C. Find the time constant, the charging curve, and the stored energy.</p></section>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="tool-wrap"><div class="spec"><h2>RC Time Constant — Specification Sheet</h2>
+<div class="grid2">
+<div class="field"><label for="cp-r">Resistance (ohms)</label><input id="cp-r" type="number" min="0" step="any" placeholder="e.g. 1000"></div>
+<div class="field"><label for="cp-c">Capacitance (microfarads, µF)</label><input id="cp-c" type="number" min="0" step="any" placeholder="e.g. 100"></div>
+</div>
+<div class="field"><label for="cp-v">Supply voltage (V) — for energy and charging curve</label><input id="cp-v" type="number" min="0" step="any" placeholder="e.g. 5"></div>
+<button class="btn-main" onclick="cpCalc()">Calculate RC circuit</button>
+<div id="cp-out" class="result" aria-live="polite">Enter resistance and capacitance and press Calculate.</div>
+<h3>Charging curve — voltage across the capacitor</h3>
+<table><tr><th>Time</th><th>Charge reached</th><th>Capacitor voltage (if 5 V supply)</th></tr><tbody id="cp-table"></tbody></table>
+<p style="margin-top:14px"><button class="btn-ghost" onclick="cpPreset(10000,470)">Camera flash preset (10 kΩ, 470 µF)</button>
+<button class="btn-ghost" onclick="cpPreset(1000,100)">Timer preset (1 kΩ, 100 µF)</button></p>
+<p id="cp-err" class="error" role="alert"></p></div></section>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<article class="article"><h2>The RC Time Constant: τ = RC</h2>
+<p>Connect a resistor and a capacitor in series with a voltage source, and the capacitor does not charge instantly. Current flows through the resistor, charge accumulates on the capacitor's plates, and the voltage across the capacitor rises — quickly at first, then ever more slowly as it approaches the supply voltage. The speed of this process is governed by a single number, the time constant, written with the Greek letter tau: τ = R × C, resistance multiplied by capacitance. A one thousand ohm resistor with a one hundred microfarad capacitor gives a time constant of one thousand times one hundred millionths, which is zero point one seconds.</p>
+<p>The time constant has a precise meaning: after one time constant of charging, the capacitor reaches about sixty-three point two percent of the supply voltage. After two time constants, about eighty-six point five percent; after three, ninety-five percent; after four, ninety-eight point two percent; and after five, ninety-nine point three percent. Engineers treat five time constants as effectively fully charged, because the remaining gap is smaller than the tolerance of most real components. The same numbers describe discharging, with the voltage falling to thirty-six point eight percent after one time constant and to under one percent after five.</p>
+<h2>Why Charging Slows Down</h2>
+<p>The slowing is not a quirk of the components; it follows from the circuit itself. Current through the resistor equals the voltage across the resistor divided by its resistance, and the voltage across the resistor is the supply voltage minus the capacitor's voltage. At the start, the capacitor is empty, so the full supply voltage appears across the resistor and current is at its maximum. As the capacitor charges, its voltage rises, the resistor's share falls, current falls, and charging slows. This feedback produces the exponential curve described by V(t) = V0(1 − e^(−t/τ)) for charging and V(t) = V0·e^(−t/τ) for discharging.</p>
+<p>Exponential behaviour appears throughout nature — radioactive decay, cooling, population growth under limits — and the RC circuit is one of the cleanest places to meet it. The mathematics is the same in each case: the rate of change is proportional to how far the system is from its final state, so progress is rapid when the gap is large and gentle when the gap is small. Understanding the RC curve therefore gives intuition far beyond electronics, into any process that approaches a limit gradually.</p>
+<h2>Energy Stored in a Capacitor</h2>
+<p>A charged capacitor stores energy in the electric field between its plates, given by E = ½CV². A one hundred microfarad capacitor charged to five volts stores half times one hundred millionths times twenty-five, which is one point two five millijoules — a small amount, but enough to matter in timing and pulse circuits. Larger capacitors at higher voltages store far more: a camera flash capacitor, for example, stores several joules and releases them in a fraction of a second through the flash tube, producing the brief, intense light. This is why large capacitors demand respect: they can hold a dangerous charge long after the power is switched off, and should be discharged through a resistor before handling.</p>
+<p>Capacitor energy also explains why power supplies use large capacitors for smoothing. After a rectifier converts alternating current to pulsing direct current, a capacitor charges on each pulse and discharges between pulses, filling in the gaps and delivering a steadier voltage. The larger the capacitance, the smaller the ripple, but the longer the circuit takes to reach its working voltage — the same time constant, seen from a different angle.</p>
+<h2>Where RC Circuits Appear</h2>
+<p>RC circuits are everywhere in electronics. The classic 555 timer chip, used in countless hobby and industrial projects, sets its timing with an external resistor and capacitor: the chip charges the capacitor through the resistor until it reaches a threshold, then discharges it, producing a repeating pulse whose frequency is set by the RC time constant. Audio tone controls use RC networks to filter frequencies, because a capacitor's opposition to current — its reactance — falls as frequency rises, so high frequencies pass more easily than low ones through the right arrangement.</p>
+<p>Debounce circuits use a small RC network to clean up the noisy signal from a mechanical switch, which bounces several times on each press. Touch sensors, camera flashes, defibrillators, and the timing circuits in washing machines and traffic lights all contain RC stages. Even the humble reset circuit in a microcontroller, which holds the chip in reset for a moment after power-up, is usually just a resistor and a capacitor. Learn one time constant and you have a key to a large fraction of practical electronics.</p>
+<h2>Choosing R and C Values</h2>
+<p>Designers choose resistor and capacitor values to hit a target time constant while respecting practical limits. Resistors are available in standard values, and capacitors in standard series too, so an exact time constant often requires combining values or accepting the nearest standard pair. Large resistances make the circuit sensitive to leakage currents and noise, while very small resistances draw large currents that may exceed a component's rating. Large capacitances are physically bulky and expensive, especially at high voltages, while very small capacitances are swamped by stray capacitance in the wiring itself.</p>
+<p>Component tolerance matters as well. A typical electrolytic capacitor may be rated at plus or minus twenty percent, so a time constant calculated from nominal values can be off by a fifth in practice. Precision timing circuits therefore use film capacitors with tighter tolerances, or add a trimmer resistor for adjustment. When a circuit must be accurate, always design with tolerance in mind, and measure the real result rather than trusting the nominal calculation alone.</p>
+<h2>Charging Versus Discharging</h2>
+<p>Charging and discharging are mirror images with the same time constant, but they are not always symmetric in a real circuit. If the capacitor charges through one resistor and discharges through a different path — as in many timer and oscillator circuits — the two time constants differ, and the output waveform becomes asymmetric. The 555 timer exploits exactly this: separate charge and discharge paths let designers set the high and low times of the output pulse independently. Recognising which resistor is in the path at each phase is the key to analysing any RC timing circuit.</p>
+<p>Safety deserves a final word. Capacitors in mains-powered equipment can store lethal energy, and the stored charge does not vanish when the plug is pulled. Always assume a large capacitor is charged until you have discharged it deliberately through a suitable resistor, never by shorting it with a screwdriver, which can damage the capacitor and spray hot metal. In low-voltage hobby circuits the risk is negligible, but the habit of respecting stored energy should be formed early and kept always.</p>
+<h2>Using This Calculator</h2>
+<p>Enter resistance in ohms and capacitance in microfarads, plus the supply voltage if you want the charging curve and stored energy. The calculator returns the time constant in seconds, the time to ninety-five and ninety-nine percent charge, the stored energy, and a table showing the capacitor voltage at each multiple of the time constant. Use the presets to explore a camera flash circuit and a classic timer circuit, and watch how a tenfold change in either component stretches or shrinks the whole curve.</p></article>
+<section class="faq"><h2>Frequently Asked Questions</h2><details><summary>What is the RC time constant?</summary><p>τ = R × C. After one time constant, a charging capacitor reaches about 63.2% of the supply voltage; after five time constants it is about 99.3% charged.</p></details>
+<details><summary>How long does a capacitor take to fully charge?</summary><p>Engineers treat five time constants (5τ) as fully charged. For a 1 kΩ resistor and 100 µF capacitor, τ = 0.1 s, so full charge takes about 0.5 s.</p></details>
+<details><summary>What is the charging formula?</summary><p>V(t) = V0(1 − e^(−t/τ)) for charging, and V(t) = V0·e^(−t/τ) for discharging, where V0 is the supply voltage.</p></details>
+<details><summary>How much energy does a capacitor store?</summary><p>E = ½CV². A 100 µF capacitor at 5 V stores 1.25 millijoules. Energy grows with the square of voltage.</p></details>
+<details><summary>Can a capacitor stay charged after power is off?</summary><p>Yes. Large capacitors can hold a dangerous charge long after switch-off. Discharge them through a resistor before handling.</p></details>
+<details><summary>Why does charging slow down over time?</summary><p>As the capacitor&#x27;s voltage rises, less voltage remains across the resistor, so current falls and charging slows — producing the exponential curve.</p></details>
+</section>
+</main>
+<footer class="site-footer">
+<p class="footer-brand">CapacitorLab — Calculate the RC time constant, charging and discharging curves, stored energy, and time to full charge for any resistor-capacitor circuit.</p>
+<p class="footer-about">A free, no-signup web tool that runs entirely in your browser.</p>
+<p class="footer-links"><a href="https://fixoraa.tech">Home</a> · <a href="https://fixoraa.tech">More Tools</a></p>
+<p class="footer-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a></p>
+</footer>
+<script>
+function rcTau(R,C){return R*C;}
+function chargeFrac(t,tau){if(tau<=0)return 0;return 1-Math.exp(-t/tau);}
+function capEnergy(C,V){return 0.5*C*V*V;}
+function cpCalc(){var R=parseFloat(document.getElementById('cp-r').value);var CuF=parseFloat(document.getElementById('cp-c').value);var V=parseFloat(document.getElementById('cp-v').value);var err=document.getElementById('cp-err');err.textContent='';
+if(isNaN(R)||isNaN(CuF)||R<0||CuF<0){err.textContent='Please enter valid non-negative resistance and capacitance.';return;}
+if(R===0||CuF===0){err.textContent='Both resistance and capacitance must be greater than zero for a time constant.';return;}
+var C=CuF*1e-6;var tau=rcTau(R,C);var Vv=isNaN(V)?5:V;
+var rows='';[1,2,3,4,5].forEach(function(n){var f=chargeFrac(n*tau,tau);rows+='<tr><td>'+n+'τ = '+(n*tau).toFixed(3)+' s</td><td>'+(f*100).toFixed(1)+'%</td><td>'+(Vv*f).toFixed(3)+' V</td></tr>';});
+document.getElementById('cp-table').innerHTML=rows;
+document.getElementById('cp-out').innerHTML='<strong>Time constant τ = '+tau.toFixed(4)+' s</strong> ('+(tau*1000).toFixed(1)+' ms)<br>Time to 95% charge: '+(3*tau).toFixed(4)+' s · Time to 99.3% (5τ): '+(5*tau).toFixed(4)+' s<br>Stored energy at '+Vv+' V: '+(capEnergy(C,Vv)*1000).toFixed(3)+' mJ ('+capEnergy(C,Vv).toFixed(6)+' J)';}
+function cpPreset(R,CuF){document.getElementById('cp-r').value=R;document.getElementById('cp-c').value=CuF;if(!document.getElementById('cp-v').value)document.getElementById('cp-v').value=5;cpCalc();}
+</script>
+</body>
+</html>
