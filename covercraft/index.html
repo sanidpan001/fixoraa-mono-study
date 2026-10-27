@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoverCraft — Free Cover Letter Generator</title>
+<meta name="description" content="Free cover letter generator: enter the role, company and your key achievements to get a structured, tailored letter in 3 tones — with word-count check.">
+<link rel="canonical" href="https://study.fixoraa.tech/covercraft/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="CoverCraft — Free Cover Letter Generator">
+<meta property="og:description" content="Free cover letter generator: enter the role, company and your key achievements to get a structured, tailored letter in 3 tones — with word-count check.">
+<meta property="og:url" content="https://study.fixoraa.tech/covercraft/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "CoverCraft",
+      "url": "https://study.fixoraa.tech/covercraft/",
+      "applicationCategory": "Career Tools",
+      "operatingSystem": "Web",
+      "description": "Free cover letter generator: enter the role, company and your key achievements to get a structured, tailored letter in 3 tones \u2014 with word-count check.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long should a cover letter be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "250\u2013350 words \u2014 about four short paragraphs. Hiring managers spend under a minute on first pass, so every sentence must earn its place. Over 400 words signals you can't prioritise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I include in a cover letter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Role title + one genuine company-specific reason, three proof points (achievement + scale + result), and a confident close connecting your experience to their needs. Specificity beats eloquence every time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which tone should my cover letter use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Professional for finance, law, healthcare and corporates. Friendly for startups, creative and nonprofit roles. Confident for senior and sales positions. When unsure, mirror the tone of the company's job ad."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I write a cover letter with no direct experience?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Frame what you bring, not what you lack. Lead with transferable achievements and genuine motivation for the role \u2014 never apologise for your background or write 'I know I don't have X but\u2026'"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the biggest cover letter mistakes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Repeating your CV instead of adding narrative, using the wrong company name, apologising for gaps, writing over 400 words, and generic flattery without a specific reason. Each is an instant credibility hit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do recruiters actually read cover letters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes \u2014 as a tiebreaker. When two CVs look equal, the candidate with a specific, thoughtful letter wins. A generic template letter is worse than none, so always customise."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F8F8FC; --surface:#FFFFFF; --accent:#4C3ED9; --accent-ink:#FFFFFF;
+  --ink:#23233A; --muted:#54546C; --line:#DFDDF0;
+  --display:'Syne',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.ccf-hero{text-align:center;max-width:740px;margin:0 auto 24px}.ccf-kicker{display:inline-block;background:#E6E3FA;color:#4C3ED9;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin:0 0 12px}.ccf-hero h1{font-family:'Syne',Inter,sans-serif;font-size:clamp(2.4rem,6vw,3.8rem);margin:0 0 10px;color:#23233A}.ccf-hero p{color:#54546C;font-size:1.12rem;margin:0}.ccf-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;max-width:1080px;margin:0 auto}.ccf-card{background:#fff;border:2px solid #DFDDF0;border-radius:22px;padding:24px}.ccf-card h2{margin:0 0 14px;font-size:1.25rem}.ccf-field{margin-bottom:14px}.ccf-field label{display:block;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#54546C;margin-bottom:6px}.ccf-field input,.ccf-field textarea{width:100%;padding:12px;border:2px solid #DFDDF0;border-radius:12px;font-size:15px;min-height:50px;font-family:'Inter',sans-serif}.ccf-field textarea{min-height:110px;resize:vertical}.ccf-tones{display:flex;gap:8px;flex-wrap:wrap}.ccf-tone{border:2px solid #DFDDF0;background:#F8F8FC;border-radius:999px;padding:10px 18px;font-weight:700;font-size:14px;cursor:pointer;min-height:46px;color:#23233A}.ccf-tone.on{background:#4C3ED9;border-color:#4C3ED9;color:#fff}.ccf-letter{background:#F8F8FC;border:2px dashed #4C3ED9;border-radius:16px;padding:22px;white-space:pre-wrap;font-size:15px;line-height:1.65;min-height:280px;color:#23233A}.ccf-meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:10px}.ccf-count{font-weight:700;font-size:14px;color:#54546C}.ccf-count.good{color:#1E9E6A}.ccf-count.bad{color:#C0392B}.ccf-btn{background:#4C3ED9;color:#fff;border:none;font-weight:800;font-size:15px;padding:13px 26px;border-radius:12px;cursor:pointer;min-height:50px}.ccf-hint{font-size:13px;color:#54546C;margin-top:10px}@media(max-width:820px){.ccf-grid{grid-template-columns:1fr}.ccf-hero h1{font-size:2.2rem}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="CoverCraft home">
+      <span class="fx-logo-tile" aria-hidden="true">✉️</span>
+      <span class="fx-brand">CoverCraft</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-hero-card" aria-label="CoverCraft tool">
+<div class="ccf-hero"><p class="ccf-kicker">Job applications</p><h1>CoverCraft</h1><p>Your points, your tone — a sharp cover letter in under two minutes.</p></div><div class="ccf-grid"><div class="ccf-card"><h2>✏️ Your details</h2><div class="ccf-field"><label for="ccfName">Your name</label><input id="ccfName" value="Ava Sharma" placeholder="Jane Doe"></div><div class="ccf-field"><label for="ccfRole">Role you're applying for</label><input id="ccfRole" value="Senior Designer" placeholder="Product Manager"></div><div class="ccf-field"><label for="ccfCompany">Company</label><input id="ccfCompany" value="Acme Corp" placeholder="Acme Corp"></div><div class="ccf-field"><label for="ccfPoints">Your key points (one per line)</label><textarea id="ccfPoints">5 years of product design experience
+Led a rebrand across 40 markets</textarea></div><div class="ccf-field"><label>Tone</label><div class="ccf-tones" role="group" aria-label="Letter tone"><button class="ccf-tone on" data-tone="Professional">💼 Professional</button><button class="ccf-tone" data-tone="Friendly">😊 Friendly</button><button class="ccf-tone" data-tone="Confident">💪 Confident</button></div></div></div><div class="ccf-card"><h2>📄 Your cover letter</h2><div class="ccf-letter" id="ccfLetter"></div><div class="ccf-meta"><span class="ccf-count" id="ccfCount"></span><button class="ccf-btn" id="ccfCopy">Copy letter</button></div><p class="ccf-hint" id="ccfHint">Sweet spot: 250–350 words. Generated letters are starting points — add one company-specific sentence before sending.</p></div></div>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Do cover letters still matter?</h2><p>Yes — but not the way they used to. Fewer hiring managers read every letter word by word, yet the cover letter remains the only part of your application written in your voice. Recruiters consistently report using it as a tiebreaker: when two CVs look equal, the candidate who wrote a specific, thoughtful letter wins. A generic letter, on the other hand, is worse than none — it signals low effort.</p><p>The good news: a strong cover letter is a formula, not a talent. Specific role, specific company, three proof points, confident close. CoverCraft builds exactly that structure from your inputs, so you spend your energy on the content that matters instead of the blank page.</p><h2>The anatomy of a letter that gets read</h2><h3>1. The opening: role + why this company</h3><p>Two sentences. Name the exact role title and one genuine reason you're drawn to this company — a product you admire, a value you share, a problem you want to solve. "I'm excited to apply for the Senior Designer role at Acme" beats "I am writing to express my interest in the advertised position" every time. Specificity is the whole game.</p><h3>2. The body: three proof points</h3><p>Pick your three strongest, most relevant achievements — not your life story. Each point should follow the pattern: what you did, the scale, the result. "Led a rebrand across 40 markets, lifting brand recall 18%" is a proof point. "I'm a creative team player" is not. Numbers beat adjectives; specifics beat claims.</p><h3>3. The close: confidence + next step</h3><p>End by connecting your points to their needs and stating you're keen to discuss the role. "I'd welcome the chance to discuss how my experience with X can help Acme achieve Y" is confident without grovelling. Never apologise for your experience level, never beg, and never write "I know I don't have X but…" — frame what you bring.</p><h2>Choosing your tone</h2><p><strong>Professional</strong> is the default: formal, polished, safe for finance, law, healthcare and large corporates. <strong>Friendly</strong> works for startups, creative roles, nonprofits and customer-facing jobs — warm and human while staying competent. <strong>Confident</strong> suits senior roles and sales: direct, achievement-led, unapologetic about ambition. When in doubt, match the tone of the company's own website and job ad — mirror their language back to them.</p><h2>Length: the 250–350 word rule</h2><p>Hiring managers spend under a minute on first pass. Aim for 250–350 words: roughly four short paragraphs. Every sentence must earn its place — if a sentence could appear in anyone's letter, delete it. CoverCraft's length check keeps you in the zone: too short looks careless, too long won't get read.</p><h2>Customisation checklist (do this every time)</h2><table><thead><tr><th>Element</th><th>Generic (bad)</th><th>Specific (good)</th></tr></thead><tbody><tr><td>Company reason</td><td>"your esteemed company"</td><td>"Acme's recent launch of…"</td></tr><tr><td>Proof point</td><td>"strong track record"</td><td>"grew revenue 32% in 18 months"</td></tr><tr><td>Skills</td><td>"excellent communicator"</td><td>"presented quarterly results to 200+ stakeholders"</td></tr><tr><td>Close</td><td>"hope to hear from you"</td><td>"keen to discuss how I can help Acme…"</td></tr></tbody></table><h2>Mistakes that kill applications</h2><p><strong>Repeating your CV:</strong> the letter should add narrative and motivation, not duplicate bullet points. <strong>Wrong company name:</strong> the fastest rejection in hiring — proofread the header twice. <strong>Apologising:</strong> "Although I lack direct experience…" tells them what to reject you for. <strong>Novel-length letters:</strong> over 400 words signals you can't prioritise. <strong>Flattery without substance:</strong> "I've always admired Acme" means nothing without a specific reason.</p><h2>After you generate: the 5-minute polish</h2><p>Read the letter aloud — awkward phrasing reveals itself instantly. Check every claim against your CV for consistency. Cut one sentence (there's always one). Verify the hiring manager's name and title if you use one. Save as PDF with a clean filename: Firstname-Lastname-Cover-Letter.pdf. Then send it and move on — a good letter sent today beats a perfect letter next week.</p><h2>Example: entry-level marketing role (Friendly tone)</h2><p>\"Hi Nova team — I'm excited to apply for the Marketing Assistant role at Nova. Your 'weird works' campaign is exactly the kind of bold creative I want to make. In my internship at BrightCo I grew the TikTok account from 2k to 45k followers in six months, wrote the email series that lifted open rates 12%, and coordinated three product launches end to end. I'd love to bring that scrappy energy to Nova — can we talk? Warmly, Priya.\" 130 words, specific, human. Notice what's missing: no \"esteemed company,\" no objective statement, no adjectives without evidence.</p><h2>Example: senior engineering role (Confident tone)</h2><p>\"Dear Meridian Hiring Team — I'm applying for the Staff Engineer position because I build systems that scale, and I have the record to prove it: re-architected payments to handle 10x holiday traffic with zero downtime; cut infrastructure costs 38% while improving p99 latency; mentored four engineers to senior. I don't just keep systems running — I make them boringly reliable. Let's discuss what I'll do for Meridian's platform. Regards, Daniel.\" Senior letters can be shorter, not longer — authority needs fewer words.</p><h2>Email application vs attachment</h2><p>When the job ad says \"email your application,\" the email body <em>is</em> the cover letter — paste it in, attach the CV as PDF, and keep the subject line exactly as requested (\"Application: Senior Designer — Ava Sharma\"). When applying through a portal, upload the letter as a separate PDF unless the form has a dedicated text box. Never send .docx — formatting breaks across systems, and PDF looks professional everywhere.</p><h2>Following up without being annoying</h2><p>One follow-up, 7–10 days after applying: three sentences restating interest and offering any further information. That's it. No second follow-up, no LinkedIn stalking the hiring manager, no \"just bumping this.\" Hiring pipelines are slow for reasons unrelated to you; a single polite nudge shows enthusiasm, while repeated ones signal desperation. Meanwhile, keep applying elsewhere — the best negotiating position is another offer.</p><h2>Cover letters for career changers</h2><p>Career changers need the letter more than anyone — it's where the pivot gets explained. The formula: name the transferable skill explicitly (\"five years of client-facing sales taught me to diagnose needs fast — the core of UX research\"), show one concrete bridge (a project, course, or freelance work in the new field), and express genuine, specific motivation for the switch. Never apologise for the old career; reframe it as the source of your edge.</p><h2>Cover letters for internal applications</h2><p>Applying inside your own company? Shorter is better — they know the firm, so skip the \"why this company\" paragraph and focus on why this role and why now. Reference internal context explicitly: projects you've shipped, stakeholders who'll vouch for you, institutional knowledge you'll bring. The tone can be one notch more direct than an external application; you're a colleague making a case, not a stranger introducing yourself.</p><h2>ATS and formatting basics</h2><p>Most large employers run applications through Applicant Tracking Systems. Keep formatting simple: standard fonts, no tables or text boxes, no headers/footers with critical info. Use the exact role title from the job ad somewhere in the letter — it's the simplest keyword match there is. Save and upload as PDF unless the portal explicitly asks for .docx. None of this gets you hired, but it stops you getting filtered before a human ever reads a word.</p><p><strong>Remember:</strong> hiring managers skim — put your strongest achievement in the first three lines, where eyes always land.</p><h2>Openings That Work vs Openings That Don't</h2><p>The first two sentences decide whether the rest gets read. Compare:</p><table><tr><th>Instead of this…</th><th>Try this…</th></tr><tr><td>"I am writing to apply for the position of Marketing Executive advertised on your website."</td><td>"In three years I grew a D2C skincare brand's email list from 4,000 to 61,000, and learned that subject lines are won in the first five words — a lesson I'd bring to your Marketing Executive role."</td></tr><tr><td>"I am a hardworking team player with excellent communication skills."</td><td>"As the engineer who cut our deploy time from 40 minutes to 9, I know the difference between busywork and work that ships — and I only join teams that ship."</td></tr><tr><td>"Please find attached my CV for your consideration."</td><td>"Your ad asks for someone who can own the onboarding funnel end to end — last quarter I rebuilt ours and lifted trial-to-paid conversion by 22%."</td></tr></table><p><em>The pattern:</em> a specific number, a named skill, and a direct link to the role — all inside the opening lines. Generic openers force the reader to hunt for reasons to care; strong ones hand those reasons over immediately.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How long should a cover letter be?</summary><p>250–350 words — about four short paragraphs. Hiring managers spend under a minute on first pass, so every sentence must earn its place. Over 400 words signals you can't prioritise.</p></details>
+<details><summary>What should I include in a cover letter?</summary><p>Role title + one genuine company-specific reason, three proof points (achievement + scale + result), and a confident close connecting your experience to their needs. Specificity beats eloquence every time.</p></details>
+<details><summary>Which tone should my cover letter use?</summary><p>Professional for finance, law, healthcare and corporates. Friendly for startups, creative and nonprofit roles. Confident for senior and sales positions. When unsure, mirror the tone of the company's job ad.</p></details>
+<details><summary>How do I write a cover letter with no direct experience?</summary><p>Frame what you bring, not what you lack. Lead with transferable achievements and genuine motivation for the role — never apologise for your background or write 'I know I don't have X but…'</p></details>
+<details><summary>What are the biggest cover letter mistakes?</summary><p>Repeating your CV instead of adding narrative, using the wrong company name, apologising for gaps, writing over 400 words, and generic flattery without a specific reason. Each is an instant credibility hit.</p></details>
+<details><summary>Do recruiters actually read cover letters?</summary><p>Yes — as a tiebreaker. When two CVs look equal, the candidate with a specific, thoughtful letter wins. A generic template letter is worse than none, so always customise.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">CoverCraft</div>
+    <p>CoverCraft writes a structured cover letter from your role, company and key points — in three tones, ready to copy.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function coverLetter(d){var name=d.name||'Your Name';var role=d.role||'the role';var company=d.company||'your company';var points=(d.points&&d.points.length?d.points:['a strong track record of results']);var tone=d.tone||'Professional';var bullets=points.map(function(p){return '• '+p;}).join('\n');var letter='';
+if(tone==='Friendly'){letter='Hi '+company+' team,\n\nI\'m thrilled to apply for the '+role+' role at '+company+' — it\'s exactly the kind of challenge I love. Here\'s a quick snapshot of what I\'d bring:\n\n'+bullets+'\n\nI\'d love to chat about how I can help '+company+' keep winning. Thanks so much for your time!\n\nWarmly,\n'+name;}
+else if(tone==='Confident'){letter='Dear '+company+' Hiring Team,\n\nI\'m applying for the '+role+' position at '+company+' because I deliver results — and I have the record to prove it:\n\n'+bullets+'\n\nI don\'t just meet expectations; I exceed them. Let\'s discuss how I\'ll do the same for '+company+'.\n\nRegards,\n'+name;}
+else{letter='Dear '+company+' Hiring Team,\n\nI am excited to apply for the '+role+' position at '+company+'. With a background built around delivering measurable results, I would be delighted to bring my experience to your team.\n\nWhat I offer:\n'+bullets+'\n\nI would welcome the opportunity to discuss how my experience can contribute to '+company+'\'s continued success.\n\nSincerely,\n'+name;}
+return letter;}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){
+var tone='Professional';
+function refresh(){var points=document.getElementById('ccfPoints').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);var letter=coverLetter({name:document.getElementById('ccfName').value.trim(),role:document.getElementById('ccfRole').value.trim(),company:document.getElementById('ccfCompany').value.trim(),points:points,tone:tone});document.getElementById('ccfLetter').textContent=letter;var words=letter.trim().split(/\s+/).length;var c=document.getElementById('ccfCount');c.textContent=words+' words';c.className='ccf-count '+(words>=200&&words<=400?'good':'bad');var h=document.getElementById('ccfHint');if(words<200)h.textContent='A bit short — add one more achievement or a company-specific sentence.';else if(words>400)h.textContent='A bit long — hiring managers skim. Trim to your three strongest points.';else h.textContent='Length looks great — in the 200–400 word readable zone.';}
+['ccfName','ccfRole','ccfCompany','ccfPoints'].forEach(function(id){document.getElementById(id).addEventListener('input',refresh);});
+document.querySelectorAll('.ccf-tone').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.ccf-tone').forEach(function(x){x.classList.remove('on');});b.classList.add('on');tone=b.dataset.tone;refresh();});});
+document.getElementById('ccfCopy').addEventListener('click',function(){var t=document.getElementById('ccfLetter').textContent;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t);});
+refresh();
+});}
+</script>
+</body>
+</html>
