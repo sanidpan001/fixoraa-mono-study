@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/bookpace/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookPace — Reading Time Calculator & WPM Reading Speed Test</title>
+<meta name="description" content="BookPace is a free reading time calculator: find out how long a book takes to read, test your reading speed (WPM) in 60 seconds, plan pages per day to hit a deadline, and track your yearly reading challenge.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script id="bookpace-reading-time-lib">
+/* BookPace — Reading Time Calculator core logic (pure functions, no DOM). */
+
+function wpmFromTest(wordsRead, seconds) {
+  if (!isFinite(wordsRead) || !isFinite(seconds) || wordsRead <= 0 || seconds <= 0) return 0;
+  return Math.round((wordsRead / seconds) * 60);
+}
+
+function densityFactor(genre) {
+  var map = {
+    'fiction': 1.0,
+    'nonfiction-light': 1.2,
+    'nonfiction-dense': 1.6,
+    'academic': 2.0
+  };
+  return Object.prototype.hasOwnProperty.call(map, genre) ? map[genre] : 1.0;
+}
+
+function readingTime(pages, wordsPerPage, wpm, density) {
+  if (!isFinite(pages) || !isFinite(wordsPerPage) || !isFinite(wpm) || pages <= 0 || wordsPerPage <= 0 || wpm <= 0) return 0;
+  var d = isFinite(density) && density > 0 ? density : 1.0;
+  return Math.round((pages * wordsPerPage / wpm) * d);
+}
+
+function dailyQuota(pagesLeft, daysLeft) {
+  if (!isFinite(pagesLeft) || !isFinite(daysLeft) || pagesLeft <= 0 || daysLeft <= 0) return 0;
+  return Math.ceil(pagesLeft / daysLeft);
+}
+
+function plannerStatus(pagesTotal, pagesDone, daysTotal, daysElapsed) {
+  if (!isFinite(pagesTotal) || !isFinite(pagesDone) || !isFinite(daysTotal) ||
+      pagesTotal <= 0 || daysTotal <= 0) {
+    return { daysLeft: 0, pagesLeft: 0, quotaPerDay: 0, expectedDone: 0, behind: 0, valid: false };
+  }
+  var done = Math.max(0, pagesDone || 0);
+  var elapsed = Math.max(0, Math.min(daysElapsed || 0, daysTotal));
+  var daysLeft = Math.max(0, Math.round(daysTotal - elapsed));
+  var pagesLeft = Math.max(0, Math.round(pagesTotal - done));
+  var quota = daysLeft > 0 ? Math.ceil(pagesLeft / daysLeft) : (pagesLeft > 0 ? pagesLeft : 0);
+  var expectedDone = (elapsed / daysTotal) * pagesTotal;
+  var behind = Math.max(0, Math.round(expectedDone - done));
+  return {
+    daysLeft: daysLeft,
+    pagesLeft: pagesLeft,
+    quotaPerDay: quota,
+    expectedDone: Math.round(expectedDone),
+    behind: behind,
+    valid: true
+  };
+}
+
+function challengePace(booksRead, goal, dayOfYear) {
+  if (!isFinite(booksRead) || !isFinite(goal) || !isFinite(dayOfYear) || goal <= 0) {
+    return { ahead: 0, expected: 0, remaining: 0, valid: false };
+  }
+  var read = Math.max(0, booksRead || 0);
+  var day = Math.max(1, Math.min(dayOfYear || 1, 366));
+  var expected = (day / 365) * goal;
+  var ahead = read - expected;
+  var remaining = Math.max(0, Math.ceil(goal - read));
+  return {
+    ahead: ahead,
+    expected: expected,
+    remaining: remaining,
+    valid: true
+  };
+}
+
+function paceVerdict(booksRead, goal, dayOfYear) {
+  var p = challengePace(booksRead, goal, dayOfYear);
+  if (!p.valid) return 'Enter your goal to see your pace.';
+  if (booksRead >= goal) return 'Goal smashed! You finished ' + Math.round(booksRead) + ' of ' + goal + ' books.';
+  if (p.ahead >= 1) return 'Ahead of pace by ' + Math.floor(p.ahead) + ' book' + (Math.floor(p.ahead) === 1 ? '' : 's') + '. Keep it up!';
+  if (p.ahead <= -1) return 'Behind pace by ' + Math.abs(Math.floor(p.ahead)) + ' book' + (Math.floor(p.ahead) === -1 ? '' : 's') + '. Time to turn a few pages.';
+  return 'Right on pace. Steady reading wins the year.';
+}
+
+function formatDuration(minutes) {
+  if (!isFinite(minutes) || minutes <= 0) return '0 minutes';
+  var m = Math.round(minutes);
+  var h = Math.floor(m / 60);
+  var rem = m % 60;
+  if (h === 0) return m + (m === 1 ? ' minute' : ' minutes');
+  if (rem === 0) return h + (h === 1 ? ' hour' : ' hours');
+  return h + (h === 1 ? ' hour ' : ' hours ') + rem + (rem === 1 ? ' minute' : ' minutes');
+}
+
+function sessionsNeeded(totalMinutes, minutesPerSession) {
+  if (!isFinite(totalMinutes) || !isFinite(minutesPerSession) || totalMinutes <= 0 || minutesPerSession <= 0) return 0;
+  return Math.ceil(totalMinutes / minutesPerSession);
+}
+
+</script>
+<style>
+  :root{
+    --paper:#FAF6ED; --espresso:#5C3D2E; --crimson:#A31621;
+    --espresso-dark:#3E2A1F; --cream:#F5EEDA; --gold:#C9A227;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--paper); color:var(--espresso-dark); font-family:'Inter',system-ui,sans-serif;}
+  .font-display{font-family:'Playfair Display',Georgia,serif;}
+  /* wood-shelf header band */
+  .wood{
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 2px, transparent 2px 46px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 1px, transparent 1px 5px),
+      linear-gradient(180deg,#6B4632 0%, #5C3D2E 55%, #4A3024 100%);
+  }
+  .paper-card{
+    background:#FFFDF7;
+    border:1px solid #E7DCC3;
+    box-shadow:0 1px 0 #E7DCC3, 0 12px 30px -18px rgba(92,61,46,.45);
+  }
+  .lamp-glow{background:radial-gradient(ellipse 70% 55% at 50% 0%, rgba(201,162,39,.28), transparent 70%);}
+  .spine{border-radius:3px 6px 6px 3px; box-shadow:inset -2px 0 3px rgba(0,0,0,.25);}
+  .btn-crimson{background:var(--crimson); color:#fff; transition:transform .12s ease, box-shadow .12s ease, background .12s ease;}
+  .btn-crimson:hover{background:#8C121C; box-shadow:0 8px 18px -8px rgba(163,22,33,.7);}
+  .btn-crimson:active{transform:translateY(1px);}
+  .btn-outline{border:2px solid var(--espresso); color:var(--espresso); transition:all .12s ease;}
+  .btn-outline:hover{background:var(--espresso); color:var(--paper);}
+  input[type=number],input[type=date],select{accent-color:var(--crimson);}
+  .field{background:#fff; border:1.5px solid #D9CDAE; border-radius:.65rem; padding:.6rem .8rem; width:100%; color:#3E2A1F;}
+  .field:focus{outline:2px solid var(--crimson); outline-offset:1px; border-color:var(--crimson);}
+  .tab-btn{border:2px solid transparent; color:var(--espresso);}
+  .tab-btn.active{background:var(--espresso); color:var(--paper);}
+  .timer-ring{transition:stroke-dashoffset .2s linear;}
+  .faq-item summary{cursor:pointer;}
+  .no-print{} /* ad wrapper hook */
+  @media print{ .no-print{display:none;} }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How long does it take to read a 300-page book?","acceptedAnswer":{"@type":"Answer","text":"It depends on your reading speed and the book's density. At an average pace of 250 words per minute and about 300 words per page, a 300-page book takes roughly 6 hours. Dense non-fiction or academic texts can take 1.5 to 2 times longer because you naturally slow down to absorb complex ideas."}},
+    {"@type":"Question","name":"What is a good reading speed in WPM?","acceptedAnswer":{"@type":"Answer","text":"The average adult reads around 200–250 words per minute with normal comprehension. 300+ WPM is above average, 400–500 WPM is fast, and anything above 600 WPM usually means skimming with reduced comprehension. Use BookPace's 60-second test to measure your true speed with a comprehension check."}},
+    {"@type":"Question","name":"How many pages can I read in an hour?","acceptedAnswer":{"@type":"Answer","text":"At 250 WPM with 300 words per page, you read about 50 pages per hour for fiction. For dense non-fiction, expect 25–35 pages per hour. Your personal number depends on your measured WPM, so take the free reading speed test above for an accurate answer."}},
+    {"@type":"Question","name":"How does book difficulty change reading time?","acceptedAnswer":{"@type":"Answer","text":"Fiction and light non-fiction read at your full measured speed. Dense non-fiction (history, science, philosophy) typically takes about 1.6 times longer, and academic or technical texts about twice as long, because you pause to re-read, take notes, and process arguments."}},
+    {"@type":"Question","name":"How do I finish a book before a deadline?","acceptedAnswer":{"@type":"Answer","text":"Divide your remaining pages by the days left until your deadline — that is your daily page quota. If you started earlier, BookPace's finish-by-date planner compares your expected progress to your actual progress and tells you exactly how many pages you are behind, so your quota updates with catch-up math."}},
+    {"@type":"Question","name":"How many books should I read per year?","acceptedAnswer":{"@type":"Answer","text":"There is no universal number — 12 books a year (one a month) is a popular and achievable goal for busy adults, while avid readers aim for 30–52. What matters more is consistency. BookPace's challenge tracker shows whether you are ahead of or behind your personal pace so you can adjust early instead of in December."}}
+  ]
+}
+</script>
+</head>
+<body id="top" class="antialiased">
+
+<!-- ============ STICKY HEADER ============ -->
+<header class="sticky top-0 z-50 wood text-[#FAF6ED] shadow-lg">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M20 8c-3-2.5-7.5-3.5-12-3v24c4.5-.5 9 .5 12 3 3-2.5 7.5-3.5 12-3V5c-4.5-.5-9 .5-12 3z" fill="#FAF6ED"/>
+        <path d="M20 8v24" stroke="#5C3D2E" stroke-width="2.4"/>
+        <path d="M11 13.5c2.5-.2 5 .3 7 1.5M11 18.5c2.5-.2 5 .3 7 1.5M11 23.5c2.5-.2 5 .3 7 1.5M22 15c2-1.2 4.5-1.7 7-1.5M22 20c2-1.2 4.5-1.7 7-1.5M22 25c2-1.2 4.5-1.7 7-1.5" stroke="#A31621" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="font-display text-2xl font-bold tracking-tight">BookPace</span>
+    </a>
+    <nav class="flex items-center gap-5 text-sm font-medium">
+      <a href="#top" class="hover:text-[#C9A227] transition">Home</a>
+      <a href="https://fixoraa.tech" class="hover:text-[#C9A227] transition">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="lamp-glow border-b border-[#E7DCC3]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 pt-12 pb-8 text-center">
+    <span class="inline-flex items-center gap-2 bg-[#5C3D2E] text-[#FAF6ED] text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full shadow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="#C9A227" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+      Unlimited Free Usage
+    </span>
+    <h1 class="font-display text-4xl sm:text-5xl font-black mt-5 leading-tight">How long will this book <em class="text-[#A31621] not-italic font-display italic">really</em> take you?</h1>
+    <p class="mt-4 text-base sm:text-lg text-[#6B5343] max-w-2xl mx-auto">Measure your true reading speed, get an honest finish time for any book, plan pages per day to beat a deadline, and keep your yearly reading challenge on pace — all free, no signup.</p>
+    <!-- bookshelf divider -->
+    <div class="mt-8 flex items-end justify-center gap-[3px] h-16 select-none" aria-hidden="true">
+      <div class="spine w-5 h-14 bg-[#5C3D2E]"></div><div class="spine w-4 h-11 bg-[#A31621]"></div>
+      <div class="spine w-6 h-15 bg-[#8A6D3B]" style="height:3.75rem"></div><div class="spine w-4 h-10 bg-[#3E2A1F]"></div>
+      <div class="spine w-5 h-13 bg-[#7A4A2B]" style="height:3.25rem"></div><div class="spine w-6 h-12 bg-[#A31621]"></div>
+      <div class="spine w-4 h-14 bg-[#5C3D2E]"></div><div class="spine w-5 h-10 bg-[#B08D57]"></div>
+      <div class="spine w-4 h-12 bg-[#6B4632]"></div><div class="spine w-6 h-14 bg-[#8C121C]"></div>
+      <div class="spine w-5 h-11 bg-[#5C3D2E]"></div><div class="spine w-4 h-13 bg-[#A31621]" style="height:3.25rem"></div>
+      <div class="spine w-5 h-12 bg-[#3E2A1F]"></div><div class="spine w-4 h-10 bg-[#8A6D3B]"></div>
+    </div>
+    <div class="h-2 wood rounded-b mx-auto max-w-3xl"></div>
+  </div>
+</section>
+
+<!-- ============ TOP AD ============ -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOOL ============ -->
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-8">
+
+  <!-- tabs -->
+  <div class="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="BookPace tools">
+    <button class="tab-btn active font-semibold px-4 py-2 rounded-full border-2 border-[#5C3D2E]" data-tab="calc" role="tab">⏱ Reading Time</button>
+    <button class="tab-btn font-semibold px-4 py-2 rounded-full border-2 border-[#5C3D2E]" data-tab="test" role="tab">⚡ WPM Test</button>
+    <button class="tab-btn font-semibold px-4 py-2 rounded-full border-2 border-[#5C3D2E]" data-tab="plan" role="tab">📅 Finish Planner</button>
+    <button class="tab-btn font-semibold px-4 py-2 rounded-full border-2 border-[#5C3D2E]" data-tab="challenge" role="tab">🏆 Challenge</button>
+  </div>
+
+  <!-- TAB 1: calculator -->
+  <section id="tab-calc" class="paper-card rounded-2xl p-6 sm:p-8" role="tabpanel">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold">Reading Time Calculator</h2>
+    <p class="text-[#6B5343] mt-1 text-sm">Enter your book and your speed — BookPace gives you an honest finish time, adjusted for how dense the book is.</p>
+    <div class="grid sm:grid-cols-2 gap-5 mt-6">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="calc-pages">Book pages</label>
+        <input id="calc-pages" type="number" min="1" max="100000" value="300" class="field" placeholder="e.g. 300">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="calc-wpp">Words per page <span class="font-normal text-[#6B5343]">(≈300 for most books)</span></label>
+        <input id="calc-wpp" type="number" min="50" max="2000" value="300" class="field">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="calc-wpm">Your reading speed (WPM)</label>
+        <div class="flex gap-2">
+          <input id="calc-wpm" type="number" min="20" max="3000" value="250" class="field">
+          <button id="calc-use-test" class="btn-outline rounded-xl px-3 text-sm font-semibold whitespace-nowrap" title="Use your measured test speed">Use my test ↓</button>
+        </div>
+        <p id="calc-saved-note" class="text-xs text-[#6B5343] mt-1"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="calc-genre">Book difficulty <span class="font-normal text-[#6B5343]">(density adjuster)</span></label>
+        <select id="calc-genre" class="field">
+          <option value="fiction">📖 Fiction / light reads — full speed</option>
+          <option value="nonfiction-light">📰 Light non-fiction — a touch slower</option>
+          <option value="nonfiction-dense">📚 Dense non-fiction — much slower</option>
+          <option value="academic">🎓 Academic / technical — slowest</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="calc-session">Reading time per day (minutes)</label>
+        <input id="calc-session" type="number" min="5" max="1440" value="30" class="field">
+      </div>
+    </div>
+    <p id="calc-error" class="hidden mt-4 text-sm font-medium text-[#A31621] bg-[#FBECEC] border border-[#EFC3C3] rounded-xl px-4 py-2.5"></p>
+    <button id="calc-go" class="btn-crimson mt-6 font-bold px-8 py-3 rounded-xl text-lg w-full sm:w-auto">Calculate reading time</button>
+    <div id="calc-result" class="hidden mt-6 bg-[#FAF6ED] border-2 border-dashed border-[#5C3D2E] rounded-2xl p-6">
+      <p class="text-sm uppercase tracking-widest text-[#6B5343] font-semibold">You will finish this book in</p>
+      <p id="calc-total" class="font-display text-4xl sm:text-5xl font-black text-[#A31621] mt-1"></p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 text-center">
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="calc-days"></p><p class="text-xs text-[#6B5343]">days at your daily pace</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="calc-sessions"></p><p class="text-xs text-[#6B5343]">reading sessions</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="calc-pph"></p><p class="text-xs text-[#6B5343]">pages per hour</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="calc-words"></p><p class="text-xs text-[#6B5343]">total words</p></div>
+      </div>
+      <p id="calc-density-note" class="mt-4 text-sm text-[#6B5343] italic"></p>
+    </div>
+  </section>
+
+  <!-- TAB 2: WPM test -->
+  <section id="tab-test" class="paper-card rounded-2xl p-6 sm:p-8 hidden" role="tabpanel">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold">60-Second Reading Speed Test</h2>
+    <p class="text-[#6B5343] mt-1 text-sm">Read the passage at your natural pace. A comprehension question keeps the result honest — no skimming.</p>
+
+    <div id="test-setup" class="mt-6">
+      <div class="bg-[#FAF6ED] border border-[#E7DCC3] rounded-2xl p-5 sm:p-6 font-display text-lg leading-relaxed" id="test-passage" style="line-height:1.9"></div>
+      <p class="text-xs text-[#6B5343] mt-2">Passage length: <span id="test-wordcount" class="font-semibold"></span> words</p>
+      <button id="test-start" class="btn-crimson mt-5 font-bold px-8 py-3 rounded-xl text-lg">Start 60-second test</button>
+    </div>
+
+    <div id="test-running" class="hidden mt-6 text-center">
+      <div class="relative inline-block">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="66" fill="none" stroke="#E7DCC3" stroke-width="12"/>
+          <circle id="test-ring" class="timer-ring" cx="75" cy="75" r="66" fill="none" stroke="#A31621" stroke-width="12" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="0" transform="rotate(-90 75 75)"/>
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span id="test-clock" class="font-display text-4xl font-black">60</span>
+          <span class="text-xs text-[#6B5343]">seconds left</span>
+        </div>
+      </div>
+      <div class="bg-[#FAF6ED] border border-[#E7DCC3] rounded-2xl p-5 sm:p-6 font-display text-lg mt-4 text-left max-h-72 overflow-y-auto" id="test-passage-live" style="line-height:1.9"></div>
+      <button id="test-done" class="btn-crimson mt-5 font-bold px-8 py-3 rounded-xl text-lg">I finished reading</button>
+    </div>
+
+    <div id="test-fraction" class="hidden mt-6 text-center">
+      <h3 class="font-display text-xl font-bold">Time's up! How much of the passage did you finish?</h3>
+      <div class="flex flex-wrap justify-center gap-2 mt-4">
+        <button class="frac btn-outline rounded-xl px-5 py-2.5 font-semibold" data-frac="1">All of it</button>
+        <button class="frac btn-outline rounded-xl px-5 py-2.5 font-semibold" data-frac="0.75">About 3/4</button>
+        <button class="frac btn-outline rounded-xl px-5 py-2.5 font-semibold" data-frac="0.5">About half</button>
+        <button class="frac btn-outline rounded-xl px-5 py-2.5 font-semibold" data-frac="0.25">About 1/4</button>
+      </div>
+    </div>
+
+    <div id="test-quiz" class="hidden mt-6">
+      <h3 class="font-display text-xl font-bold">Comprehension check <span class="text-sm font-normal text-[#6B5343]">(keeps your score honest)</span></h3>
+      <p id="quiz-q" class="mt-2 font-medium"></p>
+      <div id="quiz-opts" class="grid gap-2 mt-3"></div>
+    </div>
+
+    <div id="test-result" class="hidden mt-6 bg-[#FAF6ED] border-2 border-dashed border-[#5C3D2E] rounded-2xl p-6 text-center">
+      <p class="text-sm uppercase tracking-widest text-[#6B5343] font-semibold">Your reading speed</p>
+      <p class="font-display text-6xl font-black text-[#A31621] mt-1"><span id="test-wpm">0</span><span class="text-2xl font-bold text-[#6B5343]"> WPM</span></p>
+      <p id="test-level" class="mt-2 font-semibold"></p>
+      <p id="test-honest" class="hidden mt-2 text-sm text-[#A31621] font-medium">⚠️ You missed the comprehension question — this speed may reflect skimming. Try reading a little slower for a truer score.</p>
+      <div class="flex flex-wrap justify-center gap-3 mt-5">
+        <button id="test-save" class="btn-crimson font-bold px-6 py-2.5 rounded-xl">Use this speed in calculator</button>
+        <button id="test-retry" class="btn-outline font-bold px-6 py-2.5 rounded-xl">Retake test</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: planner -->
+  <section id="tab-plan" class="paper-card rounded-2xl p-6 sm:p-8 hidden" role="tabpanel">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold">Finish-by-Date Planner</h2>
+    <p class="text-[#6B5343] mt-1 text-sm">Book club meeting next Friday? Exam on Monday? Get your daily page quota — with catch-up math if you've fallen behind.</p>
+    <div class="grid sm:grid-cols-2 gap-5 mt-6">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="plan-total">Total pages in the book</label>
+        <input id="plan-total" type="number" min="1" max="100000" value="300" class="field">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="plan-done">Pages already read</label>
+        <input id="plan-done" type="number" min="0" max="100000" value="0" class="field">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="plan-start">Started reading on</label>
+        <input id="plan-start" type="date" class="field">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="plan-deadline">Must finish by</label>
+        <input id="plan-deadline" type="date" class="field">
+      </div>
+    </div>
+    <p id="plan-error" class="hidden mt-4 text-sm font-medium text-[#A31621] bg-[#FBECEC] border border-[#EFC3C3] rounded-xl px-4 py-2.5"></p>
+    <button id="plan-go" class="btn-crimson mt-6 font-bold px-8 py-3 rounded-xl text-lg w-full sm:w-auto">Build my reading plan</button>
+    <div id="plan-result" class="hidden mt-6 bg-[#FAF6ED] border-2 border-dashed border-[#5C3D2E] rounded-2xl p-6">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="plan-daysleft"></p><p class="text-xs text-[#6B5343]">days left</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="plan-pagesleft"></p><p class="text-xs text-[#6B5343]">pages left</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold text-[#A31621]" id="plan-quota"></p><p class="text-xs text-[#6B5343]">pages per day</p></div>
+        <div class="bg-white rounded-xl border border-[#E7DCC3] p-3"><p class="text-2xl font-bold" id="plan-progress"></p><p class="text-xs text-[#6B5343]">progress</p></div>
+      </div>
+      <div class="mt-4 h-3 bg-[#EDE4CC] rounded-full overflow-hidden"><div id="plan-bar" class="h-full bg-[#5C3D2E] rounded-full transition-all" style="width:0%"></div></div>
+      <p id="plan-verdict" class="mt-4 font-semibold text-lg"></p>
+    </div>
+  </section>
+
+  <!-- TAB 4: challenge -->
+  <section id="tab-challenge" class="paper-card rounded-2xl p-6 sm:p-8 hidden" role="tabpanel">
+    <h2 class="font-display text-2xl sm:text-3xl font-bold">Yearly Reading Challenge</h2>
+    <p class="text-[#6B5343] mt-1 text-sm">Set a goal like "24 books this year" — BookPace tracks whether you're ahead of or behind pace. Saved on this device.</p>
+    <div class="grid sm:grid-cols-2 gap-5 mt-6">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="ch-goal">Books goal for <span id="ch-year"></span></label>
+        <input id="ch-goal" type="number" min="1" max="1000" value="24" class="field">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="ch-read">Books finished so far</label>
+        <input id="ch-read" type="number" min="0" max="1000" value="0" class="field">
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-5">
+      <button id="ch-plus" class="btn-crimson font-bold px-6 py-2.5 rounded-xl">+ Finished a book</button>
+      <button id="ch-minus" class="btn-outline font-bold px-6 py-2.5 rounded-xl">− Undo</button>
+      <button id="ch-save" class="btn-outline font-bold px-6 py-2.5 rounded-xl">Save progress</button>
+    </div>
+    <div id="ch-result" class="mt-6 bg-[#FAF6ED] border-2 border-dashed border-[#5C3D2E] rounded-2xl p-6">
+      <div class="flex items-baseline justify-between flex-wrap gap-2">
+        <p class="font-display text-3xl font-black"><span id="ch-big-read">0</span><span class="text-lg text-[#6B5343] font-bold"> / <span id="ch-big-goal">24</span> books</span></p>
+        <p id="ch-pct" class="font-bold text-[#A31621]"></p>
+      </div>
+      <div class="mt-3 h-4 bg-[#EDE4CC] rounded-full overflow-hidden"><div id="ch-bar" class="h-full rounded-full transition-all" style="width:0%;background:linear-gradient(90deg,#5C3D2E,#A31621)"></div></div>
+      <p id="ch-verdict" class="mt-4 font-semibold text-lg"></p>
+      <p id="ch-needed" class="text-sm text-[#6B5343]"></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ BOTTOM AD ============ -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SEO ARTICLE ============ -->
+<article class="mx-auto max-w-4xl px-4 sm:px-6 pb-10 prose-book">
+  <div class="paper-card rounded-2xl p-6 sm:p-10">
+    <h2 class="font-display text-3xl font-black">How Long Does It Take to Read a Book? The Honest Calculator Guide</h2>
+    <div class="mt-4 space-y-4 text-[15px] leading-7 text-[#4A3A2C]">
+      <p>Pick up any book and a simple question follows: how long will this actually take me? The answer most people guess is wrong, usually by hours. That is because reading time is not just about page count. It is a meeting point between three things: how fast you personally read, how densely the book is written, and how honestly you measure both. A how long to read a book calculator only earns your trust when it respects all three — and that is exactly what this page does.</p>
+      <p>Let us start with the raw math, because it is reassuringly simple. Multiply the number of pages by the words per page to get the total words, then divide by your words per minute. A typical paperback holds about 250 to 300 words per page. If you read at 250 words per minute, a 300-page novel contains roughly 90,000 words and takes about 360 minutes — six hours of actual reading. That is the clean version. Real life adds friction: dense chapters you re-read, arguments you pause to think about, and the phone you keep checking. BookPace's density adjuster exists for this reason, scaling the estimate for fiction, light non-fiction, dense non-fiction, and academic texts.</p>
+      <p>The average adult reading speed sits between 200 and 250 words per minute with normal comprehension, according to decades of reading research. That average hides enormous variation. A practiced reader of thrillers may cruise at 400 WPM through a page-turner and drop to 150 WPM through a philosophy chapter. This is why generic "this book takes 8 hours" figures on retail sites mislead: they assume one speed for every reader and every book. The only number that matters is yours, measured on real text, with comprehension verified. Our built-in reading speed test WPM tool gives you that number in sixty seconds.</p>
+      <p>Why does a comprehension check matter so much? Because speed without understanding is not reading — it is scanning. Most online speed tests hand you a big WPM number with no questions asked, and people walk away believing they read at 700 WPM. In reality, studies consistently show that pushing past roughly 400–500 WPM costs comprehension for almost everyone. The "speed readers" who claim 1,000+ WPM are skimming: they catch headings, names, and topic sentences while missing the substance. BookPace asks you a question about the passage after the timer stops. Get it right and your score is solid. Get it wrong and we tell you plainly that the number may reflect skimming, and invite you to retake it at a natural pace. An honest 260 WPM beats a fantasy 800 WPM every time, because only the honest number produces finish times you can plan around.</p>
+      <p>So how many pages can you read in an hour? Work it from your own numbers. At 250 WPM you process 15,000 words per hour. With 300 words per page, that is 50 pages of fiction per hour — a respectable evening's reading. But switch to a dense history book where your effective speed drops toward 150 WPM and the density multiplier kicks in, and the same hour yields 25 to 30 pages. Students facing a 400-page textbook often discover this the hard way: the "six hours" they budgeted becomes twelve. The density adjuster on this page exists precisely to prevent that surprise. Choose "dense non-fiction" or "academic" and watch the estimate grow to match reality — then plan your week around the real number, not the wishful one.</p>
+      <p>Once you know your speed, the next question is scheduling. This is where most reading goals die. "I'll read more this year" is a wish; "I will read 30 pages before bed every night" is a plan. The finish-by-date planner turns a deadline into a daily quota with simple, unforgiving arithmetic: pages remaining divided by days remaining. The part most planners skip — and ours does not — is catch-up math. Life interrupts. You miss three days. Now a naive plan still says "30 pages a day," but the honest plan says: given where you should be by now, you are 12 pages behind, so your real quota is higher until you catch up. Seeing "you're 12 pages behind" stings a little, and that sting is useful. It tells you exactly what today demands instead of letting the shortfall silently compound until the deadline becomes impossible.</p>
+      <p>The same logic powers the yearly challenge tracker, just stretched across twelve months. Goals like "read 24 books this year" fail in December, but they are actually lost in March, when a slow start goes unnoticed. The tracker compares your finished books against the pace you should be at today — the goal multiplied by the fraction of the year that has passed — and gives you a verdict: ahead of pace, right on pace, or behind by a specific number of books. An early warning in April ("behind by 2 books") is fixable with one extra reading session a week. The same warning in November is a crisis. Your progress saves on your device, so you can check in any time without an account.</p>
+      <p>A word about improving your speed, since the test often sparks the question. You can genuinely read faster, but the levers are unglamorous: read daily so the habit stays warm, cut subvocalization gradually rather than forcing it, widen your eye span with a pointer or finger guide, and — most effective of all — simply read more within one genre, because familiarity with its vocabulary and structure does half the work. What does not work is "photo-reading" and other schemes promising thousands of WPM with full comprehension; controlled studies have never supported them. Aim to lift your honest WPM by 10–20% over a few months of consistent practice, retest monthly with the comprehension check, and let the calculator turn that improvement into visibly shorter finish times.</p>
+      <p>Different books also deserve different strategies, and your time estimate should reflect how you will actually read them. A novel rewards immersion: long sessions, few notes, full speed. A dense non-fiction book rewards active reading: slower pace, a pencil in hand, pauses to summarize chapters in your own words — which is exactly why the density multiplier slows the estimate. Textbooks reward spaced, deliberate study where "reading time" and "learning time" blur together. When you set the difficulty selector before calculating, you are not just tweaking a number; you are choosing the reading strategy the estimate assumes.</p>
+      <p>Finally, a practical note on words per page, the input people guess worst. Mass-market paperbacks run 250–350 words per page; trade paperbacks and hardcovers often 300–400; large-print or heavily illustrated books far fewer. If your edition feels airy with wide margins, nudge the number down; if it is a dense academic tome with tiny type, nudge it up. A quick sanity check: count the words on three full lines, count the lines on a full page, multiply. Thirty seconds of counting beats any default. Combined with your measured WPM and the right density setting, the result is a finish time you can genuinely trust — whether you are planning tonight's chapters, next month's book club, or the whole year's reading life.</p>
+    </div>
+
+    <h3 class="font-display text-2xl font-bold mt-10 mb-4">Frequently asked questions</h3>
+    <div class="space-y-3">
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">How long does it take to read a 300-page book?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">At an average 250 WPM with about 300 words per page, roughly 6 hours of actual reading. Dense non-fiction can take 1.5–2× longer. Enter your own numbers in the calculator above for a personalized answer.</p>
+      </details>
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">What is a good reading speed in WPM?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">200–250 WPM is average for adults with normal comprehension. 300+ is above average, 400–500 is fast, and claims above 600 usually mean skimming. Take the 60-second test above — its comprehension check keeps the score honest.</p>
+      </details>
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">How many pages can I read in an hour?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">About 50 pages of fiction per hour at 250 WPM and 300 words per page. For dense non-fiction, expect 25–35 pages per hour. Your exact number depends on your measured speed — test it free above.</p>
+      </details>
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">How does book difficulty change reading time?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">Fiction reads at full speed; light non-fiction is slightly slower; dense non-fiction (history, science, philosophy) takes about 1.6× longer; academic or technical texts take about 2×. Use the density adjuster in the calculator.</p>
+      </details>
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">How do I finish a book before a deadline?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">Divide remaining pages by days left for your daily quota. The finish-by-date planner above also does catch-up math: it compares your expected progress with actual pages read and tells you exactly how many pages behind you are.</p>
+      </details>
+      <details class="faq-item bg-[#FAF6ED] border border-[#E7DCC3] rounded-xl px-5 py-3">
+        <summary class="font-semibold">How many books should I read per year?</summary>
+        <p class="mt-2 text-sm leading-6 text-[#4A3A2C]">Twelve a year (one a month) is a great, achievable goal for busy adults; avid readers aim for 30–52. Consistency matters more than the number — the challenge tracker tells you whether you're ahead of or behind your personal pace.</p>
+      </details>
+    </div>
+  </div>
+</article>
+
+<!-- ============ FOOTER ============ -->
+<footer class="wood text-[#FAF6ED] mt-4">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="font-display text-xl font-bold">BookPace</p>
+    <nav class="flex gap-5 text-sm">
+      <a href="#top" class="hover:text-[#C9A227] transition">Home</a>
+      <a href="https://fixoraa.tech" class="hover:text-[#C9A227] transition">More Tools</a>
+    </nav>
+    <p class="text-xs text-[#E7DCC3]/70">© 2026 BookPace · Free forever, no signup.</p>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- tabs ---------- */
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var tabs = { calc: $('tab-calc'), test: $('tab-test'), plan: $('tab-plan'), challenge: $('tab-challenge') };
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      Object.keys(tabs).forEach(function(k){ tabs[k].classList.add('hidden'); });
+      tabs[btn.getAttribute('data-tab')].classList.remove('hidden');
+    });
+  });
+
+  function err(el, msg){
+    if(!msg){ el.classList.add('hidden'); el.textContent=''; return; }
+    el.textContent = msg; el.classList.remove('hidden');
+  }
+  function num(id){ var v = parseFloat($(id).value); return isFinite(v) ? v : NaN; }
+
+  /* ---------- TAB 1: calculator ---------- */
+  function refreshSavedNote(){
+    var w = null;
+    try{ w = parseInt(localStorage.getItem('bookpace_wpm'), 10); }catch(e){}
+    if(w > 0){ $('calc-saved-note').textContent = 'Your measured speed: ' + w + ' WPM (from the WPM test).'; }
+    else { $('calc-saved-note').textContent = ''; }
+  }
+  refreshSavedNote();
+  $('calc-use-test').addEventListener('click', function(){
+    var w = null;
+    try{ w = parseInt(localStorage.getItem('bookpace_wpm'), 10); }catch(e){}
+    if(w > 0){ $('calc-wpm').value = w; refreshSavedNote(); }
+    else { err($('calc-error'), 'No test result saved yet — take the 60-second WPM test first, then come back.'); }
+  });
+  $('calc-go').addEventListener('click', function(){
+    var pages = num('calc-pages'), wpp = num('calc-wpp'), wpm = num('calc-wpm'), sessMin = num('calc-session');
+    if(!(pages > 0)) return err($('calc-error'), 'Please enter a valid number of pages (at least 1).');
+    if(!(wpp > 0)) return err($('calc-error'), 'Please enter a valid words-per-page number (try ~300).');
+    if(!(wpm > 0)) return err($('calc-error'), 'Please enter your reading speed in WPM — or take the free 60-second test.');
+    if(!(sessMin > 0)) return err($('calc-error'), 'Please enter how many minutes you read per day.');
+    err($('calc-error'), null);
+    var genre = $('calc-genre').value;
+    var factor = densityFactor(genre);
+    var mins = readingTime(pages, wpp, wpm, factor);
+    $('calc-total').textContent = formatDuration(mins);
+    $('calc-days').textContent = Math.max(1, Math.ceil(mins / sessMin));
+    $('calc-sessions').textContent = sessionsNeeded(mins, sessMin);
+    $('calc-pph').textContent = Math.round((wpm / factor) / wpp * 60);
+    $('calc-words').textContent = (pages * wpp).toLocaleString('en-US');
+    var labels = { 'fiction':'Fiction / light reads: no density penalty applied.', 'nonfiction-light':'Light non-fiction: estimate increased ×1.2 for denser prose.', 'nonfiction-dense':'Dense non-fiction: estimate increased ×1.6 — you will naturally slow down.', 'academic':'Academic / technical: estimate doubled (×2.0) for study-style reading.' };
+    $('calc-density-note').textContent = labels[genre] || '';
+    $('calc-result').classList.remove('hidden');
+  });
+
+  /* ---------- TAB 2: WPM test ---------- */
+  var PASSAGE = "In 1957, a schoolteacher named Evelyn Wood made an accidental discovery that would change how the world thinks about reading. While grading papers, she noticed that the fast-moving hand of a colleague seemed to sweep across pages at remarkable speed — and the colleague still understood everything. Curious, Wood spent years studying eye movement, testing herself with a finger tracing lines faster and faster. She found that most readers move their eyes in small, hesitant jumps, often re-reading the same words. By training her eyes to glide smoothly and widening the span of words taken in at a glance, she could read several times faster while keeping comprehension. She called it dynamic reading, and her seminars eventually taught thousands of students, including a future president. Yet the science that followed told a more careful story. Researchers confirmed that eliminating re-reading and using a guide genuinely helps, but they also found a hard ceiling: beyond roughly four to six hundred words per minute, comprehension falls for almost everyone. The eye can move faster, but the brain still needs time to turn symbols into meaning, connect ideas, and build memory. True reading speed, then, is not just a number on a timer. It is the pace at which your eyes and your understanding travel together — and the only honest test measures both.";
+  var PASSAGE_WORDS = PASSAGE.trim().split(/\s+/).length;
+  var QUIZ = {
+    q: "According to the passage, what happens beyond roughly 400–600 words per minute?",
+    opts: ["Comprehension falls for almost everyone", "Memory improves permanently", "Eye strain disappears completely"],
+    answer: 0
+  };
+  $('test-passage').textContent = PASSAGE;
+  $('test-passage-live').textContent = PASSAGE;
+  $('test-wordcount').textContent = PASSAGE_WORDS;
+
+  var tState = null; // {remain, timerId, finishedWords, elapsed}
+  function resetTestUI(){
+    ['test-running','test-fraction','test-quiz','test-result'].forEach(function(id){ $(id).classList.add('hidden'); });
+    $('test-setup').classList.remove('hidden');
+  }
+  function startTest(){
+    $('test-setup').classList.add('hidden');
+    $('test-running').classList.remove('hidden');
+    var remain = 60;
+    $('test-clock').textContent = remain;
+    $('test-ring').style.strokeDashoffset = 0;
+    var timerId = setInterval(function(){
+      remain -= 1;
+      $('test-clock').textContent = Math.max(0, remain);
+      $('test-ring').style.strokeDashoffset = (414.7 * (60 - remain) / 60).toFixed(1);
+      if(remain <= 0){ clearInterval(timerId); onTimeout(); }
+    }, 1000);
+    tState = { remain: remain, timerId: timerId, startTs: Date.now() };
+  }
+  function elapsedSec(){
+    return Math.min(60, Math.max(1, Math.round((Date.now() - tState.startTs) / 1000)));
+  }
+  function onTimeout(){
+    clearInterval(tState.timerId);
+    $('test-running').classList.add('hidden');
+    $('test-fraction').classList.remove('hidden');
+    tState.timedOut = true;
+  }
+  function finishTest(wordsRead, seconds){
+    $('test-running').classList.add('hidden');
+    $('test-fraction').classList.add('hidden');
+    var wpm = wpmFromTest(wordsRead, seconds);
+    tState.measuredWpm = wpm;
+    // quiz
+    $('quiz-q').textContent = QUIZ.q;
+    var box = $('quiz-opts'); box.innerHTML = '';
+    QUIZ.opts.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.className = 'btn-outline rounded-xl px-4 py-2.5 text-left font-medium';
+      b.textContent = opt;
+      b.addEventListener('click', function(){ gradeQuiz(i); });
+      box.appendChild(b);
+    });
+    $('test-quiz').classList.remove('hidden');
+  }
+  function gradeQuiz(picked){
+    var honest = (picked === QUIZ.answer);
+    var wpm = tState.measuredWpm;
+    $('test-wpm').textContent = wpm;
+    var lvl = wpm < 200 ? 'Steady reader — consistency will lift this.' :
+              wpm < 300 ? 'Around average — solid everyday pace.' :
+              wpm < 450 ? 'Above average — nicely done.' : 'Fast reader — impressive pace.';
+    $('test-level').textContent = lvl;
+    $('test-honest').classList.toggle('hidden', honest);
+    $('test-quiz').classList.add('hidden');
+    $('test-result').classList.remove('hidden');
+    try{ localStorage.setItem('bookpace_wpm', String(wpm)); }catch(e){}
+    refreshSavedNote();
+  }
+  $('test-start').addEventListener('click', startTest);
+  $('test-done').addEventListener('click', function(){
+    if(!tState) return;
+    clearInterval(tState.timerId);
+    finishTest(PASSAGE_WORDS, elapsedSec());
+  });
+  document.querySelectorAll('.frac').forEach(function(b){
+    b.addEventListener('click', function(){
+      var words = Math.round(PASSAGE_WORDS * parseFloat(b.getAttribute('data-frac')));
+      finishTest(words, 60);
+    });
+  });
+  $('test-save').addEventListener('click', function(){
+    var w = tState ? tState.measuredWpm : 0;
+    if(w > 0){ $('calc-wpm').value = w; refreshSavedNote(); }
+    tabBtns[0].click();
+    $('calc-go').click();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  $('test-retry').addEventListener('click', function(){ resetTestUI(); startTest(); });
+
+  /* ---------- TAB 3: planner ---------- */
+  (function(){
+    var today = new Date();
+    var iso = function(d){ return d.toISOString().slice(0,10); };
+    $('plan-start').value = iso(today);
+    var dl = new Date(today); dl.setDate(dl.getDate() + 14);
+    $('plan-deadline').value = iso(dl);
+  })();
+  $('plan-go').addEventListener('click', function(){
+    var total = num('plan-total'), done = num('plan-done');
+    var startD = new Date($('plan-start').value + 'T00:00:00');
+    var deadD = new Date($('plan-deadline').value + 'T00:00:00');
+    var now = new Date(); now.setHours(0,0,0,0);
+    if(!(total > 0)) return err($('plan-error'), 'Please enter the total pages in the book.');
+    if(!(done >= 0)) return err($('plan-error'), 'Pages already read must be 0 or more.');
+    if(done > total) return err($('plan-error'), 'Pages already read cannot exceed the total pages.');
+    if(isNaN(startD.getTime()) || isNaN(deadD.getTime())) return err($('plan-error'), 'Please pick both a start date and a deadline.');
+    if(deadD <= startD) return err($('plan-error'), 'The deadline must be after your start date.');
+    err($('plan-error'), null);
+    var DAY = 86400000;
+    var daysTotal = Math.max(1, Math.round((deadD - startD) / DAY));
+    var daysElapsed = Math.round((now - startD) / DAY);
+    var st = plannerStatus(total, done, daysTotal, daysElapsed);
+    $('plan-daysleft').textContent = st.daysLeft;
+    $('plan-pagesleft').textContent = st.pagesLeft.toLocaleString('en-US');
+    $('plan-quota').textContent = st.quotaPerDay;
+    var pct = Math.round((done / total) * 100);
+    $('plan-progress').textContent = pct + '%';
+    $('plan-bar').style.width = Math.min(100, pct) + '%';
+    var v = $('plan-verdict');
+    if(st.pagesLeft === 0){
+      v.innerHTML = '🎉 <span class="text-[#A31621]">Finished!</span> You have read the whole book.';
+    } else if(st.daysLeft === 0){
+      v.innerHTML = '⏰ The deadline is <span class="text-[#A31621]">today</span> — ' + st.pagesLeft + ' pages to go. Time for a reading sprint!';
+    } else if(st.behind > 0){
+      v.innerHTML = '📕 You are <span class="text-[#A31621] font-bold">' + st.behind + ' pages behind</span> — read <span class="font-bold">' + st.quotaPerDay + ' pages/day</span> from now on to catch up.';
+    } else {
+      v.innerHTML = '✅ Right on track — <span class="font-bold">' + st.quotaPerDay + ' pages/day</span> gets you there with room to spare.';
+    }
+    $('plan-result').classList.remove('hidden');
+  });
+
+  /* ---------- TAB 4: challenge ---------- */
+  function dayOfYear(){
+    var n = new Date();
+    return Math.floor((n - new Date(n.getFullYear(), 0, 0)) / 86400000);
+  }
+  function loadChallenge(){
+    var d = { goal: 24, read: 0, year: new Date().getFullYear() };
+    try{
+      var raw = localStorage.getItem('bookpace_challenge');
+      if(raw){ var p = JSON.parse(raw); if(p.year === d.year){ d.goal = p.goal; d.read = p.read; } }
+    }catch(e){}
+    return d;
+  }
+  function saveChallenge(d){
+    try{ localStorage.setItem('bookpace_challenge', JSON.stringify(d)); }catch(e){}
+  }
+  function renderChallenge(){
+    var d = loadChallenge();
+    $('ch-goal').value = d.goal;
+    $('ch-read').value = d.read;
+    $('ch-year').textContent = d.year;
+    $('ch-big-read').textContent = d.read;
+    $('ch-big-goal').textContent = d.goal;
+    var pct = d.goal > 0 ? Math.round((d.read / d.goal) * 100) : 0;
+    $('ch-pct').textContent = pct + '%';
+    $('ch-bar').style.width = Math.min(100, pct) + '%';
+    var p = challengePace(d.read, d.goal, dayOfYear());
+    $('ch-verdict').textContent = '📊 ' + paceVerdict(d.read, d.goal, dayOfYear());
+    $('ch-needed').textContent = p.remaining > 0
+      ? p.remaining + ' book' + (p.remaining === 1 ? '' : 's') + ' to go · expected at this point in the year: ~' + p.expected.toFixed(1)
+      : 'Nothing left to read — enjoy the victory lap.';
+  }
+  renderChallenge();
+  function bump(delta){
+    var d = loadChallenge();
+    d.goal = Math.max(1, parseInt($('ch-goal').value, 10) || d.goal);
+    d.read = Math.max(0, d.read + delta);
+    saveChallenge(d); renderChallenge();
+  }
+  $('ch-plus').addEventListener('click', function(){ bump(1); });
+  $('ch-minus').addEventListener('click', function(){ bump(-1); });
+  $('ch-save').addEventListener('click', function(){
+    var d = loadChallenge();
+    d.goal = Math.max(1, parseInt($('ch-goal').value, 10) || 1);
+    d.read = Math.max(0, parseInt($('ch-read').value, 10) || 0);
+    saveChallenge(d); renderChallenge();
+  });
+})();
+</script>
+</body>
+</html>
