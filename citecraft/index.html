@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/citecraft/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CiteCraft — Free Citation &amp; Bibliography Generator (APA, MLA, Chicago, Harvard)</title>
+<meta name="description" content="CiteCraft is a free citation generator and bibliography maker. Format books, journals, websites and videos in APA 7th, MLA 9th, Chicago 17th and Harvard styles, get in-text citations, and download your bibliography.">
+<meta name="keywords" content="citation generator, apa citation generator, mla citation generator, bibliography generator, free citation machine, chicago citation, harvard referencing">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: { navy: '#1E293B', paper: '#F8FAFC', gold: '#F59E0B' },
+      fontFamily: { serif: ['Georgia', 'Times New Roman', 'serif'] }
+    }
+  }
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; }
+  .tab-active { background-color: #F59E0B !important; color: #1E293B !important; border-color: #F59E0B !important; }
+  .ref-card { font-family: Georgia, 'Times New Roman', serif; }
+  .ref-card p { text-indent: -1.75rem; padding-left: 1.75rem; }
+  input, textarea, select { color: #1E293B; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid #F59E0B; outline-offset: 0; border-color: #F59E0B; }
+  @media print { .no-print { display: none !important; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between APA, MLA, Chicago, and Harvard citation styles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "APA (American Psychological Association, 7th edition) is used mainly in the social sciences and uses an author-date format like (Smith, 2020). MLA (Modern Language Association, 9th edition) is common in the humanities and uses author-page in-text citations like (Smith 23). Chicago 17th author-date is popular in history and the sciences and looks like (Smith 2020), while its notes-bibliography variant uses footnotes. Harvard referencing is an author-date system widely used in the UK, Australia, and many international universities, formatted like (Smith, 2020) with a reference list entry such as Smith, J., 2020. Title. Publisher."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I cite a source with no author?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When no author is listed, move the title into the author position. In APA 7th, the title takes the author's place: Title of Work. (2020). Publisher. In MLA 9th, start with the title: Title of Work. Publisher, 2020. In Harvard referencing, use Anon in place of the author: Anon, 2020. Title. Publisher. CiteCraft handles this automatically when you leave the author field blank."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I cite a source with no publication date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use n.d. (no date) in APA and Chicago styles, for example (Smith, n.d.), omit the year in MLA and rely on the access date for web sources, and write no date in Harvard style, for example Smith, J., no date. Title. Publisher. CiteCraft inserts the correct placeholder for each style when you leave the year field empty."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does et al. mean and when should I use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Et al. is short for the Latin et alia, meaning and others. It is used when a source has three or more authors, so you name the first author and shorten the rest. In APA 7th, three or more authors become Smith et al. (2020) in text and Smith, J., et al. (2020) in the reference list. MLA 9th uses Smith, John, et al., and Harvard uses Smith, J. et al. CiteCraft applies et al. automatically when you enter three or more authors."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to include a DOI or URL in my citations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, whenever one is available. APA 7th requires a DOI formatted as https://doi.org/xxxxx for journal articles, or the URL for web content. MLA 9th includes the DOI or URL at the end of the entry. Chicago author-date adds the DOI or URL, and Harvard lists it after Available at:. A DOI is preferred over a URL because it is a permanent link. CiteCraft formats your DOI correctly and falls back to the URL when no DOI exists."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is CiteCraft really free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. CiteCraft is completely free with unlimited usage. There is no signup, no paywall, no watermark, and no limit on how many citations or bibliographies you generate. Everything runs in your browser, so your sources never leave your device."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body id="top" class="bg-paper text-slate-800">
+
+<!-- ============ STICKY HEADER ============ -->
+<header class="sticky top-0 z-50 bg-navy shadow-lg">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5" aria-label="CiteCraft home">
+      <span class="w-9 h-9 rounded-md bg-gold flex items-center justify-center font-serif font-bold text-navy text-xl leading-none">&ldquo;&rdquo;</span>
+      <span class="font-serif text-2xl font-bold text-white tracking-tight">Cite<span class="text-gold">Craft</span></span>
+    </a>
+    <nav class="flex items-center gap-5 sm:gap-8 text-sm font-medium">
+      <a href="#top" class="text-slate-200 hover:text-gold transition">Home</a>
+      <a href="https://fixoraa.tech" class="text-slate-200 hover:text-gold transition">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="bg-navy border-t border-slate-700">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+    <h1 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight">Free Citation &amp; Bibliography Generator</h1>
+    <p class="mt-4 text-slate-300 text-base sm:text-lg max-w-2xl mx-auto">Format books, journals, websites, and videos in <span class="text-gold font-semibold">APA 7th</span>, <span class="text-gold font-semibold">MLA 9th</span>, <span class="text-gold font-semibold">Chicago 17th</span>, and <span class="text-gold font-semibold">Harvard</span> styles — side by side, in seconds.</p>
+    <div class="mt-6 inline-flex items-center gap-2 bg-slate-800 border border-gold/60 rounded-full px-5 py-2">
+      <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+      <span class="text-sm font-semibold text-gold tracking-wide">Unlimited Free Usage</span>
+      <span class="text-xs text-slate-400">· no signup · no paywall · no watermark</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOP AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOOL ============ -->
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8" aria-label="Citation generator tool">
+  <div class="grid lg:grid-cols-5 gap-6">
+
+    <!-- LEFT: source form -->
+    <section class="lg:col-span-2 bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden" aria-label="Source details form">
+      <div class="bg-navy px-5 py-4">
+        <h2 class="font-serif text-xl font-bold text-white">1 · Enter source details</h2>
+        <p class="text-xs text-slate-300 mt-1">Pick a source type, then fill the fields.</p>
+      </div>
+      <div class="p-5">
+        <div class="grid grid-cols-4 gap-2 mb-5" role="tablist" aria-label="Source type">
+          <button type="button" data-type="book" class="srctype tab-active border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Book</button>
+          <button type="button" data-type="journal" class="srctype border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Journal</button>
+          <button type="button" data-type="website" class="srctype border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Website</button>
+          <button type="button" data-type="video" class="srctype border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Video</button>
+        </div>
+        <div id="formFields" class="space-y-4"></div>
+        <div class="flex flex-col sm:flex-row gap-3 mt-6">
+          <button id="btnAdd" type="button" class="flex-1 bg-navy hover:bg-slate-700 text-white font-semibold rounded-lg px-4 py-3 text-sm transition">Add to bibliography</button>
+          <button id="btnClear" type="button" class="sm:w-auto border border-slate-300 hover:border-gold text-slate-600 font-semibold rounded-lg px-4 py-3 text-sm transition">Clear</button>
+        </div>
+        <p id="formHint" class="text-xs text-slate-500 mt-3">Tip: enter one author per line, e.g. <span class="italic">Jane Smith</span> or <span class="italic">Smith, Jane</span>.</p>
+      </div>
+    </section>
+
+    <!-- RIGHT: 4-style comparison tabs -->
+    <section class="lg:col-span-3 bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden" aria-label="Citation output">
+      <div class="bg-navy px-5 py-4 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="font-serif text-xl font-bold text-white">2 · Your citations</h2>
+        <span class="text-xs text-slate-300">All 4 styles, side by side</span>
+      </div>
+      <div class="p-5">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5" role="tablist" aria-label="Citation style">
+          <button type="button" data-style="apa" class="styletab tab-active border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">APA 7th</button>
+          <button type="button" data-style="mla" class="styletab border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">MLA 9th</button>
+          <button type="button" data-style="chicago" class="styletab border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Chicago</button>
+          <button type="button" data-style="harvard" class="styletab border border-slate-300 rounded-lg px-2 py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:border-gold transition">Harvard</button>
+        </div>
+
+        <div id="previewEmpty" class="text-center py-10 text-slate-400 text-sm">
+          Fill in the source details on the left — your formatted citations appear here instantly.
+        </div>
+
+        <div id="previewBox" class="hidden space-y-5">
+          <div class="ref-card bg-paper border border-slate-200 rounded-lg p-5">
+            <div class="flex items-center justify-between mb-2 no-print">
+              <h3 class="font-sans text-xs font-bold uppercase tracking-widest text-slate-500">Reference list entry</h3>
+              <button type="button" class="copybtn text-xs font-semibold text-navy border border-slate-300 rounded-md px-3 py-1.5 hover:border-gold hover:text-amber-600 transition" data-copy="refOut">Copy</button>
+            </div>
+            <p id="refOut" class="text-[15px] leading-relaxed text-slate-800"></p>
+          </div>
+
+          <div class="bg-paper border border-slate-200 rounded-lg p-5">
+            <h3 class="font-sans text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">In-text citations</h3>
+            <div class="space-y-3 text-[15px]">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <span class="text-xs font-semibold text-slate-500 block mb-0.5">Parenthetical</span>
+                  <span id="intextParen" class="font-serif text-slate-800"></span>
+                </div>
+                <button type="button" class="copybtn shrink-0 text-xs font-semibold text-navy border border-slate-300 rounded-md px-3 py-1.5 hover:border-gold hover:text-amber-600 transition" data-copy="intextParen">Copy</button>
+              </div>
+              <div class="flex items-start justify-between gap-3 border-t border-slate-200 pt-3">
+                <div>
+                  <span class="text-xs font-semibold text-slate-500 block mb-0.5">Narrative</span>
+                  <span id="intextNarr" class="font-serif text-slate-800"></span>
+                </div>
+                <button type="button" class="copybtn shrink-0 text-xs font-semibold text-navy border border-slate-300 rounded-md px-3 py-1.5 hover:border-gold hover:text-amber-600 transition" data-copy="intextNarr">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BIBLIOGRAPHY PANEL -->
+  <section class="mt-6 bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden" aria-label="Bibliography list">
+    <div class="bg-navy px-5 py-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h2 class="font-serif text-xl font-bold text-white">3 · Bibliography <span id="bibCount" class="text-gold text-base font-sans font-semibold"></span></h2>
+        <p class="text-xs text-slate-300 mt-1">Entries are sorted alphabetically and saved in your browser.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 no-print">
+        <label class="text-xs text-slate-300 font-semibold" for="bibStyle">Style</label>
+        <select id="bibStyle" class="text-sm rounded-md border border-slate-300 px-2 py-2 bg-white">
+          <option value="apa">APA 7th</option>
+          <option value="mla">MLA 9th</option>
+          <option value="chicago">Chicago 17th</option>
+          <option value="harvard">Harvard</option>
+        </select>
+        <button id="btnCopyAll" type="button" class="text-xs font-semibold bg-gold text-navy rounded-md px-3 py-2 hover:bg-amber-400 transition">Copy all</button>
+        <button id="btnDownload" type="button" class="text-xs font-semibold border border-slate-500 text-slate-200 rounded-md px-3 py-2 hover:border-gold hover:text-gold transition">Download .txt</button>
+      </div>
+    </div>
+    <div class="p-5">
+      <div id="bibEmpty" class="text-center py-8 text-slate-400 text-sm">No sources yet. Fill the form and click <span class="font-semibold text-slate-600">Add to bibliography</span>.</div>
+      <ul id="bibList" class="ref-card space-y-4"></ul>
+    </div>
+  </section>
+</main>
+
+<!-- BOTTOM AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SEO ARTICLE ============ -->
+<article id="seo-article" class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+  <h2 class="font-serif text-3xl font-bold text-navy mb-6">The Complete Guide to Citation Styles: APA, MLA, Chicago, and Harvard</h2>
+
+  <p class="mb-5 leading-relaxed text-slate-700">Every essay, research paper, thesis, and journal article stands on the shoulders of earlier work. Citations are how you acknowledge that debt. A citation tells your reader exactly which book, article, website, or video informed your argument, and it gives them enough information to find that source themselves. Done well, citations make your writing look credible, careful, and professional. Done badly — or left out entirely — they can undermine an otherwise strong paper and, in the worst case, lead to accusations of plagiarism. This guide explains the four citation styles students and researchers use most often: APA 7th edition, MLA 9th edition, Chicago 17th edition (author-date), and Harvard referencing. It also shows how a free citation generator like CiteCraft can take the tedious formatting work off your plate.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">Why citations matter</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">Citations serve three purposes. First, they give credit to the original authors whose ideas, data, or words you used. Scholarship is a conversation across time, and citations are how you show you are listening to the other participants. Second, they let readers verify your claims. If you write that a particular study found a result, your reader should be able to look up that study and check. Third, they demonstrate the depth of your research. A paper with a rich, carefully formatted bibliography signals that you did the reading. Universities take this seriously: most institutions treat missing or fabricated citations as an academic integrity issue. Learning to cite correctly is therefore not just a formatting chore — it is a core research skill.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">In-text citations vs. the reference list</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">All four styles covered here split the job into two parts. The <strong>in-text citation</strong> is a short marker placed inside your writing, right where you use the source. It is deliberately brief so it does not interrupt your reader's flow. The <strong>reference list</strong> (called Works Cited in MLA, and sometimes simply the bibliography) appears at the end of your document and gives the full details of every source: author, year, title, publisher, and so on. The two parts are linked — every in-text citation must point to exactly one entry in the reference list, and every entry in the list should be cited at least once in the text. A common beginner mistake is to list sources that were never cited, or to cite sources in the text that never appear in the list. A good citation generator keeps both halves consistent because it builds them from the same source details.</p>
+  <p class="mb-5 leading-relaxed text-slate-700">There are two flavors of in-text citation. A <strong>parenthetical</strong> citation puts the whole marker in brackets at the end of the sentence: <em>Memory improves with spaced repetition (Smith, 2020).</em> A <strong>narrative</strong> citation weaves the author's name into your sentence and puts the rest in brackets: <em>Smith (2020) shows that memory improves with spaced repetition.</em> Both are correct; the choice is stylistic. CiteCraft generates both versions for every source, so you can pick whichever reads better in your paragraph.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">APA 7th edition: the social science standard</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">The American Psychological Association style dominates psychology, education, business, nursing, and much of the social sciences. Its signature is the author-date system. In the text you write (Smith, 2020), and in the reference list the entry starts with the author's surname and initials, followed by the year in parentheses: <em>Smith, J. (2020). The Great Book. Acme Press.</em> Note the details APA cares about: only the author's initials (not full first names), the year immediately after the author, sentence case for titles (only the first word and proper nouns capitalized), and italics for book and journal titles. For journal articles, APA 7th wants the article title in plain text, the journal name and volume in italics, and a DOI formatted as a full URL: <em>https://doi.org/10.1000/xyz123</em>. Web pages include the site name and the URL, but no longer require a retrieval date unless the content is designed to change over time. When a work has three or more authors, APA shortens the in-text citation to the first author plus <em>et al.</em> — for example, (Lee et al., 2021) — while the reference list entry also uses <em>et al.</em> after the first author. If no author is available, the title moves into the author's position; if no date is available, APA uses the placeholder <em>n.d.</em> (no date).</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">MLA 9th edition: the humanities choice</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">The Modern Language Association style is the default in literature, languages, cultural studies, and many high-school English classes. MLA's in-text citations are famously minimal: just the author's surname, and a page number when you quote or refer to a specific passage — (Smith 23). No year, no comma. The Works Cited entry carries the weight instead: <em>Smith, John. The Great Book. Acme Press, 2020.</em> Notice the differences from APA: the author's full first name, the publisher before the year, and the year at the very end. MLA 9th organizes every citation around a template of nine core elements — author, title of source, title of container, contributors, version, number, publisher, publication date, and location — which makes it flexible enough to describe anything from a printed novel to a TikTok video. Containers matter: an article sits inside a journal, a video sits inside YouTube, and MLA wants both. Web sources end with the URL (without <em>https://</em> in strict MLA, though including it is widely accepted) and an access date, because web pages change. Two or more authors are joined with <em>and</em>, and three or more become <em>Smith, John, et al.</em> When there is no author, the entry simply begins with the title.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">Chicago 17th author-date: history and the sciences</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">The Chicago Manual of Style actually offers two systems. The <em>notes and bibliography</em> system uses footnotes or endnotes and is beloved in history and the arts. The <em>author-date</em> system, which CiteCraft generates, is preferred in the sciences and social sciences and looks close to APA at first glance: <em>(Smith 2020)</em> in the text. Look closer and the differences appear. There is no comma between author and year in the in-text citation, the reference list gives the author's full first name rather than initials, and the year follows the author with a period rather than sitting in parentheses: <em>Smith, John. 2020. The Great Book. Acme Press.</em> Journal articles put the article title in quotation marks, the journal title in italics, and the volume and pages after it, ending with the DOI or URL. Chicago is precise about dates on web content, asking for the full publication or revision date when available. Like the other styles, it shortens long author lists with <em>et al.</em> Chicago's flexibility is its strength — it handles archival documents, interviews, artworks, and other unusual sources gracefully — but that same flexibility is why students reach for a generator instead of memorizing the manual.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">Harvard referencing: the international author-date system</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">Harvard referencing is not published by Harvard University, despite the name — it is a family of author-date styles used widely across the United Kingdom, Australia, and many international universities. Individual institutions publish their own Harvard guides, so small details vary, but the core pattern is stable: <em>(Smith, 2020)</em> in the text, and in the reference list <em>Smith, J., 2020. The Great Book. Acme Press.</em> Notice the compact author format — surname, initial, no spaces — and the year followed by a period rather than parentheses. Journal articles use single quotation marks around the article title, and web sources follow the distinctive formula <em>Available at: URL [Accessed Day Month Year]</em>. Harvard is strict about the access date for online sources because it tells the reader which version of a changeable page you saw. Multiple authors follow the familiar pattern: two authors joined by <em>and</em>, three or more shortened to <em>et al.</em> When no author exists, Harvard uses <em>Anon</em>; when no date exists, it uses <em>no date</em>. Because Harvard varies slightly between universities, always check your institution's guide — CiteCraft follows the widely used Cite Them Right conventions, which satisfy most requirements.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">DOIs, URLs, and the access date</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">A DOI (digital object identifier) is a permanent ID assigned to most published journal articles. It never rots the way URLs do, which is why APA, MLA, Chicago, and Harvard all prefer it when one exists. You will usually find it on the article's first page or on the publisher's website, formatted like <em>10.1000/xyz123</em>. In your citation, present it as a clickable link: <em>https://doi.org/10.1000/xyz123</em>. If there is no DOI, use the most stable URL available — the journal's page for the article rather than a database session link. For ordinary web pages and videos, the URL is the location element, and Harvard and MLA additionally want the date you accessed the page. This matters because web content changes: the access date tells your reader which version you are citing. CiteCraft formats DOIs as proper links automatically and falls back to your URL when no DOI is entered.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">Common citation mistakes to avoid</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">Even careful students trip on the same handful of errors. The first is mixing styles — starting a paper in APA and drifting into MLA halfway through. Pick one style and use it for every citation. The second is inconsistent author names: writing <em>J. Smith</em> in one entry and <em>John Smith</em> in another confuses both readers and alphabetical sorting. The third is forgetting italics: book titles, journal names, and website names are italicized in the reference list across all four styles, while article and chapter titles go in quotation marks (MLA, Chicago) or plain sentence case (APA). The fourth is the hanging indent — reference lists use a hanging indent where the first line starts at the margin and subsequent lines are indented. CiteCraft's output is designed with this in mind. The fifth is citing sources you never read, or listing background reading that was never cited in the text. And the sixth is trusting a generator blindly: always glance over the result, especially capitalization and author names, before submitting.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">How to use CiteCraft</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">CiteCraft is built for speed without sacrificing correctness. Choose your source type — book, journal article, website, or video — and fill in the fields. Each source type shows only the fields its citation style actually needs, so you are never guessing which boxes matter. As you type, all four styles generate live and appear in comparison tabs, each with its reference list entry plus parenthetical and narrative in-text variants, ready to copy with one click. When the entry looks right, add it to your bibliography. Entries are sorted alphabetically, saved in your browser so they survive a refresh, and can be switched between styles at any time — handy when a professor asks you to convert a paper from MLA to APA. When you are done, copy the whole list or download it as a plain-text file to paste into your document. There are no accounts, no limits, and no watermarks: generate as many citations as your paper needs.</p>
+
+  <h3 class="font-serif text-2xl font-bold text-navy mt-8 mb-4">Which style should you choose?</h3>
+  <p class="mb-5 leading-relaxed text-slate-700">If your instructor or publisher names a style, the decision is made — follow their requirement exactly, including the edition. If the choice is yours, match your discipline: APA for psychology, education, business, and the social sciences; MLA for literature, languages, and the humanities; Chicago author-date for history, the sciences, and general academic publishing; Harvard if you study at a UK, Australian, or international university that specifies it. When in doubt, ask your instructor — a thirty-second question now saves hours of reformatting later. Whichever you choose, CiteCraft keeps all four at your fingertips, so switching is a single click rather than a weekend of retyping.</p>
+</article>
+
+<!-- ============ FAQS ============ -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 pb-12" aria-label="Frequently asked questions">
+  <h2 class="font-serif text-3xl font-bold text-navy mb-6">Frequently Asked Questions</h2>
+  <div class="space-y-4">
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">What is the difference between APA, MLA, Chicago, and Harvard citation styles?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">APA 7th is used in the social sciences with author-date citations like (Smith, 2020). MLA 9th is common in the humanities with author-page citations like (Smith 23). Chicago 17th author-date is popular in history and the sciences and looks like (Smith 2020). Harvard is an author-date system widely used in the UK, Australia, and international universities, formatted like (Smith, 2020) with compact reference entries.</p>
+    </details>
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">How do I cite a source with no author?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">Move the title into the author position. APA 7th gives: Title of Work. (2020). Publisher. MLA 9th starts with the title: Title of Work. Publisher, 2020. Harvard uses Anon: Anon, 2020. Title. Publisher. CiteCraft handles this automatically when you leave the author field blank.</p>
+    </details>
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">How do I cite a source with no publication date?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">Use n.d. in APA and Chicago, for example (Smith, n.d.). In MLA, omit the year and rely on the access date for web sources. In Harvard, write no date, for example Smith, J., no date. Title. Publisher. CiteCraft inserts the correct placeholder for each style when the year field is empty.</p>
+    </details>
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">What does et al. mean and when should I use it?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">Et al. is short for the Latin et alia, meaning "and others." Use it when a source has three or more authors: name the first author and shorten the rest. APA 7th uses Smith et al. (2020) in text, MLA 9th uses Smith, John, et al., and Harvard uses Smith, J. et al. CiteCraft applies et al. automatically for three or more authors.</p>
+    </details>
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">Do I need to include a DOI or URL in my citations?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">Yes, whenever one is available. APA 7th requires a DOI as https://doi.org/xxxxx for journal articles or the URL for web content. MLA 9th, Chicago, and Harvard also end entries with the DOI or URL. A DOI is preferred because it is a permanent link. CiteCraft formats your DOI correctly and falls back to the URL when no DOI exists.</p>
+    </details>
+    <details class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+      <summary class="font-semibold text-navy cursor-pointer">Is CiteCraft really free to use?</summary>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">Yes. CiteCraft is completely free with unlimited usage. No signup, no paywall, no watermark, and no limit on citations or bibliographies. Everything runs in your browser, so your sources never leave your device.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-navy border-t border-slate-700">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <span class="font-serif text-lg font-bold text-white">Cite<span class="text-gold">Craft</span></span>
+    <p class="text-xs text-slate-400 text-center">Free citation generator · APA 7th · MLA 9th · Chicago 17th · Harvard</p>
+    <a href="https://fixoraa.tech" class="text-sm text-slate-300 hover:text-gold transition">More Tools</a>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<script id="citecraft-lib">
+
+/* CiteCraft citation logic — pure functions, no DOM.
+ * Shipped inside <script id="citecraft-lib"> in citecraft.html.
+ * Tests eval this exact block from the finished HTML.
+ */
+'use strict';
+
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_SHORT = ['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sept.','Oct.','Nov.','Dec.'];
+
+function trim(s){ return (s === undefined || s === null) ? '' : String(s).trim(); }
+
+function parseName(raw){
+  raw = trim(raw);
+  if(!raw) return null;
+  if(raw.indexOf(',') !== -1){
+    var parts = raw.split(',');
+    var last = trim(parts[0]);
+    var first = trim(parts.slice(1).join(' '));
+    if(!last) return null;
+    return { first: first, last: last };
+  }
+  var toks = raw.split(/\s+/).filter(Boolean);
+  if(toks.length === 1) return { first: '', last: toks[0] };
+  return { first: toks.slice(0, -1).join(' '), last: toks[toks.length - 1] };
+}
+
+function parseAuthors(multiline){
+  return trim(multiline).split(/\r?\n/).map(parseName).filter(Boolean);
+}
+
+function initials(first, style){
+  var parts = trim(first).split(/\s+/).filter(Boolean);
+  var inits = parts.map(function(p){ return p.charAt(0).toUpperCase() + '.'; });
+  return style === 'harvard' ? inits.join('') : inits.join(' ');
+}
+
+function apaAuthor(a){ return a.last + (a.first ? ', ' + initials(a.first, 'apa') : ''); }
+function harvardAuthor(a){ return a.last + (a.first ? ', ' + initials(a.first, 'harvard') : ''); }
+function mlaFirstAuthor(a){ return a.first ? a.last + ', ' + a.first : a.last; }
+function naturalName(a){ return a.first ? a.first + ' ' + a.last : a.last; }
+function lastNames(authors){ return authors.map(function(a){ return a.last; }); }
+
+function apaAuthors(authors){
+  if(!authors.length) return '';
+  if(authors.length === 1) return apaAuthor(authors[0]);
+  if(authors.length === 2) return apaAuthor(authors[0]) + ', & ' + apaAuthor(authors[1]);
+  return apaAuthor(authors[0]) + ', et al.';
+}
+function mlaAuthors(authors){
+  if(!authors.length) return '';
+  if(authors.length === 1) return mlaFirstAuthor(authors[0]);
+  if(authors.length === 2) return mlaFirstAuthor(authors[0]) + ', and ' + naturalName(authors[1]);
+  return mlaFirstAuthor(authors[0]) + ', et al';
+}
+function chicagoAuthors(authors){
+  if(!authors.length) return '';
+  if(authors.length === 1) return mlaFirstAuthor(authors[0]);
+  if(authors.length === 2) return mlaFirstAuthor(authors[0]) + ', and ' + naturalName(authors[1]);
+  return mlaFirstAuthor(authors[0]) + ', et al';
+}
+function harvardAuthors(authors){
+  if(!authors.length) return '';
+  if(authors.length === 1) return harvardAuthor(authors[0]);
+  if(authors.length === 2) return harvardAuthor(authors[0]) + ' and ' + harvardAuthor(authors[1]);
+  return harvardAuthor(authors[0]) + ' et al.';
+}
+
+function yearOr(src, style){
+  var y = trim(src.year);
+  if(y) return y;
+  if(style === 'apa') return 'n.d.';
+  if(style === 'chicago') return 'n.d.';
+  if(style === 'harvard') return 'no date';
+  return ''; /* mla: omitted */
+}
+
+function monthName(m){
+  m = parseInt(m, 10);
+  return (m >= 1 && m <= 12) ? MONTHS[m - 1] : '';
+}
+function mlaMonth(m){
+  m = parseInt(m, 10);
+  return (m >= 1 && m <= 12) ? MONTHS_SHORT[m - 1] : '';
+}
+function mlaDate(src){
+  return [trim(src.day), mlaMonth(src.month), trim(src.year)].filter(Boolean).join(' ');
+}
+function apaFullDate(src){
+  var y = trim(src.year), m = monthName(src.month), d = trim(src.day);
+  if(!y) return 'n.d.';
+  if(m && d) return y + ', ' + m + ' ' + d;
+  if(m) return y + ', ' + m;
+  return y;
+}
+function chicagoLongDate(src){
+  var y = trim(src.year), m = monthName(src.month), d = trim(src.day);
+  if(m && d && y) return m + ' ' + d + ', ' + y;
+  if(m && y) return m + ' ' + y;
+  return y || 'n.d.';
+}
+function doiUrl(doi){
+  var d = trim(doi).replace(/^https?:\/\/(dx\.)?doi\.org\//i, '');
+  return d ? 'https://doi.org/' + d : '';
+}
+
+/* ---------------- APA 7th ---------------- */
+function refAPA(src){
+  var A = apaAuthors(src.authors);
+  var t = trim(src.title);
+  var yr = (src.type === 'website' || src.type === 'video') ? apaFullDate(src) : yearOr(src, 'apa');
+  var head = A ? A + ' (' + yr + ').' : (t ? t + '. (' + yr + ').' : '(' + yr + ').');
+  if(src.type === 'book'){
+    var bt = A ? (t ? ' <em>' + t + '</em>.' : '') : '';
+    return head + bt + (trim(src.publisher) ? ' ' + trim(src.publisher) + '.' : '');
+  }
+  if(src.type === 'journal'){
+    var s = head + (A ? ' ' + t + '.' : '') + ' <em>' + trim(src.journal);
+    if(trim(src.volume)) s += ', ' + trim(src.volume);
+    s += '</em>';
+    if(trim(src.issue)) s += '(' + trim(src.issue) + ')';
+    if(trim(src.pages)) s += ', ' + trim(src.pages);
+    s += '.';
+    var du = doiUrl(src.doi);
+    if(du) s += ' ' + du;
+    else if(trim(src.url)) s += ' ' + trim(src.url);
+    return s;
+  }
+  if(src.type === 'website'){
+    var r = head + (A ? ' ' + t + '.' : '');
+    if(trim(src.site)) r += ' ' + trim(src.site) + '.';
+    if(trim(src.url)) r += ' ' + trim(src.url);
+    return r;
+  }
+  /* video */
+  var v = head + (A ? ' ' + t + ' [Video].' : (t ? '' : ' [Video].'));
+  if(trim(src.platform)) v += ' ' + trim(src.platform) + '.';
+  if(trim(src.url)) v += ' ' + trim(src.url);
+  return v;
+}
+
+/* ---------------- MLA 9th ---------------- */
+function refMLA(src){
+  var A = mlaAuthors(src.authors);
+  var t = trim(src.title);
+  var yr = yearOr(src, 'mla');
+  var head = A ? A + '.' : ''; /* when no author, the title itself opens the entry */
+  if(src.type === 'book'){
+    var bt = A ? ' <em>' + t + '</em>.' : ' <em>' + t + '</em>.';
+    var pub = trim(src.publisher) ? ' ' + trim(src.publisher) + (yr ? ',' : '.') : '';
+    return (head + bt + pub + (yr ? ' ' + yr + '.' : '')).replace(/^\s+/, '');
+  }
+  if(src.type === 'journal'){
+    var s = head + ' &ldquo;' + t + '.&rdquo; <em>' + trim(src.journal) + '</em>';
+    if(trim(src.volume)) s += ', vol. ' + trim(src.volume);
+    if(trim(src.issue)) s += ', no. ' + trim(src.issue);
+    if(yr) s += ', ' + yr;
+    if(trim(src.pages)) s += ', pp. ' + trim(src.pages);
+    var du = doiUrl(src.doi);
+    if(du) s += '. ' + du;
+    else if(trim(src.url)) s += '. ' + trim(src.url);
+    s += '.';
+    return s;
+  }
+  if(src.type === 'website'){
+    var w = head + (A ? ' &ldquo;' + t + '.&rdquo;' : '');
+    if(trim(src.site)) w += ' <em>' + trim(src.site) + '</em>';
+    else w += ' <em>Web</em>';
+    if(trim(src.publisher)) w += ', ' + trim(src.publisher);
+    var d = mlaDate(src);
+    if(d) w += ', ' + d;
+    if(trim(src.url)) w += ', ' + trim(src.url);
+    w += '.';
+    if(trim(src.accessed)) w += ' Accessed ' + trim(src.accessed) + '.';
+    return w;
+  }
+  /* video */
+  var v = head + ' &ldquo;' + t + '.&rdquo; <em>' + trim(src.platform || 'Video') + '</em>';
+  var d2 = mlaDate(src);
+  if(d2) v += ', ' + d2;
+  if(trim(src.url)) v += ', ' + trim(src.url);
+  v += '.';
+  if(trim(src.accessed)) v += ' Accessed ' + trim(src.accessed) + '.';
+  return v;
+}
+
+/* ---------------- Chicago 17th (author-date) ---------------- */
+function refChicago(src){
+  var A = chicagoAuthors(src.authors);
+  var t = trim(src.title);
+  var yr = yearOr(src, 'chicago');
+  var yrDot = yr + (/\.$/.test(yr) ? '' : '.');
+  var head = A ? A + '. ' + yrDot : (t ? t + '. ' + yrDot : yrDot);
+  if(src.type === 'book'){
+    var bt = A ? ' <em>' + t + '</em>.' : '';
+    return head + bt + (trim(src.publisher) ? ' ' + trim(src.publisher) + '.' : '');
+  }
+  if(src.type === 'journal'){
+    var s = head + (A ? ' &ldquo;' + t + '.&rdquo;' : '') + ' <em>' + trim(src.journal) + '</em> ' + trim(src.volume);
+    if(trim(src.issue)) s += ' (' + trim(src.issue) + ')';
+    if(trim(src.pages)) s += ': ' + trim(src.pages);
+    s += '.';
+    var du = doiUrl(src.doi);
+    if(du) s += ' ' + du + '.';
+    else if(trim(src.url)) s += ' ' + trim(src.url) + '.';
+    return s;
+  }
+  if(src.type === 'website'){
+    var w = head + (A ? ' &ldquo;' + t + '.&rdquo;' : '');
+    if(trim(src.site)) w += ' ' + trim(src.site) + '.';
+    var d = chicagoLongDate(src);
+    if(d && d !== 'n.d.') w += ' ' + d + '.';
+    if(trim(src.url)) w += ' ' + trim(src.url) + '.';
+    return w;
+  }
+  /* video */
+  var v = head + (A ? ' &ldquo;' + t + '.&rdquo;' : '');
+  if(trim(src.platform)) v += ' ' + trim(src.platform) + ' video,';
+  var d2 = chicagoLongDate(src);
+  if(d2 && d2 !== 'n.d.') v += ' ' + d2 + '.';
+  if(trim(src.url)) v += ' ' + trim(src.url) + '.';
+  return v;
+}
+
+/* ---------------- Harvard ---------------- */
+function refHarvard(src){
+  var A = harvardAuthors(src.authors);
+  var t = trim(src.title);
+  var yr = yearOr(src, 'harvard');
+  var head = (A || 'Anon') + ', ' + yr + '.';
+  if(src.type === 'book'){
+    return head + (t ? ' <em>' + t + '</em>.' : '') + (trim(src.publisher) ? ' ' + trim(src.publisher) + '.' : '');
+  }
+  if(src.type === 'journal'){
+    var s = head + " '" + t + "', <em>" + trim(src.journal) + '</em>';
+    if(trim(src.volume)) s += ', ' + trim(src.volume);
+    if(trim(src.issue)) s += '(' + trim(src.issue) + ')';
+    if(trim(src.pages)) s += ', pp. ' + trim(src.pages);
+    s += '.';
+    var du = doiUrl(src.doi);
+    if(du) s += ' ' + du + '.';
+    else if(trim(src.url)) s += ' ' + trim(src.url) + '.';
+    return s;
+  }
+  if(src.type === 'website'){
+    var w = head + (t ? ' <em>' + t + '</em>.' : '');
+    if(trim(src.site)) w += ' ' + trim(src.site) + '.';
+    if(trim(src.url)) w += ' Available at: ' + trim(src.url);
+    if(trim(src.accessed)) w += ' [Accessed ' + trim(src.accessed) + '].';
+    else if(trim(src.url)) w += '.';
+    return w;
+  }
+  /* video */
+  var v = head + (t ? ' <em>' + t + '</em>.' : '') + ' [online video]';
+  if(trim(src.platform)) v += ' ' + trim(src.platform) + '.';
+  if(trim(src.url)) v += ' Available at: ' + trim(src.url);
+  if(trim(src.accessed)) v += ' [Accessed ' + trim(src.accessed) + '].';
+  else if(trim(src.url)) v += '.';
+  return v;
+}
+
+function formatReference(src){
+  if(src.style === 'mla') return refMLA(src);
+  if(src.style === 'chicago') return refChicago(src);
+  if(src.style === 'harvard') return refHarvard(src);
+  return refAPA(src);
+}
+
+/* ---------------- In-text citations ---------------- */
+function inTextCore(authors, conj){
+  if(!authors.length) return '';
+  var L = lastNames(authors);
+  if(L.length === 1) return L[0];
+  if(L.length === 2) return L[0] + ' ' + conj + ' ' + L[1];
+  return L[0] + ' et al.';
+}
+
+function inTextAPA(src, narrative){
+  var y = yearOr(src, 'apa');
+  if(narrative){
+    var coreN = inTextCore(src.authors, 'and');
+    if(!coreN) return '"' + trim(src.title) + '" (' + y + ')';
+    return coreN + ' (' + y + ')';
+  }
+  var core = inTextCore(src.authors, '&');
+  if(!core) return '("' + trim(src.title) + '," ' + y + ')';
+  return '(' + core + ', ' + y + ')';
+}
+function inTextMLA(src){
+  var core = inTextCore(src.authors, 'and');
+  if(!core) return '("' + trim(src.title) + '")';
+  return '(' + core + ')';
+}
+function inTextChicago(src, narrative){
+  var core = inTextCore(src.authors, 'and');
+  var y = yearOr(src, 'chicago');
+  if(!core) return narrative ? '"' + trim(src.title) + '" (' + y + ')' : '("' + trim(src.title) + '" ' + y + ')';
+  return narrative ? core + ' (' + y + ')' : '(' + core + ' ' + y + ')';
+}
+function inTextHarvard(src, narrative){
+  var core = inTextCore(src.authors, 'and');
+  var y = yearOr(src, 'harvard');
+  if(!core) return narrative ? 'Anon (' + y + ')' : '(Anon, ' + y + ')';
+  return narrative ? core + ' (' + y + ')' : '(' + core + ', ' + y + ')';
+}
+
+function inText(src, style, narrative){
+  if(style === 'mla') return inTextMLA(src);
+  if(style === 'chicago') return inTextChicago(src, narrative);
+  if(style === 'harvard') return inTextHarvard(src, narrative);
+  return inTextAPA(src, narrative);
+}
+
+/* ---------------- Bibliography helpers ---------------- */
+function sortKey(src){
+  if(src.authors && src.authors.length) return src.authors[0].last.toLowerCase();
+  return trim(src.title).toLowerCase();
+}
+function sortBibliography(list){
+  return list.slice().sort(function(a, b){
+    var ka = sortKey(a), kb = sortKey(b);
+    if(ka < kb) return -1;
+    if(ka > kb) return 1;
+    return 0;
+  });
+}
+function stripTags(html){
+  return String(html).replace(/<[^>]*>/g, '').replace(/&ldquo;/g, '"').replace(/&rdquo;/g, '"').replace(/&amp;/g, '&');
+}
+
+
+</script>
+
+<script>
+(function(){
+  'use strict';
+
+  var MONTHS_SHORT_UI = ['Jan.','Feb.','Mar.','Apr.','May','June','July','Aug.','Sept.','Oct.','Nov.','Dec.'];
+  var STYLES = ['apa','mla','chicago','harvard'];
+  var STYLE_LABEL = { apa: 'APA 7th', mla: 'MLA 9th', chicago: 'Chicago 17th', harvard: 'Harvard' };
+
+  var FIELDS = {
+    book: [
+      { k:'authors', label:'Author(s) — one per line', type:'textarea', ph:'Jane Smith\nJohn Doe' },
+      { k:'year', label:'Year of publication', type:'text', ph:'2020', w:'sm' },
+      { k:'title', label:'Book title', type:'text', ph:'The Great Book' },
+      { k:'publisher', label:'Publisher', type:'text', ph:'Acme Press' }
+    ],
+    journal: [
+      { k:'authors', label:'Author(s) — one per line', type:'textarea', ph:'Anna Lee\nTom Wu' },
+      { k:'year', label:'Year', type:'text', ph:'2021', w:'sm' },
+      { k:'title', label:'Article title', type:'text', ph:'Citation habits of students' },
+      { k:'journal', label:'Journal name', type:'text', ph:'Journal of Studies' },
+      { k:'volume', label:'Volume', type:'text', ph:'12', w:'sm' },
+      { k:'issue', label:'Issue', type:'text', ph:'3', w:'sm' },
+      { k:'pages', label:'Page range', type:'text', ph:'45-67', w:'sm' },
+      { k:'doi', label:'DOI (optional)', type:'text', ph:'10.1000/xyz123' }
+    ],
+    website: [
+      { k:'authors', label:'Author(s) — one per line (optional)', type:'textarea', ph:'Jane Doe' },
+      { k:'year', label:'Year', type:'text', ph:'2023', w:'sm' },
+      { k:'month', label:'Month', type:'month', w:'sm' },
+      { k:'day', label:'Day', type:'text', ph:'12', w:'sm' },
+      { k:'title', label:'Page title', type:'text', ph:'How to cite sources' },
+      { k:'site', label:'Website name', type:'text', ph:'WebCite' },
+      { k:'publisher', label:'Publisher (optional)', type:'text', ph:'' },
+      { k:'url', label:'URL', type:'url', ph:'https://example.com/article' },
+      { k:'accessed', label:'Date accessed', type:'date', w:'sm' }
+    ],
+    video: [
+      { k:'authors', label:'Creator(s) — one per line', type:'textarea', ph:'Mike Ross' },
+      { k:'year', label:'Year', type:'text', ph:'2022', w:'sm' },
+      { k:'month', label:'Month', type:'month', w:'sm' },
+      { k:'day', label:'Day', type:'text', ph:'3', w:'sm' },
+      { k:'title', label:'Video title', type:'text', ph:'Citing like a pro' },
+      { k:'platform', label:'Platform', type:'text', ph:'YouTube' },
+      { k:'url', label:'URL', type:'url', ph:'https://youtu.be/abc123' },
+      { k:'accessed', label:'Date accessed', type:'date', w:'sm' }
+    ]
+  };
+
+  var curType = 'book';
+  var curStyle = 'apa';
+  var bibStyle = 'apa';
+  var formCache = { book:{}, journal:{}, website:{}, video:{} };
+  var bib = loadBib();
+
+  function el(id){ return document.getElementById(id); }
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  function fieldHTML(f){
+    var id = 'f-' + f.k;
+    var wrap = f.w === 'sm' ? '' : ' class="sm:col-span-2"';
+    var label = '<label for="' + id + '" class="block text-xs font-semibold text-slate-600 mb-1">' + f.label + '</label>';
+    var cls = 'w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm bg-white';
+    var input;
+    if(f.type === 'textarea'){
+      input = '<textarea id="' + id + '" rows="2" placeholder="' + esc(f.ph||'') + '" class="' + cls + ' resize-y"></textarea>';
+    } else if(f.type === 'month'){
+      var opts = '<option value="">—</option>';
+      for(var i=1;i<=12;i++){ opts += '<option value="'+i+'">'+MONTHS_SHORT_UI[i-1].replace('.','')+'</option>'; }
+      input = '<select id="' + id + '" class="' + cls + '">' + opts + '</select>';
+    } else if(f.type === 'date'){
+      input = '<input id="' + id + '" type="date" class="' + cls + '">';
+    } else {
+      input = '<input id="' + id + '" type="' + f.type + '" placeholder="' + esc(f.ph||'') + '" class="' + cls + '">';
+    }
+    return '<div' + wrap + '>' + label + input + '</div>';
+  }
+
+  function renderForm(){
+    var html = '<div class="grid sm:grid-cols-2 gap-4">';
+    FIELDS[curType].forEach(function(f){ html += fieldHTML(f); });
+    html += '</div>';
+    el('formFields').innerHTML = html;
+    var cache = formCache[curType];
+    FIELDS[curType].forEach(function(f){
+      var n = el('f-' + f.k);
+      if(!n) return;
+      if(cache[f.k] !== undefined){ n.value = cache[f.k]; }
+      else if(f.type === 'date'){
+        var t = new Date();
+        n.value = t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
+      }
+      n.addEventListener('input', onFormInput);
+      n.addEventListener('change', onFormInput);
+    });
+    onFormInput();
+  }
+
+  function cacheForm(){
+    var c = {};
+    FIELDS[curType].forEach(function(f){
+      var n = el('f-' + f.k);
+      if(n) c[f.k] = n.value;
+    });
+    formCache[curType] = c;
+  }
+
+  function fmtAccessed(iso){
+    if(!iso) return '';
+    var p = iso.split('-');
+    if(p.length !== 3) return iso;
+    var m = parseInt(p[1],10);
+    return parseInt(p[2],10) + ' ' + MONTHS_SHORT_UI[m-1] + ' ' + p[0];
+  }
+
+  function readForm(){
+    var o = { type: curType };
+    FIELDS[curType].forEach(function(f){
+      var n = el('f-' + f.k);
+      var v = n ? n.value : '';
+      if(f.k === 'accessed') v = fmtAccessed(v);
+      o[f.k] = esc(v.trim());
+    });
+    o.authorsRaw = o.authors || '';
+    o.authors = parseAuthors(o.authorsRaw);
+    return o;
+  }
+
+  function onFormInput(){
+    cacheForm();
+    renderPreview();
+  }
+
+  function refFor(src, style){
+    var s = {
+      type: src.type, authors: src.authors, year: src.year, month: src.month, day: src.day,
+      title: src.title, publisher: src.publisher, site: src.site, journal: src.journal,
+      volume: src.volume, issue: src.issue, pages: src.pages, doi: src.doi,
+      url: src.url, accessed: src.accessed, platform: src.platform, style: style
+    };
+    return formatReference(s);
+  }
+
+  function renderPreview(){
+    var src = readForm();
+    var hasTitle = src.title && src.title.length > 0;
+    el('previewEmpty').classList.toggle('hidden', hasTitle);
+    el('previewBox').classList.toggle('hidden', !hasTitle);
+    if(!hasTitle) return;
+    var s2 = Object.assign({}, src, { style: curStyle });
+    el('refOut').innerHTML = refFor(src, curStyle);
+    el('intextParen').textContent = stripTags(inText(s2, curStyle, false));
+    el('intextNarr').textContent = stripTags(inText(s2, curStyle, true));
+  }
+
+  /* ---------- tabs ---------- */
+  function setType(t){
+    cacheForm();
+    curType = t;
+    document.querySelectorAll('.srctype').forEach(function(b){
+      b.classList.toggle('tab-active', b.getAttribute('data-type') === t);
+    });
+    renderForm();
+  }
+  function setStyle(s){
+    curStyle = s;
+    document.querySelectorAll('.styletab').forEach(function(b){
+      b.classList.toggle('tab-active', b.getAttribute('data-style') === s);
+    });
+    renderPreview();
+  }
+  document.querySelectorAll('.srctype').forEach(function(b){
+    b.addEventListener('click', function(){ setType(b.getAttribute('data-type')); });
+  });
+  document.querySelectorAll('.styletab').forEach(function(b){
+    b.addEventListener('click', function(){ setStyle(b.getAttribute('data-style')); });
+  });
+
+  /* ---------- copy ---------- */
+  function copyText(txt, btn){
+    function done(){
+      var old = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = old; }, 1200);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(function(){ fallback(); });
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      done();
+    }
+  }
+  document.querySelectorAll('.copybtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var target = el(b.getAttribute('data-copy'));
+      copyText(stripTags(target.innerHTML), b);
+    });
+  });
+
+  /* ---------- bibliography ---------- */
+  function loadBib(){
+    try {
+      var raw = localStorage.getItem('citecraft-bib-v1');
+      return raw ? JSON.parse(raw) : [];
+    } catch(e){ return []; }
+  }
+  function saveBib(){
+    try { localStorage.setItem('citecraft-bib-v1', JSON.stringify(bib)); } catch(e){}
+  }
+
+  function renderBib(){
+    var sorted = sortBibliography(bib);
+    el('bibCount').textContent = sorted.length ? '(' + sorted.length + ')' : '';
+    el('bibEmpty').style.display = sorted.length ? 'none' : 'block';
+    var html = '';
+    sorted.forEach(function(item){
+      var idx = bib.indexOf(item);
+      var ref = refFor(item, bibStyle);
+      html += '<li class="bg-paper border border-slate-200 rounded-lg p-4">' +
+        '<div class="flex items-start justify-between gap-3">' +
+          '<p class="text-[15px] leading-relaxed text-slate-800 flex-1">' + ref + '</p>' +
+          '<div class="flex shrink-0 gap-2 no-print">' +
+            '<button type="button" class="bibcopy text-xs font-semibold text-navy border border-slate-300 rounded-md px-2.5 py-1.5 hover:border-gold hover:text-amber-600 transition" data-idx="' + idx + '">Copy</button>' +
+            '<button type="button" class="bibdel text-xs font-semibold text-red-700 border border-slate-300 rounded-md px-2.5 py-1.5 hover:border-red-500 transition" data-idx="' + idx + '" aria-label="Remove entry">Remove</button>' +
+          '</div>' +
+        '</div></li>';
+    });
+    el('bibList').innerHTML = html;
+    el('bibList').querySelectorAll('.bibcopy').forEach(function(b){
+      b.addEventListener('click', function(){
+        var item = bib[parseInt(b.getAttribute('data-idx'),10)];
+        copyText(stripTags(refFor(item, bibStyle)), b);
+      });
+    });
+    el('bibList').querySelectorAll('.bibdel').forEach(function(b){
+      b.addEventListener('click', function(){
+        bib.splice(parseInt(b.getAttribute('data-idx'),10), 1);
+        saveBib();
+        renderBib();
+      });
+    });
+  }
+
+  el('btnAdd').addEventListener('click', function(){
+    var src = readForm();
+    if(!src.title){
+      el('formHint').innerHTML = '<span class="text-red-600 font-semibold">Please enter at least a title before adding.</span>';
+      return;
+    }
+    el('formHint').textContent = 'Added to your bibliography below.';
+    bib.push(src);
+    saveBib();
+    renderBib();
+  });
+
+  el('btnClear').addEventListener('click', function(){
+    formCache[curType] = {};
+    renderForm();
+  });
+
+  el('bibStyle').addEventListener('change', function(){
+    bibStyle = el('bibStyle').value;
+    renderBib();
+  });
+
+  el('btnCopyAll').addEventListener('click', function(){
+    var sorted = sortBibliography(bib);
+    if(!sorted.length) return;
+    var txt = sorted.map(function(item){ return stripTags(refFor(item, bibStyle)); }).join('\n\n');
+    copyText(txt, el('btnCopyAll'));
+  });
+
+  el('btnDownload').addEventListener('click', function(){
+    var sorted = sortBibliography(bib);
+    if(!sorted.length) return;
+    var txt = 'Bibliography (' + STYLE_LABEL[bibStyle] + ')\n' +
+      'Generated with CiteCraft\n\n' +
+      sorted.map(function(item, i){ return (i+1) + '. ' + stripTags(refFor(item, bibStyle)); }).join('\n\n');
+    var blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'citecraft-bibliography-' + bibStyle + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){
+      URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+    }, 500);
+  });
+
+  renderForm();
+  renderBib();
+})();
+</script>
+</body>
+</html>
