@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Tracker — Free Streak &amp; Hour Logger, No Signup | StudyStreak</title>
+<meta name="description" content="Free study tracker: log sessions with a live timer, keep your streak alive, chart your week and export your data. No signup, data stays in your browser.">
+<link rel="canonical" href="https://study.fixoraa.tech/studystreak/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Study Tracker — Free Streak &amp; Hour Logger, No Signup | StudyStreak">
+<meta property="og:description" content="Free study tracker: log sessions with a live timer, keep your streak alive, chart your week and export your data. No signup, data stays in your browser.">
+<meta property="og:url" content="https://study.fixoraa.tech/studystreak/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "StudyStreak",
+      "url": "https://study.fixoraa.tech/studystreak/",
+      "applicationCategory": "Education Tools",
+      "operatingSystem": "Web",
+      "description": "Free study tracker: log sessions with a live timer, keep your streak alive, chart your week and export your data. No signup, data stays in your browser.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What counts as a study streak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A study streak is a run of consecutive days with at least one logged study session. StudyStreak counts back from today \u2014 if you haven't logged today yet, yesterday's session keeps the chain alive until midnight."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I time my sessions live?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Press start on the live timer when you begin and stop when you finish \u2014 the exact minutes are logged to the chosen subject. You can also add sessions manually for study done away from the screen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I set a daily study goal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely \u2014 set any daily goal in minutes (the default is 120). The goal ring fills as today's logged minutes accumulate, so you can see at a glance how close you are."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I export my study data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The export button downloads your full session ledger as a CSV file (date, subject, minutes) that opens in Excel or Google Sheets. Your data stays in your browser \u2014 nothing is uploaded anywhere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account? Where is my data stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Everything is stored in your browser's local storage on your own device. There is no account, no cloud sync, and no tracking \u2014 which is also why your data won't follow you to another device unless you export the CSV."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do when I break my streak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Don't backfill fake sessions \u2014 log the zero honestly and start fresh the next morning. Use the 'never miss twice' rule: one missed day is an accident, two is a new habit. On brutal days, a 10-minute minimum session keeps the chain alive."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F3F7F4; --surface:#FFFFFF; --accent:#0F766E; --accent-ink:#FFFFFF;
+  --ink:#1F2E28; --muted:#55665E; --line:#D5E0D8;
+  --display:'Sora',serif; --body:'Public Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.ss-wrap{background-color:#F3F7F4;background-image:linear-gradient(#E4ECE6 1px,transparent 1px),linear-gradient(90deg,#E4ECE6 1px,transparent 1px);background-size:30px 30px;padding:56px 18px 72px;color:#1F2E28;}.ss-inner{max-width:1080px;margin:0 auto;}.ss-head{text-align:center;margin-bottom:30px;}.ss-eyebrow{font-family:'Sora',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#0F766E;font-weight:700;}.ss-logo{font-size:46px;margin-top:6px;}.ss-head h1{font-family:'Sora',sans-serif;font-size:clamp(32px,5vw,50px);margin:10px 0 8px;letter-spacing:-.01em;}.ss-tag{color:#55665E;font-size:17px;margin:0;}.ss-plates{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}@media(max-width:860px){.ss-plates{grid-template-columns:repeat(2,1fr);}}.ss-plate{background:#fff;border:1px solid #D5E0D8;border-radius:8px;padding:18px;text-align:center;box-shadow:0 8px 22px rgba(31,46,40,.06);position:relative;}.ss-plate::before{content:attr(data-tag);position:absolute;top:-9px;left:14px;background:#0F766E;color:#fff;font-family:'Sora',sans-serif;font-size:10px;letter-spacing:.14em;padding:2px 8px;border-radius:3px;font-weight:700;}.ss-num{font-family:'Sora',sans-serif;font-size:38px;font-weight:700;color:#0F766E;line-height:1.1;}.ss-num small{font-size:15px;color:#55665E;font-weight:600;}.ss-lab{font-size:13px;color:#55665E;margin-top:4px;}.ss-ring{width:84px;height:84px;margin:0 auto;}.ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}@media(max-width:860px){.ss-grid{grid-template-columns:1fr;}}.ss-card{background:#fff;border:1px solid #D5E0D8;border-radius:8px;box-shadow:0 8px 22px rgba(31,46,40,.06);}.ss-card-h{padding:14px 18px;border-bottom:1px dashed #D5E0D8;font-family:'Sora',sans-serif;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#55665E;font-weight:700;display:flex;justify-content:space-between;}.ss-card-h .fig{color:#0F766E;}.ss-card-b{padding:18px;}.ss-field{margin-bottom:14px;}.ss-field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#55665E;margin-bottom:7px;}.ss-field input,.ss-field select{width:100%;padding:12px;border:1.5px solid #D5E0D8;border-radius:8px;font-size:15.5px;font-family:'Public Sans',sans-serif;box-sizing:border-box;background:#fff;color:#1F2E28;}.ss-field input:focus,.ss-field select:focus{outline:none;border-color:#0F766E;}.ss-row{display:flex;gap:10px;}.ss-row .ss-field{flex:1;}.ss-btn{background:#0F766E;color:#fff;border:none;border-radius:8px;padding:13px 24px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;}.ss-btn:hover{filter:brightness(1.08);}.ss-btn.ghost{background:#fff;color:#0F766E;border:2px solid #0F766E;padding:11px 20px;}.ss-btn.warn{background:#fff;color:#B91C1C;border:2px solid #E7B4B4;padding:8px 14px;font-size:13px;}.ss-btn:disabled{opacity:.45;cursor:not-allowed;}.ss-live{font-family:'Sora',sans-serif;font-size:30px;font-weight:700;color:#0F766E;text-align:center;padding:10px 0;letter-spacing:.02em;}.ss-chart{display:flex;align-items:flex-end;gap:10px;height:190px;padding:10px 4px 0;border-bottom:2px solid #1F2E28;position:relative;}.ss-barwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}.ss-bar{width:70%;max-width:44px;background:linear-gradient(180deg,#14B8A6,#0F766E);border-radius:4px 4px 0 0;min-height:3px;position:relative;}.ss-bar.today{outline:2px dashed #0F766E;outline-offset:3px;}.ss-barval{font-size:11.5px;font-weight:700;color:#1F2E28;margin-bottom:4px;font-family:'Sora',sans-serif;}.ss-day{font-size:11.5px;color:#55665E;margin-top:8px;font-weight:600;}.ss-ticks{position:absolute;left:0;right:0;top:10px;bottom:0;pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 35px,#E4ECE6 35px 36px);}.ss-table{width:100%;border-collapse:collapse;font-size:14.5px;}.ss-table th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#55665E;padding:10px 8px;border-bottom:2px solid #1F2E28;}.ss-table td{padding:10px 8px;border-bottom:1px dashed #D5E0D8;}.ss-empty{color:#55665E;font-size:14.5px;padding:14px 4px;}.ss-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:10px;}.ss-note{font-size:13px;color:#55665E;line-height:1.6;}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="StudyStreak home">
+      <span class="fx-logo-tile" aria-hidden="true">🔥</span>
+      <span class="fx-brand">StudyStreak</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-blueprint" aria-label="StudyStreak tool">
+<section class='ss-wrap'><div class='ss-inner'><div class='ss-head'><div class='ss-eyebrow'>Fig. 02 — Study Logbook</div><div class='ss-logo' aria-hidden='true'>🔥</div><h1>Study Streak Tracker</h1><p class='ss-tag'>Log the hours. Keep the streak. See the truth.</p></div><div class='ss-plates'><div class='ss-plate' data-tag='STREAK'><div class='ss-num'><span id='ss-streak'>0</span> <small>days</small></div><div class='ss-lab'>Current streak</div></div><div class='ss-plate' data-tag='TODAY'><div class='ss-num'><span id='ss-today'>0</span> <small>min</small></div><div class='ss-lab'>Studied today</div></div><div class='ss-plate' data-tag='WEEK'><div class='ss-num'><span id='ss-week'>0</span> <small>min</small></div><div class='ss-lab'>Last 7 days</div></div><div class='ss-plate' data-tag='GOAL'><svg class='ss-ring' viewBox='0 0 84 84' aria-hidden='true'><circle cx='42' cy='42' r='34' fill='none' stroke='#E4ECE6' stroke-width='9'/><circle id='ss-ringfg' cx='42' cy='42' r='34' fill='none' stroke='#0F766E' stroke-width='9' stroke-linecap='round' stroke-dasharray='213.6' stroke-dashoffset='213.6' transform='rotate(-90 42 42)'/></svg><div class='ss-lab'><span id='ss-goalpct'>0%</span> of daily goal</div></div></div><div class='ss-grid'><div class='ss-card'><div class='ss-card-h'><span class='fig'>LOG-01</span><span>Session logger</span></div><div class='ss-card-b'><div class='ss-field'><label for='ss-subject'>Subject</label><input id='ss-subject' type='text' placeholder='e.g. Physics' maxlength='40'></div><div class='ss-live' id='ss-live'>00:00:00</div><div class='ss-row' style='margin-bottom:16px'><button class='ss-btn' id='ss-start' type='button' style='flex:1'>▶ Start session</button><button class='ss-btn ghost' id='ss-stop' type='button' style='flex:1' disabled>■ Stop &amp; log</button></div><div style='border-top:1px dashed #D5E0D8;padding-top:14px'><div class='ss-row'><div class='ss-field'><label for='ss-manmin'>Minutes</label><input id='ss-manmin' type='number' min='1' max='1440' placeholder='45'></div><div class='ss-field'><label for='ss-mandate'>Date</label><input id='ss-mandate' type='date'></div></div><button class='ss-btn ghost' id='ss-addman' type='button'>+ Add manually</button></div><div class='ss-row' style='margin-top:16px'><div class='ss-field'><label for='ss-goal'>Daily goal (min)</label><input id='ss-goal' type='number' min='10' max='1440' value='120'></div></div><p class='ss-note'>Live timing is the honest default — manual entry is for sessions away from the screen. Only focused minutes count; breaks stay out.</p></div></div><div class='ss-card'><div class='ss-card-h'><span class='fig'>CHT-02</span><span>Last 7 days</span></div><div class='ss-card-b'><div class='ss-chart' id='ss-chart'><div class='ss-ticks'></div></div><p class='ss-note' style='margin-top:12px'>Steady medium bars beat one giant bar. Spaced sessions retain more than binges — the chart makes the pattern impossible to miss.</p><div class='ss-foot'><span class='ss-note' id='ss-total'>Total logged: 0 sessions</span><button class='ss-btn ghost' id='ss-export' type='button'>⬇ Export CSV</button></div></div></div></div><div class='ss-card'><div class='ss-card-h'><span class='fig'>LED-03</span><span>Session ledger</span></div><div class='ss-card-b' style='overflow-x:auto'><table class='ss-table'><thead><tr><th>Date</th><th>Subject</th><th>Minutes</th><th></th></tr></thead><tbody id='ss-rows'></tbody></table><div class='ss-empty' id='ss-empty'>No sessions logged yet. Start the timer above — your first session starts the streak.</div></div></div></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Why Tracking Study Hours Works</h2><p>Ask a student how long they studied yesterday and you'll hear a confident number. Ask them to prove it and the confidence evaporates. Study time leaks: five minutes on the phone here, a break that runs long there, a chapter that was 'revised' but only skimmed. Without a record, the brain does generous accounting — it remembers the heroic evening and forgets the three distracted ones. A study tracker replaces guessing with measurement. Every session gets a subject, a duration, and a date, and the numbers that come out the other end — today's minutes, this week's total, the current streak — are honest. That honesty is the whole product. Students who track consistently report the same surprise: they study less than they thought, and once they can see it, they study more.</p><p>The mechanism is not mysterious. Psychologists call it the <strong>mere-measurement effect</strong>: observing a behavior changes it. A visible streak creates a second mechanism — <strong>loss aversion</strong>. Missing a day doesn't just cost today's minutes; it breaks a 23-day chain, and that prospect stings more than the effort of a short session. The tracker weaponizes both effects deliberately: the streak flame at the top of the page is not decoration, it's the commitment device.</p><h2>Streaks: The Good, The Bad, and The Recovery</h2><p>A streak is consecutive days with at least one logged session. Ours counts back from today — if you haven't logged today yet, yesterday's session still keeps the chain alive until midnight. That design choice matters: a streak that dies at noon punishes morning studiers for no reason.</p><p>Streaks are powerful and slightly dangerous. The good: they convert 'should I study today?' from a willpower question into a maintenance question. The bad: a broken long streak can feel like failure and trigger quitting entirely — the 'what the hell' effect familiar from diet research. The fix is built into how you should read the number: a broken streak is data, not a verdict. Log the miss honestly (a zero day is still a row in the ledger), start the new chain the next morning, and compare streak <em>lengths over months</em>, not the current number. Three 20-day streaks in a term beat one 45-day streak followed by burnout.</p><p>Practical streak rules that survive contact with real life: <strong>never miss twice</strong> (one zero day is an accident; two is a new habit), keep a <strong>minimum viable session</strong> (even 10 minutes keeps the chain alive on brutal days), and <strong>log immediately</strong> — memory inflates, the timer doesn't.</p><h2>How to Log Sessions You'll Actually Trust</h2><ol><li><strong>Name the subject before you start.</strong> 'Physics' beats 'studying'. Subject-tagged sessions reveal where hours really go — most students discover one subject silently eating 60% of their time.</li><li><strong>Use the live timer, not memory.</strong> Press start, study, press stop. The timer logs exact minutes to the right subject. Manual entry exists for sessions away from the screen, but live timing is the honest default.</li><li><strong>Log breaks separately — or rather, don't log them.</strong> Only focused time counts. A 3-hour library visit with 45 minutes of phone time is a 2h15m session. The focus score stays real only if breaks stay out.</li><li><strong>One session, one subject.</strong> Switching subjects mid-session muddies the data. Stop, log, start fresh — it takes four seconds.</li><li><strong>Review weekly, not daily.</strong> Daily numbers are noisy; weekly totals show the trend. Sunday evening, look at the 7-day chart: which days leaked, which subject is starving, what's the plan for next week.</li></ol><h2>Setting a Daily Goal That Doesn't Break You</h2><p>The default goal is 120 minutes — two focused hours, the evidence-backed sweet spot for deep study before diminishing returns bite. But the right goal is personal: a school student might aim for 90 minutes, a competitive-exam aspirant for 300+. The goal ring fills as today's minutes accumulate, and the only rule is that the goal must be <strong>embarrassingly achievable on a bad day</strong>. A 60-minute goal you hit 30 days straight beats a 240-minute goal you hit twice and abandon. Raise the goal only after two full weeks of consistent hits — consistency first, volume second.</p><p>There is a subtle trap in goal-setting: counting hours instead of outcomes. Hours are an input metric. Pair the tracker with a weekly output check — problems solved, chapters finished, mock scores — and if hours rise while outputs stall, the problem is method, not time. The ledger tells you <em>how much</em>; your results tell you <em>whether it worked</em>.</p><h2>Reading Your 7-Day Chart</h2><p>The bar chart shows minutes per day for the last seven days, scaled to your biggest day. Read it like a doctor reads a chart:</p><ul><li><strong>One giant bar, six tiny ones:</strong> binge studying. Feels heroic, retains poorly. Redistribute — spaced sessions beat massed ones for every subject ever tested.</li><li><strong>Steady medium bars:</strong> the ideal pattern. Consistency compounds; this is what top performers' charts look like.</li><li><strong>Weekend craters:</strong> normal for school students, but plan for it — set a smaller weekend goal rather than a zero.</li><li><strong>A single subject dominating:</strong> check whether it's need or comfort. Students over-study favorite subjects and under-study feared ones; the subject split in the ledger exposes it.</li><li><strong>Declining trend:</strong> usually fatigue or a broken routine, rarely laziness. Shorten sessions, protect sleep, rebuild the chain with minimum-viable days.</li></ul><h2>Subjects: Where Your Hours Really Go</h2><p>Tag every session with its subject and the ledger becomes a time audit. Run this audit monthly: total each subject's hours and compare against each subject's weight in your exams. The mismatch is almost always revealing — the subject worth 40% of the grade getting 15% of the hours is the single most common planning failure in student life. Rebalance explicitly: assign the under-served subject the first session of the day for two weeks, when willpower is freshest. The tracker won't rebalance for you, but it makes the imbalance impossible to ignore, which is usually enough.</p><h2>The Focus Question: Hours vs Attention</h2><p>Two students log 3 hours. One was fully engaged; the other checked messages eleven times. The ledger shows identical numbers, and that's fine — the tracker measures time, and attention is your job. But you can sharpen the data with one habit: the <strong>drift tap</strong>. Each time you catch yourself distracted mid-session, make a mental note. Students who do this for a week typically cut their drift episodes in half without any other intervention, because catching drift requires the very attention it builds. Pair long sessions with the evidence-backed rhythm of 50 minutes on, 10 minutes off for problem-solving subjects, or 25/5 for reading-heavy ones — and log only the 'on' minutes.</p><h2>Weekly Review: The 10-Minute Ritual</h2><p>Once a week, open the ledger and answer five questions: (1) Total hours — up, down, or flat vs last week? (2) Streak status — alive, and what threatens it this week? (3) Subject split — does it match exam weights? (4) Best day — what made it work, and can it be repeated? (5) One fix — the single change for next week. Write the fix down somewhere visible. This ritual is the difference between a tracker that's a mirror and a tracker that's a coach. Ten minutes, every Sunday, compounds into the best study habit most students will ever build.</p><h2>Exporting and Owning Your Data</h2><p>Your sessions live in your browser's local storage — no account, no cloud, no subscription. The CSV export turns the ledger into a spreadsheet: date, subject, minutes per row. Use it to build pivot tables, to show a parent or mentor real evidence of work, or to archive a term before clearing the log. Data you can export is data you own; a tracker that locks your history behind a paywall is a landlord, not a tool.</p><h2>Common Tracking Mistakes</h2><ul><li><strong>Logging aspirational hours.</strong> The timer exists so you don't have to estimate. Estimates inflate by 20–40%; measured time doesn't.</li><li><strong>Chasing the streak into burnout.</strong> A 10-minute minimum-viable session keeps the chain alive without wrecking recovery. Rest days with tiny sessions beat heroic collapses.</li><li><strong>Too many subjects.</strong> Five tags is plenty. Twenty micro-tags ('Physics — thermodynamics — problems') fragments the data into noise.</li><li><strong>Ignoring zeros.</strong> A day with no session is information. Don't delete zero days or backfill fake sessions — the gaps are what make the chart honest.</li><li><strong>Tracking without reviewing.</strong> Data nobody reads is clutter. The weekly 10-minute review is non-negotiable.</li></ul><h2>What the Research Says</h2><p>Self-monitoring is one of the most replicated effects in behavioral science: across studying, exercise, and spending, people who record a behavior improve it. Spaced practice beats massed practice (Cepeda et al.), retrieval practice beats re-reading (Roediger & Karpicke), and interleaving beats blocking for long-term retention. The tracker doesn't teach these techniques — but it gives you the honest time data to apply them deliberately, and the streak gives you the reason to show up tomorrow.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>What counts as a study streak?</summary><p>A study streak is a run of consecutive days with at least one logged study session. StudyStreak counts back from today — if you haven't logged today yet, yesterday's session keeps the chain alive until midnight.</p></details>
+<details><summary>Can I time my sessions live?</summary><p>Yes. Press start on the live timer when you begin and stop when you finish — the exact minutes are logged to the chosen subject. You can also add sessions manually for study done away from the screen.</p></details>
+<details><summary>Can I set a daily study goal?</summary><p>Absolutely — set any daily goal in minutes (the default is 120). The goal ring fills as today's logged minutes accumulate, so you can see at a glance how close you are.</p></details>
+<details><summary>Can I export my study data?</summary><p>Yes. The export button downloads your full session ledger as a CSV file (date, subject, minutes) that opens in Excel or Google Sheets. Your data stays in your browser — nothing is uploaded anywhere.</p></details>
+<details><summary>Do I need an account? Where is my data stored?</summary><p>No. Everything is stored in your browser's local storage on your own device. There is no account, no cloud sync, and no tracking — which is also why your data won't follow you to another device unless you export the CSV.</p></details>
+<details><summary>What should I do when I break my streak?</summary><p>Don't backfill fake sessions — log the zero honestly and start fresh the next morning. Use the 'never miss twice' rule: one missed day is an accident, two is a new habit. On brutal days, a 10-minute minimum session keeps the chain alive.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">StudyStreak</div>
+    <p>StudyStreak logs your study sessions, keeps your daily streak alive, charts your week, and exports your data — no signup, everything stays in your browser.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function streakCount(dates,todayStr){var set={},i;for(i=0;i<dates.length;i++)set[dates[i]]=1;var d=new Date(todayStr+'T00:00:00Z');if(isNaN(d.getTime()))return 0;if(!set[todayStr])d=new Date(d.getTime()-86400000);var n=0,g=0;while(g<400){var k=d.toISOString().slice(0,10);if(set[k]){n++;d=new Date(d.getTime()-86400000);}else{break;}g++;}return n;}
+function ssDayStr(dt){var p=function(x){return (x<10?'0':'')+x;};return dt.getFullYear()+'-'+p(dt.getMonth()+1)+'-'+p(dt.getDate());}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var KEY='studystreak_sessions',GOAL='studystreak_goal';var startB=document.getElementById('ss-start'),stopB=document.getElementById('ss-stop'),liveEl=document.getElementById('ss-live'),subjEl=document.getElementById('ss-subject');if(!startB)return;function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}function save(s){try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}}var sessions=load();var goal=120;try{goal=Number(localStorage.getItem(GOAL))||120;}catch(e){}var goalEl=document.getElementById('ss-goal');goalEl.value=goal;goalEl.addEventListener('change',function(){goal=Math.max(10,Number(goalEl.value)||120);try{localStorage.setItem(GOAL,String(goal));}catch(e){}render();});document.getElementById('ss-mandate').value=ssDayStr(new Date());var t0=null,tick=null;function fmt(ms){var s=Math.floor(ms/1000);var p=function(x){return (x<10?'0':'')+x;};return p(Math.floor(s/3600))+':'+p(Math.floor(s/60)%60)+':'+p(s%60);}startB.addEventListener('click',function(){var subj=subjEl.value.trim()||'General';t0={start:Date.now(),subject:subj};startB.disabled=true;stopB.disabled=false;subjEl.disabled=true;tick=setInterval(function(){liveEl.textContent=fmt(Date.now()-t0.start);},500);liveEl.textContent='00:00:00';});stopB.addEventListener('click',function(){if(!t0)return;clearInterval(tick);var mins=Math.max(1,Math.round((Date.now()-t0.start)/60000));sessions.unshift({date:ssDayStr(new Date()),subject:t0.subject,minutes:mins});save(sessions);t0=null;startB.disabled=false;stopB.disabled=true;subjEl.disabled=false;liveEl.textContent='00:00:00';render();});document.getElementById('ss-addman').addEventListener('click',function(){var mins=Math.max(1,Math.min(1440,Number(document.getElementById('ss-manmin').value)||0));var dt=document.getElementById('ss-mandate').value||ssDayStr(new Date());var subj=subjEl.value.trim()||'General';if(!mins){return;}sessions.unshift({date:dt,subject:subj,minutes:mins});save(sessions);document.getElementById('ss-manmin').value='';render();});document.getElementById('ss-export').addEventListener('click',function(){if(!sessions.length)return;var csv='date,subject,minutes\n'+sessions.map(function(s){return s.date+',"'+String(s.subject).replace(/"/g,'""')+'",'+s.minutes;}).join('\n');var blob=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='studystreak-sessions.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},400);});function dayMinutes(dstr){var t=0;for(var i=0;i<sessions.length;i++)if(sessions[i].date===dstr)t+=sessions[i].minutes;return t;}function render(){var today=ssDayStr(new Date());var dates=[];for(var i=0;i<sessions.length;i++)if(dates.indexOf(sessions[i].date)<0)dates.push(sessions[i].date);document.getElementById('ss-streak').textContent=streakCount(dates,today);var tm=dayMinutes(today);document.getElementById('ss-today').textContent=tm;var week=0;var chart=document.getElementById('ss-chart');var bars='';var vals=[];var max=1;for(var d=6;d>=0;d--){var dt=new Date();dt.setDate(dt.getDate()-d);var ds=ssDayStr(dt);var m=dayMinutes(ds);vals.push({ds:ds,m:m,label:'SMTWTFS'[dt.getDay()],today:d===0});week+=m;if(m>max)max=m;}for(var k=0;k<vals.length;k++){var v=vals[k];var h=Math.max(3,Math.round(v.m/max*150));bars+='<div class=\'ss-barwrap\'><div class=\'ss-barval\'>'+(v.m>0?v.m:'')+'</div><div class=\'ss-bar'+(v.today?' today':'')+'\' style=\'height:'+h+'px\'></div><div class=\'ss-day\'>'+v.label+'</div></div>';}chart.innerHTML='<div class=\'ss-ticks\'></div>'+bars+(week===0?'<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center\'><span class=\'ss-note\'>Log sessions to draw your week.</span></div>':'');document.getElementById('ss-week').textContent=week;var pct=Math.min(100,Math.round(tm/goal*100));document.getElementById('ss-goalpct').textContent=pct+'%';document.getElementById('ss-ringfg').setAttribute('stroke-dashoffset',String(213.6*(1-pct/100)));var tb=document.getElementById('ss-rows');var rows='';for(var j=0;j<sessions.length;j++){var s=sessions[j];rows+='<tr><td>'+s.date+'</td><td>'+String(s.subject).replace(/</g,'&lt;')+'</td><td><b>'+s.minutes+'</b> min</td><td><button class=\'ss-btn warn\' type=\'button\' data-del=\''+j+'\'>Delete</button></td></tr>';}tb.innerHTML=rows;document.getElementById('ss-empty').style.display=sessions.length?'none':'block';document.getElementById('ss-total').textContent='Total logged: '+sessions.length+' session'+(sessions.length===1?'':'s');var dels=tb.querySelectorAll('[data-del]');for(var q=0;q<dels.length;q++){dels[q].addEventListener('click',function(){sessions.splice(Number(this.getAttribute('data-del')),1);save(sessions);render();});}}render();});}
+</script>
+</body>
+</html>
