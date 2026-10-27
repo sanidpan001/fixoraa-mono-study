@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LinkedIn Headline Generator | LinkedInHead</title>
+<meta name="description" content="LinkedIn headline generator: build a keyword-rich headline from your role, skill, and proof — scored out of 100 with A/B variants. Free tool.">
+<link rel="canonical" href="https://study.fixoraa.tech/linkedinhead/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="LinkedIn Headline Generator | LinkedInHead">
+<meta property="og:description" content="LinkedIn headline generator: build a keyword-rich headline from your role, skill, and proof — scored out of 100 with A/B variants. Free tool.">
+<meta property="og:url" content="https://study.fixoraa.tech/linkedinhead/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "LinkedInHead",
+      "url": "https://study.fixoraa.tech/linkedinhead/",
+      "applicationCategory": "Career Tools",
+      "operatingSystem": "Web",
+      "description": "LinkedIn headline generator: build a keyword-rich headline from your role, skill, and proof \u2014 scored out of 100 with A/B variants. Free tool.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long can a LinkedIn headline be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "220 characters. The most effective headlines use roughly 120\u2013180 \u2014 enough to include role, specialty, and proof keywords without truncating on mobile. The scorer above gives full length marks in that range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which keywords should I put in my headline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the exact titles and skill phrases from job postings you want. Recruiters search for 'product designer' and 'SQL', not clever internal titles. Your headline should translate how you describe yourself into what the market searches for."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use the | separator in my headline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The pipe (|) visually chunks the headline so recruiters can parse it in about two seconds, and it's the convention their eyes are trained on. Keep your most important keyword before the first separator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should my headline say I'm open to work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only the photo-frame badge, not headline space. Writing 'Open to Work' in the headline wastes characters that could carry searchable keywords. Put your value proposition in the headline and let the badge signal availability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I update my headline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Refresh it at the start of every job search with your target roles' keywords, and whenever your positioning changes \u2014 a promotion, certification, or launch with a number worth sharing. Quarterly, re-read it as a stranger: if it takes more than five seconds to grasp, tighten it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do emojis belong in a LinkedIn headline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sparingly, if at all. One restrained emoji can add personality in creative fields, but they consume character budget, render inconsistently across devices, and can read as unprofessional in conservative industries. Keywords and proof outperform decoration."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F2F5F3; --surface:#FFFFFF; --accent:#2F5D3A; --accent-ink:#FFFFFF;
+  --ink:#20242C; --muted:#5A6478; --line:#D9E1DB;
+  --display:'Bai Jamjuree',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.lh-wrap{font-family:'Bai Jamjuree',Inter,system-ui,sans-serif;background:#F2F5F3;color:#20242C;padding:56px 20px 72px;}.lh-hero{max-width:840px;margin:0 auto 34px;text-align:center;}.lh-logo{width:76px;height:76px;margin:0 auto 18px;border-radius:22px;background:linear-gradient(135deg,#2F5D3A,#6fae7f);font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(47,93,58,.25);}.lh-hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 12px;letter-spacing:-.02em;font-weight:800;line-height:1.1;}.lh-tag{font-size:18px;color:#5A6478;margin:0;}.lh-deck{max-width:840px;margin:0 auto;display:grid;gap:20px;}.lh-card{background:#FFFFFF;border:1px solid #D9E1DB;border-radius:24px;padding:34px;box-shadow:0 20px 50px rgba(47,93,58,.10);position:relative;}.lh-cardnum{position:absolute;top:22px;right:26px;font-size:13px;font-weight:800;color:#5A6478;letter-spacing:.08em;}.lh-card h2{font-size:22px;margin:0 0 6px;font-weight:800;}.lh-csub{color:#5A6478;font-size:14.5px;margin:0 0 18px;}.lh-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px;}.lh-field label{display:block;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:#5A6478;margin-bottom:8px;}.lh-field input{width:100%;padding:13px 14px;font-size:16px;border:2px solid #D9E1DB;border-radius:14px;font-family:inherit;color:#20242C;background:#F2F5F3;box-sizing:border-box;}.lh-field input:focus{outline:none;border-color:#2F5D3A;}.lh-preview{background:#20242C;color:#fff;border-radius:18px;padding:26px;margin-top:16px;}.lh-preview .lh-plabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#9fb8a5;margin-bottom:10px;font-weight:800;}.lh-headline{font-size:21px;line-height:1.5;font-weight:600;margin:0 0 16px;overflow-wrap:anywhere;}.lh-copyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}.lh-btn{padding:12px 22px;font-size:15px;font-weight:800;border-radius:12px;border:none;cursor:pointer;font-family:inherit;background:#2F5D3A;color:#fff;min-height:50px;}.lh-btn.ghost{background:transparent;color:#2F5D3A;border:2px solid #2F5D3A;}.lh-char{font-size:13px;color:#9fb8a5;font-weight:600;}.lh-scorewrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}.lh-bignum{font-size:56px;font-weight:800;color:#2F5D3A;letter-spacing:-.02em;line-height:1;}.lh-bignum small{font-size:20px;color:#5A6478;}.lh-bars{flex:1;min-width:220px;display:grid;gap:10px;}.lh-srow{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;font-size:13.5px;font-weight:600;}.lh-track{height:10px;background:#EAF0EB;border-radius:999px;overflow:hidden;}.lh-fill{height:100%;width:0;background:#2F5D3A;border-radius:999px;transition:width .3s;}.lh-srow span:last-child{text-align:right;font-variant-numeric:tabular-nums;}.lh-variant{border:2px solid #D9E1DB;border-radius:16px;padding:16px 18px;margin-bottom:12px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}.lh-variant p{margin:0;font-size:16px;font-weight:600;flex:1;min-width:220px;overflow-wrap:anywhere;}.lh-variant button{padding:10px 18px;border-radius:12px;border:2px solid #2F5D3A;background:#fff;color:#2F5D3A;font-weight:800;font-family:inherit;cursor:pointer;min-height:46px;white-space:nowrap;}.lh-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}.lh-chips button{padding:9px 16px;border-radius:999px;border:2px solid #D9E1DB;background:#F2F5F3;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;color:#20242C;min-height:42px;}.lh-chips button:hover{border-color:#2F5D3A;}@media (max-width:640px){.lh-card{padding:26px 20px;}.lh-grid{grid-template-columns:1fr;}.lh-srow{grid-template-columns:110px 1fr 40px;}.lh-bignum{font-size:44px;}.lh-wrap{padding:40px 14px 56px;}.lh-headline{font-size:18px;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="LinkedInHead home">
+      <span class="fx-logo-tile" aria-hidden="true">💡</span>
+      <span class="fx-brand">LinkedInHead</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-deck-stack" aria-label="LinkedInHead tool">
+<section class='lh-wrap'><div class='lh-hero'><div class='lh-logo' aria-hidden='true'>💡</div><h1>LinkedIn Headline Generator</h1><p class='lh-tag'>One line that ranks in recruiter searches and sells your value.</p></div><div class='lh-deck'><div class='lh-card'><span class='lh-cardnum'>CARD 1 / 4</span><h2>Build your headline</h2><p class='lh-csub'>Role first, specialty second, proof third — the formula recruiters scan for.</p><div class='lh-grid'><div class='lh-field'><label for='lh-role'>Your role / title</label><input id='lh-role' type='text' value='Product Designer' maxlength='80'></div><div class='lh-field'><label for='lh-skill'>Sharpest skill</label><input id='lh-skill' type='text' value='Design Systems' maxlength='80'></div><div class='lh-field'><label for='lh-years'>Years of experience</label><input id='lh-years' type='text' value='6' maxlength='4'></div><div class='lh-field'><label for='lh-proof'>Proof / achievement</label><input id='lh-proof' type='text' placeholder='e.g. Shipped checkout used by 2M shoppers' maxlength='120'></div></div><div class='lh-preview'><div class='lh-plabel'>Live preview</div><p class='lh-headline' id='lh-preview'>—</p><div class='lh-copyrow'><button class='lh-btn' id='lh-copy' type='button'>Copy headline</button><span class='lh-char' id='lh-char'>0 / 220 characters</span></div></div></div><div class='lh-card'><span class='lh-cardnum'>CARD 2 / 4</span><h2>Headline score</h2><p class='lh-csub'>Length, keyword density, and separator structure — out of 100.</p><div class='lh-scorewrap'><div class='lh-bignum'><span id='lh-score'>0</span><small>/100</small></div><div class='lh-bars'><div class='lh-srow'><span>Length ≤ 220</span><div class='lh-track'><div class='lh-fill' id='lh-f-len'></div></div><span id='lh-v-len'>0</span></div><div class='lh-srow'><span>Keyword density</span><div class='lh-track'><div class='lh-fill' id='lh-f-kw'></div></div><span id='lh-v-kw'>0</span></div><div class='lh-srow'><span>Separators</span><div class='lh-track'><div class='lh-fill' id='lh-f-sep'></div></div><span id='lh-v-sep'>0</span></div></div></div></div><div class='lh-card'><span class='lh-cardnum'>CARD 3 / 4</span><h2>A/B variants</h2><p class='lh-csub'>Three alternative wordings. Run each for 2–3 weeks and watch search appearances.</p><div id='lh-variants'></div><button class='lh-btn ghost' id='lh-gen' type='button'>Generate variants</button></div><div class='lh-card'><span class='lh-cardnum'>CARD 4 / 4</span><h2>Keyword chips</h2><p class='lh-csub'>Tap a chip to append it to your skill field. Match the keywords in your target job posts.</p><div class='lh-chips' id='lh-chips'><button type='button'>B2B</button><button type='button'>SaaS</button><button type='button'>Remote</button><button type='button'>Leadership</button><button type='button'>Data-driven</button><button type='button'>Growth</button><button type='button'>Agile</button><button type='button'>AI</button></div></div></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Your Headline Is Your Billboard</h2><p>On LinkedIn, your headline follows you everywhere: search results, comments, connection requests, recruiter inboxes. It is the single most-read line on your profile, and LinkedIn's own data shows that profiles with complete, keyword-rich headlines get dramatically more search appearances. Yet most people leave the default — their current job title at their current company — which tells a recruiter almost nothing and tells the search algorithm even less.</p><p>A strong headline does three jobs at once. It <strong>ranks</strong> — it contains the keywords recruiters actually type into LinkedIn Recruiter. It <strong>positions</strong> — it tells a stranger in five seconds what you do and who you do it for. And it <strong>differentiates</strong> — it gives one proof point that separates you from the ten thousand other people with the same title. The builder above assembles all three from your role, your sharpest skill, your years of experience, and one concrete achievement.</p><h2>The Anatomy of a High-Performing Headline</h2><p>Great headlines share a structure, even when the words differ. The most reliable formula is:</p><p><strong>Role | Skill positioning | Proof of value</strong></p><p>For example: <em>"Product Designer | Design Systems Specialist | 6 yrs — Shipped checkout used by 2M shoppers."</em> Each segment earns its place. The role matches the job titles recruiters search. The skill positioning narrows you to a specialty, which paradoxically gets you <em>more</em> relevant inbound, not less. The proof — a number, a launch, a recognizable name — is what makes a hiring manager click instead of scrolling past.</p><p>You have <strong>220 characters</strong> to work with, which is generous — most effective headlines use 120–180. Shorter than 80 characters and you are probably wasting ranking potential; longer than 200 and you risk looking cluttered on mobile, where headlines truncate aggressively.</p><h2>Keywords: Write for the Search Box, Not the Mirror</h2><p>Recruiters do not search LinkedIn the way you describe yourself at dinner parties. They type job titles and skill keywords: "product designer," "design systems," "SaaS," "B2B." Your headline should contain the <strong>exact phrases</strong> from the job descriptions you want. This is not keyword stuffing — it is translation. If your official title is "Product Design Wizard" but the market hires "Product Designers," your headline should say Product Designer.</p><p>Pull up five job postings you would love and circle the repeated nouns. Those nouns belong in your headline. The keyword chips above offer common high-value terms to spark ideas, but your target job descriptions are the ultimate source of truth. Aim for your primary role keyword and one or two specialty keywords to appear naturally in the line — that density check is part of the scorer above.</p><h2>Separators and Scannability</h2><p>The vertical bar — <strong>|</strong> — is the headline's workhorse. It visually chunks the line so a skimming recruiter can parse it in under two seconds, and it signals intentional structure rather than a rambling sentence. Alternatives like middots (·) or em dashes work, but the pipe is the convention recruiters' eyes are trained on.</p><p>Two formatting rules matter. First, <strong>front-load the most important keyword</strong>: LinkedIn's search algorithm and human skimmers both weight the beginning of the line more heavily. Your role title should come first, not your philosophy of work. Second, <strong>never bury the proof at the end</strong> if it is your strongest asset — a headline that opens with a metric ("Grew ARR $2M → $11M | VP Sales") can outperform a title-first version for senior roles. The A/B variant generator above produces alternative orderings so you can compare.</p><h2>What to Leave Out</h2><ul><li><strong>"Open to work" as the whole headline.</strong> The #OpenToWork photo frame already signals availability; spending headline characters on it wastes ranking space. Put your value proposition there instead.</li><li><strong>Buzzword soup.</strong> "Passionate results-driven ninja guru" says nothing searchable and reads as filler. One vivid proof point beats five adjectives.</li><li><strong>Your entire job history.</strong> The headline is not a resume. Current positioning plus proof is enough; the experience section carries the rest.</li><li><strong>Contact info.</strong> Email addresses and phone numbers in headlines look spammy and LinkedIn may suppress them. Keep contact details in the contact section.</li><li><strong>All caps.</strong> It reads as shouting and truncates worse on mobile. Title case or sentence case throughout.</li></ul><h2>Headlines by Career Stage</h2><table><thead><tr><th>Stage</th><th>Strategy</th><th>Example</th></tr></thead><tbody><tr><td>Student / new grad</td><td>Lead with skills and projects, not empty titles</td><td>CS Graduate | Python Specialist | 2 yrs — Built campus delivery app, 5k users</td></tr><tr><td>Early career (1–4 yrs)</td><td>Role + sharpest skill + one metric</td><td>Data Analyst | SQL Specialist | 3 yrs — Cut reporting time 70%</td></tr><tr><td>Mid career (5–10 yrs)</td><td>Specialty positioning + scale of impact</td><td>Engineering Manager | Platform Teams | 8 yrs — Led 25 engineers, 99.99% uptime</td></tr><tr><td>Senior / executive</td><td>Outcomes and scope first</td><td>Grew ARR $2M to $11M | VP Sales, B2B SaaS | 12 yrs</td></tr><tr><td>Career changer</td><td>Bridge old credibility to new target</td><td>Ex-Teacher Turned UX Designer | Research Specialist | Portfolio of 6 case studies</td></tr><tr><td>Freelancer / consultant</td><td>Who you help + outcome</td><td>Fractional CMO | Helping SaaS Startups Hit $1M ARR | 10 yrs</td></tr></tbody></table><h2>How the 100-Point Scorer Works</h2><p>The scorer above grades your headline on the three factors that actually drive performance. <strong>Length (40 points):</strong> full marks for staying within LinkedIn's 220-character limit with room to breathe — headlines in the 100–200 range score best, since they use the space without truncating on mobile. <strong>Keyword density (30 points):</strong> checks that your role, skill, and proof terms actually appear in the final line — a headline that drops the keywords you typed is leaking search traffic. <strong>Separator structure (30 points):</strong> rewards the pipe-delimited chunking that makes headlines scannable in search results and feeds.</p><p>Treat 80+ as publish-ready. Between 60 and 80, fix whichever dimension is weakest — usually it is keyword density, which is a five-second fix. Below 60, rebuild from the formula rather than patching: role first, specialty second, proof third.</p><h2>Testing With A/B Variants</h2><p>You cannot truly A/B test a LinkedIn headline the way you test an ad — LinkedIn shows one headline at a time. But you <em>can</em> rotate deliberately. The variant generator produces three alternative wordings: a <strong>specialty-first</strong> version, a <strong>proof-first</strong> version, and a <strong>conversational</strong> version. Run each for two to three weeks and watch two metrics: <strong>search appearances</strong> (Profile → Analytics) and <strong>recruiter inbound</strong> (how many relevant messages you get).</p><p>Change one variable at a time. If the proof-first variant doubles your inbound, you have learned something durable about your market: outcomes sell harder than titles in your field. Keep a note of what you tested and when — the highest-performing headline is an asset you will reuse across your resume summary, portfolio hero, and personal site.</p><h2>Keeping It Fresh</h2><p>A headline is not a tattoo. Update it whenever your positioning changes: a promotion, a completed certification, a shipped launch with a number worth bragging about, or a pivot toward a new target role. Job seekers should refresh the headline at the <em>start</em> of a search with the keywords of the roles they are targeting — this alone can multiply search appearances within days. And once a quarter, re-read your headline as a stranger would: if it takes more than five seconds to understand what you do and why you are good at it, tighten it.</p><p>Build the line, score it, generate the variants, and ship the winner. Your headline works while you sleep — give it something worth saying.</p><h2>A 10-Minute Headline Rewrite</h2><p>If your current headline is just a job title, here is a ten-minute upgrade path. <strong>Minutes 1-3:</strong> open three job postings you want and list the repeated role and skill nouns - those are your keywords. <strong>Minutes 4-6:</strong> type your role, your sharpest skill, and your years into the builder, then add the single most impressive number from your last two years of work. <strong>Minutes 7-8:</strong> check the score; if keyword density is low, swap vague words for the exact posting nouns. <strong>Minutes 9-10:</strong> generate the A/B variants, pick the strongest, copy it to LinkedIn, and set a reminder to review search appearances in three weeks.</p><p>That is the whole system: keywords from real postings, a scannable three-part structure, one proof point, and deliberate iteration. Most professionals see a visible lift in profile views within the first month - not because of tricks, but because the headline finally does the three jobs it was always supposed to do.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How long can a LinkedIn headline be?</summary><p>220 characters. The most effective headlines use roughly 120–180 — enough to include role, specialty, and proof keywords without truncating on mobile. The scorer above gives full length marks in that range.</p></details>
+<details><summary>Which keywords should I put in my headline?</summary><p>Use the exact titles and skill phrases from job postings you want. Recruiters search for 'product designer' and 'SQL', not clever internal titles. Your headline should translate how you describe yourself into what the market searches for.</p></details>
+<details><summary>Should I use the | separator in my headline?</summary><p>Yes. The pipe (|) visually chunks the headline so recruiters can parse it in about two seconds, and it's the convention their eyes are trained on. Keep your most important keyword before the first separator.</p></details>
+<details><summary>Should my headline say I&#x27;m open to work?</summary><p>Only the photo-frame badge, not headline space. Writing 'Open to Work' in the headline wastes characters that could carry searchable keywords. Put your value proposition in the headline and let the badge signal availability.</p></details>
+<details><summary>How often should I update my headline?</summary><p>Refresh it at the start of every job search with your target roles' keywords, and whenever your positioning changes — a promotion, certification, or launch with a number worth sharing. Quarterly, re-read it as a stranger: if it takes more than five seconds to grasp, tighten it.</p></details>
+<details><summary>Do emojis belong in a LinkedIn headline?</summary><p>Sparingly, if at all. One restrained emoji can add personality in creative fields, but they consume character budget, render inconsistently across devices, and can read as unprofessional in conservative industries. Keywords and proof outperform decoration.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">LinkedInHead</div>
+    <p>LinkedInHead builds a keyword-rich headline from your role, skill, and experience — scored, with A/B variants to test.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function headlineMake(role,skill,years){return role+' | '+skill+' Specialist | '+years+' yrs';}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var wrap=document.querySelector('.lh-wrap');if(!wrap)return;function $(id){return document.getElementById(id);}var role=$('lh-role'),skill=$('lh-skill'),years=$('lh-years'),proof=$('lh-proof');var prev=$('lh-preview'),charEl=$('lh-char'),scoreEl=$('lh-score');if(!role||!skill||!years||!prev)return;function current(){var h=headlineMake(role.value.trim(),skill.value.trim(),years.value.trim());var p=proof?proof.value.trim():'';return p?h+' — '+p:h;}function render(){var h=current();prev.textContent=h;if(charEl)charEl.textContent=h.length+' / 220 characters';var lenScore=h.length<=220?(h.length>=100?40:Math.round(h.length/100*40)):Math.max(0,40-Math.round((h.length-220)/10));var low=h.toLowerCase();var kw=0;[role.value,skill.value,proof?proof.value:''].forEach(function(v){String(v).toLowerCase().split(/\s+/).forEach(function(w){if(w.length>2&&low.indexOf(w)!==-1)kw++;});});var kwScore=Math.min(30,kw*6);var sepScore=h.indexOf('|')!==-1?30:0;var total=lenScore+kwScore+sepScore;if(scoreEl)scoreEl.textContent=total;var defs=[['lh-f-len','lh-v-len',lenScore,40],['lh-f-kw','lh-v-kw',kwScore,30],['lh-f-sep','lh-v-sep',sepScore,30]];defs.forEach(function(d){var f=$(d[0]),v=$(d[1]);if(f)f.style.width=(d[2]/d[3]*100)+'%';if(v)v.textContent=d[2];});}var inputs=[role,skill,years,proof];['input','change'].forEach(function(ev){inputs.forEach(function(el){if(el)el.addEventListener(ev,render);});});var gen=$('lh-gen'),vbox=$('lh-variants');function genVariants(){if(!vbox)return;var r=role.value.trim(),s=skill.value.trim(),y=years.value.trim(),p=proof?proof.value.trim():'';var vs=[s+' Specialist | '+r+' · '+y+' yrs'+(p?' | '+p:''),p?p+' | '+r+', '+s+' ('+y+' yrs)':r+' | '+s+' Specialist | '+y+' yrs','Helping teams ship better products | '+r+' · '+s+' · '+y+' yrs'];vbox.innerHTML='';vs.forEach(function(v,i){var d=document.createElement('div');d.className='lh-variant';var pp=document.createElement('p');pp.textContent=(i+1)+'. '+v;var b=document.createElement('button');b.type='button';b.textContent='Use this';b.addEventListener('click',function(){prev.textContent=v;if(charEl)charEl.textContent=v.length+' / 220 characters';});d.appendChild(pp);d.appendChild(b);vbox.appendChild(d);});}if(gen)gen.addEventListener('click',genVariants);var chips=wrap.querySelectorAll('#lh-chips button');for(var i=0;i<chips.length;i++){(function(btn){btn.addEventListener('click',function(){var t=btn.textContent;var cur=skill.value.trim();skill.value=cur?(cur+', '+t):t;render();});})(chips[i]);}var copyBtn=$('lh-copy');if(copyBtn)copyBtn.addEventListener('click',function(){var t=prev.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){copyBtn.textContent='Copied!';setTimeout(function(){copyBtn.textContent='Copy headline';},1500);});}});render();genVariants();});}
+</script>
+</body>
+</html>
