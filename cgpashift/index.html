@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CGPA to Percentage Calculator — CBSE, VTU, Mumbai Formulas | CgpaShift</title>
+<meta name="description" content="Free CGPA to percentage calculator with CBSE, VTU, Mumbai &amp; Anna formulas, reverse conversion, SGPA averager and class verdict. No signup.">
+<link rel="canonical" href="https://study.fixoraa.tech/cgpashift/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="CGPA to Percentage Calculator — CBSE, VTU, Mumbai Formulas | CgpaShift">
+<meta property="og:description" content="Free CGPA to percentage calculator with CBSE, VTU, Mumbai &amp; Anna formulas, reverse conversion, SGPA averager and class verdict. No signup.">
+<meta property="og:url" content="https://study.fixoraa.tech/cgpashift/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "CgpaShift",
+      "url": "https://study.fixoraa.tech/cgpashift/",
+      "applicationCategory": "Education Tools",
+      "operatingSystem": "Web",
+      "description": "Free CGPA to percentage calculator with CBSE, VTU, Mumbai & Anna formulas, reverse conversion, SGPA averager and class verdict. No signup.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I convert CGPA to percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multiply your CGPA by 9.5 \u2014 this is CBSE's official formula, also used by Delhi University and most central universities. So 8.5 CGPA = 80.75%. But check your university's handbook first: VTU uses (CGPA \u2212 0.75) \u00d7 10 and Mumbai University uses 7.1 \u00d7 CGPA + 11."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is 10 CGPA equal to 95% and not 100%?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because CBSE derived 9.5 statistically from actual student marks data \u2014 a perfect 10 CGPA corresponds to about 95% in the marks distribution, not 100%. So 10 CGPA = 95% is the maximum under this formula, by design."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert percentage back to CGPA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes \u2014 switch to '% \u2192 CGPA' mode. The tool inverts your chosen formula: CGPA = (percentage \u2212 offset) \u00f7 multiplier. Note that under CBSE, any percentage above 95 has no valid CGPA equivalent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate CGPA from my semester SGPAs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the SGPA averager: enter each semester's SGPA with its credits and the tool computes the credit-weighted CGPA. Then convert that final CGPA \u2014 never convert individual SGPAs and average the percentages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which formula should my university use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your university's published formula always wins. Many mark sheets print it directly. If none is published, CBSE's \u00d7 9.5 is the widely accepted default in India \u2014 and always write the formula next to your result so it can be verified."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What class is my percentage \u2014 distinction, first class?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Conventionally: 75%+ is Distinction, 60\u201374% First Class, 50\u201359% Second Class, 40\u201349% Pass, below 40% Fail. These are traditional bands \u2014 your university's ordinance is the final authority."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#0A1C33; --surface:#10263F; --accent:#F59E0B; --accent-ink:#0A1C33;
+  --ink:#F4F7FB; --muted:#A9B7C9; --line:#24405F;
+  --display:'JetBrains Mono',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.cs-wrap{background-color:#0A1C33;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:32px 32px;padding:56px 18px 72px;color:#F4F7FB;}.cs-inner{max-width:1080px;margin:0 auto;}.cs-head{text-align:center;margin-bottom:30px;}.cs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#F59E0B;font-weight:700;}.cs-logo{font-size:46px;margin-top:6px;}.cs-head h1{font-family:'JetBrains Mono',monospace;font-size:clamp(30px,4.6vw,46px);margin:10px 0 8px;letter-spacing:-.02em;color:#F4F7FB;}.cs-tag{color:#A9B7C9;font-size:17px;margin:0;}.cs-diagram{display:flex;align-items:stretch;justify-content:center;gap:0;margin-bottom:22px;flex-wrap:wrap;}.cs-node{background:#10263F;border:1px solid #24405F;border-radius:8px;padding:18px 26px;text-align:center;min-width:170px;position:relative;}.cs-node .k{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:#A9B7C9;margin-bottom:6px;}.cs-node b{font-family:'JetBrains Mono',monospace;font-size:34px;color:#F4F7FB;}.cs-node .u{display:block;font-size:12px;color:#A9B7C9;margin-top:6px;letter-spacing:.08em;}.cs-node.out{border-color:#F59E0B;}.cs-node.out b{color:#F59E0B;}.cs-link{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 18px;position:relative;}.cs-link .line{width:64px;height:2px;background:#F59E0B;position:relative;}.cs-link .line::after{content:'';position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left:9px solid #F59E0B;}.cs-link .f{font-family:'JetBrains Mono',monospace;font-size:13px;color:#F59E0B;margin-top:8px;font-weight:700;}.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}@media(max-width:860px){.cs-grid{grid-template-columns:1fr;}}.cs-card{background:#10263F;border:1px solid #24405F;border-radius:10px;}.cs-card-h{padding:14px 18px;border-bottom:1px dashed #24405F;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#A9B7C9;font-weight:700;display:flex;justify-content:space-between;}.cs-card-h .fig{color:#F59E0B;}.cs-card-b{padding:18px;}.cs-dir{display:flex;gap:8px;margin-bottom:16px;}.cs-dir button{flex:1;border:1px solid #24405F;background:#0A1C33;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;color:#A9B7C9;font-family:'JetBrains Mono',monospace;}.cs-dir button.on{background:#F59E0B;border-color:#F59E0B;color:#0A1C33;}.cs-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}@media(max-width:560px){.cs-presets{grid-template-columns:repeat(2,1fr);}}.cs-presets button{border:1px solid #24405F;background:#0A1C33;border-radius:8px;padding:10px 8px;font-size:12.5px;font-weight:700;cursor:pointer;color:#A9B7C9;font-family:'JetBrains Mono',monospace;line-height:1.4;}.cs-presets button.on{border-color:#F59E0B;color:#F59E0B;background:rgba(245,158,11,.08);}.cs-field{margin-bottom:13px;}.cs-field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#A9B7C9;margin-bottom:7px;font-family:'JetBrains Mono',monospace;}.cs-field input{width:100%;padding:12px;border:1.5px solid #24405F;border-radius:8px;font-size:17px;font-family:'JetBrains Mono',monospace;box-sizing:border-box;color:#F4F7FB;background:#0A1C33;}.cs-field input:focus{outline:none;border-color:#F59E0B;}.cs-row{display:flex;gap:10px;}.cs-row .cs-field{flex:1;}.cs-btn{background:#F59E0B;color:#0A1C33;border:none;border-radius:8px;padding:13px 24px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;width:100%;}.cs-btn:hover{filter:brightness(1.08);}.cs-btn.ghost{background:transparent;color:#F59E0B;border:2px solid #F59E0B;padding:11px 20px;width:auto;font-size:14px;}.cs-result{margin-top:16px;border:1px dashed #F59E0B;border-radius:8px;padding:18px;text-align:center;background:rgba(245,158,11,.05);}.cs-big{font-family:'JetBrains Mono',monospace;font-size:52px;font-weight:700;color:#F59E0B;line-height:1.1;}.cs-formula{font-family:'JetBrains Mono',monospace;font-size:15px;color:#F4F7FB;margin-top:8px;}.cs-class{display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid #F59E0B;color:#F59E0B;border-radius:999px;padding:6px 16px;}.cs-note{font-size:13px;color:#A9B7C9;line-height:1.6;margin-top:10px;}.cs-sgparow{display:flex;gap:8px;margin-bottom:8px;}.cs-sgparow input{flex:1;padding:10px;border:1.5px solid #24405F;border-radius:8px;font-size:15px;font-family:'JetBrains Mono',monospace;background:#0A1C33;color:#F4F7FB;box-sizing:border-box;min-width:0;}.cs-sgparow button{background:none;border:none;color:#5B7290;font-size:18px;cursor:pointer;}.cs-table{width:100%;border-collapse:collapse;font-size:14px;font-family:'JetBrains Mono',monospace;}.cs-table th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:#A9B7C9;padding:10px 8px;border-bottom:2px solid #F59E0B;}.cs-table td{padding:9px 8px;border-bottom:1px dashed #24405F;color:#F4F7FB;}.cs-table td:last-child{color:#F59E0B;font-weight:700;}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="CgpaShift home">
+      <span class="fx-logo-tile" aria-hidden="true">📐</span>
+      <span class="fx-brand">CgpaShift</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-blueprint" aria-label="CgpaShift tool">
+<section class='cs-wrap'><div class='cs-inner'><div class='cs-head'><div class='cs-eyebrow'>Fig. 05 — Conversion Nomograph</div><div class='cs-logo' aria-hidden='true'>📐</div><h1>CGPA to Percentage</h1><p class='cs-tag'>Your CGPA, translated — with the formula shown.</p></div><div class='cs-diagram' aria-hidden='true'><div class='cs-node'><span class='k'>INPUT</span><b id='cs-din'>8.50</b><span class='u' id='cs-dinu'>CGPA</span></div><div class='cs-link'><div class='line'></div><div class='f' id='cs-df'>× 9.5</div></div><div class='cs-node out'><span class='k'>OUTPUT</span><b id='cs-dout'>80.75%</b><span class='u' id='cs-doutu'>PERCENTAGE</span></div></div><div class='cs-grid'><div class='cs-card'><div class='cs-card-h'><span class='fig'>CV-01</span><span>Converter</span></div><div class='cs-card-b'><div class='cs-dir' role='group' aria-label='Conversion direction'><button type='button' id='cs-dA' class='on'>CGPA → %</button><button type='button' id='cs-dB'>% → CGPA</button></div><div class='cs-field'><label>University formula</label><div class='cs-presets' id='cs-presets'><button type='button' data-csa='9.5' data-csb='0' data-csn='CBSE · DU' class='on'>CBSE · DU<br>× 9.5</button><button type='button' data-csa='10' data-csb='-7.5' data-csn='VTU · AKTU'>VTU · AKTU<br>(x−.75)×10</button><button type='button' data-csa='7.1' data-csb='11' data-csn='Mumbai Univ.'>Mumbai Univ.<br>7.1x+11</button><button type='button' data-csa='10' data-csb='0' data-csn='Anna · ×10'>Anna · ×10<br>× 10</button><button type='button' data-csa='10' data-csb='-5' data-csn='GTU · BPUT'>GTU · BPUT<br>(x−.5)×10</button><button type='button' data-csa='' data-csb='' data-csn='Custom' id='cs-custombtn'>Custom<br>a·x+b</button></div></div><div class='cs-row' id='cs-customrow' style='display:none'><div class='cs-field'><label for='cs-a'>a (multiplier)</label><input id='cs-a' type='number' step='any' value='9.5'></div><div class='cs-field'><label for='cs-b'>b (offset)</label><input id='cs-b' type='number' step='any' value='0'></div></div><div class='cs-field'><label for='cs-in' id='cs-inlabel'>Your CGPA (10-point scale)</label><input id='cs-in' type='number' step='any' min='0' max='10' value='8.5'></div><button class='cs-btn' id='cs-go' type='button'>Convert</button><div class='cs-result'><div class='cs-big' id='cs-big'>80.75%</div><div class='cs-formula' id='cs-formula'>8.5 × 9.5 = 80.75%</div><div><span class='cs-class' id='cs-class'>Distinction</span></div></div><p class='cs-note'>Write the formula next to your result on every form — e.g. “80.75% (8.5 × 9.5)” — so it can be verified. Never round to whole numbers on official forms.</p></div></div><div class='cs-card'><div class='cs-card-h'><span class='fig'>SG-02</span><span>SGPA → CGPA averager</span></div><div class='cs-card-b'><p class='cs-note' style='margin-top:0'>Enter each semester's SGPA with its credits. Credit-weighted average — convert the <b>final CGPA</b>, never individual SGPAs.</p><div id='cs-sgparows'></div><button class='cs-btn ghost' id='cs-addrow' type='button'>+ Add semester</button><div class='cs-result' style='margin-top:14px'><div class='cs-big' id='cs-cgpa' style='font-size:40px'>–</div><div class='cs-formula'>Weighted CGPA</div></div><button class='cs-btn' id='cs-usecgpa' type='button' style='margin-top:12px'>Use as CGPA →</button><p class='cs-note'>Same credits every semester? Just enter any equal number — the weighting cancels out.</p></div></div></div><div class='cs-card'><div class='cs-card-h'><span class='fig'>TB-03</span><span>Conversion table · <span id='cs-tbname'>CBSE · DU</span></span></div><div class='cs-card-b' style='overflow-x:auto'><table class='cs-table'><thead><tr><th>CGPA</th><th>Percentage</th><th>CGPA</th><th>Percentage</th></tr></thead><tbody id='cs-tbody'></tbody></table></div></div></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>What CGPA Actually Is</h2><p>CGPA — Cumulative Grade Point Average — is the 10-point scale most Indian schools and universities use to summarize your performance. Each course gives you grade points (typically 10 for O/A+, 9 for A, 8 for B+, down to 0 for fail), and the CGPA is the credit-weighted average across everything: <strong>CGPA = Σ(grade points × credits) ÷ Σ(credits)</strong>. A CGPA of 8.5 doesn't mean 85% — the scale isn't a percentage in disguise, which is exactly why conversion formulas exist. Employers, foreign universities, and government exams usually ask for percentage, so at some point every Indian student multiplies their CGPA by something. The question is always: multiply by <em>what</em>?</p><h2>The 9.5 Formula: Where It Comes From</h2><p>The most widely used conversion is <strong>Percentage = CGPA × 9.5</strong>. This is CBSE's published rule for Class 10/12 results, derived from statistical analysis of student performance data, and Delhi University uses the same factor for its CBCS programmes. Under it, 8.5 CGPA becomes 80.75%, and a perfect 10 becomes 95% — note that 10 CGPA never equals 100%, because the formula maps the top of the grade-point scale to the observed top of the marks distribution, not to a theoretical maximum. When a form asks for 'percentage equivalent,' this is the default answer — <em>unless</em> your university publishes its own formula, which takes precedence. Always check your mark sheet or university handbook first; many print the official conversion right on the transcript.</p><h2>University Formulas: One CGPA, Many Percentages</h2><p>Here is the uncomfortable truth the table below makes visible: the same CGPA maps to very different percentages depending on the institution. Using the wrong formula can shift your result by several points — easily the difference across a cutoff.</p><table><thead><tr><th>Board / University</th><th>Formula</th><th>8.2 CGPA →</th></tr></thead><tbody><tr><td>CBSE, DU, most central universities</td><td>CGPA × 9.5</td><td>77.9%</td></tr><tr><td>VTU / AKTU / JNTU</td><td>(CGPA − 0.75) × 10</td><td>74.5%</td></tr><tr><td>Mumbai University</td><td>7.1 × CGPA + 11</td><td>69.2%</td></tr><tr><td>Anna University</td><td>CGPA × 10</td><td>82.0%</td></tr><tr><td>GTU / BPUT / MAKAUT</td><td>(CGPA − 0.5) × 10</td><td>77.0%</td></tr><tr><td>Simple 10-scale</td><td>CGPA × 10</td><td>82.0%</td></tr></tbody></table><p>A 13-point spread for the identical CGPA. This is why official conversion certificates exist, and why you should write the formula next to the result on any application — '77.9% (CGPA 8.2 × 9.5)' — so the reader can verify it. Recruiters see thousands of conversions; showing your working signals honesty and saves everyone an email.</p><h2>How to Use the Converter</h2><ol><li><strong>Pick your formula.</strong> Choose your university's preset plate. Don't see it? Use the custom mode and enter the multiplier (a) and offset (b) from your handbook — every linear formula here is percentage = a × CGPA + b.</li><li><strong>Enter your CGPA.</strong> Use the cumulative figure from your latest mark sheet, not a single semester's SGPA.</li><li><strong>Read the diagram.</strong> The nomograph shows input → factor → output so you can see exactly what was computed.</li><li><strong>Copy the working.</strong> The result line prints the full equation (e.g. '8.5 × 9.5 = 80.75%') — paste it directly into forms.</li></ol><p>Switch to <strong>% → CGPA</strong> mode when a form asks for CGPA but your old mark sheet only shows percentage: the tool inverts the same formula (CGPA = (percentage − b) ÷ a). Note the CBSE quirk: because 10 CGPA caps at 95%, a percentage above 95 has no CBSE CGPA equivalent — the tool will tell you so rather than inventing one.</p><h2>From SGPA to CGPA: The Averager</h2><p>Don't have your CGPA yet? The averager builds it from semester SGPAs. Enter each semester's SGPA and its total credits; the tool computes the credit-weighted average: <strong>CGPA = Σ(SGPA × credits) ÷ Σ(credits)</strong>. Credits matter — a 9.0 in a 24-credit semester counts more than an 8.0 in a 16-credit one. (If your university weights all semesters equally, just enter the same credits for each.) Convert the <em>final</em> CGPA to percentage — never convert individual SGPAs and average the percentages, which introduces rounding error and, worse, applies the formula at the wrong stage. One 'Use as CGPA' tap sends the averaged figure straight into the converter.</p><h2>Reading Your Class: Distinction to Pass</h2><p>Indian universities traditionally bucket percentages into classes, and the converter labels your result:</p><ul><li><strong>75% and above — Distinction.</strong> The tier most recruiters and foreign universities screen for.</li><li><strong>60–74% — First Class.</strong> The standard 'good degree' band; many eligibility cutoffs sit at 60%.</li><li><strong>50–59% — Second Class.</strong> Solid; meets most general cutoffs.</li><li><strong>40–49% — Pass Class.</strong> Above the typical 40% pass mark.</li><li><strong>Below 40% — Fail.</strong> Below the standard pass threshold at most Indian universities.</li></ul><p>These bands are conventional, not universal — your university's ordinance is the final word, especially for honours classifications.</p><h2>Where the Converted Percentage Gets Used</h2><p><strong>Job applications:</strong> most Indian recruiters ask for percentage, not CGPA. Put the converted figure with the formula in brackets. <strong>Government exams:</strong> eligibility cutoffs (often 50–60%) are published in percentage — convert with your university's formula, not the generic one, because verification uses your transcript. <strong>Study abroad:</strong> foreign universities evaluate transcripts holistically, but application portals still want a percentage field; include the formula and, if asked, the 4.0-scale equivalent. <strong>Scholarships:</strong> merit cutoffs are strict — a 79.6% vs 80% distinction matters, so never round to whole numbers on the form; report two decimals.</p><h2>Rounding: The Two-Decimal Rule</h2><p>Always round to <strong>two decimal places</strong>, never to a whole number. 79.56% rounds to 79.56%, not 80% — and definitely not up. Rounding up on an official form is misrepresentation; rounding down unnecessarily can cost you a cutoff. The converter reports two decimals by default. If a form demands whole numbers, round half up (79.5 → 80) and keep the two-decimal figure in your records.</p><h2>Worked Examples: One Student, Five Formulas</h2><p>Meet Arjun: 8.4 CGPA, applying for jobs. Watch what happens under different official formulas:</p><table><thead><tr><th>Formula</th><th>Calculation</th><th>Result</th></tr></thead><tbody><tr><td>CBSE (× 9.5)</td><td>8.4 × 9.5</td><td><strong>79.80%</strong></td></tr><tr><td>VTU ((x − 0.75) × 10)</td><td>(8.4 − 0.75) × 10</td><td><strong>76.50%</strong></td></tr><tr><td>Mumbai (7.1x + 11)</td><td>7.1 × 8.4 + 11</td><td><strong>70.64%</strong></td></tr><tr><td>Anna (× 10)</td><td>8.4 × 10</td><td><strong>84.00%</strong></td></tr><tr><td>GTU ((x − 0.5) × 10)</td><td>(8.4 − 0.5) × 10</td><td><strong>79.00%</strong></td></tr></tbody></table><p>Same student, same performance, results spanning <strong>70.64% to 84.00%</strong> — a 13-point gap that decides shortlists. Two lessons: first, never convert with a formula you haven't verified against your university's handbook; second, when a recruiter from another state looks puzzled at your number, the formula in brackets ('79.80% (8.4 × 9.5, CBSE)') resolves the confusion instantly. Students who omit the formula invite the recruiter to apply <em>their</em> local formula instead — which may not favor you.</p><h2>The 9.5 Debate: Critics and Defenders</h2><p>The × 9.5 rule has critics. Their argument: it was calibrated on CBSE Class 10 data from a specific era, and applying it to university CGPAs — or to boards with different marking cultures — stretches it beyond its design. A student at a strict-marking university and one at a lenient-marking university can hold identical CGPAs with very different underlying marks, and no linear formula can fix that; it can only standardize the arithmetic. The defenders reply with practicality: some common rule beats fifty competing ones, employers need <em>a</em> number, and 9.5 has two decades of acceptance behind it. Both sides agree on the operational advice: use your institution's official formula where one exists, use 9.5 as the default where none does, and always show your working. The debate matters for policy; for your application, the handbook matters more.</p><h2>A Semester-by-Semester CGPA Build</h2><p>Priya's four semesters: SGPA 8.1 (22 credits), 7.8 (24 credits), 8.3 (22 credits), 8.0 (24 credits). The simple average is (8.1 + 7.8 + 8.3 + 8.0) ÷ 4 = 8.05. The credit-weighted CGPA is (8.1×22 + 7.8×24 + 8.3×22 + 8.0×24) ÷ 92 = (178.2 + 187.2 + 182.6 + 192.0) ÷ 92 = 740 ÷ 92 = <strong>8.04</strong>. Close here — but with uneven credits the gap widens, and universities use the weighted figure. Convert the final CGPA once: 8.04 × 9.5 = <strong>76.38%</strong> (CBSE). The classic error is converting each SGPA first (76.95%, 74.10%, 78.85%, 76.00%) and averaging the percentages — you get 76.48%, slightly off from rounding drift, and you've done four conversions where one would do. Worse, some students average percentages computed under <em>different</em> formulas across semesters, which is simply invalid. One CGPA, one formula, one conversion.</p><h2>What Foreign Universities Do With Your Percentage</h2><p>For MS and MBA applications abroad, the percentage field on a portal is just the start. Most universities recalculate using their own credential evaluators (WES, ECE, Scholaro), which map your Indian marks to a 4.0 GPA course-by-course — your self-conversion is informational, not determinative. That said, the number still matters for initial screening and for scholarships with published percentage cutoffs. Report the original CGPA <em>alongside</em> the converted percentage and the formula: 'CGPA 8.4/10 (79.8% per CBSE × 9.5)'. Never invent a 4.0 GPA by dividing your CGPA by 2.5 — evaluators distrust it, and a wrong self-reported GPA discovered during verification damages credibility far more than a blank field would. If the portal demands a 4.0 figure and provides no guidance, leave it blank or write 'N/A — 10-point scale' rather than fabricating precision you don't have.</p><h2>Common Conversion Mistakes</h2><ul><li><strong>Using × 9.5 for every university.</strong> VTU, Mumbai, and Anna all differ. Check your handbook.</li><li><strong>Converting SGPA instead of CGPA.</strong> Percentage equivalents apply to the cumulative figure.</li><li><strong>Treating 10 CGPA as 100%.</strong> Under CBSE it's 95%. Claiming 100% from a 10 CGPA is simply wrong.</li><li><strong>Rounding to whole numbers.</strong> 79.6% and 80% can sit on opposite sides of a cutoff.</li><li><strong>Hiding the formula.</strong> Always show your working: '80.75% (8.5 × 9.5)'. Verifiability beats neatness.</li><li><strong>Reversing above the cap.</strong> 97% has no CBSE CGPA equivalent — don't force one.</li></ul><h2>CGPA vs Percentage vs GPA: Clearing the Fog</h2><p><strong>CGPA</strong> (10-point, India) summarizes all semesters as grade points. <strong>Percentage</strong> is marks-based and universally understood — the lingua franca of cutoffs. <strong>GPA</strong> usually means the US 4.0 scale, where conversion is a different mapping entirely (roughly, percentage ÷ 100 × 4, though institutions vary). Don't convert Indian CGPA to US GPA by dividing by 2.5 unless the receiving institution says so — many provide their own conversion tables, and WES-style evaluations do it course by course. When in doubt, report the original CGPA <em>with</em> the percentage equivalent and let the evaluator do their job.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How do I convert CGPA to percentage?</summary><p>Multiply your CGPA by 9.5 — this is CBSE's official formula, also used by Delhi University and most central universities. So 8.5 CGPA = 80.75%. But check your university's handbook first: VTU uses (CGPA − 0.75) × 10 and Mumbai University uses 7.1 × CGPA + 11.</p></details>
+<details><summary>Why is 10 CGPA equal to 95% and not 100%?</summary><p>Because CBSE derived 9.5 statistically from actual student marks data — a perfect 10 CGPA corresponds to about 95% in the marks distribution, not 100%. So 10 CGPA = 95% is the maximum under this formula, by design.</p></details>
+<details><summary>Can I convert percentage back to CGPA?</summary><p>Yes — switch to '% → CGPA' mode. The tool inverts your chosen formula: CGPA = (percentage − offset) ÷ multiplier. Note that under CBSE, any percentage above 95 has no valid CGPA equivalent.</p></details>
+<details><summary>How do I calculate CGPA from my semester SGPAs?</summary><p>Use the SGPA averager: enter each semester's SGPA with its credits and the tool computes the credit-weighted CGPA. Then convert that final CGPA — never convert individual SGPAs and average the percentages.</p></details>
+<details><summary>Which formula should my university use?</summary><p>Your university's published formula always wins. Many mark sheets print it directly. If none is published, CBSE's × 9.5 is the widely accepted default in India — and always write the formula next to your result so it can be verified.</p></details>
+<details><summary>What class is my percentage — distinction, first class?</summary><p>Conventionally: 75%+ is Distinction, 60–74% First Class, 50–59% Second Class, 40–49% Pass, below 40% Fail. These are traditional bands — your university's ordinance is the final authority.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">CgpaShift</div>
+    <p>CgpaShift converts CGPA to percentage with your university's official formula — plus reverse conversion, an SGPA-to-CGPA averager, and a full conversion table.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function cgpaToPct(cgpa,a,b){return Math.round((Number(a)*Number(cgpa)+Number(b))*100)/100;}
+function csClass(p){if(p>=75)return'Distinction';if(p>=60)return'First Class';if(p>=50)return'Second Class';if(p>=40)return'Pass Class';return'Below Pass';}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var dir='A',a=9.5,b=0,fname='CBSE · DU';var dA=document.getElementById('cs-dA'),dB=document.getElementById('cs-dB');if(!dA)return;function formulaStr(){return fname+': % = '+a+' × CGPA'+(b===0?'':(b>0?' + '+b:' − '+Math.abs(b)));}dA.addEventListener('click',function(){dir='A';dA.classList.add('on');dB.classList.remove('on');document.getElementById('cs-inlabel').textContent='Your CGPA (10-point scale)';document.getElementById('cs-dinu').textContent='CGPA';document.getElementById('cs-doutu').textContent='PERCENTAGE';convert();});dB.addEventListener('click',function(){dir='B';dB.classList.add('on');dA.classList.remove('on');document.getElementById('cs-inlabel').textContent='Your percentage';document.getElementById('cs-dinu').textContent='PERCENT';document.getElementById('cs-doutu').textContent='CGPA';convert();});var pres=document.querySelectorAll('#cs-presets button');for(var i=0;i<pres.length;i++){pres[i].addEventListener('click',function(){for(var j=0;j<pres.length;j++)pres[j].classList.remove('on');this.classList.add('on');var ca=this.getAttribute('data-csa');document.getElementById('cs-customrow').style.display=ca===''?'flex':'none';if(ca!==''){a=Number(ca);b=Number(this.getAttribute('data-csb'));fname=this.getAttribute('data-csn');}else{fname='Custom';}document.getElementById('cs-tbname').textContent=fname;renderTable();convert();});}function readCustom(){var ca=document.querySelector('#cs-presets button.on');if(ca&&ca.getAttribute('data-csa')===''){a=Number(document.getElementById('cs-a').value)||0;b=Number(document.getElementById('cs-b').value)||0;renderTable();}}document.getElementById('cs-a').addEventListener('input',readCustom);document.getElementById('cs-b').addEventListener('input',readCustom);function convert(){readCustom();var inp=Number(document.getElementById('cs-in').value);var big=document.getElementById('cs-big'),form=document.getElementById('cs-formula'),cls=document.getElementById('cs-class');if(isNaN(inp)){big.textContent='–';form.textContent='Enter a number.';cls.style.display='none';return;}cls.style.display='inline-block';if(dir==='A'){var p=cgpaToPct(inp,a,b);big.textContent=p.toFixed(2)+'%';form.textContent=inp+' × '+a+(b===0?'':' '+(b>0?'+ '+b:'− '+Math.abs(b)))+' = '+p.toFixed(2)+'%  ·  '+fname;cls.textContent=csClass(p);document.getElementById('cs-din').textContent=inp.toFixed(2);document.getElementById('cs-df').textContent='× '+a+(b===0?'':(b>0?' +'+b:' '+b));document.getElementById('cs-dout').textContent=p.toFixed(2)+'%';}else{if(a===0){big.textContent='–';form.textContent='Multiplier cannot be zero.';return;}var c=Math.round(((inp-b)/a)*100)/100;big.textContent=c.toFixed(2);form.textContent='('+inp+' − ('+b+')) ÷ '+a+' = '+c.toFixed(2)+'  ·  '+fname;if(inp>95&&fname.indexOf('CBSE')===0){form.textContent+=' — above the 95% CBSE cap; no exact equivalent.';}cls.textContent=csClass(inp);document.getElementById('cs-din').textContent=inp.toFixed(2)+'%';document.getElementById('cs-df').textContent='÷ '+a;document.getElementById('cs-dout').textContent=c.toFixed(2);}}document.getElementById('cs-go').addEventListener('click',convert);document.getElementById('cs-in').addEventListener('input',convert);function renderTable(){var tb=document.getElementById('cs-tbody');var html='';for(var c=10;c>=5;c-=0.5){var c2=c-0.5;var p1=cgpaToPct(c,a,b).toFixed(2)+'%';var p2=c2>=5?cgpaToPct(c2,a,b).toFixed(2)+'%':'—';html+='<tr><td>'+c.toFixed(1)+'</td><td>'+p1+'</td><td>'+(c2>=5?c2.toFixed(1):'—')+'</td><td>'+p2+'</td></tr>';}tb.innerHTML=html;}var sgpaBox=document.getElementById('cs-sgparows');function addRow(s,c){var div=document.createElement('div');div.className='cs-sgparow';div.innerHTML='<input type=\'number\' step=\'any\' min=\'0\' max=\'10\' placeholder=\'SGPA\' value=\''+(s||'')+'\' aria-label=\'SGPA\'><input type=\'number\' step=\'any\' min=\'0\' placeholder=\'Credits\' value=\''+(c||'')+'\' aria-label=\'Credits\'><button type=\'button\' aria-label=\'Remove row\'>×</button>';var btn=div.querySelector('button');btn.addEventListener('click',function(){div.remove();avg();});var ins=div.querySelectorAll('input');for(var k=0;k<ins.length;k++)ins[k].addEventListener('input',avg);sgpaBox.appendChild(div);}document.getElementById('cs-addrow').addEventListener('click',function(){addRow('','');});function avg(){var rows=sgpaBox.querySelectorAll('.cs-sgparow');var sw=0,sc=0;for(var i=0;i<rows.length;i++){var ins=rows[i].querySelectorAll('input');var s=Number(ins[0].value),c=Number(ins[1].value);if(s>0&&c>0){sw+=s*c;sc+=c;}}var el=document.getElementById('cs-cgpa');if(sc>0){var v=Math.round(sw/sc*100)/100;el.textContent=v.toFixed(2);el.setAttribute('data-v',v);}else{el.textContent='–';el.removeAttribute('data-v');}}document.getElementById('cs-usecgpa').addEventListener('click',function(){var v=document.getElementById('cs-cgpa').getAttribute('data-v');if(!v)return;dir='A';dA.classList.add('on');dB.classList.remove('on');document.getElementById('cs-in').value=v;convert();window.scrollTo({top:0,behavior:'smooth'});});for(var r=0;r<4;r++)addRow('','');renderTable();convert();avg();});}
+</script>
+</body>
+</html>
