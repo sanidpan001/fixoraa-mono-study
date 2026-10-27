@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/askhire/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AskHire — Free Interview Question Bank & Scorecard Builder (216 Questions)</title>
+<meta name="description" content="AskHire is a free interview question bank with 216 curated behavioral interview questions, interview questions for managers, and a printable interview scorecard template. Filter by 12 roles, 4 categories, and junior/mid/senior levels. No signup.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Cpath d='M18 22h28v14H30l-8 8v-8h-4z' fill='white'/%3E%3Ccircle cx='26' cy='29' r='2.4' fill='%232563EB'/%3E%3Ccircle cx='33' cy='29' r='2.4' fill='%232563EB'/%3E%3Ccircle cx='40' cy='29' r='2.4' fill='%232563EB'/%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html{scroll-behavior:smooth}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .chat-scroll{scrollbar-width:thin;scrollbar-color:#93c5fd #e2e8f0}
+  .bubble-i{background:#fff;border:1px solid #dbe4f0;border-left:4px solid #2563EB;border-radius:2px 18px 18px 18px;box-shadow:0 1px 2px rgba(15,23,42,.06)}
+  .bubble-c{background:#FFFBEB;border:1px solid #f3d38a;border-right:4px solid #F59E0B;border-radius:18px 2px 18px 18px}
+  .avatar{width:34px;height:34px;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+  .avatar-i{background:#2563EB;color:#fff}
+  .avatar-c{background:#F59E0B;color:#1f2937}
+  .chip{transition:all .15s ease}
+  .chip[aria-pressed="true"]{background:#2563EB;color:#fff;border-color:#2563EB}
+  .lvl[aria-pressed="true"]{background:#1e293b;color:#fff;border-color:#1e293b}
+  .lvl-badge-j{background:#dcfce7;color:#166534}
+  .lvl-badge-m{background:#dbeafe;color:#1d4ed8}
+  .lvl-badge-s{background:#ede9fe;color:#6d28d9}
+  .cat-dot{display:inline-block;width:8px;height:8px;border-radius:9999px;margin-right:6px}
+  .typing span{display:inline-block;width:6px;height:6px;border-radius:9999px;background:#93c5fd;margin-right:4px;animation:blink 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+  #print-area{display:none}
+  @media print{
+    body.printing>*:not(#print-area){display:none !important}
+    #print-area{display:block !important}
+    @page{margin:14mm}
+  }
+  details.faq summary::-webkit-details-marker{display:none}
+</style>
+</head>
+<body id="top" class="bg-[#EEF2F7] text-slate-800 antialiased">
+
+<!-- Sticky header -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2563EB"/><path d="M18 22h28v14H30l-8 8v-8h-4z" fill="white"/><circle cx="26" cy="29" r="2.4" fill="#2563EB"/><circle cx="33" cy="29" r="2.4" fill="#2563EB"/><circle cx="40" cy="29" r="2.4" fill="#2563EB"/></svg>
+      <span class="text-xl font-extrabold tracking-tight text-slate-900">Ask<span class="text-[#2563EB]">Hire</span></span>
+    </a>
+    <nav class="flex items-center gap-5 text-sm font-medium">
+      <a href="#top" class="text-slate-600 hover:text-[#2563EB]">Home</a>
+      <a href="https://fixoraa.tech" class="text-slate-600 hover:text-[#2563EB]">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="no-print">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-10 pb-6 text-center">
+    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Interview Question Bank <span class="text-[#2563EB]">&amp;</span> Scorecard Builder</h1>
+    <p class="mt-3 text-slate-600 max-w-2xl mx-auto text-base sm:text-lg">216 curated interview questions across 12 roles — each with <em>"what good looks like"</em> answer notes — plus a printable 1–5 scorecard builder with junior / mid / senior calibration. Built for hiring managers, founders, and recruiters.</p>
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 border border-emerald-200">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+        Unlimited Free Usage
+      </span>
+      <span class="rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5">216 questions</span>
+      <span class="rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5">12 role families</span>
+      <span class="rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5">4 categories</span>
+      <span class="rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5">3 difficulty levels</span>
+      <span class="rounded-full bg-white border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1.5">No signup</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOP AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOL -->
+<main id="tool" class="no-print mx-auto max-w-7xl px-4 sm:px-6 py-8">
+  <div class="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)_340px]">
+    <!-- Filters -->
+    <aside class="space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Filters</h2>
+        <label class="block text-xs font-semibold text-slate-600 mb-1" for="f-role">Role family</label>
+        <select id="f-role" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-[#2563EB]"></select>
+
+        <p class="block text-xs font-semibold text-slate-600 mt-4 mb-2">Category</p>
+        <div id="f-cats" class="flex flex-wrap gap-1.5"></div>
+
+        <p class="block text-xs font-semibold text-slate-600 mt-4 mb-2">Difficulty level</p>
+        <div id="f-levels" class="grid grid-cols-4 gap-1.5"></div>
+
+        <label class="block text-xs font-semibold text-slate-600 mt-4 mb-1" for="f-search">Search the bank</label>
+        <input id="f-search" type="search" placeholder="e.g. salary, conflict, SQL…" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+
+        <button id="f-reset" class="mt-4 w-full text-xs font-semibold text-slate-500 hover:text-[#2563EB] underline underline-offset-2">Reset all filters</button>
+      </div>
+
+      <div class="rounded-2xl border border-amber-200 bg-[#FFFBEB] p-5 shadow-sm">
+        <h2 class="text-sm font-bold text-amber-900 mb-1.5 flex items-center gap-1.5">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+          Difficulty calibration
+        </h2>
+        <p id="calib-text" class="text-[13px] leading-relaxed text-amber-900/90">Pick a role and a level to see what "good" means at that seniority — every question carries a matching badge.</p>
+      </div>
+
+      <div class="bg-[#2563EB] rounded-2xl p-5 text-white shadow-sm">
+        <h2 class="text-sm font-bold mb-1.5">Hiring tip</h2>
+        <p class="text-[13px] leading-relaxed text-blue-100">Ask every candidate for a role the <strong class="text-white">same core questions</strong>, then score them against the <em>"what good looks like"</em> notes. Structured interviews are far more predictive than free-flowing chats.</p>
+      </div>
+    </aside>
+
+    <!-- Chat transcript: the question bank -->
+    <section aria-label="Interview question bank">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="flex items-center gap-3 px-5 py-4 border-b border-slate-200 bg-gradient-to-r from-[#2563EB] to-[#1d4ed8]">
+          <div class="avatar" style="background:#fff;color:#2563EB">I</div>
+          <div class="min-w-0">
+            <p class="text-white font-bold text-sm sm:text-base truncate" id="chat-title">Interview transcript — All roles</p>
+            <p class="text-blue-200 text-xs"><span id="q-count">216</span> questions · interviewer <span class="font-semibold text-white">you</span> ask, candidate answers</p>
+          </div>
+        </div>
+        <div id="transcript" class="chat-scroll max-h-[720px] overflow-y-auto px-4 sm:px-6 py-6 space-y-5 bg-[#EEF2F7]"></div>
+        <div id="empty-state" class="hidden px-6 py-12 text-center bg-[#EEF2F7]">
+          <p class="text-4xl mb-3">🔍</p>
+          <p class="font-bold text-slate-700">No questions match those filters.</p>
+          <p class="text-sm text-slate-500 mt-1">Try clearing the search or choosing a different role, category, or level.</p>
+          <button id="empty-reset" class="mt-4 rounded-xl bg-[#2563EB] text-white text-sm font-bold px-5 py-2.5 hover:bg-[#1d4ed8]">Clear filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scorecard builder -->
+    <aside class="space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm lg:sticky lg:top-20">
+        <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Scorecard builder
+        </h2>
+        <p class="text-xs text-slate-500 mt-0.5 mb-4">Pick questions from the transcript, then print a 1–5 scorecard.</p>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div class="col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 mb-1" for="sc-title">Scorecard title</label>
+            <input id="sc-title" type="text" value="Interview Scorecard" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1" for="sc-candidate">Candidate</label>
+            <input id="sc-candidate" type="text" placeholder="Jane Doe" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1" for="sc-interviewer">Interviewer</label>
+            <input id="sc-interviewer" type="text" placeholder="Your name" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 mb-1" for="sc-date">Interview date</label>
+            <input id="sc-date" type="date" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 mt-4">
+          <select id="auto-count" class="rounded-xl border border-slate-300 px-2 py-2 text-sm font-semibold" aria-label="Number of questions">
+            <option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option>
+          </select>
+          <button id="auto-build" class="flex-1 rounded-xl bg-[#2563EB] text-white text-sm font-bold px-3 py-2 hover:bg-[#1d4ed8]">⚡ Auto-build balanced set</button>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-1.5">Uses your current role + level filters; covers all 4 categories.</p>
+
+        <div id="picked-list" class="mt-4 space-y-2 max-h-72 overflow-y-auto chat-scroll"></div>
+        <p id="picked-empty" class="mt-4 text-xs text-slate-400 text-center py-4 border border-dashed border-slate-300 rounded-xl">No questions picked yet — tap <strong>+ Scorecard</strong> on any question, or auto-build a set.</p>
+
+        <div id="live-score" class="hidden mt-4 rounded-xl bg-[#FFFBEB] border border-amber-200 px-4 py-3 text-sm">
+          <span class="font-bold text-amber-900">Live average: <span id="live-avg">–</span></span>
+          <span id="live-label" class="ml-1 text-xs font-semibold text-amber-700"></span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-4">
+          <button id="btn-copy" class="rounded-xl border border-slate-300 text-slate-700 text-xs font-bold px-3 py-2.5 hover:border-[#2563EB] hover:text-[#2563EB]">📋 Copy text</button>
+          <button id="btn-download" class="rounded-xl border border-slate-300 text-slate-700 text-xs font-bold px-3 py-2.5 hover:border-[#2563EB] hover:text-[#2563EB]">⬇ Download .txt</button>
+          <button id="btn-print" class="rounded-xl bg-slate-900 text-white text-xs font-bold px-3 py-2.5 hover:bg-slate-700">🖨 Print scorecard</button>
+          <button id="btn-clear" class="rounded-xl border border-red-200 text-red-600 text-xs font-bold px-3 py-2.5 hover:bg-red-50">Clear</button>
+        </div>
+        <p id="sc-msg" class="text-xs mt-2 min-h-[1rem] font-medium"></p>
+
+        <div class="mt-4 pt-4 border-t border-slate-200">
+          <div class="flex gap-2">
+            <input id="save-name" type="text" placeholder="Name this scorecard…" class="flex-1 min-w-0 rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB]">
+            <button id="btn-save" class="rounded-xl bg-[#F59E0B] text-slate-900 text-xs font-extrabold px-4 py-2 hover:bg-amber-500">Save</button>
+          </div>
+          <div id="saved-list" class="mt-2 space-y-1.5"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- BOTTOM AD (verbatim) -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+    </div>
+  </div>
+</div>
+<!-- SEO ARTICLE -->
+<section class="mx-auto max-w-4xl px-4 sm:px-6 pb-4">
+  <article id="seo-article" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm prose-styles">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">The Hiring Manager's Guide to Better Interviews: Behavioral Interview Questions, Manager Questions &amp; Scorecard Templates</h2>
+    <p class="text-slate-600 leading-relaxed mb-4">Hiring is the highest-leverage decision most managers make — and the one most teams do worst. A bad hire costs months of salary, drags down the team, and often has to be managed out within a year. Yet most interviews are still casual conversations: a quick glance at the resume, a few improvised questions, and a gut feeling at the end. Decades of hiring research point to a clear conclusion — <strong>structured interviews beat unstructured ones, consistently and by a wide margin</strong>. This guide explains how to run structured interviews using behavioral interview questions, the right interview questions for managers, difficulty calibration across seniority levels, and a printable interview scorecard template. Everything described here is built into the free AskHire tool above: 216 curated questions, each with "what good looks like" answer notes, filterable by 12 role families, 4 question categories, and junior / mid / senior difficulty.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Why most job interviews fail</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">The typical interview fails for three predictable reasons. First, <strong>every interviewer asks different questions</strong>, so candidates cannot be compared fairly — you end up comparing your memory of candidate A with your notes on candidate B. Second, <strong>interviewers overweight first impressions and charisma</strong>; confident talkers score well even when their actual track record is thin. Third, <strong>nobody writes down what "good" looks like beforehand</strong>, so scoring drifts toward whoever the interviewer personally liked. The fix is not longer interviews or trickier questions. It is structure: the same core questions for every candidate, asked in the same way, scored against the same written bar. Structured interviews roughly double the predictive accuracy of hiring decisions compared to unstructured chats, because they force the panel to evaluate evidence instead of vibes. They also make hiring fairer — when every candidate faces the same questions and the same rubric, bias has far less room to operate.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">What are behavioral interview questions?</h3>
+    <p class="text-slate-600 leading-relaxed mb-4"><strong>Behavioral interview questions</strong> ask candidates to describe what they actually did in real past situations: "Tell me about a time you disagreed with a teammate about a technical decision," or "Describe the biggest production incident you were involved in." They rest on a simple, well-supported idea — <em>past behavior is the best predictor of future behavior</em>. Anyone can claim to be a great collaborator; far fewer can walk you through a specific disagreement, what each side argued, how it was resolved, and what they learned. The classic way to evaluate answers is the <strong>STAR method</strong>: Situation, Task, Action, Result. Strong answers name a specific situation, explain the candidate's own task, detail the actions <em>they personally took</em> (not the team), and quantify the result. Weak answers stay vague, take credit for team outcomes, or describe hypotheticals instead of history. When you listen for STAR structure, behavioral questions become remarkably hard to fake — and remarkably revealing. AskHire's bank includes 60 behavioral questions across 12 roles, and every single one ships with a "what good looks like" note so your whole panel grades the same evidence the same way.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Interview questions for managers: hiring leaders is different</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">Hiring an individual contributor is mostly about craft. Hiring a manager is about <strong>judgment, courage, and multiplication</strong> — does this person make the people around them better? The best interview questions for managers therefore probe situations individual contributors rarely face: managing a low performer through a performance plan, delivering bad news to a team, disagreeing with their own boss, handling open conflict between two strong personalities, and making hiring decisions they would defend publicly. Listen for specifics. A strong management candidate tells you exactly what they said in the hard conversation, how the person reacted, and what happened next. A weak one speaks in abstractions — "I believe in radical candor" — without a single story to back it up. Three manager questions that rarely fail: "Tell me about managing a low performer — what did you actually do?", "Describe a time you disagreed with your own manager about a team decision," and "Tell me about the best hire you ever made, and what you saw in them." The first tests courage, the second tests loyalty in both directions, and the third reveals whether they can spot talent — the core of the job. AskHire includes a dedicated Engineering Manager bank plus leadership questions for operations, HR, and startup generalist roles, all calibrated across junior, mid, and senior management levels.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">The four question categories every interview should cover</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">A complete interview probes four dimensions, and most teams over-index on just one. <strong>Behavioral questions</strong> reveal track record — what the candidate has actually done. <strong>Technical or craft questions</strong> test role-specific skill: SQL joins for analysts, discovery-call structure for salespeople, accessibility practices for designers. <strong>Situational questions</strong> present a hypothetical tied to your reality — "your champion leaves mid-deal, what do you do?" — and reveal judgment, prioritization, and calm under pressure. <strong>Culture and values questions</strong> explore work style, motivation, and team fit: how they give feedback, what energizes them, how they handle being wrong. Skip any category and you hire blind in that dimension — the brilliant engineer who cannot take feedback, the charming salesperson who cannot qualify, the experienced manager who avoids hard conversations. A balanced 45–60 minute interview typically runs 6 to 10 questions drawn from all four categories. AskHire's auto-build feature does exactly this: pick a role and level, and it assembles a balanced set round-robin across all four categories, so no dimension gets skipped by accident.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Calibrating difficulty: junior vs mid vs senior</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">The same question can work for every level — what changes is the bar. Ask a junior engineer "how would you design a URL shortener" and you are testing structured thinking and fundamentals: a hash function, a database table, a redirect. Ask a senior the same question and you expect capacity planning, caching strategy, and an honest discussion of trade-offs. This is <strong>difficulty calibration</strong>: defining what "good" means at each seniority before you interview, so you neither reject strong juniors for lacking senior polish nor hire seniors who answer like juniors. In practice, calibration means three things. First, write the level's expectations down — AskHire shows a calibration card for every role and level, e.g. what distinguishes a mid-level product manager (owns a product area, prioritizes with a framework) from a senior one (sets strategy, aligns organizations). Second, badge every question with its intended level, so interviewers instinctively adjust depth. Third, debrief with the calibration visible: "was that answer senior-level for this role?" Teams that calibrate explicitly make faster, more confident hiring decisions — and give candidates fairer, more consistent evaluations.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">What is an interview scorecard template?</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">An <strong>interview scorecard template</strong> is a structured grading sheet used during and after interviews. Instead of freeform notes ("seemed sharp, good culture fit"), each interviewer scores every question on a consistent scale — typically <strong>1 to 5</strong> — and writes brief evidence for each score. A good scorecard template has five elements: the candidate's name, role, interviewer, and date; the list of questions asked; a "what good looks like" reference for each question; a 1–5 rating scale with anchored labels (1 Poor, 2 Below average, 3 Solid, 4 Strong, 5 Exceptional); and an evidence or notes column capturing the specific things the candidate said. The magic is in the evidence column: when the panel debriefs, you compare notes anchored to actual answers rather than impressions, and disagreements become productive ("you gave a 4 on the conflict question — what did they say that I missed?"). Scorecards also create a paper trail that protects the company and the candidate — every decision is documented against the same bar. AskHire's scorecard builder generates a printable template automatically: pick questions from the bank (or auto-build a balanced set), fill in the candidate details, and print a clean one-page-per-interview scorecard with circles for 1–5 scoring and space for evidence notes.</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">How to run a consistent interview panel</h3>
+    <p class="text-slate-600 leading-relaxed mb-4">Tools only help if the process around them is disciplined. Five practices separate great panels from mediocre ones. <strong>One:</strong> assign each interviewer a dimension — one covers behavioral, another technical, another culture — so nothing is double-covered or missed. <strong>Two:</strong> ask every candidate the same core questions; follow-ups can flex, but the scored questions stay fixed. <strong>Three:</strong> score independently before discussing. Group debriefs where the most senior person speaks first are just hierarchy with extra steps — have everyone submit scores first, then talk. <strong>Four:</strong> debrief within 24 hours while memories are fresh, and decide with a clear rule (e.g. unanimous strong-hire, or a designated hiring manager decides after hearing the panel). <strong>Five:</strong> close the loop with candidates fast. Slow, silent processes lose great people and damage your employer brand. None of this requires expensive software — a shared scorecard template and a little discipline outperform most "AI hiring suites."</p>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Common interview mistakes to avoid</h3>
+    <ul class="list-disc pl-6 text-slate-600 leading-relaxed mb-4 space-y-2">
+      <li><strong>Brainteasers and trick questions</strong> ("how many golf balls fit in a bus?") — they measure test-taking, not job performance. Drop them.</li>
+      <li><strong>Illegal or intrusive questions</strong> about age, marital status, religion, or health. Keep every question job-related.</li>
+      <li><strong>Selling instead of assessing</strong> — spending the whole interview pitching the company. Assess first, sell the strong candidates after.</li>
+      <li><strong>No written bar</strong> — scoring without "what good looks like" notes guarantees every interviewer grades a different test.</li>
+      <li><strong>Hiring for "culture fit" as similarity</strong> — fit should mean shared values and complementary strengths, not "someone I would have a beer with."</li>
+      <li><strong>Skipping reference checks</strong> on finalists. Thirty minutes of structured references catches what interviews miss.</li>
+    </ul>
+
+    <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">How AskHire helps you hire better today</h3>
+    <p class="text-slate-600 leading-relaxed">AskHire puts this entire methodology one click away. Browse <strong>216 expert-written interview questions</strong> across 12 role families — software engineering, product, design, data, marketing, sales, support, operations, engineering management, HR, finance, and startup leadership. Filter by <strong>behavioral, technical, situational, and culture</strong> categories, and by <strong>junior, mid, and senior</strong> difficulty, with a calibration note explaining what good looks like at each level. Every question includes a written <strong>"what good looks like"</strong> answer guide plus a suggested follow-up, so your panel scores consistently. Then build a <strong>printable interview scorecard template</strong>: pick questions manually or auto-generate a balanced set, add the candidate's details, score live on a 1–5 scale with an evidence column, and print a clean scorecard for the file. Save scorecard templates for reuse across requisitions. It is free, unlimited, works offline from a single file, and needs no signup — because better hiring should not require an enterprise contract.</p>
+  </article>
+</section>
+<!-- FAQS -->
+<section class="mx-auto max-w-4xl px-4 sm:px-6 py-8">
+  <h2 class="text-2xl font-extrabold text-slate-900 mb-5 text-center">Frequently asked questions</h2>
+  <div class="space-y-3">
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">What are behavioral interview questions?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">Behavioral interview questions ask candidates to describe what they actually did in real past situations — for example, "Tell me about a time you disagreed with a teammate." They are based on the principle that past behavior predicts future performance. The best way to evaluate answers is the STAR method (Situation, Task, Action, Result): strong candidates name a specific situation, explain their own role, detail the actions they personally took, and quantify the result. AskHire includes 60 behavioral interview questions across 12 roles, each with a written "what good looks like" guide.</p>
+    </details>
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">What interview questions should managers ask candidates?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">Interview questions for managers should probe judgment and leadership, not just craft skills. Ask about managing a low performer, delivering bad news to a team, disagreeing with their own boss, resolving conflict between strong personalities, and the best hire they ever made. Listen for specific stories with dialogue and outcomes — not abstractions like "I believe in radical candor." AskHire's bank includes dedicated management questions for engineering managers, operations, HR, and startup leaders, calibrated for junior, mid, and senior levels.</p>
+    </details>
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">What is an interview scorecard template?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">An interview scorecard template is a structured grading sheet: candidate name, role, interviewer, and date at the top; the list of questions asked; a "what good looks like" reference per question; a 1–5 rating scale (1 Poor, 2 Below average, 3 Solid, 4 Strong, 5 Exceptional); and an evidence column for notes. It forces every interviewer to score the same questions against the same bar, which makes panel debriefs fair and decisions defensible. AskHire's scorecard builder generates a printable scorecard template automatically from any set of questions you pick.</p>
+    </details>
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">How many questions should an interview scorecard have?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">For a 45–60 minute interview, 6 to 10 scored questions is the sweet spot — enough to cover behavioral, technical, situational, and culture dimensions without rushing. Fewer than 5 and you are hiring on thin evidence; more than 12 and answers get shallow. AskHire's auto-build feature creates balanced sets of 6, 8, 10, or 12 questions, round-robin across all four categories, so every interview covers every dimension.</p>
+    </details>
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">How do you adjust interview difficulty for junior vs senior candidates?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">Use the same core questions but calibrate the bar: write down what "good" means at each level before you interview. A junior answering a system-design question should show structured thinking and fundamentals; a senior should discuss capacity planning, trade-offs, and failure modes. AskHire badges every question with its intended level (junior, mid, senior) and shows a calibration card per role explaining exactly what distinguishes each seniority — so interviewers adjust depth consistently instead of by gut feel.</p>
+    </details>
+    <details class="faq bg-white rounded-2xl border border-slate-200 shadow-sm open:ring-2 open:ring-[#2563EB]/20">
+      <summary class="cursor-pointer px-5 py-4 font-bold text-slate-800 text-[15px] list-none flex justify-between items-center gap-3">Is AskHire really free?<span class="text-[#2563EB] text-xl leading-none">+</span></summary>
+      <p class="px-5 pb-5 text-sm text-slate-600 leading-relaxed">Yes. The full question bank (216 questions), all filters, the scorecard builder, printing, copying, downloads, and saved scorecard templates are free and unlimited, with no signup, no paywall, and no watermark. Everything runs in your browser from a single file.</p>
+    </details>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are behavioral interview questions?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Behavioral interview questions ask candidates to describe what they actually did in real past situations, based on the principle that past behavior predicts future performance. Evaluate answers with the STAR method (Situation, Task, Action, Result). AskHire includes 60 behavioral interview questions across 12 roles, each with a written 'what good looks like' guide." }
+    },
+    {
+      "@type": "Question",
+      "name": "What interview questions should managers ask candidates?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Interview questions for managers should probe judgment and leadership: managing a low performer, delivering bad news, disagreeing with their own boss, resolving conflict, and the best hire they ever made. Listen for specific stories, not abstractions. AskHire includes dedicated management questions calibrated for junior, mid, and senior levels." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is an interview scorecard template?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An interview scorecard template is a structured grading sheet with candidate details, the questions asked, a 'what good looks like' reference per question, a 1-5 rating scale, and an evidence column. AskHire's scorecard builder generates a printable scorecard template automatically from any set of questions." }
+    },
+    {
+      "@type": "Question",
+      "name": "How many questions should an interview scorecard have?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For a 45-60 minute interview, 6 to 10 scored questions is ideal, covering behavioral, technical, situational, and culture dimensions. AskHire's auto-build creates balanced sets of 6, 8, 10, or 12 questions across all four categories." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you adjust interview difficulty for junior vs senior candidates?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Calibrate the bar per level: juniors should show structured thinking and fundamentals, seniors should discuss trade-offs and failure modes. AskHire badges every question with its level and shows a calibration card per role explaining what distinguishes each seniority." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is AskHire really free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The full question bank, all filters, the scorecard builder, printing, downloads, and saved templates are free and unlimited with no signup, no paywall, and no watermark." }
+    }
+  ]
+}
+</script>
+
+<footer class="border-t border-slate-200 bg-white mt-6">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2563EB"/><path d="M18 22h28v14H30l-8 8v-8h-4z" fill="white"/><circle cx="26" cy="29" r="2.4" fill="#2563EB"/><circle cx="33" cy="29" r="2.4" fill="#2563EB"/><circle cx="40" cy="29" r="2.4" fill="#2563EB"/></svg>
+      <span class="font-extrabold text-slate-900">Ask<span class="text-[#2563EB]">Hire</span></span>
+      <span class="text-xs text-slate-400 ml-2">Hire better, one structured interview at a time.</span>
+    </div>
+    <nav class="flex items-center gap-5 text-sm font-medium text-slate-500">
+      <a href="#top" class="hover:text-[#2563EB]">Home</a>
+      <a href="#tool" class="hover:text-[#2563EB]">Question bank</a>
+      <a href="https://fixoraa.tech" class="hover:text-[#2563EB]">More Tools</a>
+    </nav>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<div id="print-area" aria-hidden="true"></div>
+
+<!-- Core logic (inlined at build time) -->
+<script id="askhire-interview-question-generator-lib">
+/* AskHire — Interview Question Bank + Scorecard logic.
+ * Pure functions only: no DOM, window, document, localStorage, navigator.
+ * Shipped inside <script id="askhire-interview-question-generator-lib">.
+ * Tests eval this exact block from the finished HTML.
+ */
+'use strict';
+
+function trimStr(s){ return (s === undefined || s === null) ? '' : String(s).trim(); }
+
+/* ---------------- taxonomy ---------------- */
+function getRoles(){
+  return [
+    {id:'software-engineer', name:'Software Engineer'},
+    {id:'product-manager', name:'Product Manager'},
+    {id:'ux-designer', name:'UX / UI Designer'},
+    {id:'data-scientist', name:'Data Analyst / Scientist'},
+    {id:'marketing-manager', name:'Marketing Manager'},
+    {id:'sales-executive', name:'Sales Executive'},
+    {id:'customer-support', name:'Customer Support Specialist'},
+    {id:'operations-manager', name:'Operations Manager'},
+    {id:'engineering-manager', name:'Engineering Manager'},
+    {id:'hr-manager', name:'HR / People Manager'},
+    {id:'finance-analyst', name:'Finance Analyst'},
+    {id:'startup-generalist', name:'Startup Generalist / Leader'}
+  ];
+}
+function getCategories(){
+  return [
+    {id:'behavioral', name:'Behavioral', hint:'Past behavior predicts future performance'},
+    {id:'technical', name:'Technical / Craft', hint:'Role-specific skills and knowledge'},
+    {id:'situational', name:'Situational', hint:'How they would handle a scenario'},
+    {id:'culture', name:'Culture & Values', hint:'Work style, motivation, and team fit'}
+  ];
+}
+function getLevels(){ return ['junior','mid','senior']; }
+
+function roleById(id){
+  var r = getRoles();
+  for(var i=0;i<r.length;i++){ if(r[i].id === id) return r[i]; }
+  return null;
+}
+function roleName(id){ var r = roleById(id); return r ? r.name : 'Unknown role'; }
+function categoryName(id){
+  var c = getCategories();
+  for(var i=0;i<c.length;i++){ if(c[i].id === id) return c[i].name; }
+  return 'Unknown';
+}
+function levelName(l){
+  l = trimStr(l).toLowerCase();
+  if(l === 'junior') return 'Junior';
+  if(l === 'mid') return 'Mid-level';
+  if(l === 'senior') return 'Senior';
+  return 'All levels';
+}
+
+/* ---------------- difficulty calibration ---------------- */
+var CALIBRATION = {
+  'software-engineer': {
+    junior:'Writes clean, working code for well-defined tasks; debugs systematically with guidance; solid CS fundamentals and reasonable depth in one stack.',
+    mid:'Owns features end-to-end: designs, tests, deploys, and monitors. Makes sound trade-offs, gives useful code reviews, and mentors juniors.',
+    senior:'Designs systems for scale and reliability; sets technical direction; multiplies the team through architecture decisions, standards, and mentorship.'
+  },
+  'product-manager': {
+    junior:'Executes a defined roadmap well; writes clear specs; tracks metrics and communicates status reliably.',
+    mid:'Owns a product area: sets goals, prioritizes with a real framework, ships outcomes not just features, and influences without authority.',
+    senior:'Sets product strategy; makes high-stakes calls with incomplete data; aligns whole organizations and grows other PMs.'
+  },
+  'ux-designer': {
+    junior:'Strong visual craft and tool skills; follows the design system; iterates well on feedback.',
+    mid:'Runs their own research; connects design decisions to user outcomes; partners tightly with PM and engineering.',
+    senior:'Shapes design strategy and systems; influences product direction; raises the bar for the entire design org.'
+  },
+  'data-scientist': {
+    junior:'Solid SQL and statistics; cleans data carefully; communicates findings clearly with guidance.',
+    mid:'Frames ambiguous business questions; designs sound experiments; stakeholders trust their recommendations.',
+    senior:'Sets analytics and ML strategy; builds measurement systems others rely on; influences company-level decisions.'
+  },
+  'marketing-manager': {
+    junior:'Executes campaigns reliably; knows channel basics; reports results clearly.',
+    mid:'Owns a channel or program end-to-end; optimizes on CAC and ROAS; runs structured experiments.',
+    senior:'Sets growth strategy; allocates budget across channels; builds and leads a high-performing team.'
+  },
+  'sales-executive': {
+    junior:'High activity and coachable; qualifies honestly; learns the product fast.',
+    mid:'Consistently hits quota; runs strong discovery; manages a real pipeline and forecasts accurately.',
+    senior:'Closes complex multi-stakeholder deals; builds champions; mentors reps and improves the playbook.'
+  },
+  'customer-support': {
+    junior:'Empathetic and process-driven; resolves standard issues; escalates cleanly with full context.',
+    mid:'Handles difficult cases independently; spots patterns; contributes to help content and macros.',
+    senior:'Leads through crises; improves systems and metrics; mentors the team; carries the customer voice to product.'
+  },
+  'operations-manager': {
+    junior:'Reliable executor; follows and documents processes; flags issues early.',
+    mid:'Owns processes end-to-end; uses data to improve efficiency; manages vendors firmly and fairly.',
+    senior:'Designs operating systems that scale; makes cost-versus-quality trade-offs; builds high-accountability teams.'
+  },
+  'engineering-manager': {
+    junior:'Leads a small team well; runs good 1:1s and steady delivery; still close to the code.',
+    mid:'Delivers through others consistently; hires well; manages performance honestly; partners with product.',
+    senior:'Runs orgs: sets technical and people strategy; grows managers; delivers complex multi-team programs.'
+  },
+  'hr-manager': {
+    junior:'Runs recruiting and onboarding smoothly; knows core policies; handles routine queries well.',
+    mid:'Partners with managers on hiring, performance, and retention; uses people data; handles sensitive cases with care.',
+    senior:'Shapes people strategy; builds the leadership bench; navigates complex organizational and legal situations.'
+  },
+  'finance-analyst': {
+    junior:'Accurate bookkeeping and reporting; strong Excel; meets close deadlines.',
+    mid:'Builds forecasts and models; explains variances clearly; partners with departments on budgets.',
+    senior:'Owns planning and financial strategy; advises leadership on big bets; guarantees controls and integrity.'
+  },
+  'startup-generalist': {
+    junior:'Fast learner with high energy; does whatever is needed; needs direction on priorities.',
+    mid:'Owns ambiguous projects end-to-end; validates ideas cheaply; unblocks themselves without hand-holding.',
+    senior:'Sets direction with founders; makes company-level trade-offs; builds teams and systems from zero.'
+  }
+};
+
+function calibrationFor(roleId, level){
+  var c = CALIBRATION[roleId];
+  if(!c) return '';
+  level = trimStr(level).toLowerCase();
+  if(level === 'junior' || level === 'mid' || level === 'senior') return c[level];
+  return '';
+}
+
+/* ---------------- question bank ---------------- */
+function Q(role, category, level, id, question, goodAnswer, followup){
+  return { id:id, role:role, category:category, level:level,
+           question:question, goodAnswer:goodAnswer, followup: followup || '' };
+}
+
+var QUESTIONS = [
+/* --- Role 1: Software Engineer --- */
+Q('software-engineer','behavioral','junior','se-b1',
+  "Tell me about a time you had to learn a new programming language or framework quickly to finish a task.",
+  "Names the technology, the learning method (docs, tutorials, pairing), and the timeline. Shipped the outcome on time. Strong answers show a structured learning approach, not just random searching.",
+  "What would you do differently if you had to learn it again?"),
+Q('software-engineer','behavioral','mid','se-b2',
+  "Describe a time you disagreed with a teammate about a technical approach. How did you resolve it?",
+  "Presents both sides fairly, explains how trade-offs were evaluated (data, prototypes, maintenance cost), and what was decided. Looks for collaboration and intellectual honesty, not winning the argument.",
+  "Looking back, was the decision right?"),
+Q('software-engineer','behavioral','senior','se-b3',
+  "Tell me about the biggest production incident you were involved in. What was your role?",
+  "Gives a specific timeline and their exact actions, frames it blamelessly, identifies the root cause, and drove systemic fixes afterward (monitoring, runbooks, post-mortem). Senior answers show ownership beyond their own code.",
+  "What changed in the team process as a result?"),
+Q('software-engineer','behavioral','mid','se-b4',
+  "Have you ever had to push back on an unrealistic deadline? What happened?",
+  "Explains the trade-offs communicated, the alternatives offered (scope cuts, phased delivery), and the outcome. Strong answers protect quality without being adversarial.",
+  "How did the stakeholder react?"),
+Q('software-engineer','behavioral','junior','se-b5',
+  "Tell me about a bug you were proud of fixing.",
+  "Explains the bug clearly, walks through a real debugging process (reproduce, isolate, verify the fix), and shares what they learned. Shows curiosity and method, not luck.",
+  "How did you make sure it would not come back?"),
+Q('software-engineer','technical','junior','se-t1',
+  "What is the difference between == and === in JavaScript?",
+  "Explains abstract equality with type coercion versus strict equality without it, with examples like 0 == '' being true. Says strict equality is preferred and why.",
+  "When would you ever want type coercion?"),
+Q('software-engineer','technical','junior','se-t2',
+  "Explain what a REST API is and what GET, POST, PUT, and DELETE are for.",
+  "Describes resources addressed by URLs and stateless requests, gives correct verb semantics, and mentions idempotency of PUT and DELETE. Bonus for status codes.",
+  "What is the difference between PUT and PATCH?"),
+Q('software-engineer','technical','mid','se-t3',
+  "How would you design a URL shortener?",
+  "Covers ID generation (counter with base62 vs hash), database schema, collision handling, 301 vs 302 redirects, caching, and rate limiting. Discusses scale trade-offs rather than jumping to one answer.",
+  "How would it handle 100 million URLs a day?"),
+Q('software-engineer','technical','mid','se-t4',
+  "What happens when you type a URL into a browser and press enter?",
+  "Walks through DNS resolution, TCP and TLS handshake, HTTP request, server processing, response, and the rendering pipeline. Depth of each step is calibrated to the level.",
+  "Where would you look first if the page loads slowly?"),
+Q('software-engineer','technical','senior','se-t5',
+  "How do you design a system that must handle 10x traffic growth next year?",
+  "Covers capacity planning and load testing, stateless services, caching layers, database scaling (read replicas, sharding), async queues, observability, and cost trade-offs. Asks clarifying questions about the workload first.",
+  "What would you explicitly not over-engineer on day one?"),
+Q('software-engineer','situational','mid','se-s1',
+  "Your team's deploy broke checkout 30 minutes before a major sale. Walk me through your first 10 minutes.",
+  "Assesses impact first, decides rollback versus fix-forward, communicates status to stakeholders, assigns clear roles, and schedules a post-mortem. Calm prioritization over heroics.",
+  "When do you choose fix-forward over rollback?"),
+Q('software-engineer','situational','junior','se-s2',
+  "A senior engineer left a harsh code review on your pull request. What do you do?",
+  "Assumes good intent, asks clarifying questions, addresses the substance of the feedback, and raises review tone constructively only if it becomes a pattern. Shows maturity.",
+  "What makes a code review comment genuinely helpful?"),
+Q('software-engineer','situational','senior','se-s3',
+  "The product team wants a feature in 2 weeks that your team estimates at 6. How do you handle it?",
+  "Breaks down the estimate transparently, proposes phased scope or an MVP, and gets explicit sign-off on trade-offs. Never agrees silently and hopes for the best.",
+  "How do you keep trust when you say no?"),
+Q('software-engineer','situational','mid','se-s4',
+  "You inherit a legacy codebase with no tests and no documentation. Where do you start?",
+  "Characterizes behavior before changing anything, adds tests around the seams, reads critical paths, talks to stakeholders, and refactors in small safe steps. Resists the rewrite urge.",
+  "When is a rewrite actually justified?"),
+Q('software-engineer','culture','junior','se-c1',
+  "What does a healthy engineering culture look like to you?",
+  "Mentions psychological safety, quality code reviews, blameless post-mortems, and sustainable pace. Shows they think about team health, not just their own output.",
+  "What is one culture trait you would bring to our team?"),
+Q('software-engineer','culture','mid','se-c2',
+  "How do you like to receive feedback, and how do you give it to others?",
+  "Gives concrete preferences with examples, describes giving difficult feedback kindly and directly, and shows openness to being challenged themselves.",
+  "Tell me about feedback you received that stung but helped."),
+Q('software-engineer','culture','senior','se-c3',
+  "What kind of work energizes you most, and what drains you?",
+  "Honest self-awareness. Senior answers connect energy to impact: mentoring, architecture, unblocking others. Watch for alignment with what the role actually needs.",
+  "How do you stay effective during the draining parts?"),
+Q('software-engineer','culture','mid','se-c4',
+  "Tell me about a time you helped a teammate grow.",
+  "Names a specific person, describes what they did (pairing, feedback, sponsorship), and the outcome for that person. Shows they invest in others, not just themselves.",
+  "How do you give feedback that actually lands?"),
+/* --- Role 2: Product Manager --- */
+Q('product-manager','behavioral','mid','pm-b1',
+  "Tell me about a product decision you made that turned out to be wrong.",
+  "Owns the mistake fully, explains the reasoning at the time, shows what the data revealed, and describes the process change that followed. No blame-shifting.",
+  "What is your framework for decisions with incomplete data now?"),
+Q('product-manager','behavioral','senior','pm-b2',
+  "Describe a time you had to say no to a senior stakeholder.",
+  "Explains the framework used (strategy fit, opportunity cost), how the no was delivered with a real alternative, and the outcome. Shows backbone with diplomacy.",
+  "How do you say no without damaging the relationship?"),
+Q('product-manager','behavioral','junior','pm-b3',
+  "Tell me about a project you drove from idea to launch.",
+  "Shows clear ownership: the user problem, how success was defined, cross-functional coordination, and the measured result. Junior answers may be smaller in scope but should still show end-to-end thinking.",
+  "What was the hardest part of the launch?"),
+Q('product-manager','behavioral','mid','pm-b4',
+  "Describe a launch that failed to hit its goals. What did you do?",
+  "Diagnoses honestly (wrong problem, bad timing, weak distribution) instead of blaming the market, and shows the learning applied to the next launch.",
+  "How early did you know it was failing?"),
+Q('product-manager','behavioral','senior','pm-b5',
+  "Tell me about a time you aligned engineering, design, and business around a controversial roadmap.",
+  "Shows stakeholder mapping, a communication cadence, and how dissent was handled. Senior answers show they built genuine alignment, not just announced a decision.",
+  "Who was hardest to convince, and why?"),
+Q('product-manager','technical','junior','pm-t1',
+  "How would you improve our onboarding flow?",
+  "Asks clarifying questions first, identifies the target user and drop-off points, proposes hypotheses, and explains how they would measure success. Structure matters more than the specific ideas.",
+  "What would you test first?"),
+Q('product-manager','technical','mid','pm-t2',
+  "How do you prioritize a backlog with 50 competing requests?",
+  "Uses a real framework (RICE, opportunity scoring, MoSCoW) tied to strategy, explains trade-offs explicitly, and communicates the reasoning. Avoids pure gut feel or loudest-voice prioritization.",
+  "What do you do with the requests you deprioritize?"),
+Q('product-manager','technical','senior','pm-t3',
+  "Design a product that helps truck drivers find safe overnight parking.",
+  "Structured approach: clarifies users and constraints, defines the MVP, names key metrics and risks. Asks good clarifying questions before designing. Tests structured thinking under ambiguity.",
+  "How would you validate it before building?"),
+Q('product-manager','technical','mid','pm-t4',
+  "Our activation rate dropped 15% last month. How do you investigate?",
+  "Segments the data (cohort, channel, platform), forms hypotheses, checks external factors and instrumentation changes, and proposes experiments. Methodical, not panicked.",
+  "What is the first chart you would pull?"),
+Q('product-manager','technical','junior','pm-t5',
+  "What metrics would you track for a subscription product?",
+  "Covers acquisition, activation, retention and churn, and revenue (MRR, LTV, CAC payback), and explains why each matters. Shows they think in funnels and cohorts.",
+  "Which single metric would you pick as north star, and why?"),
+Q('product-manager','situational','mid','pm-s1',
+  "Engineering says a committed feature will slip by 3 weeks, one week before launch. What do you do?",
+  "Understands the root cause first, then re-scopes or delays based on data, communicates early to customers and stakeholders, and owns the trade-off publicly.",
+  "How do you communicate the slip to customers?"),
+Q('product-manager','situational','junior','pm-s2',
+  "Two big customers demand opposite features. How do you decide?",
+  "Looks past the requests to the underlying jobs-to-be-done, compares segment sizes, and checks whether one solution serves both. Avoids building both or picking the louder customer.",
+  "What if the bigger customer threatens to churn?"),
+Q('product-manager','situational','senior','pm-s3',
+  "The CEO wants to copy a competitor's feature immediately. How do you respond?",
+  "Separates the insight from the implementation, validates with users, and proposes a differentiated version tied to strategy. Manages up without being a yes-person.",
+  "When is copying actually the right call?"),
+Q('product-manager','situational','mid','pm-s4',
+  "Your team ships on time but users do not love the product. What changes?",
+  "Shifts from output to outcome metrics, invests in discovery, talks to users directly, and tightens feedback loops. Shows they care about impact, not just velocity.",
+  "How do you convince the team to slow down and listen?"),
+Q('product-manager','culture','mid','pm-c1',
+  "What does good product judgment mean to you?",
+  "Gives concrete examples of decisions made with incomplete data, plus honest humility about being wrong. Shows taste backed by evidence.",
+  "Tell me about a judgment call you got right that data alone would not support."),
+Q('product-manager','culture','junior','pm-c2',
+  "How do you work with engineers who are skeptical of product management?",
+  "Earns trust through technical understanding, data, and shared wins. Avoids process theater and respects engineering time.",
+  "What have you learned from engineers that changed how you work?"),
+Q('product-manager','culture','senior','pm-c3',
+  "What product do you admire most, and why?",
+  "Reveals taste: articulates specific craft details (onboarding, empty states, pricing) rather than just naming a popular app. Shows they study products deliberately.",
+  "What would you steal from it for our product?"),
+Q('product-manager','culture','mid','pm-c4',
+  "Describe the best manager you have worked with.",
+  "Shows what environment they thrive in and, by extension, what they will expect here. Look for self-awareness about their own needs.",
+  "What did they do that you now do for others?"),
+/* --- Role 3: UX / UI Designer --- */
+Q('ux-designer','behavioral','mid','xd-b1',
+  "Walk me through a design project where user research changed your direction.",
+  "Describes the original assumption, the research method, the surprising insight, and how the design changed. The outcome was measured. Shows research actually drives decisions.",
+  "How did stakeholders react to the pivot?"),
+Q('ux-designer','behavioral','junior','xd-b2',
+  "Tell me about a time you received harsh critique on your work.",
+  "Separates ego from craft, asks what to learn from it, and iterates visibly. Shows a growth mindset rather than defensiveness.",
+  "How has that critique shaped your work since?"),
+Q('ux-designer','behavioral','senior','xd-b3',
+  "Describe a time you influenced product strategy, not just screens.",
+  "Shows they connected user insight to business outcomes and earned buy-in beyond the design team. Senior designers shape what gets built, not just how it looks.",
+  "What was the business result?"),
+Q('ux-designer','behavioral','mid','xd-b4',
+  "Tell me about a project with a very tight deadline. How did you prioritize the design work?",
+  "Shows ruthless scoping, progressive fidelity (low-fi first, polish later), and clear communication about what was cut and why.",
+  "What did you cut that you wish you had kept?"),
+Q('ux-designer','behavioral','junior','xd-b5',
+  "Have you ever designed something users disliked? What happened?",
+  "Gives an honest post-mortem with data on what went wrong, explains the redesign, and shows what they check earlier now.",
+  "How do you test risky designs before full build?"),
+Q('ux-designer','technical','junior','xd-t1',
+  "What is the difference between UX and UI?",
+  "Explains that UX is the full journey and usability while UI is the visual interface, with an example of good UX with plain UI. Shows they think beyond pixels.",
+  "Give an example of bad UX with beautiful UI."),
+Q('ux-designer','technical','mid','xd-t2',
+  "How do you design for accessibility?",
+  "Covers contrast ratios, keyboard navigation, screen readers, focus states, and reduced motion. Mentions WCAG levels and testing with real assistive-technology users, not just checklists.",
+  "What is the most common accessibility mistake you see?"),
+Q('ux-designer','technical','senior','xd-t3',
+  "How would you build a design system for a company with five product teams?",
+  "Covers design tokens, governance and contribution models, adoption strategy, and balancing consistency with flexibility. Shows systems thinking and change management.",
+  "How do you get teams to actually adopt it?"),
+Q('ux-designer','technical','mid','xd-t4',
+  "A stakeholder says: make the logo bigger. How do you handle it?",
+  "Digs into the underlying goal (brand visibility, trust), proposes alternatives that serve the goal, and tests with users. Diplomatic but principled.",
+  "When do you just do what the stakeholder asks?"),
+Q('ux-designer','technical','junior','xd-t5',
+  "How do you hand off designs to developers?",
+  "Mentions specs, component states, edge cases, design tokens, and ongoing collaboration, not just Figma links. Shows they think about buildability.",
+  "What is usually missing from a bad handoff?"),
+Q('ux-designer','situational','mid','xd-s1',
+  "Engineering says your design is too expensive to build. What now?",
+  "Asks which parts are costly, finds cheaper alternatives that preserve the user outcome, and negotiates scope with the PM. Treats constraints as design material.",
+  "How do you keep the design intent alive through cuts?"),
+Q('ux-designer','situational','junior','xd-s2',
+  "The CEO loves a design that tested poorly with users. What do you do?",
+  "Presents the user evidence clearly, proposes a hybrid that addresses the CEO's concern, and lets data decide. Diplomatic, principled, and evidence-led.",
+  "Have you ever lost that argument? What happened?"),
+Q('ux-designer','situational','senior','xd-s3',
+  "Two teams are shipping inconsistent experiences. How do you fix it?",
+  "Proposes an audit, shared patterns, a governance model, and a migration plan with quick wins. Shows they can drive alignment across teams.",
+  "Where do you start when everything is inconsistent?"),
+Q('ux-designer','situational','mid','xd-s4',
+  "You join a company with no research culture. How do you introduce it?",
+  "Starts small with one high-impact study, shares compelling clips, and makes research cheap and fast. Builds demand through proof, not process mandates.",
+  "What is the smallest research habit that actually works?"),
+Q('ux-designer','culture','junior','xd-c1',
+  "What inspires your design work?",
+  "Names specific influences and shows curiosity about users. Reveals craft passion beyond following trends.",
+  "What is something you have changed your mind about in design?"),
+Q('ux-designer','culture','mid','xd-c2',
+  "How do you handle working with a PM who has strong design opinions?",
+  "Welcomes input, redirects discussion to user problems, and uses prototypes to resolve disagreements with evidence rather than authority.",
+  "When has a non-designer's idea improved your work?"),
+Q('ux-designer','culture','senior','xd-c3',
+  "What does design maturity look like in an organization?",
+  "Describes stages from decorative styling to strategic influence, and how they have helped a team move up. Shows org-level thinking.",
+  "How do you measure design's impact on the business?"),
+Q('ux-designer','culture','mid','xd-c4',
+  "Tell me about mentoring a junior designer.",
+  "Describes specific growth they enabled, how they delivered critique, and the outcome. Shows they multiply craft in others.",
+  "What is the hardest design skill to teach?"),
+/* --- Role 4: Data Analyst / Scientist --- */
+Q('data-scientist','behavioral','mid','ds-b1',
+  "Tell me about an analysis that changed a business decision.",
+  "States the original question, the method, the surprising finding, and the decision it drove with measured impact. Shows they drive action, not just charts.",
+  "How did you present it to get buy-in?"),
+Q('data-scientist','behavioral','junior','ds-b2',
+  "Describe a time your analysis was wrong.",
+  "Owns the error (bad join, wrong assumption), explains how they caught it, and describes the safeguard added. Honesty about mistakes signals trustworthiness.",
+  "What check do you always run now?"),
+Q('data-scientist','behavioral','senior','ds-b3',
+  "Tell me about influencing a skeptical executive with data.",
+  "Tailors the story to the audience, leads with the so-what, and handles pushback with evidence rather than jargon. Shows executive communication skill.",
+  "What do you do when the executive still disagrees?"),
+Q('data-scientist','behavioral','mid','ds-b4',
+  "Have you ever disagreed with a stakeholder about what the data shows?",
+  "Distinguishes the data from the interpretation, brings methodology transparency, and finds common ground. Shows intellectual honesty.",
+  "How do you handle it when you are the one who is wrong?"),
+Q('data-scientist','behavioral','junior','ds-b5',
+  "Tell me about the messiest dataset you have worked with.",
+  "Describes the mess concretely and the systematic cleaning approach, plus how they validated the result. Shows rigor, not just tool usage.",
+  "How did you document what you did?"),
+Q('data-scientist','technical','junior','ds-t1',
+  "What is the difference between an INNER JOIN and a LEFT JOIN?",
+  "Gives correct definitions with a small example and mentions NULL handling in the result. Bonus for knowing when each is appropriate.",
+  "When would a LEFT JOIN silently give you wrong numbers?"),
+Q('data-scientist','technical','mid','ds-t2',
+  "How do you handle missing data?",
+  "Discusses missingness mechanisms, imputation options, when to drop versus model, and sensitivity analysis. Shows they think about bias, not just filling blanks.",
+  "When is dropping rows actually the right call?"),
+Q('data-scientist','technical','senior','ds-t3',
+  "Design an A/B test for a checkout change. How long do you run it?",
+  "Covers randomization unit, primary metric, power analysis and sample size, guardrail metrics, the peeking problem, and segmentation. Complete experimental design thinking.",
+  "What do you do when the test is inconclusive?"),
+Q('data-scientist','technical','mid','ds-t4',
+  "Explain p-values to a non-technical stakeholder.",
+  "Plain-language explanation without jargon, plus an honest warning about misuse. Tests communication skill as much as statistics.",
+  "What is a common p-value mistake you have seen?"),
+Q('data-scientist','technical','junior','ds-t5',
+  "What is the difference between correlation and causation?",
+  "Clear definitions, an example of spurious correlation, and how they would test causality. Shows foundational statistical thinking.",
+  "How would you test whether a feature actually causes retention?"),
+Q('data-scientist','situational','mid','ds-s1',
+  "Marketing claims a campaign drove a 30% lift, but you suspect seasonality. How do you check?",
+  "Proposes a controlled comparison (geo test, pre/post with a control group, or regression with seasonality) and plans careful communication of the finding.",
+  "How do you deliver bad news about someone's pet campaign?"),
+Q('data-scientist','situational','junior','ds-s2',
+  "A stakeholder asks for a dashboard ASAP with vague requirements. What do you do?",
+  "Asks what decision the dashboard supports, defines two or three key questions first, and ships a thin version fast. Avoids building a dashboard nobody opens.",
+  "How do you say no to dashboard request number forty?"),
+Q('data-scientist','situational','senior','ds-s3',
+  "Two teams report conflicting revenue numbers. How do you resolve it?",
+  "Traces definitions and data pipelines, finds the source of truth, and proposes a shared metric dictionary. Shows systems thinking about data governance.",
+  "How do you prevent it from happening again?"),
+Q('data-scientist','situational','mid','ds-s4',
+  "Your model performs well offline but poorly in production. What do you check?",
+  "Checks data leakage, train-serve skew, distribution shift, label delays, and monitoring gaps. Methodical debugging of the ML lifecycle.",
+  "How do you catch this before users notice?"),
+Q('data-scientist','culture','junior','ds-c1',
+  "How do you make sure your work is reproducible?",
+  "Mentions versioned code, documented assumptions, shared queries or notebooks, and review culture. Shows professional discipline.",
+  "What is in your ideal analysis handoff?"),
+Q('data-scientist','culture','mid','ds-c2',
+  "How do you prioritize when five teams want analysis this week?",
+  "Asks about the decisions and deadlines behind each request, keeps a transparent queue, and says no with alternatives. Shows they manage demand, not just supply.",
+  "How do you push back on an urgent-but-unimportant request?"),
+Q('data-scientist','culture','senior','ds-c3',
+  "What does a data-driven culture mean beyond dashboards?",
+  "Talks about experimentation, decision logs, admitting when data says no, and data literacy across the org. Shows they build culture, not just assets.",
+  "How have you changed how a team makes decisions?"),
+Q('data-scientist','culture','mid','ds-c4',
+  "Tell me about a time you taught a non-technical colleague to use data.",
+  "Names a specific person and skill, shows patience, and describes the lasting change. Reveals whether they multiply data literacy.",
+  "What is the hardest data concept to teach?"),
+/* --- Role 5: Marketing Manager --- */
+Q('marketing-manager','behavioral','mid','mm-b1',
+  "Tell me about a campaign that failed. What did you learn?",
+  "Honest diagnosis (audience, creative, timing, tracking), quantifies the loss, and applies the lesson to later work. No spin.",
+  "What would you test first if you ran it again?"),
+Q('marketing-manager','behavioral','junior','mm-b2',
+  "Describe a campaign you are proud of.",
+  "States the goal, strategy, and execution, with measured results (CAC, ROAS, conversion). Shows real ownership of outcomes.",
+  "What was your specific contribution versus the team's?"),
+Q('marketing-manager','behavioral','senior','mm-b3',
+  "Tell me about scaling a channel from experiment to major budget.",
+  "Shows staged testing, clear unit-economics thresholds for scaling, and how operations scaled with spend. Disciplined growth, not just spending more.",
+  "What broke as you scaled, and how did you fix it?"),
+Q('marketing-manager','behavioral','mid','mm-b4',
+  "Have you ever had to kill a beloved campaign because the numbers did not work?",
+  "Puts data over ego, explains how the cut was communicated, and describes what replaced it. Shows commercial maturity.",
+  "How did the team react?"),
+Q('marketing-manager','behavioral','junior','mm-b5',
+  "Tell me about working with a difficult creative or agency partner.",
+  "Describes clear briefs, structured feedback, and accountability without burning bridges. Shows professional vendor management.",
+  "What makes a great creative brief?"),
+Q('marketing-manager','technical','junior','mm-t1',
+  "What is the difference between SEO and SEM?",
+  "Explains organic versus paid search, timelines, cost models, and when to use each. Shows channel fundamentals.",
+  "When would you choose SEO over paid search?"),
+Q('marketing-manager','technical','mid','mm-t2',
+  "How do you measure the ROI of a content marketing program?",
+  "Discusses attribution models, assisted conversions, leading versus lagging metrics, and honest caveats. Avoids claiming full credit for everything.",
+  "What is the hardest part of content attribution?"),
+Q('marketing-manager','technical','senior','mm-t3',
+  "Our customer acquisition cost has doubled in a year. How do you diagnose and fix it?",
+  "Examines channel mix, auction dynamics, creative fatigue, landing page conversion, and LTV-to-CAC by cohort, then builds a diversification plan. Systematic, not panicked.",
+  "Where do you look first?"),
+Q('marketing-manager','technical','mid','mm-t4',
+  "How would you launch a product in a new market with a small budget?",
+  "Focuses on a tight ICP, one or two channels done well, partnerships, PR, and community, with tight measurement. Shows scrappiness and focus.",
+  "What would you explicitly not spend on?"),
+Q('marketing-manager','technical','junior','mm-t5',
+  "What metrics matter for an email campaign?",
+  "Covers deliverability, open rate, click-through, conversion, and unsubscribes, and notes that benchmarks are directional. Shows they read metrics critically.",
+  "What is a vanity metric in email marketing?"),
+Q('marketing-manager','situational','mid','mm-s1',
+  "A product launch is in two weeks and the landing page is not converting in tests. What do you do?",
+  "Runs rapid tests on headline, offer, and CTA, gathers qualitative feedback, and makes a data-backed go or no-go recommendation. Calm under launch pressure.",
+  "When do you recommend delaying a launch?"),
+Q('marketing-manager','situational','junior','mm-s2',
+  "The CEO wants the brand on every social platform. How do you respond?",
+  "Brings audience data per platform, is honest about resource reality, and proposes focus on one or two with a test plan. Manages up with evidence.",
+  "How do you test a new platform cheaply?"),
+Q('marketing-manager','situational','senior','mm-s3',
+  "A PR crisis erupts on social media. What is your first hour?",
+  "Assesses the facts, pauses scheduled posts, prepares a holding statement, and coordinates with leadership. No knee-jerk replies. Shows crisis discipline.",
+  "What is the biggest social media crisis mistake brands make?"),
+Q('marketing-manager','situational','mid','mm-s4',
+  "Sales says marketing leads are low quality. How do you fix the relationship?",
+  "Defines MQL and SQL together, builds closed-loop reporting, sets joint targets, and creates a regular feedback cadence. Treats it as a shared problem.",
+  "How do you handle it when sales still does not follow up?"),
+Q('marketing-manager','culture','junior','mm-c1',
+  "What brands do you admire for marketing, and why?",
+  "Names specific campaigns and the mechanics that made them work. Shows craft and genuine study of the field.",
+  "What would you borrow from them for us?"),
+Q('marketing-manager','culture','mid','mm-c2',
+  "How do you stay current with platform changes?",
+  "Mentions a testing budget, communities, and first-party data focus as cookies fade. Shows continuous learning as a habit.",
+  "What is a recent change that affected your work?"),
+Q('marketing-manager','culture','senior','mm-c3',
+  "What does good marketing look like in a downturn?",
+  "Talks about efficiency, retention, building brand when CPMs are cheap, and honest trade-offs. Shows strategic maturity beyond growth-at-all-costs.",
+  "What do you cut first, and what do you protect?"),
+Q('marketing-manager','culture','mid','mm-c4',
+  "How would you build a marketing team from scratch?",
+  "Sequences hires by bottleneck, balances freelancers versus full-time, and builds a culture of experimentation. Shows org-building sense.",
+  "What is your first hire, and why?"),
+/* --- Role 6: Sales Executive --- */
+Q('sales-executive','behavioral','mid','sa-b1',
+  "Tell me about the hardest deal you ever closed.",
+  "Describes multi-threading, objection handling, the turning point, and what they would repeat. Shows process, not just a war story.",
+  "What almost killed the deal?"),
+Q('sales-executive','behavioral','junior','sa-b2',
+  "Describe a quarter when you missed target. What happened?",
+  "Owns it, diagnoses pipeline versus close rate honestly, and shows the corrective plan. No excuses, no blame on marketing or product.",
+  "What did you change the next quarter?"),
+Q('sales-executive','behavioral','senior','sa-b3',
+  "Tell me about winning a competitive deal against an entrenched incumbent.",
+  "Describes a displacement strategy, champion building, the ROI story, and patience through a long cycle. Shows enterprise craft.",
+  "How did you find your champion?"),
+Q('sales-executive','behavioral','mid','sa-b4',
+  "Have you ever walked away from a deal? Why?",
+  "Shows qualification discipline and opportunity-cost thinking, and explains how they communicated the walk-away. Strong sellers disqualify fast.",
+  "How do you know when to stop chasing?"),
+Q('sales-executive','behavioral','junior','sa-b5',
+  "Tell me about your best cold outreach that actually worked.",
+  "Shows personalization, relevance, and respectful persistence. Demonstrates a repeatable process rather than luck.",
+  "What is your follow-up cadence?"),
+Q('sales-executive','technical','junior','sa-t1',
+  "How do you qualify a prospect?",
+  "Uses a real framework (BANT or similar), and asks about budget, authority, need, and timeline early. Shows they protect their own time.",
+  "What is your biggest red flag in qualification?"),
+Q('sales-executive','technical','mid','sa-t2',
+  "Walk me through your discovery call structure.",
+  "Covers agenda setting, open questions, pain quantification, and clear next steps. Listens more than they pitch. Shows a repeatable methodology.",
+  "What is your favorite discovery question?"),
+Q('sales-executive','technical','senior','sa-t3',
+  "How do you build a business case with a champion?",
+  "Quantifies pain in money and time, maps stakeholders, and co-creates the ROI story with the champion. Shows they sell with the customer, not at them.",
+  "How do you handle a champion with no real power?"),
+Q('sales-executive','technical','mid','sa-t4',
+  "How do you handle the objection: your price is too high?",
+  "Isolates the real objection first, reframes on value, and trades concessions for commitments. Never discounts reflexively.",
+  "When do you actually discount?"),
+Q('sales-executive','technical','junior','sa-t5',
+  "How do you keep your CRM accurate?",
+  "Updates after every interaction, keeps stages honest, and uses the CRM as a selling tool rather than admin burden. Shows operational discipline.",
+  "How do you forecast your own quarter?"),
+Q('sales-executive','situational','mid','sa-s1',
+  "Your champion leaves the company mid-deal. What do you do?",
+  "Prevents it with multi-threading early; now maps new stakeholders fast and re-establishes value quickly. Shows resilience and process.",
+  "How do you multi-thread without going around your champion?"),
+Q('sales-executive','situational','junior','sa-s2',
+  "A prospect goes dark after a great demo. What is your next move?",
+  "Uses a breakup email, value-add follow-ups, and a timeline check, and knows when to let go. Persistent without being desperate.",
+  "How long before you close the file?"),
+Q('sales-executive','situational','senior','sa-s3',
+  "Legal is blocking your biggest deal of the quarter over liability terms. How do you unblock it?",
+  "Understands the real risk, brings creative options, and escalates internally with a plan. Shows they navigate complex deals.",
+  "How do you keep the customer warm during legal delays?"),
+Q('sales-executive','situational','mid','sa-s4',
+  "You inherit a territory with zero pipeline. What are your first 30 days?",
+  "Tiers accounts, sets an outreach cadence, hunts quick wins, and learns the top accounts deeply. Shows a plan, not panic.",
+  "How do you pick which accounts to target first?"),
+Q('sales-executive','culture','junior','sa-c1',
+  "What motivates you in sales beyond money?",
+  "Gives honest, specific answers: competition, problem-solving, relationships. Shows sustainable drive.",
+  "What does a great week look like for you?"),
+Q('sales-executive','culture','mid','sa-c2',
+  "How do you handle losing a promotion to a colleague?",
+  "Shows maturity: asks for feedback, keeps performing, avoids politics. Reveals character under disappointment.",
+  "What feedback have you acted on that was hard to hear?"),
+Q('sales-executive','culture','senior','sa-c3',
+  "What does ethical selling mean to you?",
+  "Says they will not sell a bad fit, prioritizes long-term relationships over quota games, and gives a real example. Non-negotiable integrity signal.",
+  "Tell me about a time you talked a customer out of buying."),
+Q('sales-executive','culture','mid','sa-c4',
+  "How do you work with customer success after the close?",
+  "Describes clean handoffs, honest expectation-setting, and staying involved in expansions. Shows they care past the signature.",
+  "How do you handle a handoff when the implementation is rocky?"),
+/* --- Role 7: Customer Support Specialist --- */
+Q('customer-support','behavioral','mid','cs-b1',
+  "Tell me about the angriest customer you have dealt with.",
+  "Describes de-escalation steps, empathy, ownership, and the resolution. Stays calm even in the retelling. Shows emotional control.",
+  "What do you do when a customer insults you personally?"),
+Q('customer-support','behavioral','junior','cs-b2',
+  "Describe a time you went above and beyond for a customer.",
+  "Gives specific actions beyond policy, the customer's reaction, and business sense behind it. Shows judgment, not just rule-breaking.",
+  "How do you decide when to bend a policy?"),
+Q('customer-support','behavioral','senior','cs-b3',
+  "Tell me about turning a detractor into a promoter.",
+  "Fixed the root cause, followed through personally, and describes the relationship outcome. Shows ownership of the whole arc.",
+  "How do you follow up after resolving a big complaint?"),
+Q('customer-support','behavioral','mid','cs-b4',
+  "Have you ever had to tell a customer no?",
+  "Explains the no with real alternatives, shows empathy, and is clear on policy. Says no without hiding behind scripts.",
+  "What alternatives do you offer when the answer is no?"),
+Q('customer-support','behavioral','junior','cs-b5',
+  "Tell me about a mistake you made with a customer.",
+  "Owns it fast, fixed it, and put prevention in place. Shows accountability without excessive self-flagellation.",
+  "How did the customer react when you admitted it?"),
+Q('customer-support','technical','junior','cs-t1',
+  "How do you troubleshoot a problem you cannot reproduce?",
+  "Gathers environment details and logs, tries variations, and escalates with a complete write-up. Methodical, not guesswork.",
+  "What information do you always collect first?"),
+Q('customer-support','technical','mid','cs-t2',
+  "How do you write a help article that actually reduces tickets?",
+  "Uses search-friendly titles, screenshots, covers the top variants, and measures deflection. Writes for the customer, not for the team.",
+  "How do you know if an article is working?"),
+Q('customer-support','technical','senior','cs-t3',
+  "How would you design a support process for a major outage?",
+  "Covers status page updates, macros, triage tiers, proactive outreach, and a post-mortem shared with customers. Shows crisis operations thinking.",
+  "What do you tell customers when you do not have an ETA?"),
+Q('customer-support','technical','mid','cs-t4',
+  "What metrics matter in support, and which ones can mislead?",
+  "Names CSAT, first response and resolution time, and warns that handle time alone can hurt quality. Shows they think about what metrics incentivize.",
+  "What metric would you add that most teams ignore?"),
+Q('customer-support','technical','junior','cs-t5',
+  "How do you prioritize 50 open tickets?",
+  "Uses severity times customers affected times SLA, and communicates ETAs proactively. Shows triage judgment.",
+  "What do you do with the ticket nobody wants?"),
+Q('customer-support','situational','mid','cs-s1',
+  "A customer demands a refund outside policy and threatens to go public on social media. What do you do?",
+  "Empathizes, checks discretion limits, and escalates with full context. Never promises what they cannot deliver, and never caves to threats blindly.",
+  "When is it right to make an exception?"),
+Q('customer-support','situational','junior','cs-s2',
+  "You do not know the answer and the customer is waiting on live chat. What now?",
+  "Is honest about checking, sets a clear time expectation, and actually follows up. Never guesses or stalls silently.",
+  "How long is too long to keep someone waiting?"),
+Q('customer-support','situational','senior','cs-s3',
+  "Engineering says a bug affecting 200 customers will not be fixed this quarter. How do you handle the tickets?",
+  "Communicates honestly, builds workarounds, tracks impact to re-prioritize, and advocates with data. Carries the customer voice internally.",
+  "How do you keep the team motivated on an unfixable issue?"),
+Q('customer-support','situational','mid','cs-s4',
+  "A teammate is giving customers wrong information. What do you do?",
+  "Addresses it privately first, shares the correct information kindly, and involves the lead if it continues. Direct but respectful.",
+  "How do you correct someone without embarrassing them?"),
+Q('customer-support','culture','junior','cs-c1',
+  "What does great customer service mean to you?",
+  "States a specific philosophy with an example, and sees support as product insight rather than a cost center. Shows pride in the craft.",
+  "Who gives great service that you admire?"),
+Q('customer-support','culture','mid','cs-c2',
+  "How do you avoid burnout in a high-volume queue?",
+  "Mentions boundaries, variety, celebrating wins, and honest self-awareness. Shows sustainability, which predicts retention.",
+  "What recharges you during a hard week?"),
+Q('customer-support','culture','senior','cs-c3',
+  "How should support influence the product roadmap?",
+  "Quantifies ticket themes, brings the customer voice to planning, and closes the loop back to customers. Shows strategic impact.",
+  "Tell me about a product change you drove from tickets."),
+Q('customer-support','culture','mid','cs-c4',
+  "Tell me about mentoring a new support agent.",
+  "Describes a shadowing structure, feedback on tone, and the outcome. Shows they raise team quality.",
+  "What is the hardest part of support to teach?"),
+/* --- Role 8: Operations Manager --- */
+Q('operations-manager','behavioral','mid','om-b1',
+  "Tell me about a process you built or fixed that saved significant time or money.",
+  "States baseline metrics, the change, the measured improvement, and how adoption was ensured. Quantified impact is the key signal.",
+  "How did you get people to adopt the new process?"),
+Q('operations-manager','behavioral','junior','om-b2',
+  "Describe a time you managed an underperforming vendor.",
+  "Set clear expectations, documented issues, applied consequences, and describes the outcome. Shows firm, fair vendor management.",
+  "When do you switch vendors versus fix the relationship?"),
+Q('operations-manager','behavioral','senior','om-b3',
+  "Tell me about scaling an operation 3x. What broke first?",
+  "Honest about bottlenecks, describes the sequencing of fixes, and shares what they would do differently. Shows real scale experience.",
+  "What would you build ahead of time next round?"),
+Q('operations-manager','behavioral','mid','om-b4',
+  "Have you ever had to implement an unpopular policy? How?",
+  "Explained the why, listened to concerns, adjusted where possible, and held the line where needed. Shows change leadership.",
+  "How do you handle the loudest critics?"),
+Q('operations-manager','behavioral','junior','om-b5',
+  "Tell me about catching a costly error before it shipped.",
+  "Shows attention to systems: checklists, reviews, and prevention built afterward. Demonstrates operational vigilance.",
+  "What check caught it, and what did you add after?"),
+Q('operations-manager','technical','junior','om-t1',
+  "How do you decide between building versus buying a tool?",
+  "Weighs total cost, core versus commodity, and integration effort, with a real example. Shows pragmatic judgment.",
+  "What is a build decision you regret?"),
+Q('operations-manager','technical','mid','om-t2',
+  "How do you measure the health of an operation?",
+  "Defines leading and lagging KPIs, dashboard discipline, and a review cadence, tying metrics to outcomes. Shows they manage by data.",
+  "What is a leading indicator most people miss?"),
+Q('operations-manager','technical','senior','om-t3',
+  "How would you design a supply chain resilient to disruptions?",
+  "Covers dual sourcing, safety stock math, end-to-end visibility, and scenario planning. Shows strategic risk thinking.",
+  "How do you justify resilience spending to finance?"),
+Q('operations-manager','technical','mid','om-t4',
+  "What is your approach to budgeting for a department?",
+  "Discusses zero-based versus historical budgeting, ties spend to drivers, and tracks variance monthly. Shows financial ownership.",
+  "How do you handle a budget cut mid-year?"),
+Q('operations-manager','technical','junior','om-t5',
+  "How do you document a process so others can actually follow it?",
+  "Mentions SOPs with owners, visuals, version control, and testing the doc with a new hire. Shows they write for the reader.",
+  "How do you keep documentation from going stale?"),
+Q('operations-manager','situational','mid','om-s1',
+  "A key supplier fails the week of your biggest shipment. What do you do?",
+  "Activates the backup plan, communicates delays honestly, expedites selectively, then fixes the single point of failure. Calm crisis execution.",
+  "How do you communicate bad news to customers here?"),
+Q('operations-manager','situational','junior','om-s2',
+  "Two teams both claim priority for the same limited resource. How do you decide?",
+  "Applies transparent criteria tied to company goals and documents the decision. Shows fairness under pressure.",
+  "What do you tell the team that loses?"),
+Q('operations-manager','situational','senior','om-s3',
+  "You must cut operational costs 20% without hurting quality. Where do you start?",
+  "Maps cost drivers, separates waste from value, involves the team in finding savings, and protects customer-facing quality. Surgical, not slash-and-burn.",
+  "What is the first thing you would never cut?"),
+Q('operations-manager','situational','mid','om-s4',
+  "A new system rollout is meeting resistance from the team. What now?",
+  "Finds the real friction, involves skeptics in fixing it, trains properly, and measures adoption. Shows change management skill.",
+  "How do you tell real problems from change resistance?"),
+Q('operations-manager','culture','junior','om-c1',
+  "What does operational excellence look like day to day?",
+  "Describes boring reliability: checklists, calm under pressure, continuous small improvements. Shows they value the unglamorous work.",
+  "What is an unglamorous win you are proud of?"),
+Q('operations-manager','culture','mid','om-c2',
+  "How do you balance efficiency with employee morale?",
+  "Involves people in changes, explains trade-offs honestly, and watches burnout signals. Shows they optimize for humans too.",
+  "Tell me about an efficiency gain that hurt morale, and what you did."),
+Q('operations-manager','culture','senior','om-c3',
+  "How do you build a culture of ownership in an ops team?",
+  "Describes clear accountability, autonomy with guardrails, and recognition of invisible work. Shows leadership philosophy.",
+  "How do you handle someone who avoids ownership?"),
+Q('operations-manager','culture','mid','om-c4',
+  "Tell me about developing someone on your team into a bigger role.",
+  "Describes a specific growth plan, stretch assignments, and the outcome. Shows they grow people, not just processes.",
+  "How do you spot high potential early?"),
+/* --- Role 9: Engineering Manager --- */
+Q('engineering-manager','behavioral','mid','em-b1',
+  "Tell me about managing a low performer. What did you do?",
+  "Gave early honest feedback, set a clear improvement plan with real support, and made a timely decision either way. Shows management courage.",
+  "How do you know when it is time to let someone go?"),
+Q('engineering-manager','behavioral','junior','em-b2',
+  "Describe your transition from individual contributor to manager.",
+  "Honest about what was hard: letting go of code, multiplying through others. Shows self-awareness about the identity shift.",
+  "What do you miss most about being an IC?"),
+Q('engineering-manager','behavioral','senior','em-b3',
+  "Tell me about a time you had to deliver bad news to your team.",
+  "Direct and empathetic, explains the why, and supports people through it. Shows leadership under difficulty.",
+  "How do you handle the emotional aftermath?"),
+Q('engineering-manager','behavioral','mid','em-b4',
+  "Have you ever disagreed with your own manager about a team decision?",
+  "Debates privately and commits publicly. Shows loyalty in both directions and mature disagreement.",
+  "Tell me about a time you lost the debate."),
+Q('engineering-manager','behavioral','junior','em-b5',
+  "Tell me about the best hire you ever made.",
+  "Explains what they saw in the person, how they assessed it in interviews, and how the person grew. Shows hiring judgment.",
+  "What is your interview superpower?"),
+Q('engineering-manager','technical','junior','em-t1',
+  "How do you run effective 1:1s?",
+  "Employee-owned agenda, career focus rather than status updates, consistency, and follow-through on action items. Shows people-management fundamentals.",
+  "What do you do when someone has nothing to talk about?"),
+Q('engineering-manager','technical','mid','em-t2',
+  "How do you estimate and plan a quarter of engineering work?",
+  "Covers capacity planning, buffers, sequencing by risk, and a re-planning cadence. Shows they plan like an engineer, not a wish-list.",
+  "How do you handle mid-quarter surprises?"),
+Q('engineering-manager','technical','senior','em-t3',
+  "How do you handle technical debt at the organizational level?",
+  "Makes debt visible (backlog percentage, SLOs), allocates real capacity, and ties it to business risk. Shows they manage debt as strategy.",
+  "How do you sell debt work to product?"),
+Q('engineering-manager','technical','mid','em-t4',
+  "How do you evaluate an engineer's performance fairly?",
+  "Uses calibrated criteria, peer feedback, separates outcomes from effort, and watches for bias. Shows thoughtful, fair evaluation.",
+  "How do you handle calibration disagreements?"),
+Q('engineering-manager','technical','junior','em-t5',
+  "What does a healthy on-call rotation look like?",
+  "Fair rotation, low alert noise, blameless reviews, and recognition or compensation. Shows they protect the team.",
+  "How do you reduce alert fatigue?"),
+Q('engineering-manager','situational','mid','em-s1',
+  "Two senior engineers are in open conflict and it is affecting the team. What do you do?",
+  "Talks to each privately, finds the real issue beneath the personalities, mediates on the work, and sets clear expectations. Shows conflict skill.",
+  "When do you move someone off the team over conflict?"),
+Q('engineering-manager','situational','junior','em-s2',
+  "Your best engineer wants to quit, and it is your first week. What do you do?",
+  "Listens first, understands the real reasons, acts fast on what is fixable, and is honest about what is not. Shows urgency and humility.",
+  "What is usually the real reason top performers leave?"),
+Q('engineering-manager','situational','senior','em-s3',
+  "Leadership cuts your headcount plan in half but keeps the roadmap. How do you respond?",
+  "Re-scopes explicitly with trade-offs, protects team health, and negotiates openly. Never silently burns out the team to hit an impossible plan.",
+  "How do you deliver that message to the team?"),
+Q('engineering-manager','situational','mid','em-s4',
+  "A project is failing and the team knew early but did not speak up. What changes?",
+  "Builds psychological safety deliberately, retrospects honestly, and changes reporting norms. Fixes the system, not just the project.",
+  "How do you know if your team feels safe disagreeing?"),
+Q('engineering-manager','culture','junior','em-c1',
+  "What kind of team culture do you intentionally build?",
+  "Names specific rituals and norms rather than buzzwords, with examples of culture in action. Shows deliberate culture-building.",
+  "What is one ritual your teams love?"),
+Q('engineering-manager','culture','mid','em-c2',
+  "How do you stay technical as a manager?",
+  "Mentions code reviews, architecture discussions, or side projects, with honesty about depth versus breadth. Shows they keep credibility.",
+  "How technical should an EM stay?"),
+Q('engineering-manager','culture','senior','em-c3',
+  "What does diversity mean for building engineering teams?",
+  "Describes concrete practices in hiring and inclusion and explains why it improves outcomes. Shows principled, practical commitment.",
+  "What is one practice that actually moved the needle?"),
+Q('engineering-manager','culture','mid','em-c4',
+  "How do you handle your own mistakes as a leader?",
+  "Admits them publicly, models learning, and gives a specific example. Shows the vulnerability that builds trust.",
+  "Tell me about a leadership mistake you have owned."),
+/* --- Role 10: HR / People Manager --- */
+Q('hr-manager','behavioral','mid','hr-b1',
+  "Tell me about handling a sensitive employee relations issue.",
+  "Shows confidentiality, fairness, documentation, and process discipline, while protecting privacy even in the retelling. Trust signals matter most here.",
+  "How do you stay neutral when both sides are emotional?"),
+Q('hr-manager','behavioral','junior','hr-b2',
+  "Describe a time you improved a hiring process.",
+  "Identified the bottleneck, made a specific change, and measured results like time-to-hire or offer acceptance. Shows process improvement with data.",
+  "What was slowing things down?"),
+Q('hr-manager','behavioral','senior','hr-b3',
+  "Tell me about managing a reduction in force.",
+  "Treats people with dignity, communicates clearly, and supports both those leaving and those staying. Shows humanity under the hardest HR task.",
+  "How do you support the team that remains?"),
+Q('hr-manager','behavioral','mid','hr-b4',
+  "Have you ever pushed back on a hiring manager's biased decision?",
+  "Used structured data to challenge respectfully and protected the integrity of the process. Shows moral courage with diplomacy.",
+  "How do you raise bias without accusing anyone?"),
+Q('hr-manager','behavioral','junior','hr-b5',
+  "Tell me about onboarding a remote employee well.",
+  "Describes a structured first 30-60-90 days, a buddy system, and early feedback loops. Shows they design belonging remotely.",
+  "What is the biggest remote onboarding mistake?"),
+Q('hr-manager','technical','junior','hr-t1',
+  "What are the key components of a good job description?",
+  "Focuses on outcomes not just tasks, separates must-haves from nice-to-haves, uses inclusive language, and includes a compensation range. Shows modern hiring craft.",
+  "What is the most common JD mistake?"),
+Q('hr-manager','technical','mid','hr-t2',
+  "How do you structure a fair compensation review?",
+  "Uses market data, checks internal equity, links to performance, and communicates transparently. Shows rigor and fairness.",
+  "How do you handle pay gaps you discover?"),
+Q('hr-manager','technical','senior','hr-t3',
+  "How would you design a performance review system for a 200-person company?",
+  "Covers cadence, calibration, manager training, and separating compensation from development conversations. Shows systems-level people thinking.",
+  "What is broken about most review systems?"),
+Q('hr-manager','technical','mid','hr-t4',
+  "What employment law basics should every HR person know in this market?",
+  "Mentions contracts, working hours, leave entitlements, and termination process, and knows when to call counsel. Shows they know their limits.",
+  "When do you always involve a lawyer?"),
+Q('hr-manager','technical','junior','hr-t5',
+  "How do you measure HR's impact?",
+  "Tracks retention, time-to-fill, eNPS, and regretted attrition, tying them to business outcomes. Shows HR as a business function.",
+  "Which metric do you watch most closely?"),
+Q('hr-manager','situational','mid','hr-s1',
+  "An employee reports harassment by a high performer. Walk me through your response.",
+  "Takes it seriously immediately, runs an impartial investigation, protects the reporter, and follows policy and law. No hesitation, no favoritism.",
+  "How do you protect the reporter from retaliation?"),
+Q('hr-manager','situational','junior','hr-s2',
+  "A manager wants to fire someone in their first month. What do you advise?",
+  "Checks for proper onboarding and documented feedback first, and ensures the process is fair. Slows down rash decisions with good questions.",
+  "What documentation do you require before a termination?"),
+Q('hr-manager','situational','senior','hr-s3',
+  "The company is growing 3x and culture is diluting. What do you do?",
+  "Codifies values into hiring and rituals, trains managers, and measures engagement. Shows they scale culture deliberately.",
+  "How do you measure culture?"),
+Q('hr-manager','situational','mid','hr-s4',
+  "Two departments blame each other for missed targets. How do you intervene?",
+  "Facilitates joint problem-solving, clarifies shared goals, and examines incentives. Addresses the system, not just the symptoms.",
+  "How do you get finger-pointing to stop?"),
+Q('hr-manager','culture','junior','hr-c1',
+  "What does a great employee experience look like?",
+  "Describes specific moments that matter, from offer to exit. Human-centered and concrete, not generic.",
+  "What moment matters most in the first week?"),
+Q('hr-manager','culture','mid','hr-c2',
+  "How do you balance employee advocacy with business needs?",
+  "Honest that both matter, with an example of navigating the tension. Shows they can hold two truths.",
+  "Tell me about a time you sided with the business over an employee request."),
+Q('hr-manager','culture','senior','hr-c3',
+  "What is your philosophy on remote versus office work?",
+  "Principled and tied to outcomes and equity rather than personal preference. Shows they think about fairness at scale.",
+  "How do you keep remote employees visible for promotions?"),
+Q('hr-manager','culture','mid','hr-c4',
+  "How do you build trust with skeptical employees?",
+  "Consistency, kept confidences, and small promises delivered. Shows trust is built through behavior over time.",
+  "What breaks trust fastest in HR?"),
+/* --- Role 11: Finance Analyst --- */
+Q('finance-analyst','behavioral','mid','fa-b1',
+  "Tell me about a time you found a significant error in the financials.",
+  "Explains how they found it, the impact, how it was fixed, and the control added to prevent recurrence. Shows vigilance and integrity.",
+  "How did you break the news?"),
+Q('finance-analyst','behavioral','junior','fa-b2',
+  "Describe your month-end close process.",
+  "Covers checklists, reconciliations, accruals, review layers, and timeline discipline. Shows operational rigor.",
+  "What is the most common close bottleneck?"),
+Q('finance-analyst','behavioral','senior','fa-b3',
+  "Tell me about building a financial model that drove a big decision.",
+  "Makes assumptions explicit, runs scenarios, and describes the decision it enabled. Shows modeling as decision support, not decoration.",
+  "What assumption mattered most?"),
+Q('finance-analyst','behavioral','mid','fa-b4',
+  "Have you ever disagreed with leadership about spending? What happened?",
+  "Presents analysis objectively, respects the final call, and documents the decision. Shows professional courage without insubordination.",
+  "How do you disagree without damaging the relationship?"),
+Q('finance-analyst','behavioral','junior','fa-b5',
+  "Tell me about an audit you went through.",
+  "Describes preparation, cooperation, findings, and remediation. Shows they handle scrutiny well.",
+  "What did the auditors find?"),
+Q('finance-analyst','technical','junior','fa-t1',
+  "What are the three financial statements and how do they connect?",
+  "Names the P and L, balance sheet, and cash flow statement, and explains the links between them. Foundational fluency check.",
+  "Walk me through how net income flows into the balance sheet."),
+Q('finance-analyst','technical','mid','fa-t2',
+  "How do you forecast revenue for a SaaS business?",
+  "Uses cohorts, churn, expansion, and pipeline coverage, and separates bookings from cash. Shows they understand recurring revenue mechanics.",
+  "What breaks most SaaS forecasts?"),
+Q('finance-analyst','technical','senior','fa-t3',
+  "How would you evaluate whether to raise prices 10%?",
+  "Considers elasticity, churn risk, competitive position, margin math, and a testing approach. Shows commercial judgment, not just arithmetic.",
+  "How would you test it safely?"),
+Q('finance-analyst','technical','mid','fa-t4',
+  "What is working capital and why does it matter?",
+  "Defines it clearly and explains the cash conversion cycle and why growth eats cash. Shows they think in cash, not just profit.",
+  "How does working capital differ by business model?"),
+Q('finance-analyst','technical','junior','fa-t5',
+  "How do you detect fraud in expense reports?",
+  "Mentions pattern analysis, duplicate detection, policy controls, and sampling. Shows healthy skepticism with process.",
+  "What is the sneakiest expense fraud you have seen?"),
+Q('finance-analyst','situational','mid','fa-s1',
+  "The company is burning cash faster than planned. What is your first analysis?",
+  "Runs runway math, identifies burn drivers, and ranks levers by speed and impact. Shows they triage like an operator.",
+  "What levers work fastest?"),
+Q('finance-analyst','situational','junior','fa-s2',
+  "A department head overspent their budget by 30%. How do you handle it?",
+  "Understands why first, then fixes the process. Firm but collaborative, not the budget police.",
+  "How do you prevent it next quarter?"),
+Q('finance-analyst','situational','senior','fa-s3',
+  "The board wants profitability this year, but growth needs investment. How do you frame the trade-off?",
+  "Builds scenarios with explicit assumptions, gives a recommendation with risks. Shows they advise rather than just report.",
+  "What would you personally recommend?"),
+Q('finance-analyst','situational','mid','fa-s4',
+  "You discover the sales team is recognizing revenue early. What do you do?",
+  "Acts immediately, corrects the books, and tightens controls. Integrity first, no exceptions. This is a character check.",
+  "How do you handle the politics of it?"),
+Q('finance-analyst','culture','junior','fa-c1',
+  "How do you explain financial concepts to non-finance colleagues?",
+  "Uses plain language and visuals, and connects numbers to their decisions. Shows they translate, not lecture.",
+  "Give me an example of a concept you simplified."),
+Q('finance-analyst','culture','mid','fa-c2',
+  "How do you handle pressure to make the numbers look better?",
+  "Draws a clear ethical line, offers legitimate alternatives, and escalates if needed. Another integrity check; watch for hedging.",
+  "Have you ever faced that pressure? What did you do?"),
+Q('finance-analyst','culture','senior','fa-c3',
+  "What does good financial stewardship mean in a startup?",
+  "Balances speed with discipline, watches unit economics, and reports honestly. Shows they fit startup pace without losing rigor.",
+  "Where do startups usually waste money?"),
+Q('finance-analyst','culture','mid','fa-c4',
+  "Tell me about improving a broken finance process.",
+  "Describes the before and after, stakeholder buy-in, and sustained results. Shows continuous improvement.",
+  "How did you get busy stakeholders to adopt it?"),
+/* --- Role 12: Startup Generalist / Leader --- */
+Q('startup-generalist','behavioral','mid','sg-b1',
+  "Tell me about wearing five hats in a week. How do you prioritize?",
+  "Shows ruthless prioritization by impact, comfort with ambiguity, and real examples across functions. Generalists live in context-switching.",
+  "What fell through the cracks, and was that the right call?"),
+Q('startup-generalist','behavioral','junior','sg-b2',
+  "Describe a time you figured something out with zero guidance.",
+  "Demonstrates resourcefulness and first-principles thinking, plus knowing when to ask for help. Shows they thrive without a manual.",
+  "When do you stop figuring it out alone?"),
+Q('startup-generalist','behavioral','senior','sg-b3',
+  "Tell me about a bet you made that paid off, or did not.",
+  "Separates decision quality from outcome, and shares what they would repeat. Shows they think in expected value.",
+  "What did the losing bet teach you?"),
+Q('startup-generalist','behavioral','mid','sg-b4',
+  "Have you ever had to do a job you felt overqualified for? How did you handle it?",
+  "No ego: did it well and focused on the mission. Early-stage startups need this constantly.",
+  "What is the least glamorous thing you have done at work?"),
+Q('startup-generalist','behavioral','junior','sg-b5',
+  "Tell me about your fastest learning curve.",
+  "Describes a specific ramp, the methods used, and the results. Shows learning velocity, the key junior generalist trait.",
+  "How do you learn something completely new?"),
+Q('startup-generalist','technical','junior','sg-t1',
+  "How do you decide what to work on each morning?",
+  "Ties daily work to weekly goals, uses time-blocking, and can say no. Shows self-management without a manager hovering.",
+  "What does your ideal week look like?"),
+Q('startup-generalist','technical','mid','sg-t2',
+  "How would you validate a business idea in two weeks with no budget?",
+  "Proposes a landing page test, twenty customer conversations, a concierge MVP, and clear kill criteria. Shows lean validation instincts.",
+  "What would make you kill the idea?"),
+Q('startup-generalist','technical','senior','sg-t3',
+  "How do you think about unit economics for a new venture?",
+  "Covers CAC, LTV, payback period, and contribution margin, and knows when the math simply does not work. Shows commercial realism.",
+  "What is a healthy LTV to CAC ratio, and why?"),
+Q('startup-generalist','technical','mid','sg-t4',
+  "How do you hire your first five employees?",
+  "Prioritizes versatility over specialization, screens for culture add, and does references properly. Shows they know early hires define the company.",
+  "What is your biggest hiring mistake?"),
+Q('startup-generalist','technical','junior','sg-t5',
+  "What tools do you use to stay organized?",
+  "Describes a simple system, not tool obsession, and shows the actual workflow. Pragmatism over productivity theater.",
+  "What is your system for not dropping balls?"),
+Q('startup-generalist','situational','mid','sg-s1',
+  "Your cofounder disagrees with your strategy and it is getting tense. What do you do?",
+  "Proposes structured debate, brings data, consults advisors, and relies on a decision process agreed in advance. Shows partnership maturity.",
+  "How do you repair the relationship after a hard disagreement?"),
+Q('startup-generalist','situational','junior','sg-s2',
+  "You have runway for 6 months and growth is flat. What is your plan?",
+  "Diagnoses honestly, focuses on one growth lever, and cuts burn in parallel. Shows urgency with focus, not flailing.",
+  "What do you cut first?"),
+Q('startup-generalist','situational','senior','sg-s3',
+  "An investor offers money but wants control terms you hate. How do you decide?",
+  "Weighs alternatives, negotiates firmly, and knows their walk-away point. Shows they protect the company's future.",
+  "What terms are non-negotiable for you?"),
+Q('startup-generalist','situational','mid','sg-s4',
+  "Your launch gets zero traction. What do you do in the first two weeks?",
+  "Talks to users, finds the real objection, and iterates fast. Ignores vanity metrics. Shows resilience and customer obsession.",
+  "How do you tell a messaging problem from a product problem?"),
+Q('startup-generalist','culture','junior','sg-c1',
+  "Why a startup instead of a big company?",
+  "Gives genuine reasons tied to how they work best, not cliches about changing the world. Shows self-knowledge.",
+  "What will you miss about bigger companies?"),
+Q('startup-generalist','culture','mid','sg-c2',
+  "How do you handle chaos and constant change?",
+  "Describes systems for uncertainty and emotional steadiness, with examples. Shows they are energized, not drained, by ambiguity.",
+  "Tell me about your most chaotic month."),
+Q('startup-generalist','culture','senior','sg-c3',
+  "What values would you instill in a company you founded?",
+  "Names specific, lived values with stories behind them, not poster words. Shows they have thought deeply about culture.",
+  "How do values show up in hard decisions?"),
+Q('startup-generalist','culture','mid','sg-c4',
+  "How do you know when to quit something?",
+  "Has kill criteria, resists sunk cost, and gives honest examples. Shows they quit strategically, not emotionally.",
+  "What is the hardest thing you have quit?")
+];
+
+/* ---------------- querying ---------------- */
+function getQuestions(){ return QUESTIONS.slice(); }
+
+function getQuestionById(id){
+  id = trimStr(id);
+  for(var i=0;i<QUESTIONS.length;i++){ if(QUESTIONS[i].id === id) return QUESTIONS[i]; }
+  return null;
+}
+
+function filterQuestions(opts){
+  opts = opts || {};
+  var role = trimStr(opts.role).toLowerCase();
+  var category = trimStr(opts.category).toLowerCase();
+  var level = trimStr(opts.level).toLowerCase();
+  var query = trimStr(opts.query).toLowerCase();
+  return QUESTIONS.filter(function(q){
+    if(role && role !== 'all' && q.role !== role) return false;
+    if(category && category !== 'all' && q.category !== category) return false;
+    if(level && level !== 'all' && q.level !== level) return false;
+    if(query){
+      var hay = (q.question + ' ' + q.goodAnswer + ' ' + q.followup).toLowerCase();
+      if(hay.indexOf(query) === -1) return false;
+    }
+    return true;
+  });
+}
+
+function searchQuestions(query){ return filterQuestions({ query: query }); }
+
+function questionStats(){
+  var byRole = {}, byCategory = {}, byLevel = {};
+  QUESTIONS.forEach(function(q){
+    byRole[q.role] = (byRole[q.role] || 0) + 1;
+    byCategory[q.category] = (byCategory[q.category] || 0) + 1;
+    byLevel[q.level] = (byLevel[q.level] || 0) + 1;
+  });
+  return { total: QUESTIONS.length, byRole: byRole, byCategory: byCategory, byLevel: byLevel };
+}
+
+/* Balanced auto-pick: round-robin across categories so every interview
+ * covers behavioral, technical, situational, and culture. Deterministic. */
+function autoBuildSet(roleId, level, count){
+  roleId = trimStr(roleId);
+  if(!roleById(roleId)) return { ok:false, error:'Pick a role first.' };
+  count = parseInt(count, 10);
+  if(!(count >= 1 && count <= 20)) count = 8;
+  level = trimStr(level).toLowerCase();
+  if(level !== 'junior' && level !== 'mid' && level !== 'senior') level = '';
+
+  var pool = QUESTIONS.filter(function(q){
+    return q.role === roleId && (!level || q.level === level);
+  });
+  if(pool.length < count){
+    var extra = QUESTIONS.filter(function(q){
+      return q.role === roleId && pool.indexOf(q) === -1;
+    });
+    pool = pool.concat(extra);
+  }
+  var cats = ['behavioral','technical','situational','culture'];
+  var picked = [], used = {};
+  var guard = 0;
+  while(picked.length < count && guard < 500){
+    guard++;
+    var progressed = false;
+    for(var c=0;c<cats.length && picked.length < count;c++){
+      for(var i=0;i<pool.length && picked.length < count;i++){
+        var q = pool[i];
+        if(q.category === cats[c] && !used[q.id]){ picked.push(q.id); used[q.id] = 1; progressed = true; break; }
+      }
+    }
+    if(!progressed) break;
+  }
+  return { ok:true, ids: picked };
+}
+
+/* ---------------- scorecards ---------------- */
+function escapeHtml(s){
+  return trimStr(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function buildScorecard(opts){
+  opts = opts || {};
+  var ids = opts.questionIds || [];
+  if(!ids.length) return { ok:false, error:'Add at least one question to build a scorecard.' };
+  var seen = {}, rows = [], missing = [];
+  for(var i=0;i<ids.length;i++){
+    var id = trimStr(ids[i]);
+    if(!id || seen[id]) continue;
+    seen[id] = 1;
+    var q = getQuestionById(id);
+    if(!q){ missing.push(id); continue; }
+    rows.push(q);
+  }
+  if(missing.length) return { ok:false, error:'Unknown question id(s): ' + missing.join(', ') };
+  if(!rows.length) return { ok:false, error:'Add at least one question to build a scorecard.' };
+  return {
+    ok:true,
+    scorecard:{
+      title: trimStr(opts.title) || 'Interview Scorecard',
+      candidateName: trimStr(opts.candidateName),
+      roleId: trimStr(opts.roleId),
+      roleName: roleName(trimStr(opts.roleId)),
+      interviewer: trimStr(opts.interviewer),
+      dateStr: trimStr(opts.dateStr),
+      scaleMax: 5,
+      rows: rows
+    }
+  };
+}
+
+function ratingLabel(avg){
+  if(!(avg >= 1)) return 'Not scored';
+  if(avg < 1.75) return 'Poor';
+  if(avg < 2.75) return 'Below average';
+  if(avg < 3.75) return 'Solid';
+  if(avg < 4.5) return 'Strong';
+  return 'Exceptional';
+}
+
+function scoreSummary(entries){
+  entries = entries || [];
+  var dist = {1:0,2:0,3:0,4:0,5:0}, sum = 0, n = 0;
+  entries.forEach(function(e){
+    var s = parseInt(e && e.score, 10);
+    if(s >= 1 && s <= 5){ dist[s]++; sum += s; n++; }
+  });
+  return { count:n, average: n ? Math.round((sum/n)*100)/100 : 0, distribution: dist };
+}
+
+function scorecardToText(sc){
+  var L = [];
+  L.push(sc.title.toUpperCase());
+  if(sc.candidateName) L.push('Candidate: ' + sc.candidateName);
+  if(sc.roleName && sc.roleName !== 'Unknown role') L.push('Role: ' + sc.roleName);
+  if(sc.interviewer) L.push('Interviewer: ' + sc.interviewer);
+  if(sc.dateStr) L.push('Date: ' + sc.dateStr);
+  L.push('Scale: 1 (Poor) to 5 (Exceptional)');
+  L.push('');
+  sc.rows.forEach(function(q, i){
+    L.push((i+1) + '. [' + categoryName(q.category) + ' / ' + levelName(q.level) + '] ' + q.question);
+    L.push('   What good looks like: ' + q.goodAnswer);
+    L.push('   Score: [ ] 1   [ ] 2   [ ] 3   [ ] 4   [ ] 5');
+    L.push('   Evidence / notes: ___________________________________________');
+    L.push('');
+  });
+  L.push('Overall rating guide: 1 Poor | 2 Below average | 3 Solid | 4 Strong | 5 Exceptional');
+  return L.join('\n');
+}
+
+function scorecardToHtml(sc){
+  var h = [];
+  h.push('<div style="font-family:Georgia,serif;color:#111;max-width:760px;margin:0 auto;">');
+  h.push('<h1 style="font-size:26px;margin:0 0 4px;">' + escapeHtml(sc.title) + '</h1>');
+  h.push('<p style="margin:0 0 16px;color:#444;font-size:14px;">');
+  var meta = [];
+  if(sc.candidateName) meta.push('<strong>Candidate:</strong> ' + escapeHtml(sc.candidateName));
+  if(sc.roleName && sc.roleName !== 'Unknown role') meta.push('<strong>Role:</strong> ' + escapeHtml(sc.roleName));
+  if(sc.interviewer) meta.push('<strong>Interviewer:</strong> ' + escapeHtml(sc.interviewer));
+  if(sc.dateStr) meta.push('<strong>Date:</strong> ' + escapeHtml(sc.dateStr));
+  h.push(meta.join(' &nbsp;|&nbsp; ') + '</p>');
+  h.push('<table style="width:100%;border-collapse:collapse;font-size:13px;">');
+  h.push('<thead><tr>' +
+    '<th style="border:1px solid #999;padding:8px;text-align:left;width:28px;">#</th>' +
+    '<th style="border:1px solid #999;padding:8px;text-align:left;">Question &amp; what good looks like</th>' +
+    '<th style="border:1px solid #999;padding:8px;width:110px;">Score (1-5)</th>' +
+    '<th style="border:1px solid #999;padding:8px;width:150px;">Evidence / notes</th>' +
+    '</tr></thead><tbody>');
+  sc.rows.forEach(function(q, i){
+    var circles = '';
+    for(var s=1;s<=5;s++){ circles += '<span style="display:inline-block;width:18px;height:18px;border:1.5px solid #333;border-radius:50%;margin-right:4px;text-align:center;font-size:10px;line-height:16px;">' + s + '</span>'; }
+    h.push('<tr>' +
+      '<td style="border:1px solid #999;padding:8px;vertical-align:top;">' + (i+1) + '</td>' +
+      '<td style="border:1px solid #999;padding:8px;vertical-align:top;"><strong>' + escapeHtml(q.question) + '</strong>' +
+      '<div style="font-size:11px;color:#555;margin:2px 0 6px;">' + escapeHtml(categoryName(q.category)) + ' &middot; ' + escapeHtml(levelName(q.level)) + '</div>' +
+      '<div style="font-size:12px;"><em>What good looks like:</em> ' + escapeHtml(q.goodAnswer) + '</div></td>' +
+      '<td style="border:1px solid #999;padding:8px;vertical-align:top;white-space:nowrap;">' + circles + '</td>' +
+      '<td style="border:1px solid #999;padding:8px;vertical-align:top;"></td>' +
+      '</tr>');
+  });
+  h.push('</tbody></table>');
+  h.push('<p style="font-size:12px;color:#444;margin-top:12px;"><strong>Rating guide:</strong> 1 Poor &middot; 2 Below average &middot; 3 Solid &middot; 4 Strong &middot; 5 Exceptional. Score consistently against the &ldquo;what good looks like&rdquo; notes so every panelist grades the same bar.</p>');
+  h.push('</div>');
+  return h.join('');
+}
+
+</script>
+
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+  var CAT_COLORS = { behavioral:'#2563EB', technical:'#7c3aed', situational:'#0891b2', culture:'#F59E0B' };
+  var state = { role:'all', category:'all', level:'all', query:'', picked:[] };
+  var LS_KEY = 'askhire_scorecards_v1';
+
+  function esc(s){ return escapeHtml(s); }
+
+  /* ---------- filters ---------- */
+  function initFilters(){
+    var sel = $('f-role');
+    sel.innerHTML = '<option value="all">All roles (216 questions)</option>' +
+      getRoles().map(function(r){ return '<option value="'+r.id+'">'+esc(r.name)+'</option>'; }).join('');
+    sel.addEventListener('change', function(){ state.role = sel.value; onFilterChange(); });
+
+    var cats = $('f-cats');
+    var allCats = [{id:'all',name:'All'}].concat(getCategories());
+    cats.innerHTML = allCats.map(function(c){
+      var dot = c.id==='all' ? '' : '<span class="cat-dot" style="background:'+CAT_COLORS[c.id]+'"></span>';
+      return '<button type="button" class="chip text-[11px] font-bold px-2.5 py-1.5 rounded-full border border-slate-300 bg-white text-slate-600" data-cat="'+c.id+'" aria-pressed="'+(c.id==='all')+'">'+dot+esc(c.name)+'</button>';
+    }).join('');
+    cats.addEventListener('click', function(e){
+      var b = e.target.closest('[data-cat]'); if(!b) return;
+      state.category = b.getAttribute('data-cat');
+      cats.querySelectorAll('[data-cat]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      renderTranscript();
+    });
+
+    var lvls = $('f-levels');
+    var allLvls = [{id:'all',name:'All'}].concat(getLevels().map(function(l){ return {id:l, name: levelName(l).replace('-level','')}; }));
+    lvls.innerHTML = allLvls.map(function(l){
+      return '<button type="button" class="lvl text-[11px] font-bold px-2 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-600" data-lvl="'+l.id+'" aria-pressed="'+(l.id==='all')+'">'+esc(l.name)+'</button>';
+    }).join('');
+    lvls.addEventListener('click', function(e){
+      var b = e.target.closest('[data-lvl]'); if(!b) return;
+      state.level = b.getAttribute('data-lvl');
+      lvls.querySelectorAll('[data-lvl]').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      onFilterChange();
+    });
+
+    var search = $('f-search'), t = null;
+    search.addEventListener('input', function(){
+      clearTimeout(t);
+      t = setTimeout(function(){ state.query = search.value; renderTranscript(); }, 200);
+    });
+
+    $('f-reset').addEventListener('click', resetFilters);
+    $('empty-reset').addEventListener('click', resetFilters);
+  }
+
+  function resetFilters(){
+    state.role='all'; state.category='all'; state.level='all'; state.query='';
+    $('f-role').value='all'; $('f-search').value='';
+    $('f-cats').querySelectorAll('[data-cat]').forEach(function(x){ x.setAttribute('aria-pressed', x.getAttribute('data-cat')==='all' ? 'true':'false'); });
+    $('f-levels').querySelectorAll('[data-lvl]').forEach(function(x){ x.setAttribute('aria-pressed', x.getAttribute('data-lvl')==='all' ? 'true':'false'); });
+    onFilterChange();
+  }
+
+  function onFilterChange(){ updateCalib(); renderTranscript(); }
+
+  function updateCalib(){
+    var el = $('calib-text');
+    if(state.role !== 'all' && state.level !== 'all'){
+      var cal = calibrationFor(state.role, state.level);
+      el.innerHTML = '<strong>'+esc(roleName(state.role))+' · '+esc(levelName(state.level))+':</strong> '+esc(cal);
+    } else if(state.role !== 'all'){
+      el.textContent = 'Pick a difficulty level to see exactly what "good" means for ' + roleName(state.role) + ' at that seniority.';
+    } else {
+      el.textContent = 'Pick a role and a level to see what "good" means at that seniority — every question carries a matching badge.';
+    }
+    $('chat-title').textContent = 'Interview transcript — ' + (state.role==='all' ? 'All roles' : roleName(state.role));
+  }
+
+  /* ---------- transcript ---------- */
+  function lvlBadge(level){
+    var cls = level==='junior' ? 'lvl-badge-j' : (level==='mid' ? 'lvl-badge-m' : 'lvl-badge-s');
+    return '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full '+cls+'">'+esc(levelName(level))+'</span>';
+  }
+
+  function qCard(q){
+    var added = state.picked.indexOf(q.id) !== -1;
+    var good = '<div class="good hidden mt-3"><div class="flex gap-2.5">' +
+      '<div class="avatar avatar-c">C</div>' +
+      '<div class="bubble-c flex-1 min-w-0 px-4 py-3">' +
+        '<p class="text-[13px] text-slate-700 leading-relaxed"><strong class="text-amber-900">What good looks like:</strong> '+esc(q.goodAnswer)+'</p>' +
+        (q.followup ? '<p class="text-[13px] text-slate-600 mt-2"><strong>Suggested follow-up:</strong> '+esc(q.followup)+'</p>' : '') +
+      '</div></div></div>';
+    return '<div class="flex gap-2.5 sm:gap-3" data-qid="'+q.id+'">' +
+      '<div class="avatar avatar-i mt-1">I</div>' +
+      '<div class="bubble-i flex-1 min-w-0 px-4 py-3.5 sm:px-5">' +
+        '<p class="font-semibold text-slate-900 text-[15px] leading-snug">'+esc(q.question)+'</p>' +
+        '<div class="mt-2.5 flex flex-wrap items-center gap-1.5">' +
+          '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600"><span class="cat-dot" style="background:'+CAT_COLORS[q.category]+'"></span>'+esc(categoryName(q.category))+'</span>' +
+          lvlBadge(q.level) +
+          '<span class="text-[11px] text-slate-400 font-medium">'+esc(roleName(q.role))+'</span>' +
+        '</div>' +
+        '<div class="mt-3 flex flex-wrap gap-2">' +
+          '<button type="button" class="toggle-good text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5 hover:bg-amber-100">💡 What good looks like</button>' +
+          '<button type="button" class="add-btn text-xs font-bold rounded-full px-3 py-1.5 border '+(added ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'bg-blue-50 border-blue-200 text-[#2563EB] hover:bg-blue-100')+'">'+(added ? '✓ In scorecard' : '+ Scorecard')+'</button>' +
+        '</div>' + good +
+      '</div></div>';
+  }
+
+  function renderTranscript(){
+    var list = filterQuestions({role:state.role, category:state.category, level:state.level, query:state.query});
+    $('q-count').textContent = list.length;
+    var box = $('transcript'), empty = $('empty-state');
+    if(!list.length){ box.innerHTML=''; box.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+    box.classList.remove('hidden'); empty.classList.add('hidden');
+    var html = list.map(qCard).join('');
+    // typing shimmer at the end for chat feel
+    html += '<div class="flex gap-2.5 opacity-60"><div class="avatar avatar-i">I</div><div class="bubble-i px-5 py-4"><div class="typing"><span></span><span></span><span></span></div></div></div>';
+    box.innerHTML = html;
+    box.scrollTop = 0;
+  }
+
+  function togglePicked(id){
+    var i = state.picked.indexOf(id);
+    if(i === -1) state.picked.push(id); else state.picked.splice(i,1);
+    renderTranscript(); renderPicked();
+  }
+
+  /* ---------- scorecard panel ---------- */
+  function scMeta(){
+    return {
+      title: $('sc-title').value,
+      candidateName: $('sc-candidate').value,
+      roleId: state.role,
+      interviewer: $('sc-interviewer').value,
+      dateStr: $('sc-date').value,
+      questionIds: state.picked.slice()
+    };
+  }
+  function msg(t, kind){
+    var el = $('sc-msg');
+    el.textContent = t;
+    el.className = 'text-xs mt-2 min-h-[1rem] font-medium ' + (kind==='err' ? 'text-red-600' : 'text-emerald-600');
+  }
+  function buildCurrent(){
+    var r = buildScorecard(scMeta());
+    if(!r.ok){ msg(r.error, 'err'); return null; }
+    msg('', '');
+    return r.scorecard;
+  }
+
+  function renderPicked(){
+    var box = $('picked-list');
+    $('picked-empty').style.display = state.picked.length ? 'none' : 'block';
+    box.innerHTML = state.picked.map(function(id, idx){
+      var q = getQuestionById(id); if(!q) return '';
+      var radios = '';
+      for(var s=1;s<=5;s++){
+        radios += '<label class="cursor-pointer"><input type="radio" name="score-'+id+'" value="'+s+'" class="peer sr-only score-radio" data-qid="'+id+'">' +
+          '<span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-slate-300 text-[11px] font-bold text-slate-500 peer-checked:bg-[#2563EB] peer-checked:border-[#2563EB] peer-checked:text-white transition">'+s+'</span></label>';
+      }
+      return '<div class="rounded-xl border border-slate-200 bg-slate-50 p-3" data-pick="'+id+'">' +
+        '<div class="flex items-start justify-between gap-2">' +
+          '<p class="text-[13px] font-semibold text-slate-800 leading-snug"><span class="text-slate-400 font-bold mr-1">'+(idx+1)+'.</span>'+esc(q.question)+'</p>' +
+          '<button type="button" class="rm-pick text-slate-400 hover:text-red-600 text-lg leading-none shrink-0" data-id="'+id+'" aria-label="Remove">×</button>' +
+        '</div>' +
+        '<div class="mt-1 mb-2 flex items-center gap-1.5"><span class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">'+esc(categoryName(q.category))+'</span>'+lvlBadge(q.level)+'</div>' +
+        '<div class="flex items-center gap-1.5 flex-wrap"><span class="text-[11px] font-bold text-slate-500 mr-1">Score:</span>'+radios+'</div>' +
+        '<input type="text" class="ev-note mt-2 w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs" data-qid="'+id+'" placeholder="Evidence / notes…">' +
+      '</div>';
+    }).join('');
+    updateLiveScore();
+  }
+
+  function updateLiveScore(){
+    var checked = document.querySelectorAll('.score-radio:checked');
+    var entries = [];
+    checked.forEach(function(r){ entries.push({score: r.value}); });
+    var wrap = $('live-score');
+    if(!entries.length){ wrap.classList.add('hidden'); return; }
+    wrap.classList.remove('hidden');
+    var s = scoreSummary(entries);
+    $('live-avg').textContent = s.average.toFixed(2) + '  (' + s.count + ' scored)';
+    $('live-label').textContent = '· ' + ratingLabel(s.average);
+  }
+
+  function bindPanel(){
+    $('transcript').addEventListener('click', function(e){
+      var card = e.target.closest('[data-qid]'); if(!card) return;
+      var id = card.getAttribute('data-qid');
+      if(e.target.closest('.toggle-good')){
+        var g = card.querySelector('.good');
+        g.classList.toggle('hidden');
+        e.target.closest('.toggle-good').innerHTML = g.classList.contains('hidden') ? '💡 What good looks like' : '🙈 Hide guidance';
+      } else if(e.target.closest('.add-btn')){
+        togglePicked(id);
+      }
+    });
+
+    $('picked-list').addEventListener('click', function(e){
+      var b = e.target.closest('.rm-pick');
+      if(b){ togglePicked(b.getAttribute('data-id')); return; }
+    });
+    $('picked-list').addEventListener('change', function(e){
+      if(e.target.classList && e.target.classList.contains('score-radio')) updateLiveScore();
+    });
+
+    $('auto-build').addEventListener('click', function(){
+      var n = parseInt($('auto-count').value, 10) || 8;
+      var r = autoBuildSet(state.role, state.level, n);
+      if(!r.ok){ msg(r.error, 'err'); return; }
+      state.picked = r.ids;
+      renderTranscript(); renderPicked();
+      msg('Auto-built a balanced '+r.ids.length+'-question set. Edit freely.', 'ok');
+    });
+
+    $('btn-clear').addEventListener('click', function(){
+      state.picked = []; renderTranscript(); renderPicked(); msg('Scorecard cleared.', 'ok');
+    });
+
+    $('btn-copy').addEventListener('click', function(){
+      var sc = buildCurrent(); if(!sc) return;
+      var txt = scorecardToText(sc);
+      function done(){ msg('Scorecard copied to clipboard.', 'ok'); }
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e){ msg('Copy failed — use Download instead.', 'err'); }
+        document.body.removeChild(ta);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(done, fallback);
+      } else fallback();
+    });
+
+    $('btn-download').addEventListener('click', function(){
+      var sc = buildCurrent(); if(!sc) return;
+      var blob = new Blob([scorecardToText(sc)], {type:'text/plain;charset=utf-8'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (sc.title || 'scorecard').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') + '.txt';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      msg('Scorecard downloaded.', 'ok');
+    });
+
+    $('btn-print').addEventListener('click', function(){
+      var sc = buildCurrent(); if(!sc) return;
+      $('print-area').innerHTML = scorecardToHtml(sc);
+      document.body.classList.add('printing');
+      function cleanup(){ document.body.classList.remove('printing'); }
+      if('onafterprint' in window){ window.onafterprint = cleanup; }
+      window.print();
+      setTimeout(cleanup, 1000);
+    });
+
+    $('btn-save').addEventListener('click', saveScorecard);
+    renderSaved();
+  }
+
+  /* ---------- saved scorecards (localStorage) ---------- */
+  function loadSaved(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); }
+    catch(e){ return []; }
+  }
+  function storeSaved(arr){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch(e){}
+  }
+  function saveScorecard(){
+    var name = $('save-name').value.trim();
+    if(!name){ msg('Give the scorecard a name first.', 'err'); return; }
+    if(!state.picked.length){ msg('Add at least one question before saving.', 'err'); return; }
+    var arr = loadSaved();
+    arr.unshift({ name:name, savedAt:new Date().toISOString(), data: scMeta() });
+    storeSaved(arr.slice(0, 25));
+    $('save-name').value = '';
+    renderSaved();
+    msg('Scorecard template saved.', 'ok');
+  }
+  function renderSaved(){
+    var arr = loadSaved(), box = $('saved-list');
+    if(!arr.length){ box.innerHTML = '<p class="text-[11px] text-slate-400">No saved templates yet.</p>'; return; }
+    box.innerHTML = arr.map(function(s, i){
+      return '<div class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5">' +
+        '<span class="flex-1 min-w-0 truncate text-xs font-semibold text-slate-700">'+esc(s.name)+'</span>' +
+        '<span class="text-[10px] text-slate-400 shrink-0">'+esc((s.data.questionIds||[]).length)+' Qs</span>' +
+        '<button type="button" class="text-[11px] font-bold text-[#2563EB] hover:underline" data-load="'+i+'">Load</button>' +
+        '<button type="button" class="text-[11px] font-bold text-red-500 hover:underline" data-del="'+i+'">Delete</button>' +
+      '</div>';
+    }).join('');
+    box.onclick = function(e){
+      var l = e.target.closest('[data-load]'), d = e.target.closest('[data-del]');
+      var cur = loadSaved();
+      if(l){
+        var s = cur[parseInt(l.getAttribute('data-load'),10)];
+        if(s && s.data){
+          state.picked = (s.data.questionIds||[]).filter(function(id){ return !!getQuestionById(id); });
+          if(s.data.roleId && (s.data.roleId==='all' || roleById(s.data.roleId))){ state.role = s.data.roleId; $('f-role').value = state.role; }
+          $('sc-title').value = s.data.title || 'Interview Scorecard';
+          $('sc-candidate').value = s.data.candidateName || '';
+          $('sc-interviewer').value = s.data.interviewer || '';
+          $('sc-date').value = s.data.dateStr || '';
+          onFilterChange(); renderPicked();
+          msg('Loaded "'+s.name+'".', 'ok');
+        }
+      } else if(d){
+        cur.splice(parseInt(d.getAttribute('data-del'),10), 1);
+        storeSaved(cur); renderSaved();
+        msg('Deleted.', 'ok');
+      }
+    };
+  }
+
+  /* ---------- boot ---------- */
+  initFilters();
+  updateCalib();
+  renderTranscript();
+  renderPicked();
+  bindPanel();
+})();
+</script>
+</body>
+</html>
