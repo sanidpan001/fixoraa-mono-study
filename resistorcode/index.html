@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resistor Color Code Calculator — 4, 5 &amp; 6 Band | ResistorCode</title>
+<meta name="description" content="Resistor value from color bands, with tolerance and nearest standard value.">
+<link rel="canonical" href="https://study.fixoraa.tech/resistorcode/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Resistor Color Code Calculator — 4, 5 &amp; 6 Band | ResistorCode">
+<meta property="og:description" content="Resistor value from color bands, with tolerance and nearest standard value.">
+<meta property="og:url" content="https://study.fixoraa.tech/resistorcode/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "ResistorCode",
+      "url": "https://study.fixoraa.tech/resistorcode/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "description": "Resistor value from color bands, with tolerance and nearest standard value.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do you read a 4-band resistor?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The first two bands are digits, the third is the multiplier (power of ten), and the fourth is tolerance. Brown-black-red-gold is 1, 0, ×100, ±5% = 1,000 Ω ±5%. Read from the end opposite the gold or silver tolerance band." } },
+        { "@type": "Question", "name": "What is the difference between 4-band and 5-band resistors?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Five-band resistors add a third significant digit for precision: three digit bands, then multiplier, then tolerance. Brown-black-black-red-brown is 100 × 1,000 = 100 kΩ ±1%. Five-band parts are typically 1% or 2% tolerance; four-band parts are usually 5% or 10%." } },
+        { "@type": "Question", "name": "What does the 6th band on a resistor mean?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The sixth band is the temperature coefficient (TCR) in ppm/K — how much the resistance drifts with temperature. Brown = 100 ppm/K, red = 50, orange = 15, yellow = 25, blue = 10, violet = 5. It matters in precision and high-temperature circuits." } },
+        { "@type": "Question", "name": "How do I know which end to read a resistor from?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Start from the end opposite the tolerance band: gold and silver are never first-digit bands, so the gold/silver end goes last. If there is no gold or silver band, the end with the bands grouped closer together is usually the start." } },
+        { "@type": "Question", "name": "What are E12 and E24 standard resistor values?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The E-series are geometrically spaced standard values manufacturers actually make. E12 (12 values per decade, ±10%) includes 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2. E24 doubles the density for ±5% parts. You cannot buy a 350 Ω resistor — you buy 360 Ω." } },
+        { "@type": "Question", "name": "What do gold and silver mean as multiplier bands?",
+          "acceptedAnswer": { "@type": "Answer", "text": "As multipliers, gold means ×0.1 and silver means ×0.01, giving sub-10-ohm values. Green-blue-gold-gold is 56 × 0.1 = 5.6 Ω ±5%. These low values are common in current-sense and speaker crossover circuits." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#E1F9EE; --surface:#FFFFFF; --tint:#D2F4E4;
+  --accent:#147B49; --accent-deep:#3C1A68; --accent-ink:#FFFFFF;
+  --ink:#2A2140; --muted:#6E6384; --line:#D8CBEA;
+  --display:'Overpass',system-ui,sans-serif; --body:'Overpass',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+.fx-container{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+.fx-header{background:var(--surface);border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50}
+.fx-header .fx-container{display:flex;align-items:center;gap:14px;padding:12px 20px;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.fx-tile{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7A4FB5,var(--accent-deep));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;position:relative}
+.fx-tile::before,.fx-tile::after{content:"";position:absolute;top:8px;bottom:8px;width:7px;border-radius:4px;background:rgba(255,255,255,.55)}
+.fx-tile::before{left:11px}.fx-tile::after{right:11px}
+.fx-name{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.fx-nav{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:9px 18px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;border:2px solid var(--accent);color:var(--accent)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-badge{display:inline-block;padding:7px 14px;border-radius:999px;background:var(--tint);color:var(--accent-deep);font-weight:700;font-size:13px;border:1.5px dashed var(--accent)}
+/* hero */
+.rc-hero{padding:44px 0 6px}
+.rc-eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.rc-hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin-bottom:12px}
+.rc-hero p{font-size:18px;color:var(--muted);max-width:660px}
+/* lab */
+.rc-lab{margin:28px 0 10px;background:var(--surface);border:2px solid var(--line);border-radius:22px;overflow:hidden}
+.rc-bandtabs{display:flex;border-bottom:2px solid var(--line)}
+.rc-bandtabs button{flex:1;font:inherit;font-weight:700;font-size:15px;padding:15px;background:var(--tint);border:0;border-right:2px solid var(--line);cursor:pointer;color:var(--accent-deep)}
+.rc-bandtabs button:last-child{border-right:0}
+.rc-bandtabs button.on{background:var(--accent);color:#fff}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.rc-left{padding:28px;border-right:2px dashed var(--line)}
+.rc-right{padding:28px;background:linear-gradient(180deg,#FBFAFE,var(--bg))}
+.rc-resistor{background:#fff;border:2px solid var(--line);border-radius:16px;padding:26px 18px;margin-bottom:20px}
+.rc-resistor svg{width:100%;height:auto;display:block}
+.rc-bandsel{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.rc-bandbtns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.rc-bandbtns button{font:inherit;font-size:13px;font-weight:700;padding:8px 12px;border-radius:10px;border:2px solid var(--line);background:#fff;cursor:pointer;color:var(--ink)}
+.rc-bandbtns button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.rc-palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.rc-pal{border:2px solid var(--line);border-radius:10px;padding:0;cursor:pointer;background:#fff;overflow:hidden;font:inherit}
+.rc-pal .sw{height:26px}
+.rc-pal .nm{font-size:11px;font-weight:700;padding:5px 2px;color:var(--ink)}
+.rc-pal.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.rc-pal:disabled{opacity:.32;cursor:not-allowed}
+.rc-result{background:var(--accent);color:#fff;border-radius:16px;padding:24px;text-align:center;margin-bottom:16px}
+.rc-result .v{font-size:clamp(30px,4vw,44px);font-weight:800}
+.rc-result .t{font-size:15px;font-weight:600;margin-top:6px;opacity:.95}
+.rc-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.rc-spec{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px}
+.rc-spec .k{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rc-spec .n{font-weight:800;color:var(--accent-deep);font-size:17px;margin-top:2px}
+.rc-formula{font-size:13px;color:var(--muted);background:var(--tint);border-radius:10px;padding:10px 14px}
+/* article */
+.article-sec{margin:40px 0;max-width:780px}
+.article-sec h2{font-size:24px;letter-spacing:-.02em;margin:34px 0 12px;font-weight:800}
+.article-sec p{margin-bottom:14px;color:#332a4a}
+.article-sec ul,.article-sec ol{margin:0 0 14px 22px;color:#332a4a}
+.article-sec li{margin-bottom:6px}
+/* faq */
+.faq-sec{margin:36px 0;max-width:780px}
+.faq-sec h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
+.faq-sec details{background:var(--surface);border:2px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-sec summary{padding:16px 18px;font-weight:700;cursor:pointer;list-style:none;font-size:16px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary:hover{color:var(--accent)}
+.faq-sec details[open] summary{border-bottom:2px solid var(--line);color:var(--accent)}
+.faq-sec details p{padding:14px 18px;color:#332a4a;font-size:15px}
+/* footer */
+.fx-footer{background:#241536;color:#e4d9f5;margin-top:44px;padding:40px 0 34px}
+.fx-footer .fx-brand{font-size:22px;font-weight:800;margin-bottom:8px;color:#fff}
+.fx-footer p{font-size:15px;color:#b7a5d4;max-width:640px;margin-bottom:14px}
+.fx-footer nav{display:flex;gap:18px;margin-bottom:16px}
+.fx-footer nav a{color:#fff;font-weight:700;text-decoration:none;border-bottom:2px solid var(--accent)}
+.fx-credit{font-size:14px!important}
+.fx-credit a{color:#c9aef2;font-weight:700}
+@media(max-width:760px){
+  .rc-grid{grid-template-columns:1fr}
+  .rc-left{border-right:0;border-bottom:2px dashed var(--line)}
+  .fx-nav{margin-left:0}
+  .rc-palette{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container">
+    <a class="fx-logo" href="https://study.fixoraa.tech/resistorcode/" aria-label="ResistorCode home">
+      <span class="fx-tile" aria-hidden="true">&#937;</span>
+      <span class="fx-name">ResistorCode</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="rc-hero">
+    <span class="rc-eyebrow">component lab &middot; color bands</span>
+    <h1>Resistor Color Code Calculator — 4, 5 &amp; 6 Band</h1>
+    <p>Click the bands on the resistor and pick each color. Get the exact value, tolerance, temperature coefficient and the nearest standard E-series part.</p>
+  </section>
+
+  <section class="rc-lab" aria-label="ResistorCode tool">
+    <div class="rc-bandtabs" role="tablist" aria-label="Band count">
+      <button type="button" class="on" data-b="4" role="tab">4 bands</button>
+      <button type="button" data-b="5" role="tab">5 bands</button>
+      <button type="button" data-b="6" role="tab">6 bands</button>
+    </div>
+    <div class="rc-grid">
+      <div class="rc-left">
+        <div class="rc-resistor"><svg id="rc-svg" viewBox="0 0 460 130" role="img" aria-label="Resistor with color bands"></svg></div>
+        <div class="rc-bandsel">Select a band to edit</div>
+        <div class="rc-bandbtns" id="rc-bandbtns"></div>
+        <div class="rc-bandsel">Pick a color</div>
+        <div class="rc-palette" id="rc-palette"></div>
+      </div>
+      <div class="rc-right" aria-live="polite">
+        <div class="rc-result">
+          <div class="v" id="rc-val">1 k&Omega;</div>
+          <div class="t" id="rc-tol">&plusmn;5% tolerance</div>
+        </div>
+        <div class="rc-specs">
+          <div class="rc-spec"><div class="k">Tolerance range</div><div class="n" id="rc-range">950 &Omega; – 1.05 k&Omega;</div></div>
+          <div class="rc-spec"><div class="k">Nearest E24</div><div class="n" id="rc-e24">1 k&Omega; · exact</div></div>
+          <div class="rc-spec"><div class="k">Nearest E12</div><div class="n" id="rc-e12">1 k&Omega; · exact</div></div>
+          <div class="rc-spec"><div class="k" id="rc-tcrk">Temp. coefficient</div><div class="n" id="rc-tcr">—</div></div>
+        </div>
+        <div class="rc-formula" id="rc-formula"></div>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-sec" aria-label="Guide">
+    <h2>Why Resistors Wear Stripes</h2>
+    <p>A resistor is too small to print "4,700 ohms" on legibly, so the industry encodes the value in colored bands — a system dating to the 1920s that every electronics hobbyist eventually memorizes. Each color stands for a digit: black 0, brown 1, red 2, orange 3, yellow 4, green 5, blue 6, violet 7, gray 8, white 9. Learn the mnemonic <strong>"BB ROY of Great Britain has a Very Good Wife"</strong> and the sequence locks in permanently.</p>
+    <p>The bands after the digits are a multiplier — a power of ten — and a tolerance. Brown-black-red-gold reads as digits 1 and 0, multiplier ×100, tolerance ±5%: 1,000 Ω ±5%. The multiplier is where gold and silver earn their keep beyond tolerance duty: gold as a multiplier means ×0.1 and silver means ×0.01, producing the sub-10-ohm values used in current sensing. A resistor marked green-blue-gold-gold is 56 × 0.1 = 5.6 Ω ±5%.</p>
+    <h2>4-Band vs. 5-Band vs. 6-Band</h2>
+    <p>Standard <strong>4-band</strong> resistors carry two significant digits, a multiplier and a tolerance — good for the ±5% and ±10% parts that fill most hobbyist kits. <strong>5-band</strong> resistors add a third significant digit for precision work: brown-black-black-red-brown is 100 × 1,000 = 100 kΩ ±1%. The extra digit matters when you are setting gain, timing or reference voltages. <strong>6-band</strong> parts add a temperature coefficient band (ppm/K) after the tolerance, telling you how much the resistance drifts per degree of temperature change — critical in precision instruments and anything operating outdoors.</p>
+    <p>How do you tell them apart at a glance? Count the bands, and check the tolerance band: 5- and 6-band resistors use brown, red, green, blue or violet tolerance bands (±1% down to ±0.1%), while 4-band parts use gold or silver (±5%/±10%). When the count is ambiguous, the gap before the tolerance band is slightly wider on real components — the calculator above sidesteps all of this by letting you choose the band count explicitly.</p>
+    <h2>Which End Do You Read From?</h2>
+    <p>The classic beginner trap is reading the bands backwards. Two rules resolve it. <strong>Rule one:</strong> gold and silver are never first-digit bands, so the end with the gold or silver band is read <em>last</em>. <strong>Rule two:</strong> if there is no gold or silver band, the bands are grouped slightly closer together at the reading end. On 5-band resistors the tolerance band (brown, red, green...) sits at the far end with a visible gap. When all else fails, try both directions — one of them will produce a standard E-series value and the other usually will not, which is a strong hint.</p>
+    <h2>Tolerance: What ±5% Really Means</h2>
+    <p>Tolerance is a manufacturing guarantee, not a measurement of your specific part. A 1 kΩ ±5% resistor is guaranteed between 950 Ω and 1,050 Ω; your particular one might be 987 Ω. For LED current limiting, pull-ups and most digital work, ±5% is plenty. For voltage dividers feeding an ADC, filter corner frequencies or current sensing, step up to ±1% — the price difference is pennies.</p>
+    <p>Note the asymmetry of real distributions: manufacturers sort production into tolerance bins, so a batch of ±5% resistors is <em>missing</em> the ones that measured within ±1% — they were sold at the higher grade. Your ±5% part is therefore more likely to sit near the edges of its band than dead center. It rarely matters, but it is a fun piece of insider knowledge.</p>
+    <h2>Temperature Coefficient: the 6th Band</h2>
+    <p>Resistance drifts with temperature, and the 6th band quantifies it in parts per million per kelvin. Brown (100 ppm/K) means a 1 kΩ resistor changes 0.1 Ω per degree — 10 Ω across a 100°C swing, a full 1%. Violet (5 ppm/K) drifts twenty times less. For a thermostat or an outdoor sensor, TCR can dominate your error budget; for an LED resistor, it is irrelevant. The calculator shows the TCR whenever you select 6-band mode, with the standard values: brown 100, red 50, orange 15, yellow 25, blue 10, violet 5.</p>
+    <h2>The E-Series: Values You Can Actually Buy</h2>
+    <p>Resistors are manufactured in geometric series — the E12 series (12 values per decade) for ±10% parts and E24 (24 per decade) for ±5% — because geometric spacing keeps the tolerance bands of adjacent values just touching. E12 runs 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2 per decade; E24 fills the gaps. There is no 350 Ω resistor on any shelf — the calculator rounds to the nearest standard value (360 Ω) and tells you the percentage error, which is exactly the decision you make at the parts drawer.</p>
+    <p>This is why the band colors and the E-series agree with each other: a 4-band resistor's value always lands on (or very near) an E24 value, because the part was <em>selected</em> from that series. If your band reading gives 3.7 kΩ, you misread a band — the real value is 3.6 kΩ or 3.9 kΩ.</p>
+    <h2>Worked Examples</h2>
+    <p><strong>Example 1 (4-band):</strong> yellow-violet-red-gold → digits 4, 7 → 47 × 100 = 4,700 Ω, ±5%. Range: 4,465–4,935 Ω. Nearest E24: 4.7 kΩ exact.<br><strong>Example 2 (5-band):</strong> brown-black-black-orange-brown → digits 1, 0, 0 → 100 × 1,000 = 100 kΩ, ±1%. Range: 99–101 kΩ.<br><strong>Example 3 (6-band):</strong> orange-orange-black-black-brown-red → digits 3, 3, 0 → 330 × 1 = 330 Ω, ±1%, TCR 50 ppm/K.<br><strong>Example 4 (sub-ohm):</strong> red-red-silver-gold → 22 × 0.01 = 0.22 Ω ±5%, a current-sense value.</p>
+    <p>Try each in the calculator: click the band buttons, set the colors, and watch the value, tolerance window and nearest standard values update. It is the fastest way to build the pattern recognition that makes the chart unnecessary.</p>
+    <h2>Beyond Bands: SMD Codes</h2>
+    <p>Surface-mount resistors usually skip colors for printed codes: "103" means 10 × 10³ = 10 kΩ (two digits plus a multiplier digit), and EIA-96 codes like "01C" cover the ±1% series. Zero-ohm links are marked "0" or "000". The band system survives mainly in through-hole parts and education — but the underlying ideas (significant digits, multipliers, tolerance) are identical, so the fluency transfers directly.</p>
+    <h2>Power Ratings and Physical Size</h2>
+    <p>Bands encode resistance, not power — yet power is what kills resistors. The common through-hole sizes are ⅛ W, ¼ W, ½ W, 1 W and 2 W, roughly scaling with physical size: a ¼ W resistor is about 6 mm long, a 1 W about 11 mm. The rating is the maximum the part can dissipate continuously in free air at room temperature; exceed it and the resistance drifts, the paint discolors, and eventually the part fails open (or, excitingly, flames). Always derate: run a resistor at no more than <strong>half its rating</strong> in enclosed or warm spaces.</p>
+    <p>Size the wattage with P = V²/R across the resistor's actual voltage drop — not the supply voltage. A 1 kΩ resistor across 12 V dissipates 0.144 W: a ¼ W part is fine, a ⅛ W part is marginal. In the LED example from the companion calculator (350 Ω dropping 7 V at 20 mA), dissipation is 0.14 W — again a ¼ W resistor with comfortable margin. When a resistor runs too hot to touch, that is not normal operation; it is a design error asking for a bigger part.</p>
+    <h2>Reading Resistors in Circuit</h2>
+    <p>One caution for real-world troubleshooting: measuring a resistor <strong>in circuit</strong> rarely gives its marked value, because parallel paths through the rest of the circuit lower the reading. A 1 kΩ resistor reading 600 Ω in-circuit is usually fine — the meter sees the whole network. For a trustworthy reading, lift one leg of the resistor (power off, capacitors discharged). And remember the bands read the <em>nominal</em> value: a gold-band 4.7 kΩ resistor legitimately measures anywhere from 4,465 to 4,935 Ω. Only readings far outside the tolerance window indicate a failed part — resistors usually fail open (infinite) or drift high, almost never short.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+    <details><summary>How do you read a 4-band resistor?</summary><p>The first two bands are digits, the third is the multiplier (power of ten), and the fourth is tolerance. Brown-black-red-gold is 1, 0, ×100, ±5% = 1,000 Ω ±5%. Read from the end opposite the gold or silver tolerance band.</p></details>
+    <details><summary>What is the difference between 4-band and 5-band resistors?</summary><p>Five-band resistors add a third significant digit for precision: three digit bands, then multiplier, then tolerance. Brown-black-black-red-brown is 100 × 1,000 = 100 kΩ ±1%. Five-band parts are typically 1% or 2% tolerance; four-band parts are usually 5% or 10%.</p></details>
+    <details><summary>What does the 6th band on a resistor mean?</summary><p>The sixth band is the temperature coefficient (TCR) in ppm/K — how much the resistance drifts with temperature. Brown = 100 ppm/K, red = 50, orange = 15, yellow = 25, blue = 10, violet = 5. It matters in precision and high-temperature circuits.</p></details>
+    <details><summary>How do I know which end to read a resistor from?</summary><p>Start from the end opposite the tolerance band: gold and silver are never first-digit bands, so the gold/silver end goes last. If there is no gold or silver band, the end with the bands grouped closer together is usually the start.</p></details>
+    <details><summary>What are E12 and E24 standard resistor values?</summary><p>The E-series are geometrically spaced standard values manufacturers actually make. E12 (12 values per decade, ±10%) includes 1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2. E24 doubles the density for ±5% parts. You cannot buy a 350 Ω resistor — you buy 360 Ω.</p></details>
+    <details><summary>What do gold and silver mean as multiplier bands?</summary><p>As multipliers, gold means ×0.1 and silver means ×0.01, giving sub-10-ohm values. Green-blue-gold-gold is 56 × 0.1 = 5.6 Ω ±5%. These low values are common in current-sense and speaker crossover circuits.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">ResistorCode</div>
+    <p>ResistorCode decodes 4, 5 and 6-band resistor color codes — value, tolerance, temperature coefficient and nearest E-series standard parts.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+(function(){
+var COLORS = [
+  {n:'Black', c:'#1c1c1c', d:0, m:1, t:null, tcr:null},
+  {n:'Brown', c:'#6b4226', d:1, m:10, t:1, tcr:100},
+  {n:'Red', c:'#c0272d', d:2, m:100, t:2, tcr:50},
+  {n:'Orange', c:'#e67e22', d:3, m:1000, t:null, tcr:15},
+  {n:'Yellow', c:'#f1c40f', d:4, m:10000, t:null, tcr:25},
+  {n:'Green', c:'#27ae60', d:5, m:100000, t:0.5, tcr:null},
+  {n:'Blue', c:'#2471a3', d:6, m:1000000, t:0.25, tcr:10},
+  {n:'Violet', c:'#8e44ad', d:7, m:10000000, t:0.1, tcr:5},
+  {n:'Gray', c:'#7f8c8d', d:8, m:100000000, t:0.05, tcr:null},
+  {n:'White', c:'#f4f4f4', d:9, m:1000000000, t:null, tcr:null},
+  {n:'Gold', c:'#c9a227', d:null, m:0.1, t:5, tcr:null},
+  {n:'Silver', c:'#b8b8b8', d:null, m:0.01, t:10, tcr:null}
+];
+var bandCount = 4, selBand = 0;
+var bands = [1,0,2,-1]; // color indexes into COLORS; default brown black red gold
+bands = [1,0,2,10];
+var $ = function(id){ return document.getElementById(id); };
+function bandRole(i){
+  var digits = bandCount===4?2:3;
+  if(i<digits) return 'digit';
+  if(i===digits) return 'mult';
+  if(i===digits+1) return 'tol';
+  return 'tcr';
+}
+function allowed(role){
+  return COLORS.map(function(c,idx){
+    if(role==='digit') return c.d!==null;
+    if(role==='mult') return c.m!==null;
+    if(role==='tol') return c.t!==null;
+    return c.tcr!==null;
+  });
+}
+function defaultsFor(n){
+  if(n===4) return [1,0,2,10];
+  if(n===5) return [1,0,0,3,1];
+  return [4,7,0,0,1,2];
+}
+function renderBandBtns(){
+  var el = $('rc-bandbtns'); el.innerHTML='';
+  var names = bandCount===4?['Band 1 (digit)','Band 2 (digit)','Band 3 (×)','Band 4 (±%)']
+    : bandCount===5?['Band 1','Band 2','Band 3','Band 4 (×)','Band 5 (±%)']
+    :['Band 1','Band 2','Band 3','Band 4 (×)','Band 5 (±%)','Band 6 (TCR)'];
+  names.forEach(function(nm,i){
+    var b=document.createElement('button'); b.type='button'; b.textContent=nm;
+    if(i===selBand) b.classList.add('on');
+    b.addEventListener('click',function(){ selBand=i; renderBandBtns(); renderPalette(); });
+    el.appendChild(b);
+  });
+}
+function renderPalette(){
+  var el=$('rc-palette'); el.innerHTML='';
+  var role=bandRole(selBand), ok=allowed(role);
+  COLORS.forEach(function(c,idx){
+    var b=document.createElement('button'); b.type='button'; b.className='rc-pal';
+    b.innerHTML='<div class="sw" style="background:'+c.c+'"></div><div class="nm">'+c.n+'</div>';
+    if(bands[selBand]===idx) b.classList.add('on');
+    if(!ok[idx]) b.disabled=true;
+    b.addEventListener('click',function(){ bands[selBand]=idx; renderPalette(); draw(); calc(); });
+    el.appendChild(b);
+  });
+}
+function draw(){
+  var svg=$('rc-svg'), n=bandCount;
+  var x0=120, x1=340, bw=520/n*0.42, gap=(x1-x0)/n;
+  var s='<rect x="20" y="55" width="100" height="12" rx="6" fill="#b9a8d6"/>';
+  s+='<rect x="340" y="55" width="100" height="12" rx="6" fill="#b9a8d6"/>';
+  s+='<rect x="110" y="30" width="240" height="62" rx="30" fill="#e8dcc3" stroke="#c9b98f" stroke-width="2"/>';
+  for(var i=0;i<n;i++){
+    var bx = x0 + gap*i + (gap-16)/2;
+    var col = COLORS[bands[i]];
+    s+='<rect x="'+bx.toFixed(1)+'" y="30" width="16" height="62" fill="'+col.c+'" stroke="rgba(0,0,0,.25)"/>';
+    if(i===selBand) s+='<rect x="'+(bx-4).toFixed(1)+'" y="24" width="24" height="74" rx="6" fill="none" stroke="#147B49" stroke-width="3"/>';
+  }
+  s+='<text x="230" y="122" text-anchor="middle" font-size="12" fill="#6E6384">click a band button, then pick its color</text>';
+  svg.innerHTML=s;
+}
+function eng(n){
+  if(!isFinite(n)) return '—';
+  var a=Math.abs(n);
+  if(a>=1e6) return trim(n/1e6)+' MΩ';
+  if(a>=1e3) return trim(n/1e3)+' kΩ';
+  if(a>=1) return trim(n)+' Ω';
+  return trim(n*1000)+' mΩ';
+  function trim(x){ return x.toLocaleString('en-US',{maximumFractionDigits:x>=100?0:2}); }
+}
+function nearest(series, val){
+  var mag=Math.pow(10,Math.floor(Math.log10(val))), norm=val/mag, best=series[0], bd=1e18;
+  series.forEach(function(e){ var d=Math.abs(e-norm); if(d<bd){bd=d;best=e;} });
+  var bv=best*mag, off=(bv-val)/val*100;
+  return eng(bv)+(Math.abs(off)<0.005?' · exact':' · '+off.toFixed(1)+'% off');
+}
+var E12=[1,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
+var E24=[1,1.1,1.2,1.3,1.5,1.6,1.8,2,2.2,2.4,2.7,3,3.3,3.6,3.9,4.3,4.7,5.1,5.6,6.2,6.8,7.5,8.2,9.1];
+function calc(){
+  var digits = bandCount===4?2:3, dStr='';
+  for(var i=0;i<digits;i++) dStr+=COLORS[bands[i]].d;
+  var mult=COLORS[bands[digits]].m, tol=COLORS[bands[digits+1]].t;
+  var val=parseInt(dStr,10)*mult;
+  $('rc-val').textContent=eng(val);
+  $('rc-tol').textContent='±'+tol+'% tolerance';
+  $('rc-range').textContent=eng(val*(1-tol/100))+' – '+eng(val*(1+tol/100));
+  $('rc-e24').textContent=nearest(E24,val);
+  $('rc-e12').textContent=nearest(E12,val);
+  var f = dStr.replace(/^0+/,'')||'0';
+  $('rc-formula').textContent = f+' × '+mult.toLocaleString('en-US')+' Ω ±'+tol+'%'+(bandCount===6?' · TCR '+COLORS[bands[5]].tcr+' ppm/K':'');
+  if(bandCount===6){ $('rc-tcr').textContent=COLORS[bands[5]].tcr+' ppm/K'; }
+  else { $('rc-tcr').textContent='— (6-band only)'; }
+}
+document.querySelectorAll('.rc-bandtabs button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.rc-bandtabs button').forEach(function(x){x.classList.toggle('on',x===b);});
+    bandCount=parseInt(b.getAttribute('data-b'),10);
+    bands=defaultsFor(bandCount); selBand=0;
+    renderBandBtns(); renderPalette(); draw(); calc();
+  });
+});
+renderBandBtns(); renderPalette(); draw(); calc();
+})();
+</script>
+</body>
+</html>
