@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half-Life Calculator — Decay, Remaining &amp; Time | HalfLife</title>
+<meta name="description" content="Half-life decay with remaining amount, time solver and decay chart.">
+<link rel="canonical" href="https://study.fixoraa.tech/halflife/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Half-Life Calculator — Decay, Remaining &amp; Time | HalfLife">
+<meta property="og:description" content="Half-life decay with remaining amount, time solver and decay chart.">
+<meta property="og:url" content="https://study.fixoraa.tech/halflife/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "HalfLife",
+      "url": "https://study.fixoraa.tech/halflife/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "description": "Half-life decay with remaining amount, time solver and decay chart.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How much of a substance remains after 3 half-lives?",
+          "acceptedAnswer": { "@type": "Answer", "text": "One-eighth, or 12.5%. Each half-life halves the amount: after 1 half-life 50% remains, after 2 half-lives 25%, after 3 half-lives 12.5%. The formula is N = N0 × (1/2)^(t / t_half)." } },
+        { "@type": "Question", "name": "How do you calculate the time needed to reach a target amount?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use t = t_half × log2(N0 / N_target). For example, to decay from 100 g to 12.5 g with a 5-day half-life: t = 5 × log2(8) = 5 × 3 = 15 days. The calculator's 'time to target' mode does this directly." } },
+        { "@type": "Question", "name": "Does a substance ever fully disappear through half-life decay?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Mathematically, no — exponential decay approaches zero asymptotically but never reaches it. After 10 half-lives about 0.1% remains; after 20 half-lives about one-millionth. In practice, regulators treat 'effectively gone' as 7–10 half-lives." } },
+        { "@type": "Question", "name": "What is the difference between half-life and mean lifetime?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Half-life (t_half) is the time for half the atoms to decay; mean lifetime (τ) is the average survival time of an atom. They are related by τ = t_half / ln(2) ≈ 1.443 × t_half. Physics formulas often use τ, while chemistry and medicine use half-life." } },
+        { "@type": "Question", "name": "How is half-life used in carbon dating?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Living things maintain a steady ratio of carbon-14 to carbon-12. After death, carbon-14 decays with a 5,730-year half-life, so measuring the remaining ratio reveals the age: half the modern ratio means about 5,730 years old, a quarter means about 11,460 years." } },
+        { "@type": "Question", "name": "Why do medicines list a biological half-life?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A drug's biological half-life is how long your body takes to eliminate half of it, which sets dosing intervals. A drug with a 6-hour half-life dosed twice daily reaches a steady level, while one with a 36-hour half-life can be dosed once daily." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#E1F9E8; --surface:#FFFFFF; --tint:#D2F4DC;
+  --accent:#147B31; --accent-deep:#136057; --accent-ink:#FFFFFF;
+  --ink:#1B2E2B; --muted:#5A6E6B; --line:#C6E2DD;
+  --display:'IBM Plex Mono',ui-monospace,monospace; --body:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px}
+.fx-container{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+.fx-header{background:var(--surface);border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50}
+.fx-header .fx-container{display:flex;align-items:center;gap:14px;padding:12px 20px;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.fx-tile{width:44px;height:44px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;position:relative;overflow:hidden}
+.fx-tile::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 6px,rgba(255,255,255,.22) 6px,rgba(255,255,255,.22) 8px)}
+.fx-name{font-weight:700;font-size:20px;letter-spacing:-.02em}
+.fx-nav{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:9px 18px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;border:2px solid var(--accent);color:var(--accent)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-badge{display:inline-block;padding:7px 14px;border-radius:999px;background:var(--tint);color:var(--accent-deep);font-weight:600;font-size:13px;border:1.5px solid var(--accent)}
+/* hero */
+.hl-hero{padding:44px 0 6px;max-width:760px}
+.hl-eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:12px}
+.hl-hero h1{font-size:clamp(28px,4.4vw,42px);line-height:1.14;letter-spacing:-.02em;font-weight:700;margin-bottom:12px}
+.hl-hero p{font-size:17px;color:var(--muted)}
+/* lab */
+.hl-lab{margin:28px 0 10px;background:var(--surface);border:2px solid var(--line);border-radius:18px;overflow:hidden}
+.hl-modes{display:flex;border-bottom:2px solid var(--line)}
+.hl-modes button{flex:1;font:inherit;font-weight:600;font-size:15px;padding:16px 10px;background:var(--tint);border:0;border-right:2px solid var(--line);cursor:pointer;color:var(--accent-deep)}
+.hl-modes button:last-child{border-right:0}
+.hl-modes button.on{background:var(--accent);color:#fff}
+.hl-body{display:grid;grid-template-columns:340px 1fr;gap:0}
+.hl-inputs{padding:26px;border-right:2px dashed var(--line)}
+.hl-field{margin-bottom:16px}
+.hl-field label{display:block;font-weight:600;font-size:13px;margin-bottom:7px;color:var(--accent-deep)}
+.hl-row{display:flex;gap:8px}
+.hl-row input,.hl-row select{font:inherit;padding:11px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.hl-row input{flex:1;min-width:0}
+.hl-row input:focus{outline:3px solid var(--tint);border-color:var(--accent)}
+.hl-row select{background:var(--tint);color:var(--accent-deep);font-weight:600;cursor:pointer}
+.hl-preset{font-size:13px;color:var(--muted);margin-bottom:16px}
+.hl-preset button{font:inherit;font-size:12px;padding:6px 10px;border:1.5px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;margin:0 4px 6px 0;color:var(--accent-deep);font-weight:600}
+.hl-preset button:hover{border-color:var(--accent)}
+.hl-out{padding:26px;background:linear-gradient(180deg,#FDFEFE,var(--bg))}
+.hl-big{background:var(--accent);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-bottom:16px}
+.hl-big .v{font-size:clamp(28px,3.6vw,40px);font-weight:700}
+.hl-big .l{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.92;margin-top:4px}
+.hl-chart{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px}
+.hl-chart svg{width:100%;height:auto;display:block}
+.hl-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:2px solid var(--line);border-radius:14px;overflow:hidden}
+.hl-table th,.hl-table td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+.hl-table th{background:var(--tint);color:var(--accent-deep);font-size:12px}
+.hl-table td:first-child,.hl-table th:first-child{text-align:left}
+.hl-table tr:last-child td{border-bottom:0}
+.hl-note{font-size:13px;color:var(--muted);margin-top:12px}
+/* article */
+.article-sec{margin:40px 0;max-width:780px}
+.article-sec h2{font-size:22px;letter-spacing:-.01em;margin:32px 0 12px;font-weight:700}
+.article-sec p{margin-bottom:14px;color:#2b3b38}
+.article-sec ul,.article-sec ol{margin:0 0 14px 22px;color:#2b3b38}
+.article-sec li{margin-bottom:6px}
+/* faq */
+.faq-sec{margin:36px 0;max-width:780px}
+.faq-sec h2{font-size:22px;font-weight:700;margin-bottom:16px}
+.faq-sec details{background:var(--surface);border:2px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.faq-sec summary{padding:15px 18px;font-weight:600;cursor:pointer;list-style:none;font-size:15px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary:hover{color:var(--accent)}
+.faq-sec details[open] summary{border-bottom:2px solid var(--line);color:var(--accent)}
+.faq-sec details p{padding:14px 18px;color:#2b3b38;font-size:14px}
+/* footer */
+.fx-footer{background:#0f2a2a;color:#d7ecea;margin-top:44px;padding:40px 0 34px}
+.fx-footer .fx-brand{font-size:22px;font-weight:700;margin-bottom:8px;color:#fff}
+.fx-footer p{font-size:15px;color:#a3c9c4;max-width:640px;margin-bottom:14px}
+.fx-footer nav{display:flex;gap:18px;margin-bottom:16px}
+.fx-footer nav a{color:#fff;font-weight:600;text-decoration:none;border-bottom:2px solid var(--accent)}
+.fx-credit{font-size:14px!important}
+.fx-credit a{color:#8fe0d4;font-weight:700}
+@media(max-width:820px){
+  .hl-body{grid-template-columns:1fr}
+  .hl-inputs{border-right:0;border-bottom:2px dashed var(--line)}
+  .fx-nav{margin-left:0}
+}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container">
+    <a class="fx-logo" href="https://study.fixoraa.tech/halflife/" aria-label="HalfLife home">
+      <span class="fx-tile" aria-hidden="true">&frac12;</span>
+      <span class="fx-name">HalfLife</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="hl-hero">
+    <span class="hl-eyebrow">decay lab &middot; exponentials</span>
+    <h1>Half-Life Calculator — Decay, Remaining &amp; Time</h1>
+    <p>Enter an initial amount and a half-life to see exactly what remains after any elapsed time — or flip to time-to-target mode and find how long a decay takes. The live curve shows every half-life marker.</p>
+  </section>
+
+  <section class="hl-lab" aria-label="HalfLife tool">
+    <div class="hl-modes" role="tablist" aria-label="Calculator mode">
+      <button type="button" class="on" data-m="remain" role="tab">Remaining amount</button>
+      <button type="button" data-m="time" role="tab">Time to target</button>
+    </div>
+    <div class="hl-body">
+      <div class="hl-inputs">
+        <div class="hl-field">
+          <label for="hl-n0">Initial amount</label>
+          <div class="hl-row"><input type="number" id="hl-n0" value="100" min="0" step="any"><select id="hl-unit" aria-label="Amount unit"><option>g</option><option>kg</option><option>mg</option><option>mol</option><option>Bq</option><option>Ci</option><option>%</option></select></div>
+        </div>
+        <div class="hl-field">
+          <label for="hl-hl">Half-life</label>
+          <div class="hl-row"><input type="number" id="hl-hl" value="5" min="0" step="any"><select id="hl-hlu" aria-label="Half-life unit"><option value="1">seconds</option><option value="60">minutes</option><option value="3600">hours</option><option value="86400" selected>days</option><option value="31557600">years</option></select></div>
+        </div>
+        <div class="hl-preset">Isotope presets:
+          <button type="button" data-hl="8.02" data-hlu="86400" data-n="I-131">I-131 · 8.02 d</button>
+          <button type="button" data-hl="5730" data-hlu="31557600" data-n="C-14">C-14 · 5730 y</button>
+          <button type="button" data-hl="6.01" data-hlu="3600" data-n="Tc-99m">Tc-99m · 6.01 h</button>
+          <button type="button" data-hl="3.82" data-hlu="86400" data-n="Rn-222">Rn-222 · 3.82 d</button>
+        </div>
+        <div class="hl-field" id="hl-f-elapsed">
+          <label for="hl-t">Elapsed time</label>
+          <div class="hl-row"><input type="number" id="hl-t" value="10" min="0" step="any"><select id="hl-tu" aria-label="Elapsed time unit"><option value="1">seconds</option><option value="60">minutes</option><option value="3600">hours</option><option value="86400" selected>days</option><option value="31557600">years</option></select></div>
+        </div>
+        <div class="hl-field" id="hl-f-target" style="display:none">
+          <label for="hl-nt">Target amount (same unit)</label>
+          <div class="hl-row"><input type="number" id="hl-nt" value="12.5" min="0" step="any"></div>
+        </div>
+      </div>
+      <div class="hl-out" aria-live="polite">
+        <div class="hl-big">
+          <div class="v" id="hl-bigv">25 g</div>
+          <div class="l" id="hl-bigl">remaining after 10 days</div>
+        </div>
+        <div class="hl-chart"><svg id="hl-svg" viewBox="0 0 560 260" role="img" aria-label="Decay curve"></svg></div>
+        <table class="hl-table" id="hl-table" aria-label="Half-life markers"></table>
+        <p class="hl-note" id="hl-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-sec" aria-label="Guide">
+    <h2>What a Half-Life Really Means</h2>
+    <p>A half-life is the time it takes for half of a quantity to decay, transform or disappear. After one half-life, 50% remains. After two, 25%. After three, 12.5%. The pattern is exact and relentless: <strong>N = N₀ × (1/2)^(t / t½)</strong>, where N₀ is the starting amount, t is the elapsed time and t½ is the half-life. Because the exponent is a ratio of times, you can measure both in any unit you like — seconds, days, millennia — as long as they match.</p>
+    <p>The deep idea is that decay is <strong>memoryless</strong>. An atom of carbon-14 that has survived 5,000 years is no more likely to decay in the next minute than a freshly created one. Each nucleus flips the same weighted coin in every instant, and the half-life is just the aggregate rhythm of trillions of such coins. That is why the curve is exponential rather than linear: the same <em>fraction</em> disappears per unit time, not the same <em>amount</em>. Early on, when there is a lot of material, the absolute drop is fast; later, it slows to a crawl.</p>
+    <h2>Reading the Decay Curve</h2>
+    <p>The chart above plots your exact scenario. The horizontal axis is time in half-lives — a universal scale where 1 means one half-life has passed regardless of whether that is microseconds or millennia. The markers show the clean fractions: 1/2, 1/4, 1/8, 1/16 and so on. Notice how the curve never touches zero. Mathematically, exponential decay approaches zero asymptotically but never reaches it; after 10 half-lives about 0.1% remains, and after 20 half-lives roughly one-millionth.</p>
+    <p>In practice, "effectively gone" is usually defined as <strong>7 to 10 half-lives</strong>, which leaves between 0.8% and 0.1%. Nuclear regulators use this rule of thumb when deciding how long radioactive waste must be isolated: ten half-lives of cesium-137 (30.2 years each) is about 300 years of secure storage. For a medical tracer like technetium-99m with a 6-hour half-life, ten half-lives is two and a half days — which is why a patient injected on Monday is radiologically unremarkable by Wednesday.</p>
+    <h2>Solving for Time: the Logarithm Step</h2>
+    <p>Finding <em>how much remains</em> is straightforward substitution. Finding <em>how long it takes</em> to reach a target needs one logarithm: <strong>t = t½ × log₂(N₀ / N)</strong>. The base-2 logarithm appears because halving is the natural unit of the process — log₂(8) = 3 tells you it takes 3 half-lives to reduce something eightfold. Try it: decaying from 100 g to 12.5 g is a factor of 8, so t = 3 half-lives. With a 5-day half-life that is 15 days exactly.</p>
+    <p>Students often reach for the natural logarithm instead, which is equally valid: t = (t½ / ln 2) × ln(N₀ / N). Both forms are the same equation in disguise, since log₂(x) = ln(x) / ln(2). Use whichever your course expects, and let the calculator's time-to-target mode handle the arithmetic while you focus on setting the problem up correctly.</p>
+    <h2>Half-Life vs. Mean Lifetime</h2>
+    <p>Physics textbooks often quote the <strong>mean lifetime τ (tau)</strong> instead of the half-life — the average time an individual atom survives before decaying. The two are related by τ = t½ / ln(2) ≈ 1.443 × t½. The decay law then reads N = N₀ × e^(−t/τ), which is mathematically identical to the half-life form. Chemistry, medicine and environmental science almost always use half-life; particle physics prefers mean lifetime. If a formula you are given uses e and τ, convert with the 1.443 factor and everything lines up.</p>
+    <h2>Carbon Dating: Half-Life as a Clock</h2>
+    <p>The most famous application is radiocarbon dating. Cosmic rays constantly create carbon-14 in the atmosphere, so living things maintain a steady ratio of C-14 to ordinary C-12. At death the intake stops and the C-14 clock starts ticking with its 5,730-year half-life. Measure the remaining ratio: half the modern level means ~5,730 years old, a quarter means ~11,460 years, an eighth means ~17,190 years. Beyond about 50,000 years (nine half-lives) too little C-14 remains to measure reliably, which is why archaeologists switch to potassium-argon (1.25-billion-year half-life) for older rocks and fossils.</p>
+    <p>The same principle dates groundwater with tritium (12.3 years), authenticates wine vintages with cesium-137 from atmospheric testing, and verifies art with lead-210. Any process with a known half-life and a known starting ratio is a clock — you just read how far the hands have moved.</p>
+    <h2>Medicine: Why Dosing Follows Half-Lives</h2>
+    <p>Every drug has a <strong>biological half-life</strong>: the time your body needs to eliminate half of it through metabolism and excretion. This number sets the dosing schedule. A drug with a 6-hour half-life taken twice daily accumulates to a steady level after about five half-lives (30 hours); a drug with a 36-hour half-life can be dosed once daily and takes over a week to stabilize. Missing one dose of a long-half-life drug barely dents blood levels, while missing a short-half-life drug can drop you below the therapeutic window within a day.</p>
+    <p>Nuclear medicine leans on <em>physical</em> half-lives too. Technetium-99m (6.01 hours) is the workhorse of diagnostic imaging precisely because it decays fast enough to limit patient dose but slowly enough to complete a scan. Iodine-131 (8.02 days) treats thyroid disease because the thyroid concentrates iodine and the week-long half-life delivers a sustained therapeutic dose. Matching the isotope's half-life to the clinical job is half the art of the field.</p>
+    <h2>Common Misconceptions</h2>
+    <p>Three errors show up again and again. <strong>First</strong>, "after two half-lives it is all gone" — no, a quarter remains, and the tail is long. <strong>Second</strong>, confusing half-life with "the time until it is safe" — safety depends on the starting activity and the regulatory limit, which the time-to-target mode computes exactly. <strong>Third</strong>, assuming the decay rate is constant in absolute terms — it is constant only as a <em>fraction</em>; 100 g losing 50 g in the first half-life loses just 25 g in the second. Sketch the curve once and the intuition sticks forever.</p>
+    <h2>Half-Lives Beyond Radioactivity</h2>
+    <p>The mathematics of halving appears far from nuclear physics. Pharmacologists track drug elimination, environmental scientists track pollutant breakdown in soil, and even finance uses the same exponential form for depreciation. Caffeine's ~5-hour half-life in the human body explains why a 4 p.m. espresso still has a quarter of its kick at 2 a.m. Understanding one half-life table — 50%, 25%, 12.5%, 6.25%, 3.125% — gives you a mental model for every exponential decay you will ever meet. Enter your own numbers above, watch the markers land on the curve, and the abstraction becomes concrete.</p>
+    <h2>Measuring a Half-Life in the Lab</h2>
+    <p>How do scientists determine a half-life in the first place? The classic method is beautifully direct: measure the activity (decays per second) of a sample at several known times, plot the logarithm of activity against time, and read the slope. Because exponential decay becomes a straight line on a log plot, the half-life falls out of simple linear fitting — no curve-fitting heroics required. For short-lived isotopes a single afternoon of counting suffices; for carbon-14's 5,730 years, physicists measure the decay constant from exquisitely pure samples and compute t½ = ln(2)/λ.</p>
+    <p>You can replicate the classroom version with nothing radioactive: the famous <strong>dice decay simulation</strong> has each student roll a cup of dice and remove the sixes, counting survivors per "half-life" round. After a few rounds the class data traces the same exponential the calculator draws — and the scatter between groups teaches more about statistical noise than any lecture. Try it with 100 pennies (remove heads): the experiment, the curve above, and the formula are three views of one truth.</p>
+    <h2>Half-Life Arithmetic for Exams</h2>
+    <p>Three problem patterns cover nearly every half-life question you will meet. <strong>Pattern 1 — "how much remains":</strong> count the half-lives n = t/t½, then multiply by (1/2)ⁿ. <strong>Pattern 2 — "how long to reach a target":</strong> find the reduction factor, take log₂, multiply by t½. <strong>Pattern 3 — "find the half-life":</strong> rearrange to t½ = t × ln(2)/ln(N₀/N). The calculator handles all three, but practice each by hand once: exam confidence comes from having done the logarithm yourself, not from watching a tool do it. Keep the units consistent, sanity-check with the 50–25–12.5 ladder, and you will rarely go wrong.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+    <details><summary>How much of a substance remains after 3 half-lives?</summary><p>One-eighth, or 12.5%. Each half-life halves the amount: after 1 half-life 50% remains, after 2 half-lives 25%, after 3 half-lives 12.5%. The formula is N = N0 × (1/2)^(t / t_half).</p></details>
+    <details><summary>How do you calculate the time needed to reach a target amount?</summary><p>Use t = t_half × log2(N0 / N_target). For example, to decay from 100 g to 12.5 g with a 5-day half-life: t = 5 × log2(8) = 5 × 3 = 15 days. The calculator's 'time to target' mode does this directly.</p></details>
+    <details><summary>Does a substance ever fully disappear through half-life decay?</summary><p>Mathematically, no — exponential decay approaches zero asymptotically but never reaches it. After 10 half-lives about 0.1% remains; after 20 half-lives about one-millionth. In practice, regulators treat 'effectively gone' as 7–10 half-lives.</p></details>
+    <details><summary>What is the difference between half-life and mean lifetime?</summary><p>Half-life (t_half) is the time for half the atoms to decay; mean lifetime (τ) is the average survival time of an atom. They are related by τ = t_half / ln(2) ≈ 1.443 × t_half. Physics formulas often use τ, while chemistry and medicine use half-life.</p></details>
+    <details><summary>How is half-life used in carbon dating?</summary><p>Living things maintain a steady ratio of carbon-14 to carbon-12. After death, carbon-14 decays with a 5,730-year half-life, so measuring the remaining ratio reveals the age: half the modern ratio means about 5,730 years old, a quarter means about 11,460 years.</p></details>
+    <details><summary>Why do medicines list a biological half-life?</summary><p>A drug's biological half-life is how long your body takes to eliminate half of it, which sets dosing intervals. A drug with a 6-hour half-life dosed twice daily reaches a steady level, while one with a 36-hour half-life can be dosed once daily.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">HalfLife</div>
+    <p>HalfLife computes radioactive and exponential decay: remaining amount, time-to-target and a live decay curve with half-life markers.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+(function(){
+var mode = 'remain';
+var $ = function(id){ return document.getElementById(id); };
+function fmt(n,d){ if(!isFinite(n)) return '—'; if(n!==0 && (Math.abs(n)>=1e9 || Math.abs(n)<1e-4)) return n.toExponential(3); return n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:Math.min(d,2)}); }
+document.querySelectorAll('.hl-modes button').forEach(function(b){
+  b.addEventListener('click',function(){
+    mode = b.getAttribute('data-m');
+    document.querySelectorAll('.hl-modes button').forEach(function(x){ x.classList.toggle('on',x===b); });
+    $('hl-f-elapsed').style.display = mode==='remain'?'block':'none';
+    $('hl-f-target').style.display = mode==='time'?'block':'none';
+    calc();
+  });
+});
+document.querySelectorAll('.hl-preset button').forEach(function(b){
+  b.addEventListener('click',function(){
+    $('hl-hl').value = b.getAttribute('data-hl');
+    $('hl-hlu').value = b.getAttribute('data-hlu');
+    calc();
+  });
+});
+['hl-n0','hl-unit','hl-hl','hl-hlu','hl-t','hl-tu','hl-nt'].forEach(function(id){
+  $(id).addEventListener('input',calc); $(id).addEventListener('change',calc);
+});
+function drawCurve(n0, hlSec, tSec, unit){
+  var svg = $('hl-svg'); var W=560,H=260,pl=46,pr=14,pt=16,pb=34;
+  var iw=W-pl-pr, ih=H-pt-pb;
+  var maxX = Math.max(tSec, hlSec*5) * 1.02;
+  function X(t){ return pl + (t/maxX)*iw; }
+  function Y(n){ return pt + ih - (n/n0)*ih; }
+  var s = '';
+  s += '<line x1="'+pl+'" y1="'+(pt+ih)+'" x2="'+(W-pr)+'" y2="'+(pt+ih)+'" stroke="#9db8b4" stroke-width="1.5"/>';
+  s += '<line x1="'+pl+'" y1="'+pt+'" x2="'+pl+'" y2="'+(pt+ih)+'" stroke="#9db8b4" stroke-width="1.5"/>';
+  for(var i=0;i<=5;i++){
+    var tx = hlSec*i; if(tx>maxX) break;
+    var frac = Math.pow(0.5,i); var nx = X(tx), ny = Y(n0*frac);
+    s += '<line x1="'+nx+'" y1="'+(pt+ih)+'" x2="'+nx+'" y2="'+(pt+ih+6)+'" stroke="#9db8b4"/>';
+    s += '<text x="'+nx+'" y="'+(pt+ih+20)+'" font-size="10" text-anchor="middle" fill="#5A6E6B">'+(i===0?'0':i+'t½')+'</text>';
+    s += '<circle cx="'+nx+'" cy="'+ny+'" r="4.5" fill="#147B31" stroke="#fff" stroke-width="2"/>';
+    s += '<text x="'+(nx+8)+'" y="'+(ny-8)+'" font-size="10" fill="#136057" font-weight="600">'+fmt(frac*100,2).replace(/\.00$/,'')+'%</text>';
+  }
+  var d='M'+X(0).toFixed(1)+' '+Y(n0).toFixed(1);
+  for(var p=0;p<=120;p++){ var t=maxX*p/120; d+=' L'+X(t).toFixed(1)+' '+Y(n0*Math.pow(0.5,t/hlSec)).toFixed(1); }
+  s += '<path d="'+d+'" fill="none" stroke="#147B31" stroke-width="3"/>';
+  if(mode==='remain'){
+    var ny2 = Y(n0*Math.pow(0.5,tSec/hlSec));
+    s += '<circle cx="'+X(tSec)+'" cy="'+ny2+'" r="6" fill="#fff" stroke="#136057" stroke-width="3"/>';
+  }
+  s += '<text x="'+pl+'" y="'+(pt-4)+'" font-size="11" fill="#5A6E6B">amount ('+unit+')</text>';
+  s += '<text x="'+(W-pr)+'" y="'+(pt+ih+20)+'" font-size="11" text-anchor="end" fill="#5A6E6B">time in half-lives</text>';
+  svg.innerHTML = s;
+}
+function calc(){
+  var n0 = parseFloat($('hl-n0').value), unit = $('hl-unit').value;
+  var hl = parseFloat($('hl-hl').value), hlu = parseFloat($('hl-hlu').value);
+  if(!(n0>0) || !(hl>0)){ $('hl-bigv').textContent='—'; return; }
+  var hlSec = hl*hlu, rows='';
+  for(var i=0;i<=6;i++){
+    var frac = Math.pow(0.5,i);
+    rows += '<tr><td>'+(i===0?'start':i+' half-'+(i===1?'life':'lives'))+'</td><td>'+fmt(n0*frac,4)+' '+unit+'</td><td>'+fmt(frac*100,3)+'%</td></tr>';
+  }
+  $('hl-table').innerHTML = '<tr><th>Marker</th><th>Remaining</th><th>Fraction</th></tr>'+rows;
+  if(mode==='remain'){
+    var t = parseFloat($('hl-t').value), tu = parseFloat($('hl-tu').value);
+    if(!(t>=0)){ $('hl-bigv').textContent='—'; return; }
+    var tSec = t*tu;
+    var n = n0*Math.pow(0.5, tSec/hlSec);
+    var tlu = $('hl-tu').selectedOptions[0].textContent;
+    $('hl-bigv').textContent = fmt(n,4)+' '+unit;
+    $('hl-bigl').textContent = 'remaining after '+t+' '+tlu+' ('+fmt(tSec/hlSec,2)+' half-lives)';
+    $('hl-note').textContent = 'Decay factor (1/2)^'+fmt(tSec/hlSec,3)+' = '+fmt(Math.pow(0.5,tSec/hlSec),5)+'. About '+fmt(10-Math.min(10,tSec/hlSec),1)+' more half-lives to reach "effectively gone".';
+    drawCurve(n0, hlSec, tSec, unit);
+  } else {
+    var nt = parseFloat($('hl-nt').value);
+    if(!(nt>0) || nt>=n0){ $('hl-bigv').textContent='—'; $('hl-bigl').textContent = nt>=n0 ? 'target must be less than the initial amount' : 'enter a positive target'; return; }
+    var halves = Math.log(n0/nt)/Math.log(2);
+    var tSec2 = halves*hlSec;
+    var hluTxt = $('hl-hlu').selectedOptions[0].textContent;
+    $('hl-bigv').textContent = fmt(tSec2/hlu,4)+' '+hluTxt;
+    $('hl-bigl').textContent = 'to decay to '+fmt(nt,4)+' '+unit+' ('+fmt(halves,3)+' half-lives)';
+    $('hl-note').textContent = 't = t½ × log₂(N₀/N) = t½ × log₂('+fmt(n0/nt,3)+') = '+fmt(halves,3)+' half-lives.';
+    drawCurve(n0, hlSec, Math.min(tSec2, hlSec*6), unit);
+  }
+}
+calc();
+})();
+</script>
+</body>
+</html>
