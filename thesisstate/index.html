@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thesis Statement Generator | ThesisState</title>
+<meta name="description" content="Build a strong thesis statement from your topic, verb, and reasons in seconds. Weak-vs-strong examples, essay templates, and counterargument help included.">
+<link rel="canonical" href="https://study.fixoraa.tech/thesisstate/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Thesis Statement Generator | ThesisState">
+<meta property="og:description" content="Build a strong thesis statement from your topic, verb, and reasons in seconds. Weak-vs-strong examples, essay templates, and counterargument help included.">
+<meta property="og:url" content="https://study.fixoraa.tech/thesisstate/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "ThesisState",
+      "url": "https://study.fixoraa.tech/thesisstate/",
+      "applicationCategory": "Study Tools",
+      "operatingSystem": "Web",
+      "description": "Build a strong thesis statement from your topic, verb, and reasons in seconds. Weak-vs-strong examples, essay templates, and counterargument help included.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What makes a thesis statement strong?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three things: it's arguable (a reasonable person could disagree), it's specific (it names a mechanism, not a vague topic), and it includes a reason (a 'because' clause your paragraphs will prove). The generator enforces all three through the topic + verb + reason formula."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long should a thesis statement be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually one to two sentences, placed at the end of the introduction. One sharp sentence beats a paragraph of hedging \u2014 if your thesis needs three sentences, it's probably trying to make three arguments, and you should pick the strongest one."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a thesis statement be a question?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No \u2014 a question can't be argued, only answered. 'Should schools start later?' is a research question; 'Schools should start later because adolescent sleep science shows morning classes harm learning' is a thesis. Answer your question first, then state the answer as your claim."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between a topic and a thesis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A topic is the subject area ('social media and teenagers'); a thesis is your arguable claim about it ('Social media harms teenagers because algorithmic feeds reward outrage over connection'). The topic is where you start; the thesis is what you conclude after thinking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does the thesis go in the essay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At the end of the introductory paragraph, as the final sentence. This placement is a convention readers rely on: the introduction builds context and narrows down, and the thesis lands as the payoff that tells them exactly what you'll argue."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I include a counterargument in my essay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes \u2014 addressing the strongest objection to your thesis is one of the fastest ways to build credibility. Concede the objection fairly, then rebut it with evidence. The counterargument adder above drafts this move for you; expand it into a full paragraph in your essay."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F0F4F4; --surface:#FFFFFF; --accent:#0F5257; --accent-ink:#FFFFFF;
+  --ink:#27272A; --muted:#606A76; --line:#D3DFE0;
+  --display:'Libre Baskerville',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.ts-wrap{font-family:'Libre Baskerville',Georgia,serif;background:#F0F4F4;color:#27272A;padding:56px 20px 80px;}
+.ts-hero{max-width:900px;margin:0 auto 34px;text-align:center;}
+.ts-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,#0F5257,#2e868b);font-size:36px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(15,82,87,.25);}
+.ts-hero h1{font-size:clamp(30px,4.6vw,48px);line-height:1.1;margin:0 0 12px;font-weight:700;letter-spacing:-.01em;}
+.ts-tag{font-size:17px;color:#606A76;margin:0;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.7;font-family:Inter,system-ui,sans-serif;}
+.ts-grid{max-width:1080px;margin:0 auto;display:grid;gap:22px;}
+.ts-card{background:#FFFFFF;border:1px solid #D3DFE0;border-radius:22px;padding:30px;box-shadow:0 12px 32px rgba(15,82,87,.07);}
+.ts-card h2{font-size:21px;margin:0 0 14px;font-weight:700;}
+.ts-card p.ts-sub{font-family:Inter,system-ui,sans-serif;font-size:14.5px;color:#606A76;line-height:1.65;margin:0 0 14px;}
+.ts-two{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.ts-field{margin-bottom:16px;}
+.ts-field label{display:block;font-weight:700;font-size:13px;color:#606A76;margin-bottom:6px;font-family:Inter,system-ui,sans-serif;}
+.ts-field input,.ts-field select,.ts-field textarea{width:100%;box-sizing:border-box;padding:12px;font-size:16px;border:2px solid #D3DFE0;border-radius:12px;font-family:Inter,system-ui,sans-serif;color:#27272A;background:#F0F4F4;}
+.ts-field input:focus,.ts-field select:focus,.ts-field textarea:focus{outline:none;border-color:#0F5257;background:#fff;}
+.ts-field textarea{min-height:84px;resize:vertical;}
+.ts-btn{display:inline-block;padding:15px 34px;border:none;border-radius:14px;background:#0F5257;color:#fff;font-family:Inter,system-ui,sans-serif;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(15,82,87,.3);}
+.ts-btn:hover{background:#0a3c40;}
+.ts-btn.ghost{background:#fff;color:#0F5257;border:2px solid #0F5257;box-shadow:none;padding:11px 22px;font-size:15px;}
+.ts-thesis{background:linear-gradient(135deg,#0F5257,#2a6f74);border-radius:22px;padding:40px 34px;color:#fff;box-shadow:0 20px 50px rgba(15,82,87,.28);}
+.ts-thesis h2{font-size:18px;margin:0 0 14px;font-weight:700;opacity:.9;}
+.ts-thesis .ts-out{font-size:clamp(20px,3vw,28px);line-height:1.6;margin:0 0 20px;}
+.ts-thesis .ts-out em{font-style:italic;}
+.ts-copyrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.ts-copied{font-family:Inter,system-ui,sans-serif;font-size:14px;opacity:.85;display:none;}
+.ts-vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ts-ex{border-radius:16px;padding:20px;}
+.ts-ex h3{font-size:16px;margin:0 0 8px;font-family:Inter,system-ui,sans-serif;}
+.ts-ex p{font-size:15.5px;line-height:1.65;margin:0;font-family:'Libre Baskerville',Georgia,serif;}
+.ts-ex.weak{background:#FBF1F1;border:1px solid #e5b8b8;}
+.ts-ex.weak h3{color:#a33;}
+.ts-ex.strong{background:#EDF3F4;border:1px solid #0F5257;}
+.ts-ex.strong h3{color:#0F5257;}
+.ts-tpls{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+.ts-tpl{border:2px solid #D3DFE0;background:#F0F4F4;border-radius:999px;padding:10px 20px;font-family:Inter,system-ui,sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;color:#0F5257;}
+.ts-tpl:hover{border-color:#0F5257;background:#0F5257;color:#fff;}
+.ts-counter{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.ts-counter input{flex:1;min-width:200px;box-sizing:border-box;padding:12px;font-size:15px;border:2px solid #D3DFE0;border-radius:12px;font-family:Inter,system-ui,sans-serif;}
+.ts-counter input:focus{outline:none;border-color:#0F5257;}
+@media (max-width:760px){.ts-two,.ts-vs{grid-template-columns:1fr;}.ts-wrap{padding:40px 14px 60px;}.ts-thesis{padding:30px 22px;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="ThesisState home">
+      <span class="fx-logo-tile" aria-hidden="true">🎓</span>
+      <span class="fx-brand">ThesisState</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-play-cards" aria-label="ThesisState tool">
+<section class="ts-wrap">
+<div class="ts-hero">
+<div class="ts-logo" aria-hidden="true">🎓</div>
+<h1>Thesis Statement Generator</h1>
+<p class="ts-tag">Topic, verb, reason — a clear, arguable thesis in seconds, with templates and a counterargument sharpener.</p>
+</div>
+<div class="ts-grid">
+<div class="ts-card">
+<h2>Build your thesis</h2>
+<div class="ts-two">
+<div>
+<div class="ts-field"><label for="ts-topic">Topic</label><input id="ts-topic" type="text" placeholder="e.g. remote work" value="remote work"></div>
+<div class="ts-field"><label for="ts-verb">Verb (choose or type your own)</label><select id="ts-verb"><option>boosts</option><option>undermines</option><option>transforms</option><option>reveals</option><option>strengthens</option><option>threatens</option></select></div>
+<div class="ts-field"><label for="ts-verbx">Custom verb (optional)</label><input id="ts-verbx" type="text" placeholder="Overrides the dropdown"></div>
+</div>
+<div>
+<div class="ts-field"><label for="ts-reason">Reason</label><textarea id="ts-reason" placeholder="e.g. flexibility and focus">flexibility and focus</textarea></div>
+<button type="button" class="ts-btn" id="ts-gen">Generate thesis</button>
+</div>
+</div>
+<p class="ts-sub" style="margin-top:14px">Essay-type templates — fill in topic and verb presets:</p>
+<div class="ts-tpls">
+<button type="button" class="ts-tpl" data-verb="strengthens" data-hint="argue a position with evidence">Argumentative</button>
+<button type="button" class="ts-tpl" data-verb="reveals" data-hint="break down how something works">Analytical</button>
+<button type="button" class="ts-tpl" data-verb="explains" data-hint="inform the reader clearly">Expository</button>
+</div>
+<p class="ts-sub" id="ts-tplhint" style="margin-top:10px"></p>
+</div>
+<div class="ts-thesis">
+<h2>Your thesis statement</h2>
+<p class="ts-out" id="ts-out">Your generated thesis will appear here.</p>
+<div class="ts-copyrow"><button type="button" class="ts-btn ghost" id="ts-copy" style="background:#fff">Copy thesis</button><span class="ts-copied" id="ts-copied">Copied to clipboard.</span></div>
+<div style="margin-top:22px">
+<p class="ts-sub" style="color:#d8e8e9;margin-bottom:8px">Sharpen it with a counterargument:</p>
+<div class="ts-counter"><input id="ts-counter" type="text" placeholder="e.g. it can blur work-life boundaries"><button type="button" class="ts-btn ghost" id="ts-counteradd" style="background:#fff">Add counterpoint</button></div>
+</div>
+</div>
+<div class="ts-card">
+<h2>Weak vs. strong</h2>
+<p class="ts-sub">The difference is arguability. A strong thesis takes a position someone could disagree with — and gives a reason.</p>
+<div class="ts-vs">
+<div class="ts-ex weak"><h3>Weak</h3><p>"Social media has both good and bad effects on teenagers."</p></div>
+<div class="ts-ex strong"><h3>Strong</h3><p>"Social media harms teenagers because algorithmic feeds reward outrage over connection."</p></div>
+<div class="ts-ex weak"><h3>Weak</h3><p>"This essay will discuss climate policy."</p></div>
+<div class="ts-ex strong"><h3>Strong</h3><p>"Carbon taxes work better than subsidies because they price pollution at its source."</p></div>
+</div>
+</div>
+</div>
+</section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>What a Thesis Statement Is — and Isn't</h2><p>A thesis statement is a single sentence that declares the central argument of your essay and gives the reader a reason to keep reading. It is not a topic ("This essay is about social media"), not a fact ("Social media was founded in various years"), and not a vague gesture ("Social media has pros and cons"). It is a <strong>claim</strong> — something a reasonable person could disagree with — plus the <strong>reason</strong> that makes it worth arguing. The generator above builds exactly that shape: topic, verb, reason, one arguable sentence.</p><p>Why does one sentence matter so much? Because it is the essay's contract. Every paragraph you write afterward must either support the thesis, develop it, or answer an objection to it. Writers who skip the thesis wander; writers who nail it have a built-in outline. Teachers can spot a strong thesis in seconds, and it colors everything they read after it — a sharp thesis buys you the benefit of the doubt, while a mushy one invites skepticism from the first paragraph.</p><h2>The Anatomy of a Strong Thesis</h2><p>Strong theses share three ingredients. First, <strong>specificity</strong>: "algorithmic feeds reward outrage" beats "social media is bad" because it names a mechanism. Second, <strong>arguability</strong>: if nobody could disagree, there's no essay — "exercise is healthy" is a poster, not a thesis. Third, <strong>a reason</strong>: the "because" clause is what turns an opinion into an argument, and it's what your body paragraphs will actually prove.</p><p>The formula topic + verb + reason forces all three. The topic keeps you specific, the verb forces a position (boosts, undermines, transforms — each one picks a fight), and the reason commits you to evidence. Compare the weak and strong pairs in the cards above: the weak versions announce or hedge, while the strong versions claim and justify. Notice that strong theses are often <em>shorter</em> than weak ones — precision compresses.</p><h3>Thesis quality checklist</h3><table><thead><tr><th>Test</th><th>Weak sign</th><th>Strong sign</th></tr></thead><tbody><tr><td>Arguable?</td><td>"has both pros and cons"</td><td>Takes one clear side</td></tr><tr><td>Specific?</td><td>"affects society"</td><td>Names who, how, or why</td></tr><tr><td>Reasoned?</td><td>No "because" clause</td><td>Reason your paragraphs will prove</td></tr><tr><td>Scoped?</td><td>Tries to explain everything</td><td>One claim, fully defended</td></tr><tr><td>Located?</td><td>Buried in paragraph three</td><td>End of the introduction</td></tr></tbody></table><h2>Thesis Types by Essay Type</h2><p>Different essays need different theses, which is why the template buttons above preset the verb. An <strong>argumentative</strong> thesis takes a debatable position and previews its support: "School start times should move later because adolescent sleep science shows morning classes harm learning." The verbs that fit — strengthens, undermines, proves, demands — all pick a side.</p><p>An <strong>analytical</strong> thesis breaks something down and reveals how it works: "The novel's shifting narrators reveal that memory, not plot, is the real protagonist." Analytical verbs — reveals, exposes, reflects, dismantles — promise insight rather than persuasion. An <strong>expository</strong> thesis informs and clarifies: "The water cycle explains regional drought patterns through evaporation, transport, and uneven rainfall." Expository verbs — explains, clarifies, illustrates — promise understanding. Pick the template that matches your assignment, then adjust the verb until the sentence sounds like <em>your</em> argument.</p><h2>Common Thesis Mistakes (and Fixes)</h2><ul><li><strong>The announcement:</strong> "This essay will discuss climate policy." Fix: delete the announcement and state the claim — "Carbon taxes beat subsidies because they price pollution at its source."</li><li><strong>The fence-sit:</strong> "There are good arguments on both sides." Fix: choose the stronger side; you'll address the other side in the counterargument.</li><li><strong>The fact:</strong> "The minimum wage was last raised in 2009." Fix: attach a judgment — "The minimum wage must rise because its purchasing power has fallen by a third since 2009."</li><li><strong>The laundry list:</strong> "This happened because of A, B, C, D, and E." Fix: find the one reason that matters most, or group them into a single mechanism.</li><li><strong>The scope explosion:</strong> "Technology has changed everything about human life." Fix: narrow to one technology, one effect, one reason — depth beats breadth.</li></ul><p>Each fix follows the same move: replace vagueness with a verb that commits, and replace hedging with a reason you can prove. Run your draft through the checklist table above; any row that fails tells you exactly what to rewrite.</p><h2>The Counterargument: Your Thesis's Best Friend</h2><p>A strong thesis doesn't fear objections — it invites them. Addressing the strongest counterargument is the fastest way to earn a reader's trust, because it proves you've thought beyond your own position. The counterargument adder above appends a fair concession to your thesis: state the objection honestly, then reaffirm your claim with evidence.</p><p>Structure it as a full paragraph, not a throwaway line. The classic shape: <strong>concede</strong> ("Critics rightly note that remote work can blur work-life boundaries"), <strong>pivot</strong> ("but the data shows"), <strong>rebut</strong> ("that flexible schedules actually improve boundary control when paired with clear norms"). Notice the concession is genuine — straw-manning the opposition ("some people just hate change") insults the reader's intelligence and weakens your ethos. Steel-man instead: state the objection so fairly its supporters would nod, then answer it.</p><h2>From Thesis to Essay: Building Outward</h2><p>Once the thesis exists, the essay practically outlines itself. Each clause of your reason becomes a body paragraph's topic sentence; each topic sentence gets evidence, analysis, and a link back to the thesis. If your thesis is "Remote work boosts productivity because of flexibility and focus," your paragraphs are: (1) how flexibility improves output, (2) how fewer office distractions sharpen focus, (3) the counterargument on boundaries — answered. Three paragraphs, one conclusion that restates the thesis in light of the evidence, done.</p><p>The introduction writes itself last, not first. Draft the body, then write an intro that moves from a hook (a striking fact, a vivid scene, a provocative question) through context to your thesis as the final sentence. Readers remember the last line of the introduction more than any other — make it the sharpest sentence in the essay. And revise the thesis after drafting: most writers discover their real argument halfway through writing, and the honest move is to update the thesis to match the essay you actually wrote, not the one you planned.</p><h2>Revising Your Thesis: A Practical Workshop</h2><p>First drafts of theses are almost always too broad, too timid, or both — and that's fine. The revision process is where the thinking happens. Take your generated thesis and run it through three passes. <strong>Pass one: sharpen the verb.</strong> Replace weak verbs (is, has, involves, relates to) with verbs that commit: transforms, undermines, exposes, demands. Each stronger verb forces you to defend more, which is exactly the point. <strong>Pass two: interrogate the reason.</strong> Ask "so what?" of your because-clause until you hit the mechanism — "because it's unfair" becomes "because it concentrates bargaining power in employers," which is something evidence can actually address.</p><p><strong>Pass three: test the scope.</strong> Can you prove this in the pages you have? A 5-page essay cannot defend "capitalism causes inequality"; it can defend "the 2017 tax cuts widened after-tax income gaps by favoring capital gains." If the thesis still feels huge, add a qualifier — a time period, a population, a place. Qualifiers aren't hedging; they're honesty about what your evidence covers. Finally, read the thesis aloud. If you stumble, the sentence is doing too much — split it, and let the second sentence carry the reason.</p><h3>Before-and-after revisions</h3><ul><li><strong>Before:</strong> "Technology affects education in many ways." <strong>After:</strong> "One-to-one laptop programs narrow achievement gaps because they give low-income students the same research access as their peers."</li><li><strong>Before:</strong> "Shakespeare's plays are still relevant today." <strong>After:</strong> "Macbeth endures because its portrait of ambition maps precisely onto modern startup culture's worship of scale."</li><li><strong>Before:</strong> "Exercise is important for mental health." <strong>After:</strong> "Daily walking treats mild depression as effectively as medication for many patients because it regulates both sleep and stress hormones."</li></ul><p>Each revision got narrower, more arguable, and more provable. That's the whole game: trade breadth for depth until the claim fits the evidence you actually have.</p><h2>Thesis Statements for Research Papers</h2><p>Longer papers need working theses that evolve. Start with a <strong>working thesis</strong> — your best current guess at the claim, written before research is complete. It focuses your reading: sources either support it, complicate it, or refute it, and each outcome is useful. As evidence accumulates, the working thesis gets revised — sometimes slightly, sometimes completely. The final thesis appears only when the research is done, and it should surprise you at least a little; if it doesn't, you may have been cherry-picking sources that confirmed what you already believed.</p><p>Research theses also carry a burden of qualification that short essays don't. "Remote work boosts productivity" is fine for a 5-paragraph essay; a 20-page paper needs "Remote work boosts productivity <em>for experienced knowledge workers in outcome-measured roles</em>, while harming onboarding and collaboration for junior staff." Those qualifiers are where the real insight lives — the interesting claim is rarely "X is good" but "X is good <em>under these conditions</em>." State the conditions in the thesis itself, and your paper gains instant credibility with skeptical readers.</p><h2>Thesis Statements Beyond School</h2><p>The skill outlives the classroom. A grant proposal's thesis is its funding argument in one sentence. A business memo's thesis is the recommendation up front. A startup pitch's thesis is why this company wins. Journalists call it the nut graf; lawyers call it the theory of the case; executives call it the bottom line up front. In every case, the discipline is identical: one arguable claim, one compelling reason, stated before the evidence.</p><p>Practice it everywhere: summarize articles in one thesis sentence, argue with friends in thesis form, open emails with your claim instead of burying it in paragraph four. The generator above is training wheels — use it until the shape (topic, verb, reason) becomes reflex. The writers who think in theses don't just write better essays; they think more clearly, because a thesis forces you to decide what you actually believe and why.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>What makes a thesis statement strong?</summary><p>Three things: it's arguable (a reasonable person could disagree), it's specific (it names a mechanism, not a vague topic), and it includes a reason (a 'because' clause your paragraphs will prove). The generator enforces all three through the topic + verb + reason formula.</p></details>
+<details><summary>How long should a thesis statement be?</summary><p>Usually one to two sentences, placed at the end of the introduction. One sharp sentence beats a paragraph of hedging — if your thesis needs three sentences, it's probably trying to make three arguments, and you should pick the strongest one.</p></details>
+<details><summary>Can a thesis statement be a question?</summary><p>No — a question can't be argued, only answered. 'Should schools start later?' is a research question; 'Schools should start later because adolescent sleep science shows morning classes harm learning' is a thesis. Answer your question first, then state the answer as your claim.</p></details>
+<details><summary>What&#x27;s the difference between a topic and a thesis?</summary><p>A topic is the subject area ('social media and teenagers'); a thesis is your arguable claim about it ('Social media harms teenagers because algorithmic feeds reward outrage over connection'). The topic is where you start; the thesis is what you conclude after thinking.</p></details>
+<details><summary>Where does the thesis go in the essay?</summary><p>At the end of the introductory paragraph, as the final sentence. This placement is a convention readers rely on: the introduction builds context and narrows down, and the thesis lands as the payoff that tells them exactly what you'll argue.</p></details>
+<details><summary>Should I include a counterargument in my essay?</summary><p>Yes — addressing the strongest objection to your thesis is one of the fastest ways to build credibility. Concede the objection fairly, then rebut it with evidence. The counterargument adder above drafts this move for you; expand it into a full paragraph in your essay.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">ThesisState</div>
+    <p>ThesisState builds a clear, arguable thesis statement from your topic, verb, and reasons — with essay-type templates and counterargument support.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function thesisBuild(topic,verb,reason){return topic.charAt(0).toUpperCase()+topic.slice(1)+' '+verb+' because '+reason+'.';}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){
+var topicEl=document.getElementById('ts-topic'),verbEl=document.getElementById('ts-verb'),verbxEl=document.getElementById('ts-verbx'),reasonEl=document.getElementById('ts-reason'),genBtn=document.getElementById('ts-gen'),outEl=document.getElementById('ts-out'),copyBtn=document.getElementById('ts-copy'),copiedEl=document.getElementById('ts-copied'),hintEl=document.getElementById('ts-tplhint'),counterEl=document.getElementById('ts-counter'),counterAdd=document.getElementById('ts-counteradd');
+function currentThesis(){var t=topicEl?topicEl.value.trim():'';var v=(verbxEl&&verbxEl.value.trim())?verbxEl.value.trim():(verbEl?verbEl.value:'');var r=reasonEl?reasonEl.value.trim():'';if(!t||!v||!r)return '';return thesisBuild(t,v,r);}
+function render(){if(outEl){var th=currentThesis();outEl.textContent=th||'Fill in a topic, verb, and reason above, then generate.';}}
+if(genBtn)genBtn.addEventListener('click',render);
+[topicEl,verbxEl,reasonEl].forEach(function(el){if(el)el.addEventListener('input',render);});
+if(verbEl)verbEl.addEventListener('change',render);
+if(copyBtn)copyBtn.addEventListener('click',function(){var th=currentThesis();if(!th)return;function done(){if(copiedEl){copiedEl.style.display='inline';setTimeout(function(){copiedEl.style.display='none';},2000);}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(th).then(done,done);}else{var ta=document.createElement('textarea');ta.value=th;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();}});
+var tplBtns=document.querySelectorAll('.ts-tpl');
+tplBtns.forEach(function(b){b.addEventListener('click',function(){var v=b.getAttribute('data-verb');if(verbEl){var found=false;for(var i=0;i<verbEl.options.length;i++){if(verbEl.options[i].value===v||verbEl.options[i].text===v){verbEl.selectedIndex=i;found=true;break;}}if(!found){var o=document.createElement('option');o.value=v;o.textContent=v;verbEl.appendChild(o);verbEl.selectedIndex=verbEl.options.length-1;}}if(verbxEl)verbxEl.value='';if(hintEl)hintEl.textContent=b.textContent.trim()+' thesis: '+b.getAttribute('data-hint')+'. Adjust the verb and reason, then generate.';render();});});
+if(counterAdd)counterAdd.addEventListener('click',function(){var c=counterEl?counterEl.value.trim():'';var th=currentThesis();if(!c||!th||!outEl)return;outEl.textContent=th+' Critics argue that '+c.charAt(0).toLowerCase()+c.slice(1).replace(/\.$/,'')+', yet the evidence supports this claim.';});
+render();});}
+
+</script>
+</body>
+</html>
