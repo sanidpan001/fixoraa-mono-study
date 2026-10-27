@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<link rel="canonical" href="https://study.fixoraa.tech/exampace/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExamPace — SAT Section Timer, GRE Verbal Timer & Exam Pacing Timer Online</title>
+<meta name="description" content="ExamPace is a free online exam pacing timer with official SAT section timer, GRE verbal timer and ACT presets. Per-section countdowns, per-question pacing alerts, break scheduler and silent classroom projection mode.">
+<meta name="keywords" content="SAT section timer, GRE verbal timer, exam pacing timer online, ACT timer, section countdown timer">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Space Grotesk',system-ui,sans-serif;background:#101828;color:#e2e8f0}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .card{background:#16202f;border:1px solid #26324a;border-radius:1rem}
+  .seg-done{opacity:.45}
+  .flash{animation:flashAnim 1s ease}
+  @keyframes flashAnim{0%{box-shadow:0 0 0 0 rgba(52,211,153,.7)}100%{box-shadow:0 0 0 18px rgba(52,211,153,0)}}
+  .pulse-red{animation:pulseRed 1.2s ease-in-out infinite}
+  @keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.55)}50%{box-shadow:0 0 0 14px rgba(248,113,113,0)}}
+  #projOverlay{display:none}
+  #projOverlay.open{display:flex}
+  .prose-ep h2{color:#f1f5f9;font-weight:700;font-size:1.35rem;margin:1.8rem 0 .7rem}
+  .prose-ep h3{color:#c4b5fd;font-weight:600;font-size:1.1rem;margin:1.4rem 0 .5rem}
+  .prose-ep p{margin:.7rem 0;line-height:1.75;color:#cbd5e1}
+  .prose-ep ul,.prose-ep ol{margin:.7rem 0 .7rem 1.3rem;line-height:1.75;color:#cbd5e1}
+  .prose-ep table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+  .prose-ep th{background:#1e293b;color:#a78bfa;text-align:left;padding:.6rem .8rem;border:1px solid #334155}
+  .prose-ep td{padding:.6rem .8rem;border:1px solid #334155;color:#cbd5e1}
+  details.faq{background:#16202f;border:1px solid #26324a;border-radius:.75rem;margin-bottom:.7rem;padding:1rem 1.2rem}
+  details.faq summary{cursor:pointer;font-weight:600;color:#e2e8f0}
+  details.faq p{margin-top:.6rem;color:#94a3b8;line-height:1.7}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-[#26324a]" style="background:rgba(16,24,40,.92);backdrop-filter:blur(10px)">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[#101828] text-lg" style="background:linear-gradient(135deg,#a78bfa,#34d399)">E</span>
+      <span class="text-xl font-bold tracking-tight">Exam<span style="color:#a78bfa">Pace</span></span>
+    </a>
+    <nav class="flex items-center gap-5 text-sm font-medium">
+      <a href="#top" class="text-slate-300 hover:text-white transition">Home</a>
+      <a href="https://fixoraa.tech" class="text-slate-300 hover:text-white transition">More Tools</a>
+    </nav>
+  </div>
+</header>
+
+<!-- TOP AD -->
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-8">
+
+  <!-- ============ PICKER VIEW ============ -->
+  <section id="pickerView">
+    <div class="text-center mb-8">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full border border-[#34d399]/40 text-[#34d399] bg-[#34d399]/10 mb-4">
+        <span class="w-2 h-2 rounded-full bg-[#34d399] animate-pulse"></span> Unlimited Free Usage
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight">Section-by-Section <span style="color:#a78bfa">Exam Timer</span></h1>
+      <p class="text-slate-400 mt-3 max-w-2xl mx-auto">Official SAT, GRE and ACT section timings baked in. Pick your exam, run per-section countdowns, get per-question pacing alerts — and project it silently in a classroom.</p>
+    </div>
+
+    <div id="presetCards" class="grid gap-5 md:grid-cols-3 mb-8"></div>
+
+    <div id="examOptions" class="card p-6 mb-8 hidden">
+      <h2 class="text-lg font-bold mb-1">Session options</h2>
+      <p class="text-sm text-slate-400 mb-5">Fine-tune the schedule before you start the clock.</p>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" id="breakToggle" checked class="mt-1 w-5 h-5 accent-[#34d399]">
+          <span><span class="block font-semibold text-sm">Auto break scheduler</span><span class="block text-xs text-slate-400 mt-0.5">Insert official breaks between sections automatically.</span></span>
+        </label>
+        <label class="block">
+          <span class="block font-semibold text-sm mb-1.5">Break length (minutes)</span>
+          <input type="number" id="breakMinutes" min="0" max="60" value="10" class="w-full bg-[#101828] border border-[#334155] rounded-lg px-3 py-2 text-sm mono focus:outline-none focus:border-[#a78bfa]">
+        </label>
+        <div id="optionalBox" class="hidden">
+          <span class="block font-semibold text-sm mb-1.5">Optional sections</span>
+          <div id="optionalChecks" class="space-y-1.5 text-sm"></div>
+        </div>
+        <div>
+          <span class="block font-semibold text-sm mb-1.5">Alert style</span>
+          <div class="flex gap-2">
+            <button id="alertModeBtn" class="text-xs font-semibold px-3 py-2 rounded-lg border border-[#34d399]/50 text-[#34d399] bg-[#34d399]/10">Silent flash</button>
+          </div>
+          <p class="text-xs text-slate-500 mt-1.5">Silent is classroom-safe. Soft chime uses a gentle tone.</p>
+        </div>
+      </div>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <button id="startExamBtn" class="px-8 py-3.5 rounded-xl font-bold text-[#101828] text-base transition hover:opacity-90" style="background:linear-gradient(135deg,#a78bfa,#34d399)">Start timed session</button>
+        <p class="text-xs text-slate-500">Space = start/pause &nbsp;·&nbsp; N = next section</p>
+      </div>
+    </div>
+
+    <div class="card p-6">
+      <h2 class="text-lg font-bold mb-3">Recent sessions</h2>
+      <div id="historyList" class="text-sm text-slate-400">No timed sessions yet — your last 10 runs appear here.</div>
+    </div>
+  </section>
+
+  <!-- ============ TIMER VIEW ============ -->
+  <section id="timerView" class="hidden">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div>
+        <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full border border-[#34d399]/40 text-[#34d399] bg-[#34d399]/10 mb-2">
+          <span class="w-2 h-2 rounded-full bg-[#34d399] animate-pulse"></span> Unlimited Free Usage
+        </span>
+        <h2 id="examTitle" class="text-2xl font-bold"></h2>
+        <p id="segCounter" class="text-sm text-slate-400 mono"></p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="projBtn" class="px-4 py-2 rounded-lg text-sm font-semibold border border-[#a78bfa]/60 text-[#a78bfa] hover:bg-[#a78bfa]/10 transition">Projection mode</button>
+        <button id="resetBtn" class="px-4 py-2 rounded-lg text-sm font-semibold border border-[#334155] text-slate-300 hover:bg-[#1e293b] transition">New session</button>
+      </div>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-[260px_1fr_280px]">
+      <!-- Schedule rail -->
+      <aside class="card p-5 order-2 lg:order-1">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Schedule</h3>
+        <ol id="scheduleRail" class="space-y-0"></ol>
+      </aside>
+
+      <!-- Main timer -->
+      <div class="card p-6 sm:p-8 text-center order-1 lg:order-2">
+        <p id="sectionLabel" class="text-lg font-semibold text-slate-300"></p>
+        <p id="paceInfo" class="text-sm text-slate-500 mono mt-1"></p>
+
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto my-6">
+          <svg id="timerRing" viewBox="0 0 240 240" class="w-full h-full -rotate-90">
+            <circle cx="120" cy="120" r="110" fill="none" stroke="#26324a" stroke-width="14"/>
+            <circle id="ringFg" cx="120" cy="120" r="110" fill="none" stroke="#a78bfa" stroke-width="14" stroke-linecap="round" stroke-dasharray="691.15" stroke-dashoffset="0"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <div id="timeDisplay" class="mono text-5xl sm:text-6xl font-bold tracking-tight">0:00</div>
+            <div id="ringSub" class="text-xs text-slate-500 mt-2 uppercase tracking-widest">ready</div>
+          </div>
+        </div>
+
+        <div id="pacingAlert" class="rounded-xl border border-[#334155] bg-[#101828] px-4 py-3 mb-4 text-sm font-medium text-slate-300 min-h-[3.25rem] flex items-center justify-center">Press start to begin the first section.</div>
+
+        <!-- Question tracker -->
+        <div id="qStepper" class="flex items-center justify-center gap-4 mb-4">
+          <button id="qMinus" class="w-10 h-10 rounded-full border border-[#334155] text-xl font-bold hover:bg-[#1e293b]">−</button>
+          <div class="text-center">
+            <div class="text-xs uppercase tracking-widest text-slate-500">On question</div>
+            <div class="mono text-2xl font-bold"><span id="qCurrent">1</span><span id="qTotal" class="text-slate-500 text-base"></span></div>
+          </div>
+          <button id="qPlus" class="w-10 h-10 rounded-full border border-[#334155] text-xl font-bold hover:bg-[#1e293b]">+</button>
+        </div>
+        <div id="phaseRow" class="hidden flex-wrap justify-center gap-2 mb-4"></div>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button id="startPauseBtn" class="px-8 py-3 rounded-xl font-bold text-[#101828] transition hover:opacity-90" style="background:linear-gradient(135deg,#a78bfa,#34d399)">Start</button>
+          <button id="endNextBtn" class="px-6 py-3 rounded-xl font-semibold border border-[#34d399]/60 text-[#34d399] hover:bg-[#34d399]/10 transition">End section →</button>
+          <button id="skipBreakBtn" class="hidden px-6 py-3 rounded-xl font-semibold border border-[#fbbf24]/60 text-[#fbbf24] hover:bg-[#fbbf24]/10 transition">Skip break</button>
+        </div>
+        <p id="overNote" class="hidden text-sm text-[#f87171] font-semibold mt-3">Time expired — overrun is being logged as time debt.</p>
+      </div>
+
+      <!-- Pacing + debt panel -->
+      <aside class="space-y-5 order-3">
+        <div class="card p-5">
+          <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">Pace check</h3>
+          <div id="paceCheck" class="text-sm text-slate-300">—</div>
+        </div>
+        <div class="card p-5" id="debtPanel">
+          <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">Time-debt tracker</h3>
+          <div class="mono text-3xl font-bold" style="color:#34d399" id="debtTotal">+0:00</div>
+          <p class="text-xs text-slate-500 mt-1 mb-3">Borrowed minutes carried across sections.</p>
+          <ul id="debtList" class="text-sm space-y-1.5 text-slate-400"><li>No debt yet. Keep it that way.</li></ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- BOTTOM AD -->
+  <div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4 mt-10" role="complementary" aria-label="Advertisement">
+    <div class="mx-auto text-center" style="max-width:300px">
+      <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+      <div class="flex justify-center overflow-hidden">
+        <script>
+(function(grnp){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = grnp || {};
+s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SEO ARTICLE ============ -->
+  <article id="seoArticle" class="prose-ep max-w-4xl mx-auto mt-6">
+    <h2>Master Your Exam Day With a SAT Section Timer</h2>
+    <p>Every year, millions of students walk into SAT, GRE and ACT testing rooms knowing the material — and walk out with scores far below their ability. The culprit is rarely knowledge. It is pacing. Standardized exams are as much a test of time management as they are of reading, writing or math, and a dedicated <strong>SAT section timer</strong> is one of the simplest, highest-leverage tools a test-taker can practice with. ExamPace was built around this single insight: if you rehearse under the exact section timings of your real exam, with live per-question pacing alerts, test day stops feeling like a race against an invisible clock.</p>
+    <p>Consider the digital SAT. The Reading and Writing section gives you 64 minutes for 54 questions, split into two 32-minute modules of 27 questions each. The Math section gives you 70 minutes for 44 questions, in two 35-minute modules of 22 questions each. Between the sections sits an optional 10-minute break. Those numbers look comfortable on paper — roughly 71 seconds per Reading and Writing question and about 95 seconds per Math question. In practice, they are brutally tight, because questions are not uniform: a vocabulary-in-context item might take you 40 seconds while a dense paired-passage question eats three minutes. Without a section-level countdown ticking in your peripheral vision, you drift. With an <strong>exam pacing timer online</strong>, you calibrate.</p>
+    <p>That calibration is what ExamPace automates. Choose the SAT preset and the schedule builds itself: Reading and Writing Module 1 (27 questions, 32 minutes), Module 2, the 10-minute break, then Math Modules 1 and 2. Hit start and the ring countdown begins. The pacing engine continuously converts elapsed time into an expected question number — the checkpoint display tells you, for example, that sixteen minutes into a module you should be on question 14. If your own question tracker lags two questions behind that mark, you get a calm amber nudge, not a klaxon. That is the difference between practicing with a generic stopwatch and practicing with a purpose-built SAT section timer: the feedback is question-aware.</p>
+
+    <h2>The GRE Verbal Timer Problem — And How to Solve It</h2>
+    <p>The GRE General Test in its current shorter format is a 1-hour-58-minute sprint: one 30-minute Analytical Writing essay, two Verbal Reasoning sections (12 questions in 18 minutes, then 15 questions in 23 minutes) and two Quantitative Reasoning sections (12 in 21 minutes, 15 in 26 minutes). A <strong>GRE verbal timer</strong> matters disproportionately here because the verbal sections are the tightest in the whole exam — 90 seconds per question in Section 1, 92 seconds per question in Section 2, with reading comprehension passages that tempt you to slow-read your way into a time crisis.</p>
+    <p>ExamPace bakes in the real GRE section structure, including the asymmetry between the 12-question and 15-question verbal sections. Most free timers online treat every GRE section as identical; they are not, and the pacing math differs. During a verbal section, the per-question pacing alert might tell you at the nine-minute mark that you should be on question 7 of 12. During the Analytical Writing essay, where question counting makes no sense, ExamPace switches automatically to phase milestones — plan and outline, write, review and polish — with proportional time blocks. A 30-minute GRE essay becomes 8 minutes of planning, 17 of writing and 5 of review. That single design decision turns a blank countdown into a structured essay workflow.</p>
+    <p>The GRE also rewards aggressive triage: there is no penalty for wrong answers, so a question that has consumed double its budget should be guessed and abandoned. The pace-check panel makes this discipline visible. When it shows you three questions behind pace with six minutes left, the correct move is obvious — mark, move, and return only if time permits. Practicing that decision ten times in mock conditions is worth more than learning ten new vocabulary words.</p>
+
+    <h2>ACT Pacing: The Enhanced Format's New Rhythm</h2>
+    <p>The enhanced ACT, now the standard format, runs three core sections: English (50 questions, 35 minutes), Math (45 questions, 50 minutes) and Reading (36 questions, 40 minutes), with optional Science (40 questions, 40 minutes) and Writing (one 40-minute essay). The English section is the notorious one — 42 seconds per question across long editing passages. Students who have never felt that rhythm under a real countdown almost always mismanage their first attempt.</p>
+    <p>ExamPace's ACT preset includes the core three sections by default, and you can toggle the optional Science and Writing sections on if your test date includes them. The auto break scheduler inserts the standard short break after Math. Because the enhanced ACT gives roughly 17 percent more time per English question than the legacy format, the pacing alerts recalibrate accordingly — your checkpoint targets reflect the format you are actually taking, not the 215-question exam your older prep books describe.</p>
+
+    <h2>Per-Question Pacing Alerts: The Math Behind "You Should Be on Q12"</h2>
+    <p>The core formula is disarmingly simple: divide the section's total seconds by its question count to get the per-question budget, then at any elapsed moment compute expected question = floor(elapsed ÷ total × questions) + 1. A 32-minute, 27-question SAT module gives a budget of about 71 seconds per question; at the 16-minute mark the formula says you should be on question 14. ExamPace evaluates this continuously and fires a checkpoint banner each time the expected question advances — a quiet "pacing checkpoint: you should be on Q14 by now" that keeps you honest without breaking concentration.</p>
+    <p>There is a second layer. An optional question tracker lets you tap +/− as you actually progress through the test booklet, and the engine compares your real position against the expected one. Two questions behind? Amber. On pace? Green. Two ahead? A gentle violet note to bank the buffer for the hard questions at the end of the module. This transforms the timer from a passive clock into an active coach — the defining feature of a serious exam pacing timer online versus a kitchen timer with delusions of grandeur.</p>
+    <p>Classroom teachers get a special variant of this feedback: silent classroom projection mode. One click hides every control and fills the screen with a high-contrast, minimal display — giant white digits on black, the current section name, and a thin progress bar. No ticking sounds, no animations fighting for attention, no clutter for students to misread from the back row. It is designed for the exact moment a proctor wants thirty students to see, at a glance, that Reading Module 2 has eleven minutes left.</p>
+
+    <h2>Time-Debt Tracking: Borrowed Minutes, Made Visible</h2>
+    <p>Here is a phenomenon every test-taker recognizes: you finish a section two minutes over, shrug, and start the next one "fresh." But you are not fresh — you have stolen two minutes from your break, your composure, or the next section's review time. ExamPace's time-debt tracker makes this borrowing explicit. When a section's countdown hits zero and you keep working, the timer flips into overrun mode and every extra second is logged against that section. The debt panel accumulates a running total across the whole exam: "+3:42 borrowed across 2 sections."</p>
+    <p>Why does this matter? Because time debt compounds psychologically. Students who see a concrete debt number learn to make the hard trade — abandoning a sunk-cost question at 150 percent of its budget — far faster than students who only feel vague lateness. In mock-exam review, the debt ledger becomes a diagnostic: if your Math modules consistently show +2:00 debt while Reading shows none, your study plan should target math triage, not more math content. The tracker turns a feeling into a metric, and metrics are what improve.</p>
+
+    <h2>Break Scheduling: The Most Underrated Section of the Exam</h2>
+    <p>Official breaks are part of the test, and mismanaging them is a real way to lose points. The SAT's 10-minute break between Reading &amp; Writing and Math is optional — you can skip it — but skipping it to "stay in the zone" usually backfires by Math Module 2, when decision fatigue peaks. The GRE's optional 10-minute break sits at a natural hinge between verbal and quantitative work. ExamPace's auto break scheduler inserts these breaks at the official positions with configurable lengths, counts them down with the same calm interface, and lets you skip with one tap if you are genuinely ready early.</p>
+    <p>A disciplined break routine is worth rehearsing: stand, water, a few deep breaths, no phone, no score-talk with other test-takers. Set the break length to match your real test day — if your center is strict about 10 minutes, practice with exactly 10. The timer handles the boundary; you handle the recovery.</p>
+
+    <h2>How to Use ExamPace for Maximum Effect</h2>
+    <p>First, pick the preset matching your actual exam and leave the defaults alone — the timings are the official ones. Enable the break scheduler with the real break length. Put your phone on Do Not Disturb and run a full mock: all sections, all breaks, no pausing. Use the question tracker honestly; its only value is truthful input. When the session ends, study the debt ledger before you check your answers — it tells you where the test beat you on process, which is the part you can fix fastest.</p>
+    <p>Second, drill individual sections. Weak on GRE verbal? Run just the two verbal sections back-to-back three times a week, chasing a zero-debt ledger rather than a perfect score. The pacing alerts will retrain your internal clock within two weeks; most students find their per-question rhythm stabilizes after five to seven timed sections.</p>
+    <p>Third, if you are a teacher or tutor, use projection mode for group mocks. The high-contrast display is readable from the back of a lecture hall, and because it is silent, it never competes with your instructions. Run the essay phases on screen during writing practice — students respond remarkably well to a shared, visible "review and polish" phase appearing with five minutes left.</p>
+
+    <h2>Pacing Strategy by Exam: Quick Reference</h2>
+    <table>
+      <tr><th>Exam section</th><th>Questions</th><th>Time</th><th>Per question</th><th>Strategy note</th></tr>
+      <tr><td>SAT Reading &amp; Writing (per module)</td><td>27</td><td>32 min</td><td>~71 sec</td><td>One passage, one question — keep moving; flag and return.</td></tr>
+      <tr><td>SAT Math (per module)</td><td>22</td><td>35 min</td><td>~95 sec</td><td>Front-load easy wins; save multi-step algebra for the end.</td></tr>
+      <tr><td>GRE Verbal (section 1 / 2)</td><td>12 / 15</td><td>18 / 23 min</td><td>~90 / 92 sec</td><td>Skim passages for structure first, then attack questions.</td></tr>
+      <tr><td>GRE Quant (section 1 / 2)</td><td>12 / 15</td><td>21 / 26 min</td><td>~105 / 104 sec</td><td>Quantitative comparison: decide in under 60 seconds.</td></tr>
+      <tr><td>ACT English</td><td>50</td><td>35 min</td><td>~42 sec</td><td>Trust your first instinct; rereading burns the budget.</td></tr>
+      <tr><td>ACT Math</td><td>45</td><td>50 min</td><td>~67 sec</td><td>First 30 in 30 minutes; last 15 are the score separators.</td></tr>
+      <tr><td>ACT Reading</td><td>36</td><td>40 min</td><td>~67 sec</td><td>About 9 minutes per passage including its questions.</td></tr>
+    </table>
+    <p>These per-question budgets are ceilings, not targets. The goal is to finish each section with two to three minutes for review — the pacing alerts are tuned to keep you slightly ahead of the raw average so that buffer materializes naturally.</p>
+
+    <h2>Why an Online Exam Pacing Timer Beats a Watch</h2>
+    <p>A wristwatch tells you the time; it does not tell you what the time means. An <strong>exam pacing timer online</strong> like ExamPace translates raw seconds into decisions: which question you should be on, whether you are ahead or behind, how much you have borrowed, when your break ends. It removes the mental arithmetic — "32 minutes, 27 questions, I am on question 9 at minute 12, am I okay?" — that itself consumes working memory during a high-stakes test.</p>
+    <p>There is also the rehearsal argument. Test-day anxiety is largely unfamiliarity: unfamiliar room, unfamiliar proctor script, unfamiliar pressure. Every mock you run under official timings with live pacing alerts makes the real countdown one more familiar thing rather than one more novel threat. Students who have watched a ring drain fifty times do not panic the fifty-first time. That composure is worth points — often more points than another week of content review.</p>
+    <p>ExamPace runs entirely in your browser, needs no account, and keeps a local history of your last ten sessions so you can watch your time debt shrink week over week. Pick your exam, start the clock, and let the pacing math do the worrying for you.</p>
+  </article>
+
+  <!-- ============ FAQS ============ -->
+  <section class="max-w-4xl mx-auto mt-10">
+    <h2 class="text-2xl font-bold mb-5">Frequently asked questions</h2>
+    <details class="faq">
+      <summary>What is a SAT section timer and how does it help?</summary>
+      <p>A SAT section timer counts down each official section of the digital SAT separately — Reading &amp; Writing Modules 1 and 2 at 32 minutes each, Math Modules 1 and 2 at 35 minutes each — instead of timing the whole exam as one block. This matches how the real test is administered, where you cannot carry unused time between modules. Practicing with section-level countdowns plus per-question pacing alerts trains you to finish every module with review time to spare.</p>
+    </details>
+    <details class="faq">
+      <summary>How much time per question does the GRE verbal section allow?</summary>
+      <p>In the current GRE format, Verbal Reasoning Section 1 gives you 18 minutes for 12 questions (about 90 seconds each) and Section 2 gives 23 minutes for 15 questions (about 92 seconds each). ExamPace's GRE verbal timer preset uses these exact official timings and shows live pacing checkpoints, so you always know which question you should be on.</p>
+    </details>
+    <details class="faq">
+      <summary>Can I use ExamPace for the enhanced ACT format?</summary>
+      <p>Yes. The ACT preset follows the enhanced format: English (50 questions, 35 minutes), Math (45 questions, 50 minutes) and Reading (36 questions, 40 minutes), with optional Science (40 questions, 40 minutes) and Writing (40-minute essay) sections you can toggle on. The auto break scheduler inserts the standard break after Math.</p>
+    </details>
+    <details class="faq">
+      <summary>What is time-debt tracking?</summary>
+      <p>Time debt is the extra time you spend beyond a section's official limit. When a countdown hits zero and you keep working, ExamPace logs every overrun second against that section and shows a running total across your whole exam. Reviewing the debt ledger after a mock reveals exactly where your pacing broke down, so you can target triage strategy instead of just studying more content.</p>
+    </details>
+    <details class="faq">
+      <summary>Does ExamPace make any sound in classroom projection mode?</summary>
+      <p>No. Projection mode is silent by default — it shows a high-contrast minimal display with giant digits, the section name and a progress bar, with no ticking or alert sounds. You can optionally enable a soft chime for personal practice, but the projector-friendly mode never makes noise, making it safe for classrooms and group mock exams.</p>
+    </details>
+    <details class="faq">
+      <summary>Is ExamPace free? Do I need an account?</summary>
+      <p>ExamPace is completely free with unlimited usage — no account, no signup, no paywall and no watermark. Your session history is stored only in your own browser's local storage, so your practice data never leaves your device.</p>
+    </details>
+  </section>
+</main>
+
+<footer class="border-t border-[#26324a] mt-12">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+    <span class="font-bold text-slate-300">Exam<span style="color:#a78bfa">Pace</span></span>
+    <span>Free exam pacing timer — practice under official SAT, GRE and ACT timings.</span>
+  </div>
+<p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+</footer>
+
+<!-- Projection overlay -->
+<div id="projOverlay" class="fixed inset-0 z-50 bg-black items-center justify-center flex-col select-none">
+  <div id="projSection" class="text-white/70 text-xl sm:text-2xl font-semibold tracking-wide mb-4 text-center px-6"></div>
+  <div id="projTime" class="mono text-white font-bold text-[22vw] sm:text-[16rem] leading-none">0:00</div>
+  <div id="projSub" class="text-white/60 mono text-lg sm:text-xl mt-4"></div>
+  <div class="w-3/4 max-w-3xl h-2 bg-white/10 rounded-full mt-8 overflow-hidden"><div id="projBar" class="h-full bg-white rounded-full" style="width:100%"></div></div>
+  <p class="text-white/30 text-xs mt-8">Click anywhere or press Esc to exit projection mode</p>
+</div>
+
+<script id="v3-exampace-sectional-exam-timer-lib">
+/* ExamPace pure logic — NO document/window access. Safe to eval in Node. */
+'use strict';
+
+var ExamPaceLib = (function () {
+
+  /* ------------------------------------------------------------------ */
+  /* Official exam presets (public exam-format knowledge, 2026 formats)  */
+  /* ------------------------------------------------------------------ */
+  var EXAM_PRESETS = [
+    {
+      id: 'sat',
+      name: 'SAT (Digital)',
+      org: 'College Board',
+      note: '2h 14m of testing + optional 10-min break between sections.',
+      sections: [
+        { name: 'Reading & Writing \u00b7 Module 1', questions: 27, minutes: 32 },
+        { name: 'Reading & Writing \u00b7 Module 2', questions: 27, minutes: 32 },
+        { name: 'Math \u00b7 Module 1', questions: 22, minutes: 35 },
+        { name: 'Math \u00b7 Module 2', questions: 22, minutes: 35 }
+      ],
+      defaultBreaks: [{ after: 1, minutes: 10, label: 'Break' }]
+    },
+    {
+      id: 'gre',
+      name: 'GRE General Test',
+      org: 'ETS',
+      note: 'Current shorter format: ~1h 58m of testing.',
+      sections: [
+        { name: 'Analytical Writing', questions: 1, minutes: 30, essay: true },
+        { name: 'Verbal Reasoning \u00b7 Section 1', questions: 12, minutes: 18 },
+        { name: 'Verbal Reasoning \u00b7 Section 2', questions: 15, minutes: 23 },
+        { name: 'Quantitative Reasoning \u00b7 Section 1', questions: 12, minutes: 21 },
+        { name: 'Quantitative Reasoning \u00b7 Section 2', questions: 15, minutes: 26 }
+      ],
+      defaultBreaks: [{ after: 2, minutes: 10, label: 'Optional break' }]
+    },
+    {
+      id: 'act',
+      name: 'ACT (Enhanced)',
+      org: 'ACT, Inc.',
+      note: 'Core test: 2h 5m. Science & Writing are optional add-ons.',
+      sections: [
+        { name: 'English', questions: 50, minutes: 35 },
+        { name: 'Math', questions: 45, minutes: 50 },
+        { name: 'Reading', questions: 36, minutes: 40 }
+      ],
+      optionalSections: [
+        { name: 'Science', questions: 40, minutes: 40 },
+        { name: 'Writing (essay)', questions: 1, minutes: 40, essay: true }
+      ],
+      defaultBreaks: [{ after: 1, minutes: 10, label: 'Break' }]
+    }
+  ];
+
+  /* ------------------------------ helpers --------------------------- */
+  function clamp(n, lo, hi) {
+    if (n < lo) return lo;
+    if (n > hi) return hi;
+    return n;
+  }
+
+  function getPreset(id) {
+    for (var i = 0; i < EXAM_PRESETS.length; i++) {
+      if (EXAM_PRESETS[i].id === id) return JSON.parse(JSON.stringify(EXAM_PRESETS[i]));
+    }
+    return null;
+  }
+
+  function listPresets() {
+    return EXAM_PRESETS.map(function (p) { return { id: p.id, name: p.name, org: p.org, note: p.note }; });
+  }
+
+  /* Seconds per question for a section. null when not applicable. */
+  function paceSeconds(sectionSeconds, questions) {
+    if (!questions || questions <= 1) return null;
+    if (!(sectionSeconds > 0)) return null;
+    return sectionSeconds / questions;
+  }
+
+  /* Which question you should be on (1-indexed) given elapsed time.
+     Returns null for essays / single-question sections. */
+  function expectedQuestion(elapsedSeconds, sectionSeconds, questions) {
+    if (!questions || questions <= 1) return null;
+    if (!(sectionSeconds > 0)) return null;
+    var e = clamp(elapsedSeconds, 0, sectionSeconds);
+    var q = Math.floor((e / sectionSeconds) * questions) + 1;
+    return clamp(q, 1, questions);
+  }
+
+  /* Build a timed schedule: sections interleaved with breaks.
+     opts: { breaksEnabled (default true), breakMinutes (override),
+             includeOptional: [names] for ACT } */
+  function buildSchedule(presetId, opts) {
+    opts = opts || {};
+    var preset = getPreset(presetId);
+    if (!preset) return null;
+
+    var sections = preset.sections.map(function (s) {
+      return {
+        kind: 'section',
+        name: s.name,
+        questions: s.questions,
+        seconds: Math.round(s.minutes * 60),
+        essay: !!s.essay,
+        pace: paceSeconds(Math.round(s.minutes * 60), s.questions)
+      };
+    });
+
+    if (opts.includeOptional && preset.optionalSections) {
+      preset.optionalSections.forEach(function (s) {
+        if (opts.includeOptional.indexOf(s.name) !== -1) {
+          sections.push({
+            kind: 'section',
+            name: s.name,
+            questions: s.questions,
+            seconds: Math.round(s.minutes * 60),
+            essay: !!s.essay,
+            pace: paceSeconds(Math.round(s.minutes * 60), s.questions)
+          });
+        }
+      });
+    }
+
+    var breaksEnabled = opts.breaksEnabled !== false;
+    var schedule = [];
+    for (var i = 0; i < sections.length; i++) {
+      schedule.push(sections[i]);
+      if (breaksEnabled && preset.defaultBreaks) {
+        for (var b = 0; b < preset.defaultBreaks.length; b++) {
+          var br = preset.defaultBreaks[b];
+          if (br.after === i) {
+            var mins = (opts.breakMinutes != null) ? opts.breakMinutes : br.minutes;
+            mins = clamp(Math.round(mins), 0, 60);
+            schedule.push({
+              kind: 'break',
+              name: br.label || 'Break',
+              seconds: mins * 60,
+              breakMinutes: mins
+            });
+          }
+        }
+      }
+    }
+    return schedule;
+  }
+
+  function scheduleSummary(schedule) {
+    if (!schedule) return null;
+    var sections = 0, breaks = 0, totalSeconds = 0, totalQuestions = 0;
+    schedule.forEach(function (seg) {
+      totalSeconds += seg.seconds;
+      if (seg.kind === 'section') {
+        sections++;
+        totalQuestions += seg.questions || 0;
+      } else {
+        breaks++;
+      }
+    });
+    return { sections: sections, breaks: breaks, totalSeconds: totalSeconds, totalQuestions: totalQuestions };
+  }
+
+  /* Live pacing snapshot for a running section. */
+  function pacingStatus(section, elapsedSeconds, currentQuestion) {
+    var total = section.seconds;
+    var elapsed = Math.max(0, elapsedSeconds);
+    var over = elapsed > total;
+    var debt = over ? elapsed - total : 0;
+    var expectedQ = expectedQuestion(elapsed, total, section.questions);
+    var st = {
+      elapsed: elapsed,
+      remaining: over ? 0 : total - elapsed,
+      total: total,
+      over: over,
+      debt: debt,
+      expectedQ: expectedQ,
+      behindBy: null,
+      aheadBy: null,
+      alert: alertLevel(over ? 0 : total - elapsed, total)
+    };
+    if (expectedQ != null && currentQuestion != null && currentQuestion > 0) {
+      if (currentQuestion < expectedQ) st.behindBy = expectedQ - currentQuestion;
+      else st.aheadBy = currentQuestion - expectedQ;
+    }
+    return st;
+  }
+
+  /* ok while >15% or >5 min left; warn below that; danger under 60s / over. */
+  function alertLevel(remainingSeconds, totalSeconds) {
+    if (remainingSeconds <= 0) return 'danger';
+    if (totalSeconds > 0 && remainingSeconds <= 60) return 'danger';
+    if (totalSeconds > 0 && (remainingSeconds / totalSeconds) <= 0.15) return 'warn';
+    if (remainingSeconds <= 300) return 'warn';
+    return 'ok';
+  }
+
+  /* Essay phase plan: plan 25% / write 60% / review 15% (rounded). */
+  function essayPhases(totalMinutes) {
+    var m = Math.max(1, Math.round(totalMinutes));
+    var plan = Math.round(m * 0.25);
+    var review = Math.round(m * 0.15);
+    var write = m - plan - review;
+    return [
+      { label: 'Plan & outline', minutes: plan },
+      { label: 'Write the essay', minutes: write },
+      { label: 'Review & polish', minutes: review }
+    ];
+  }
+
+  /* Which essay phase index the elapsed time falls into. */
+  function essayPhaseIndex(phases, elapsedSeconds) {
+    var acc = 0;
+    for (var i = 0; i < phases.length; i++) {
+      acc += phases[i].minutes * 60;
+      if (elapsedSeconds < acc) return i;
+    }
+    return phases.length - 1;
+  }
+
+  /* --------------------------- time-debt ---------------------------- */
+  function recordDebt(ledger, sectionName, debtSeconds) {
+    var out = (ledger || []).slice();
+    if (debtSeconds > 0) out.push({ section: sectionName, debtSeconds: Math.round(debtSeconds) });
+    return out;
+  }
+
+  function debtSummary(ledger) {
+    var entries = ledger || [];
+    var total = 0, worst = null;
+    entries.forEach(function (e) {
+      total += e.debtSeconds;
+      if (!worst || e.debtSeconds > worst.debtSeconds) worst = e;
+    });
+    return { totalDebt: total, count: entries.length, worst: worst, entries: entries };
+  }
+
+  /* ---------------------------- formatting -------------------------- */
+  function formatClock(totalSeconds) {
+    var s = Math.max(0, Math.round(totalSeconds));
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var sec = s % 60;
+    var mm = (h > 0 && m < 10 ? '0' : '') + m;
+    var ss = (sec < 10 ? '0' : '') + sec;
+    return h > 0 ? h + ':' + mm + ':' + ss : m + ':' + ss;
+  }
+
+  function formatPace(paceSec) {
+    if (paceSec == null) return '\u2014';
+    var m = Math.floor(paceSec / 60);
+    var s = Math.round(paceSec % 60);
+    if (s === 60) { m += 1; s = 0; }
+    return m > 0 ? m + 'm ' + s + 's' : s + 's';
+  }
+
+  return {
+    EXAM_PRESETS: EXAM_PRESETS,
+    getPreset: getPreset,
+    listPresets: listPresets,
+    paceSeconds: paceSeconds,
+    expectedQuestion: expectedQuestion,
+    buildSchedule: buildSchedule,
+    scheduleSummary: scheduleSummary,
+    pacingStatus: pacingStatus,
+    alertLevel: alertLevel,
+    essayPhases: essayPhases,
+    essayPhaseIndex: essayPhaseIndex,
+    recordDebt: recordDebt,
+    debtSummary: debtSummary,
+    formatClock: formatClock,
+    formatPace: formatPace
+  };
+})();
+
+if (typeof module !== 'undefined' && module.exports) module.exports = ExamPaceLib;
+
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var L = (typeof ExamPaceLib !== 'undefined') ? ExamPaceLib : (typeof module !== 'undefined' && module.exports);
+  if (!L) return;
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var state = {
+    presetId: null, preset: null, schedule: [], segIdx: 0,
+    running: false, endAt: 0, remaining: 0,
+    debt: [], currentQ: 1, lastExpectedQ: -1,
+    alertMode: 'silent', audioCtx: null, finished: false,
+    segOver: false
+  };
+
+  /* ---------------- preset picker ---------------- */
+  function renderPresets() {
+    var html = '';
+    L.EXAM_PRESETS.forEach(function (p) {
+      var sum = L.scheduleSummary(L.buildSchedule(p.id));
+      var rows = p.sections.map(function (s) {
+        return '<tr><td>' + esc(s.name) + '</td><td class="text-right mono">' + s.questions + '</td><td class="text-right mono">' + s.minutes + ' min</td></tr>';
+      }).join('');
+      if (p.optionalSections) {
+        rows += '<tr><td colspan="3" class="text-slate-500 italic">+ optional: ' + p.optionalSections.map(function (s) { return esc(s.name); }).join(', ') + '</td></tr>';
+      }
+      html += '<button data-preset="' + p.id + '" class="preset-card card p-6 text-left transition hover:border-[#a78bfa] hover:-translate-y-0.5 w-full">' +
+        '<div class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#34d399">' + esc(p.org) + '</div>' +
+        '<div class="text-xl font-bold mb-1">' + esc(p.name) + '</div>' +
+        '<div class="text-xs text-slate-400 mb-4">' + esc(p.note) + '</div>' +
+        '<table class="w-full text-sm"><tbody>' + rows + '</tbody></table>' +
+        '<div class="mt-4 pt-3 border-t border-[#26324a] flex justify-between text-sm"><span class="text-slate-400">Total testing</span><span class="mono font-bold" style="color:#a78bfa">' + L.formatClock(sum.totalSeconds) + '</span></div>' +
+        '</button>';
+    });
+    $('presetCards').innerHTML = html;
+    var cards = document.querySelectorAll('.preset-card');
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () { selectPreset(c.getAttribute('data-preset')); });
+    });
+  }
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+  function selectPreset(id) {
+    state.presetId = id;
+    state.preset = L.getPreset(id);
+    document.querySelectorAll('.preset-card').forEach(function (c) {
+      var on = c.getAttribute('data-preset') === id;
+      c.style.borderColor = on ? '#a78bfa' : '';
+      c.style.boxShadow = on ? '0 0 0 2px rgba(167,139,250,.35)' : '';
+    });
+    var box = $('optionalBox');
+    if (state.preset.optionalSections) {
+      box.classList.remove('hidden');
+      $('optionalChecks').innerHTML = state.preset.optionalSections.map(function (s, i) {
+        return '<label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="opt-sec" data-i="' + i + '" class="w-4 h-4 accent-[#a78bfa]"> <span>' + esc(s.name) + ' <span class="text-slate-500 mono text-xs">' + s.minutes + ' min</span></span></label>';
+      }).join('');
+    } else { box.classList.add('hidden'); }
+    $('examOptions').classList.remove('hidden');
+    $('examOptions').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  $('alertModeBtn').addEventListener('click', function () {
+    state.alertMode = (state.alertMode === 'silent') ? 'chime' : 'silent';
+    this.textContent = state.alertMode === 'silent' ? 'Silent flash' : 'Soft chime';
+    this.className = state.alertMode === 'silent'
+      ? 'text-xs font-semibold px-3 py-2 rounded-lg border border-[#34d399]/50 text-[#34d399] bg-[#34d399]/10'
+      : 'text-xs font-semibold px-3 py-2 rounded-lg border border-[#a78bfa]/50 text-[#a78bfa] bg-[#a78bfa]/10';
+  });
+
+  /* ---------------- session ---------------- */
+  function currentSeg() { return state.schedule[state.segIdx]; }
+
+  $('startExamBtn').addEventListener('click', function () {
+    if (!state.presetId) return;
+    var includeOptional = [];
+    document.querySelectorAll('.opt-sec:checked').forEach(function (cb) {
+      includeOptional.push(state.preset.optionalSections[parseInt(cb.getAttribute('data-i'), 10)].name);
+    });
+    state.schedule = L.buildSchedule(state.presetId, {
+      breaksEnabled: $('breakToggle').checked,
+      breakMinutes: parseInt($('breakMinutes').value, 10) || 0,
+      includeOptional: includeOptional
+    });
+    state.segIdx = 0; state.debt = []; state.finished = false;
+    $('pickerView').classList.add('hidden');
+    $('timerView').classList.remove('hidden');
+    $('examTitle').textContent = state.preset.name + ' — timed session';
+    renderRail();
+    loadSegment();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  function renderRail() {
+    var html = '';
+    state.schedule.forEach(function (seg, i) {
+      var cls = i < state.segIdx ? 'seg-done' : (i === state.segIdx ? '' : 'opacity-60');
+      var dot = seg.kind === 'break'
+        ? '<span class="w-3 h-3 rounded-full bg-[#fbbf24] shrink-0"></span>'
+        : '<span class="w-3 h-3 rounded-full shrink-0" style="background:' + (i < state.segIdx ? '#34d399' : (i === state.segIdx ? '#a78bfa' : '#475569')) + '"></span>';
+      html += '<li class="' + cls + ' flex items-start gap-3 py-2.5 ' + (i < state.schedule.length - 1 ? 'border-l border-[#26324a] ml-1.5 pl-5 -mt-1' : 'ml-0') + '">' +
+        (i < state.schedule.length - 1 ? '' : '') + dot +
+        '<div class="min-w-0"><div class="text-sm font-semibold leading-tight">' + esc(seg.name) + '</div>' +
+        '<div class="text-xs text-slate-500 mono">' + (seg.kind === 'break' ? 'break · ' : (seg.questions > 1 ? seg.questions + ' Q · ' : '')) + L.formatClock(seg.seconds) + '</div></div></li>';
+    });
+    $('scheduleRail').innerHTML = html;
+  }
+
+  function loadSegment() {
+    var seg = currentSeg();
+    if (!seg) { finishSession(); return; }
+    state.running = false; state.segOver = false;
+    state.remaining = seg.seconds;
+    state.lastExpectedQ = -1;
+    $('segCounter').textContent = 'Segment ' + (state.segIdx + 1) + ' of ' + state.schedule.length;
+    $('sectionLabel').textContent = seg.name;
+    $('overNote').classList.add('hidden');
+
+    if (seg.kind === 'break') {
+      $('paceInfo').textContent = 'break · ' + L.formatClock(seg.seconds);
+      $('qStepper').style.display = 'none';
+      $('phaseRow').classList.add('hidden');
+      $('pacingAlert').textContent = 'Break time — stand up, breathe, no score talk. The next section starts when you are ready.';
+      $('skipBreakBtn').classList.remove('hidden');
+      $('endNextBtn').classList.add('hidden');
+      $('ringFg').setAttribute('stroke', '#fbbf24');
+    } else {
+      $('skipBreakBtn').classList.add('hidden');
+      $('endNextBtn').classList.remove('hidden');
+      $('ringFg').setAttribute('stroke', '#a78bfa');
+      if (seg.essay) {
+        $('qStepper').style.display = 'none';
+        var row = $('phaseRow');
+        row.classList.remove('hidden'); row.classList.add('flex');
+        var phases = L.essayPhases(seg.seconds / 60);
+        row.innerHTML = phases.map(function (ph, i) {
+          return '<span data-phase="' + i + '" class="text-xs font-semibold px-3 py-1.5 rounded-full border border-[#334155] text-slate-400">' + esc(ph.label) + ' · ' + ph.minutes + 'm</span>';
+        }).join('');
+        $('paceInfo').textContent = 'essay · ' + L.formatClock(seg.seconds) + ' · phased plan';
+        $('pacingAlert').textContent = 'Essay mode: follow the phase plan — plan, write, then review.';
+      } else {
+        $('qStepper').style.display = 'flex';
+        $('phaseRow').classList.add('hidden'); $('phaseRow').classList.remove('flex');
+        state.currentQ = 1; updateQ();
+        $('qTotal').textContent = ' / ' + seg.questions;
+        $('paceInfo').textContent = seg.questions + ' questions · ' + L.formatClock(seg.seconds) + ' · ' + L.formatPace(seg.pace) + ' per question';
+        $('pacingAlert').textContent = 'Press start — pacing checkpoints will appear here.';
+      }
+    }
+    $('startPauseBtn').textContent = 'Start';
+    updateDisplay(seg.seconds, seg.seconds);
+    renderRail();
+  }
+
+  function updateQ() { $('qCurrent').textContent = state.currentQ; }
+  $('qMinus').addEventListener('click', function () { if (state.currentQ > 1) { state.currentQ--; updateQ(); } });
+  $('qPlus').addEventListener('click', function () { var seg = currentSeg(); if (seg && state.currentQ < seg.questions) { state.currentQ++; updateQ(); } });
+
+  /* ---------------- clock engine ---------------- */
+  function fmt(s) { return L.formatClock(s); }
+
+  function updateDisplay(remaining, total) {
+    $('timeDisplay').textContent = fmt(remaining);
+    var frac = total > 0 ? remaining / total : 0;
+    $('ringFg').setAttribute('stroke-dashoffset', String(691.15 * (1 - Math.max(0, Math.min(1, frac)))));
+    var sub = $('ringSub');
+    if (state.segOver) { sub.textContent = 'overrun — debt logging'; sub.style.color = '#f87171'; }
+    else if (!state.running && remaining === total) { sub.textContent = 'ready'; sub.style.color = ''; }
+    else if (!state.running) { sub.textContent = 'paused'; sub.style.color = ''; }
+    else { sub.textContent = currentSeg() && currentSeg().kind === 'break' ? 'on break' : 'in progress'; sub.style.color = ''; }
+    // projection mirror
+    if ($('projOverlay').classList.contains('open')) {
+      var seg = currentSeg();
+      $('projSection').textContent = seg ? seg.name : '';
+      $('projTime').textContent = fmt(remaining);
+      $('projTime').style.color = state.segOver ? '#f87171' : '#ffffff';
+      $('projSub').textContent = seg && seg.kind === 'section' && seg.questions > 1
+        ? 'You should be on Q' + L.expectedQuestion(seg.seconds - remaining, seg.seconds, seg.questions) + ' of ' + seg.questions
+        : (seg ? fmt(remaining) + ' remaining' : '');
+      $('projBar').style.width = (Math.max(0, Math.min(1, frac)) * 100) + '%';
+    }
+  }
+
+  function tick() {
+    if (!state.running) return;
+    var seg = currentSeg(); if (!seg) return;
+    var remaining = Math.max(0, (state.endAt - Date.now()) / 1000);
+    var elapsed = seg.seconds - remaining;
+    if (remaining <= 0 && !state.segOver) {
+      state.segOver = true;
+      $('overNote').classList.remove('hidden');
+      if (seg.kind === 'break') { advance(); return; }
+      notify('Section time expired', true);
+      $('pacingAlert').innerHTML = '<span class="text-[#f87171] font-bold">Time is up.</span> Finish quickly — every extra second is logged as time debt, then hit End section.';
+      $('pacingAlert').classList.add('pulse-red');
+    }
+    if (state.segOver && seg.kind === 'section') {
+      // keep counting overrun as debt; display counts up in red
+      var over = (Date.now() - state.endAt) / 1000;
+      $('timeDisplay').textContent = '+' + fmt(over);
+      $('timeDisplay').style.color = '#f87171';
+      return;
+    }
+    $('timeDisplay').style.color = '';
+    updateDisplay(remaining, seg.seconds);
+
+    if (seg.kind === 'section' && !seg.essay) {
+      var exp = L.expectedQuestion(elapsed, seg.seconds, seg.questions);
+      if (exp !== state.lastExpectedQ) {
+        state.lastExpectedQ = exp;
+        var st = L.pacingStatus(seg, elapsed, state.currentQ);
+        var msg = 'Pacing checkpoint — you should be on <b>Q' + exp + '</b> by now.';
+        if (st.behindBy) msg += ' <span class="text-[#fbbf24] font-bold">You are ' + st.behindBy + ' behind pace.</span>';
+        else if (st.aheadBy) msg += ' <span style="color:#a78bfa" class="font-bold">' + st.aheadBy + ' ahead — bank it.</span>';
+        else msg += ' <span class="font-bold" style="color:#34d399">On pace.</span>';
+        $('pacingAlert').innerHTML = msg;
+        $('pacingAlert').classList.remove('flash'); void $('pacingAlert').offsetWidth; $('pacingAlert').classList.add('flash');
+        if (exp > 1) notify('Checkpoint: Q' + exp, false);
+        updatePaceCheck(st, seg);
+      }
+      var lvl = L.alertLevel(remaining, seg.seconds);
+      $('ringFg').setAttribute('stroke', lvl === 'danger' ? '#f87171' : (lvl === 'warn' ? '#fbbf24' : '#a78bfa'));
+    } else if (seg.kind === 'section' && seg.essay) {
+      var phases = L.essayPhases(seg.seconds / 60);
+      var pi = L.essayPhaseIndex(phases, elapsed);
+      document.querySelectorAll('#phaseRow [data-phase]').forEach(function (el) {
+        var i = parseInt(el.getAttribute('data-phase'), 10);
+        el.style.borderColor = i === pi ? '#34d399' : '';
+        el.style.color = i === pi ? '#34d399' : '';
+      });
+      if (pi !== state.lastExpectedQ) {
+        state.lastExpectedQ = pi;
+        $('pacingAlert').innerHTML = 'Essay phase: <b>' + esc(phases[pi].label) + '</b> — ' + phases[pi].minutes + ' minutes.';
+        notify('Essay phase: ' + phases[pi].label, false);
+      }
+    }
+  }
+  setInterval(tick, 250);
+
+  function updatePaceCheck(st, seg) {
+    var html;
+    if (st.behindBy) html = '<span class="text-[#fbbf24] font-bold">' + st.behindBy + ' question' + (st.behindBy > 1 ? 's' : '') + ' behind pace.</span><br><span class="text-slate-400 text-xs">Consider skipping a stuck question and returning later.</span>';
+    else if (st.aheadBy) html = '<span class="font-bold" style="color:#a78bfa">' + st.aheadBy + ' ahead of pace.</span><br><span class="text-slate-400 text-xs">Use the buffer on the hardest remaining questions.</span>';
+    else html = '<span class="font-bold" style="color:#34d399">On pace.</span><br><span class="text-slate-400 text-xs">Expected Q' + st.expectedQ + ' of ' + seg.questions + ' · ' + L.formatPace(seg.pace) + ' per question.</span>';
+    $('paceCheck').innerHTML = html;
+  }
+
+  function notify(msg, important) {
+    if (state.alertMode === 'chime') chime(important ? 660 : 520, important ? 0.35 : 0.18);
+    else { var el = $('timerRing'); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  }
+
+  function chime(freq, dur) {
+    try {
+      if (!state.audioCtx) state.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var ctx = state.audioCtx, o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + dur + 0.05);
+    } catch (e) { /* audio unavailable — stay silent */ }
+  }
+
+  $('startPauseBtn').addEventListener('click', function () {
+    var seg = currentSeg(); if (!seg || state.finished) return;
+    if (state.running) {
+      state.remaining = Math.max(0, (state.endAt - Date.now()) / 1000);
+      state.running = false;
+      this.textContent = 'Resume';
+      updateDisplay(state.remaining, seg.seconds);
+    } else {
+      if (state.segOver) return; // must end the section, not resume into debt
+      state.endAt = Date.now() + state.remaining * 1000;
+      state.running = true;
+      this.textContent = 'Pause';
+      try { if (state.audioCtx && state.audioCtx.state === 'suspended') state.audioCtx.resume(); } catch (e) {}
+    }
+  });
+
+  $('endNextBtn').addEventListener('click', function () { endSectionAndAdvance(); });
+  $('skipBreakBtn').addEventListener('click', function () { advance(); });
+
+  function endSectionAndAdvance() {
+    var seg = currentSeg(); if (!seg) return;
+    state.running = false;
+    if (seg.kind === 'section') {
+      var debt = state.segOver ? (Date.now() - state.endAt) / 1000 : 0;
+      state.debt = L.recordDebt(state.debt, seg.name, debt);
+      renderDebt();
+    }
+    advance();
+  }
+
+  function advance() {
+    state.running = false;
+    state.segIdx++;
+    $('pacingAlert').classList.remove('pulse-red');
+    if (state.segIdx >= state.schedule.length) finishSession();
+    else loadSegment();
+  }
+
+  function renderDebt() {
+    var sum = L.debtSummary(state.debt);
+    $('debtTotal').textContent = '+' + L.formatClock(sum.totalDebt);
+    $('debtTotal').style.color = sum.totalDebt > 0 ? '#fbbf24' : '#34d399';
+    $('debtList').innerHTML = sum.count === 0
+      ? '<li>No debt yet. Keep it that way.</li>'
+      : sum.entries.map(function (e) {
+          return '<li class="flex justify-between"><span>' + esc(e.section) + '</span><span class="mono text-[#fbbf24]">+' + L.formatClock(e.debtSeconds) + '</span></li>';
+        }).join('');
+  }
+
+  function finishSession() {
+    state.finished = true; state.running = false;
+    var sum = L.scheduleSummary(state.schedule);
+    var debt = L.debtSummary(state.debt);
+    saveHistory(debt);
+    $('sectionLabel').textContent = 'Session complete';
+    $('paceInfo').textContent = state.preset.name;
+    $('timeDisplay').textContent = fmt(sum.totalSeconds);
+    $('ringSub').textContent = 'total scheduled time';
+    $('ringFg').setAttribute('stroke-dashoffset', '0');
+    $('qStepper').style.display = 'none';
+    $('phaseRow').classList.add('hidden');
+    $('startPauseBtn').style.display = 'none';
+    $('endNextBtn').style.display = 'none';
+    $('skipBreakBtn').classList.add('hidden');
+    $('pacingAlert').innerHTML = debt.totalDebt > 0
+      ? 'Done. Total time debt: <b class="text-[#fbbf24]">+' + fmt(debt.totalDebt) + '</b> across ' + debt.count + ' section' + (debt.count > 1 ? 's' : '') + '. Review the ledger, then drill your weakest section.'
+      : 'Done with <b style="color:#34d399">zero time debt</b>. Textbook pacing — run it again to make it a habit.';
+    renderRail();
+    exitProjection();
+  }
+
+  function saveHistory(debt) {
+    try {
+      var h = JSON.parse(localStorage.getItem('exampace-history-v1') || '[]');
+      h.unshift({ date: new Date().toISOString().slice(0, 10), preset: state.preset.name, debt: Math.round(debt.totalDebt), sections: L.scheduleSummary(state.schedule).sections });
+      localStorage.setItem('exampace-history-v1', JSON.stringify(h.slice(0, 10)));
+    } catch (e) {}
+  }
+
+  function renderHistory() {
+    try {
+      var h = JSON.parse(localStorage.getItem('exampace-history-v1') || '[]');
+      if (!h.length) return;
+      $('historyList').innerHTML = h.map(function (r) {
+        return '<div class="flex justify-between py-2 border-b border-[#26324a]"><span>' + esc(r.preset) + ' <span class="text-slate-500">· ' + esc(r.date) + '</span></span><span class="mono ' + (r.debt > 0 ? 'text-[#fbbf24]' : 'text-[#34d399]') + '">debt +' + L.formatClock(r.debt) + '</span></div>';
+      }).join('');
+    } catch (e) {}
+  }
+
+  $('resetBtn').addEventListener('click', function () {
+    state.running = false;
+    exitProjection();
+    $('timerView').classList.add('hidden');
+    $('pickerView').classList.remove('hidden');
+    $('startPauseBtn').style.display = '';
+    $('timeDisplay').style.color = '';
+    renderHistory();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------------- projection mode ---------------- */
+  $('projBtn').addEventListener('click', function () {
+    $('projOverlay').classList.add('open');
+    var seg = currentSeg();
+    updateDisplay(state.remaining, seg ? seg.seconds : 1);
+    try { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); } catch (e) {}
+  });
+  function exitProjection() {
+    $('projOverlay').classList.remove('open');
+    try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+  }
+  $('projOverlay').addEventListener('click', exitProjection);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') exitProjection();
+    if ($('timerView').classList.contains('hidden')) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (e.code === 'Space') { e.preventDefault(); $('startPauseBtn').click(); }
+    if (e.key === 'n' || e.key === 'N') { ($('skipBreakBtn').classList.contains('hidden') ? $('endNextBtn') : $('skipBreakBtn')).click(); }
+  });
+
+  renderPresets();
+  renderHistory();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is a SAT section timer and how does it help?", "acceptedAnswer": {"@type": "Answer", "text": "A SAT section timer counts down each official section of the digital SAT separately — Reading & Writing Modules 1 and 2 at 32 minutes each, Math Modules 1 and 2 at 35 minutes each — instead of timing the whole exam as one block. This matches how the real test is administered, where you cannot carry unused time between modules. Practicing with section-level countdowns plus per-question pacing alerts trains you to finish every module with review time to spare."}},
+    {"@type": "Question", "name": "How much time per question does the GRE verbal section allow?", "acceptedAnswer": {"@type": "Answer", "text": "In the current GRE format, Verbal Reasoning Section 1 gives you 18 minutes for 12 questions (about 90 seconds each) and Section 2 gives 23 minutes for 15 questions (about 92 seconds each). ExamPace's GRE verbal timer preset uses these exact official timings and shows live pacing checkpoints, so you always know which question you should be on."}},
+    {"@type": "Question", "name": "Can I use ExamPace for the enhanced ACT format?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The ACT preset follows the enhanced format: English (50 questions, 35 minutes), Math (45 questions, 50 minutes) and Reading (36 questions, 40 minutes), with optional Science (40 questions, 40 minutes) and Writing (40-minute essay) sections you can toggle on. The auto break scheduler inserts the standard break after Math."}},
+    {"@type": "Question", "name": "What is time-debt tracking?", "acceptedAnswer": {"@type": "Answer", "text": "Time debt is the extra time you spend beyond a section's official limit. When a countdown hits zero and you keep working, ExamPace logs every overrun second against that section and shows a running total across your whole exam. Reviewing the debt ledger after a mock reveals exactly where your pacing broke down, so you can target triage strategy instead of just studying more content."}},
+    {"@type": "Question", "name": "Does ExamPace make any sound in classroom projection mode?", "acceptedAnswer": {"@type": "Answer", "text": "No. Projection mode is silent by default — it shows a high-contrast minimal display with giant digits, the section name and a progress bar, with no ticking or alert sounds. You can optionally enable a soft chime for personal practice, but the projector-friendly mode never makes noise, making it safe for classrooms and group mock exams."}},
+    {"@type": "Question", "name": "Is ExamPace free? Do I need an account?", "acceptedAnswer": {"@type": "Answer", "text": "ExamPace is completely free with unlimited usage — no account, no signup, no paywall and no watermark. Your session history is stored only in your own browser's local storage, so your practice data never leaves your device."}}
+  ]
+}
+</script>
+</body>
+</html>
