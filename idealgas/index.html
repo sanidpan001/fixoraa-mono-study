@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ideal Gas Law Calculator — PV = nRT Solver | IdealGas</title>
+<meta name="description" content="Ideal gas law solver for any variable, with units and worked steps.">
+<link rel="canonical" href="https://study.fixoraa.tech/idealgas/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ideal Gas Law Calculator — PV = nRT Solver | IdealGas">
+<meta property="og:description" content="Ideal gas law solver for any variable, with units and worked steps.">
+<meta property="og:url" content="https://study.fixoraa.tech/idealgas/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "IdealGas",
+      "url": "https://study.fixoraa.tech/idealgas/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "description": "Ideal gas law solver for any variable, with units and worked steps.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do you solve PV = nRT for n?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Rearrange to n = PV / RT. Convert pressure to pascals, volume to cubic meters and temperature to kelvin, then divide. For example, 12 liters at 200 bar and 20°C gives n = (20,000,000 × 0.012) / (8.314 × 293.15) ≈ 98.5 moles. This calculator does the rearrangement and all unit conversions for you." } },
+        { "@type": "Question", "name": "What value of R should I use in the ideal gas law?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on your units: use 8.314 J/(mol·K) with pascals and cubic meters, 0.08206 L·atm/(mol·K) with atmospheres and liters, or 62.36 L·mmHg/(mol·K) with mmHg and liters. The numbers are all the same constant in different units — mixing units is the most common mistake students make." } },
+        { "@type": "Question", "name": "What temperature scale does the ideal gas law use?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Always kelvin. The ideal gas law relates absolute temperature to pressure and volume, so 0°C must become 273.15 K and 77°F becomes 298.15 K before you calculate. Plugging in Celsius directly gives wildly wrong answers, especially near 0°C." } },
+        { "@type": "Question", "name": "When does the ideal gas law stop being accurate?",
+          "acceptedAnswer": { "@type": "Answer", "text": "At high pressures (roughly above 10 atm) and low temperatures near a gas's condensation point, real gases deviate because molecules attract each other and occupy real volume. For everyday problems — tires, balloons, lab work near room conditions — the ideal gas law is accurate to a few percent." } },
+        { "@type": "Question", "name": "What is STP and how many liters is one mole at STP?",
+          "acceptedAnswer": { "@type": "Answer", "text": "STP (standard temperature and pressure) is 0°C (273.15 K) and 1 atm. One mole of an ideal gas occupies 22.414 liters at STP. Note that IUPAC redefined STP in 1982 as 100 kPa instead of 1 atm, which gives 22.711 L — most textbooks still use the 1 atm convention." } },
+        { "@type": "Question", "name": "How is the ideal gas law used for scuba tanks?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A scuba tank's pressure gauge plus PV = nRT tells you how much air you actually have. A 12-liter tank at 200 bar and 20°C holds about 98 moles of air (roughly 2,840 liters at surface pressure). As pressure drops during the dive, n drops proportionally — that is your remaining air." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#E1F9E5; --surface:#FFFFFF; --tint:#D2F4D8;
+  --accent:#147B24; --accent-deep:#14601D; --accent-ink:#FFFFFF;
+  --ink:#1E3323; --muted:#5C7160; --line:#CDE6D1;
+  --display:'Space Grotesk',system-ui,sans-serif; --body:'Space Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+.fx-container{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+.fx-header{background:var(--surface);border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:50}
+.fx-header .fx-container{display:flex;align-items:center;gap:14px;padding:12px 20px;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.fx-tile{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 30%,var(--accent),var(--accent-deep));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;box-shadow:inset -3px -5px 0 rgba(0,0,0,.18)}
+.fx-name{font-weight:700;font-size:20px;letter-spacing:-.02em}
+.fx-nav{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:9px 18px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;border:2px solid var(--accent);color:var(--accent)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-badge{display:inline-block;padding:7px 14px;border-radius:999px;background:var(--tint);color:var(--accent-deep);font-weight:600;font-size:13px;border:1.5px solid var(--accent)}
+/* hero */
+.ig-hero{padding:46px 0 6px}
+.ig-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:12px}
+.ig-hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.1;letter-spacing:-.025em;font-weight:700;margin-bottom:12px}
+.ig-hero h1 .formula{color:var(--accent)}
+.ig-hero p{font-size:18px;color:var(--muted);max-width:660px}
+/* lab card */
+.ig-lab{margin:30px 0 10px;background:var(--surface);border:2px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 14px 34px rgba(29,124,39,.10)}
+.ig-formula-bar{background:linear-gradient(120deg,var(--accent),var(--accent-deep));color:#fff;padding:20px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.ig-formula-bar .eq{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:.02em}
+.ig-formula-bar .eq sub{font-size:.55em}
+.ig-formula-bar .tag{font-size:13px;font-weight:600;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:999px}
+.ig-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ig-left{padding:28px;border-right:2px dashed var(--line)}
+.ig-right{padding:28px;background:linear-gradient(180deg,#FDFEFD,var(--bg))}
+.ig-solve-label{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.ig-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px}
+.ig-tabs button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 6px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;color:var(--ink)}
+.ig-tabs button .sym{display:block;font-size:20px;color:var(--accent)}
+.ig-tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.ig-tabs button.on .sym{color:#fff}
+.ig-field{margin-bottom:16px}
+.ig-field label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:14px;margin-bottom:7px}
+.ig-field label .sym{color:var(--accent);font-weight:700}
+.ig-inputrow{display:flex;gap:8px}
+.ig-inputrow input{flex:1;font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);min-width:0}
+.ig-inputrow input:focus{outline:3px solid var(--tint);border-color:var(--accent)}
+.ig-inputrow select{font:inherit;padding:12px 10px;border:2px solid var(--line);border-radius:12px;background:var(--tint);color:var(--accent-deep);font-weight:600;cursor:pointer}
+.ig-result{background:var(--accent);color:#fff;border-radius:16px;padding:24px;text-align:center;margin-bottom:18px}
+.ig-result .val{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.ig-result .lab{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.9;margin-top:6px}
+.ig-units{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.ig-units div{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px}
+.ig-units .u{color:var(--muted);font-size:12px;display:block}
+.ig-units .n{font-weight:700;color:var(--accent-deep)}
+.ig-steps{background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px 18px}
+.ig-steps h3{font-size:15px;font-weight:700;margin-bottom:10px;color:var(--accent-deep)}
+.ig-steps ol{margin-left:20px;font-size:14px;color:var(--ink)}
+.ig-steps li{margin-bottom:8px}
+.ig-steps .mono{font-family:ui-monospace,monospace;background:var(--tint);padding:1px 7px;border-radius:6px}
+.ig-error{background:#FFF3F3;border:2px solid #E8A3A3;color:#A02323;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600;display:none;margin-bottom:14px}
+.ig-stp{border-top:2px dashed var(--line);padding:20px 28px;display:flex;gap:26px;flex-wrap:wrap;background:var(--tint)}
+.ig-stp div{font-size:14px}
+.ig-stp .k{font-weight:700;color:var(--accent-deep);display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+/* article */
+.article-sec{margin:40px 0;max-width:780px}
+.article-sec h2{font-size:24px;letter-spacing:-.02em;margin:34px 0 12px;font-weight:700}
+.article-sec p{margin-bottom:14px;color:#2c4030}
+.article-sec ul,.article-sec ol{margin:0 0 14px 22px;color:#2c4030}
+.article-sec li{margin-bottom:6px}
+/* faq */
+.faq-sec{margin:36px 0;max-width:780px}
+.faq-sec h2{font-size:24px;font-weight:700;letter-spacing:-.02em;margin-bottom:16px}
+.faq-sec details{background:var(--surface);border:2px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.faq-sec summary{padding:16px 18px;font-weight:600;cursor:pointer;list-style:none;font-size:16px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary:hover{color:var(--accent)}
+.faq-sec details[open] summary{border-bottom:2px solid var(--line);color:var(--accent)}
+.faq-sec details p{padding:14px 18px;color:#2c4030;font-size:15px}
+/* footer */
+.fx-footer{background:#122b16;color:#dcefe0;margin-top:44px;padding:40px 0 34px}
+.fx-footer .fx-brand{font-size:22px;font-weight:700;margin-bottom:8px;color:#fff}
+.fx-footer p{font-size:15px;color:#a9c8ae;max-width:640px;margin-bottom:14px}
+.fx-footer nav{display:flex;gap:18px;margin-bottom:16px}
+.fx-footer nav a{color:#fff;font-weight:600;text-decoration:none;border-bottom:2px solid var(--accent)}
+.fx-credit{font-size:14px!important}
+.fx-credit a{color:#9fe0a8;font-weight:700}
+@media(max-width:760px){
+  .ig-grid{grid-template-columns:1fr}
+  .ig-left{border-right:0;border-bottom:2px dashed var(--line)}
+  .fx-nav{margin-left:0}
+  .ig-units{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container">
+    <a class="fx-logo" href="https://study.fixoraa.tech/idealgas/" aria-label="IdealGas home">
+      <span class="fx-tile" aria-hidden="true">n</span>
+      <span class="fx-name">IdealGas</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="ig-hero">
+    <span class="ig-eyebrow">Chemistry lab &middot; gas laws</span>
+    <h1>Ideal Gas Law Calculator — <span class="formula">PV = nRT</span> Solver</h1>
+    <p>Pick the variable you need, enter the other three in any units, and get the answer with the full worked solution — conversions, substitution and all.</p>
+  </section>
+
+  <section class="ig-lab" aria-label="IdealGas tool">
+    <div class="ig-formula-bar">
+      <span class="eq">P&thinsp;V = n&thinsp;R&thinsp;T</span>
+      <span class="tag">R = 8.314 J&middot;mol&#8315;&#185;&middot;K&#8315;&#185;</span>
+      <span class="tag">Solves for any variable</span>
+    </div>
+    <div class="ig-grid">
+      <div class="ig-left">
+        <div class="ig-solve-label">I want to solve for</div>
+        <div class="ig-tabs" id="ig-tabs" role="tablist" aria-label="Solve for">
+          <button type="button" data-s="P" role="tab"><span class="sym">P</span>pressure</button>
+          <button type="button" data-s="V" role="tab" class="on"><span class="sym">V</span>volume</button>
+          <button type="button" data-s="n" role="tab"><span class="sym">n</span>moles</button>
+          <button type="button" data-s="T" role="tab"><span class="sym">T</span>temp</button>
+        </div>
+        <div id="ig-fields"></div>
+      </div>
+      <div class="ig-right" aria-live="polite">
+        <div class="ig-error" id="ig-error"></div>
+        <div class="ig-result">
+          <div class="val" id="ig-val">22.414 L</div>
+          <div class="lab" id="ig-lab">Volume</div>
+        </div>
+        <div class="ig-units" id="ig-units"></div>
+        <div class="ig-steps">
+          <h3>Worked solution</h3>
+          <ol id="ig-steps"></ol>
+        </div>
+      </div>
+    </div>
+    <div class="ig-stp">
+      <div><span class="k">STP reference</span>0&deg;C &middot; 1 atm &rarr; 1 mol = <strong>22.414 L</strong></div>
+      <div><span class="k">R values</span>8.314 J&middot;mol&#8315;&#185;K&#8315;&#185; &middot; 0.08206 L&middot;atm&middot;mol&#8315;&#185;K&#8315;&#185; &middot; 62.36 L&middot;mmHg&middot;mol&#8315;&#185;K&#8315;&#185;</div>
+      <div><span class="k">Avogadro</span>1 mol = 6.022 &times; 10&sup2;&sup3; particles</div>
+    </div>
+  </section>
+
+  <article class="article-sec" aria-label="Guide">
+    <h2>What the Ideal Gas Law Actually Says</h2>
+    <p>Four numbers describe any sample of gas: its <strong>pressure (P)</strong>, <strong>volume (V)</strong>, <strong>amount in moles (n)</strong> and <strong>absolute temperature (T)</strong>. The ideal gas law, PV = nRT, says these four are locked together by a single universal constant, R. Change one and at least one other must change to keep the equation balanced. Heat a sealed rigid can and the pressure climbs. Squeeze a balloon and the volume shrinks. Let gas escape a tire and the pressure falls. It is one of the most useful equations in all of science because gases are everywhere — in engines, lungs, weather systems, scuba tanks and chemical reactors.</p>
+    <p>The word "ideal" is doing real work here. The law assumes gas molecules are point particles that never attract or repel each other and take up no space themselves. No real gas behaves exactly like that, but at ordinary pressures and temperatures most gases — nitrogen, oxygen, helium, air — come within a few percent of ideal behavior. That is close enough for homework, lab work, diving calculations and engineering estimates. Where it breaks down is at very high pressure (tens of atmospheres and up) or near the temperature where the gas would liquefy; there, the van der Waals equation adds correction terms for molecular attraction and molecular volume.</p>
+    <h2>Solving for Each Variable</h2>
+    <p>The calculator above rearranges the equation for whichever variable you need. The four rearrangements are worth memorizing because they appear on every chemistry exam: <strong>P = nRT / V</strong>, <strong>V = nRT / P</strong>, <strong>n = PV / RT</strong> and <strong>T = PV / nR</strong>. Each one answers a practical question. Solving for P tells you the pressure inside a heated aerosol can or a scuba tank at a given temperature. Solving for V tells you how big a weather balloon will get as it rises into thin air. Solving for n tells you how many moles of gas a reaction produced, which is how chemists measure yields of gaseous products. Solving for T tells you the temperature inside an engine cylinder at peak compression.</p>
+    <p>Notice the symmetry: pressure and volume sit on one side of the proportionality, moles and temperature on the other. Doubling the moles at fixed volume and temperature doubles the pressure. Doubling the absolute temperature at fixed moles and volume also doubles the pressure. This is why tire pressure rises on a hot day and why you never throw an aerosol can in a fire — the temperature term has no mercy.</p>
+    <h2>Units: Where Every Student Goes Wrong</h2>
+    <p>More ideal gas law problems are lost to unit errors than to algebra. The constant R wears different numerical clothes depending on your units, and you must match them: use <strong>R = 8.314 J/(mol·K)</strong> when pressure is in pascals and volume in cubic meters; <strong>R = 0.08206 L·atm/(mol·K)</strong> when pressure is in atmospheres and volume in liters; <strong>R = 62.36 L·mmHg/(mol·K)</strong> for mmHg and liters. All three are the same physical constant — 8.314 joules per mole-kelvin — just expressed in different unit systems.</p>
+    <p>Temperature must always be in <strong>kelvin</strong>, the absolute scale. This is non-negotiable because the law involves ratios of temperature: 20°C is not "twice as hot" as 10°C in any sense the gas cares about, but 293 K versus 283 K is a clean ratio. Convert with K = °C + 273.15. For pressure, remember 1 atm = 101.325 kPa = 760 mmHg = 14.696 psi = 1.01325 bar. For volume, 1 m³ = 1000 L and 1 L = 1000 mL. The calculator handles every one of these conversions and shows its work, so you can check each step.</p>
+    <h2>Worked Example: The Classic STP Problem</h2>
+    <p>Let us walk through the most famous ideal gas calculation: the volume of one mole at STP (0°C, 1 atm). Convert first: T = 0 + 273.15 = 273.15 K, P = 1 atm = 101,325 Pa, n = 1 mol. Using V = nRT/P: V = (1 × 8.314 × 273.15) / 101,325 = 0.022414 m³. Multiply by 1000 to get liters: <strong>22.414 L</strong>. This number is worth memorizing — it is the molar volume at STP and the answer to a thousand exam questions.</p>
+    <p>Now a realistic one: a 12-liter scuba tank filled to 200 bar at 20°C. How many moles of air is that? Convert: P = 200 × 100,000 = 20,000,000 Pa, V = 0.012 m³, T = 293.15 K. n = PV/RT = (20,000,000 × 0.012) / (8.314 × 293.15) = 240,000 / 2,437.4 ≈ <strong>98.5 mol</strong>. At the surface (1 atm, ~20°C) that expands to about 2,400 liters of breathable air — which is exactly how dive computers estimate your remaining bottom time.</p>
+    <h2>STP, NTP and Room Conditions</h2>
+    <p>"Standard conditions" is a phrase with more than one definition, and textbooks do not always agree. The traditional chemistry STP is <strong>0°C and 1 atm</strong>, giving 22.414 L/mol. IUPAC redefined STP in 1982 as <strong>0°C and 100 kPa</strong> (1 bar), which gives 22.711 L/mol — a small but real difference that has tripped up careful students. NTP (normal temperature and pressure) usually means 20°C and 1 atm, giving 24.055 L/mol. Always check which convention your course uses before memorizing a molar volume. When in doubt, the calculator's STP strip shows the 1-atm convention used by most textbooks.</p>
+    <h2>Real-World Applications</h2>
+    <p>Beyond the classroom, the ideal gas law quietly runs modern life. <strong>Scuba divers</strong> use it (via Boyle's and Charles's laws, its special cases) to plan air consumption at depth, where every 10 meters of seawater adds another atmosphere of pressure. <strong>Tire engineers</strong> use it to set cold-inflation pressures that stay safe when tires heat up on the highway. <strong>Meteorologists</strong> use it to model how air parcels expand and cool as they rise, which is the engine of cloud formation. <strong>Chemical engineers</strong> use it to size reactors and predict yields. Even <strong>medicine</strong> uses it: anesthesiologists calculate delivered gas doses, and hyperbaric chambers are designed around it.</p>
+    <p>It also explains small everyday mysteries. A bag of chips puffs up on a mountain flight because the outside pressure dropped while the sealed inside pressure stayed put. A basketball left in a cold garage goes soft because the air inside cooled and its pressure fell. An aerosol can warns against heat because pressure climbs linearly with absolute temperature — and "linearly" becomes "explosively" faster than intuition expects.</p>
+    <h2>Common Mistakes to Avoid</h2>
+    <p>Run through this checklist before trusting an answer. <strong>One:</strong> temperature in kelvin — never Celsius, never Fahrenheit. <strong>Two:</strong> R matched to your pressure and volume units. <strong>Three:</strong> gauge pressure versus absolute pressure — tire gauges and tank gauges read zero at atmospheric pressure, so add 1 atm (or ~14.7 psi) before using PV = nRT. <strong>Four:</strong> consistent volume units on both sides of any ratio. <strong>Five:</strong> sanity-check the magnitude — a mole of gas at room conditions is always around 24 liters, so if your answer says 24,000 liters, a unit slipped somewhere.</p>
+    <p>The calculator guards against the worst of these: it refuses temperatures at or below absolute zero (0 K, where the equation breaks down physically), shows every conversion step, and reports the answer in multiple units so a factor-of-1000 slip is immediately visible. Use the worked steps as a template for showing your own work — teachers award partial credit for clean conversions even when the final number wobbles.</p>
+    <h2>From Ideal to Real: van der Waals</h2>
+    <p>When accuracy matters at high pressure, chemists upgrade to the van der Waals equation: (P + a(n/V)²)(V − nb) = nRT. The <strong>a</strong> term corrects for intermolecular attraction (which lowers the observed pressure) and the <strong>b</strong> term subtracts the volume the molecules themselves occupy. Each gas has its own a and b, tabulated in physical chemistry references. For nitrogen at 100 atm the ideal law is off by roughly 5–10%; for most student and DIY problems, that correction is smaller than your measurement error, which is why the ideal law remains the workhorse. Think of PV = nRT as the first-order truth about gases — simple, powerful, and right wherever it counts.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+    <details><summary>How do you solve PV = nRT for n?</summary><p>Rearrange to n = PV / RT. Convert pressure to pascals, volume to cubic meters and temperature to kelvin, then divide. For example, 12 liters at 200 bar and 20°C gives n = (20,000,000 × 0.012) / (8.314 × 293.15) ≈ 98.5 moles. This calculator does the rearrangement and all unit conversions for you.</p></details>
+    <details><summary>What value of R should I use in the ideal gas law?</summary><p>It depends on your units: use 8.314 J/(mol·K) with pascals and cubic meters, 0.08206 L·atm/(mol·K) with atmospheres and liters, or 62.36 L·mmHg/(mol·K) with mmHg and liters. The numbers are all the same constant in different units — mixing units is the most common mistake students make.</p></details>
+    <details><summary>What temperature scale does the ideal gas law use?</summary><p>Always kelvin. The ideal gas law relates absolute temperature to pressure and volume, so 0°C must become 273.15 K and 77°F becomes 298.15 K before you calculate. Plugging in Celsius directly gives wildly wrong answers, especially near 0°C.</p></details>
+    <details><summary>When does the ideal gas law stop being accurate?</summary><p>At high pressures (roughly above 10 atm) and low temperatures near a gas's condensation point, real gases deviate because molecules attract each other and occupy real volume. For everyday problems — tires, balloons, lab work near room conditions — the ideal gas law is accurate to a few percent.</p></details>
+    <details><summary>What is STP and how many liters is one mole at STP?</summary><p>STP (standard temperature and pressure) is 0°C (273.15 K) and 1 atm. One mole of an ideal gas occupies 22.414 liters at STP. Note that IUPAC redefined STP in 1982 as 100 kPa instead of 1 atm, which gives 22.711 L — most textbooks still use the 1 atm convention.</p></details>
+    <details><summary>How is the ideal gas law used for scuba tanks?</summary><p>A scuba tank's pressure gauge plus PV = nRT tells you how much air you actually have. A 12-liter tank at 200 bar and 20°C holds about 98 moles of air (roughly 2,840 liters at surface pressure). As pressure drops during the dive, n drops proportionally — that is your remaining air.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">IdealGas</div>
+    <p>IdealGas solves PV = nRT for pressure, volume, moles or temperature — with full unit conversion and step-by-step worked solutions for students and labs.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+(function(){
+var R = 8.314462618;
+var P2PA = {Pa:1, kPa:1e3, atm:101325, mmHg:133.322387415, torr:133.322387415, psi:6894.75729317, bar:1e5};
+var V2M3 = {m3:1, L:1e-3, mL:1e-6, cm3:1e-6};
+var N2MOL = {mol:1, mmol:1e-3};
+var VARS = {
+  P:{label:'Pressure', sym:'P', units:['Pa','kPa','atm','bar','psi','mmHg'], def:1, defU:'atm'},
+  V:{label:'Volume', sym:'V', units:['m3','L','mL','cm3'], def:22.414, defU:'L'},
+  n:{label:'Amount', sym:'n', units:['mol','mmol'], def:1, defU:'mol'},
+  T:{label:'Temperature', sym:'T', units:['K','°C','°F'], def:0, defU:'°C'}
+};
+var solveFor = 'V';
+var tabsEl = document.getElementById('ig-tabs');
+var fieldsEl = document.getElementById('ig-fields');
+function toK(v,u){ if(u==='K') return v; if(u==='°C') return v+273.15; return (v-32)*5/9+273.15; }
+function fromK(k,u){ if(u==='K') return k; if(u==='°C') return k-273.15; return (k-273.15)*9/5+32; }
+function unitLabel(u){ return {m3:'m³',cm3:'cm³'}[u]||u; }
+function fmt(n,d){ if(!isFinite(n)) return '—'; return n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:Math.min(d,2)}); }
+function buildFields(){
+  fieldsEl.innerHTML = '';
+  Object.keys(VARS).forEach(function(k){
+    if(k===solveFor) return;
+    var v = VARS[k];
+    var div = document.createElement('div'); div.className='ig-field';
+    var lab = document.createElement('label');
+    lab.innerHTML = '<span><span class="sym">'+v.sym+'</span> — '+v.label+'</span>';
+    var row = document.createElement('div'); row.className='ig-inputrow';
+    var inp = document.createElement('input'); inp.type='number'; inp.step='any'; inp.value=v.def; inp.id='ig-in-'+k;
+    inp.setAttribute('aria-label', v.label+' value');
+    var sel = document.createElement('select'); sel.id='ig-u-'+k;
+    sel.setAttribute('aria-label', v.label+' unit');
+    v.units.forEach(function(u){ var o=document.createElement('option'); o.value=u; o.textContent=unitLabel(u); if(u===v.defU) o.selected=true; sel.appendChild(o); });
+    inp.addEventListener('input',calc); sel.addEventListener('change',calc);
+    row.appendChild(inp); row.appendChild(sel);
+    div.appendChild(lab); div.appendChild(row);
+    fieldsEl.appendChild(div);
+  });
+}
+tabsEl.addEventListener('click',function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  solveFor = b.getAttribute('data-s');
+  tabsEl.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x===b); });
+  buildFields(); calc();
+});
+function err(msg){ var el=document.getElementById('ig-error'); el.style.display = msg?'block':'none'; el.textContent = msg||''; }
+function calc(){
+  var vals = {};
+  Object.keys(VARS).forEach(function(k){
+    if(k===solveFor) return;
+    vals[k] = { v: parseFloat(document.getElementById('ig-in-'+k).value), u: document.getElementById('ig-u-'+k).value };
+  });
+  for(var k in vals){ if(!isFinite(vals[k].v)){ err('Enter a number for every known variable.'); return; } }
+  err('');
+  var Ppa = vals.P ? vals.P.v * P2PA[vals.P.u] : null;
+  var Vm3 = vals.V ? vals.V.v * V2M3[vals.V.u] : null;
+  var nmol = vals.n ? vals.n.v * N2MOL[vals.n.u] : null;
+  var TK = vals.T ? toK(vals.T.v, vals.T.u) : null;
+  if(TK !== null && TK <= 0){ err('Temperature must be above absolute zero (0 K).'); return; }
+  if(Ppa!==null && Ppa<=0){ err('Pressure must be positive.'); return; }
+  if(Vm3!==null && Vm3<=0){ err('Volume must be positive.'); return; }
+  if(nmol!==null && nmol<=0){ err('Amount must be positive.'); return; }
+  var steps = [];
+  steps.push('Convert to SI: P = <span class="mono">'+fmt(Ppa,3)+' Pa</span>, V = <span class="mono">'+fmt(Vm3,6)+' m³</span>, n = <span class="mono">'+fmt(nmol,4)+' mol</span>, T = <span class="mono">'+fmt(TK,2)+' K</span>.');
+  var ansSI, ansLabel = VARS[solveFor].label;
+  if(solveFor==='P'){ ansSI = nmol*R*TK/Vm3; steps.push('P = nRT / V = ('+fmt(nmol,4)+' × 8.314 × '+fmt(TK,2)+') / '+fmt(Vm3,6)+'.'); }
+  if(solveFor==='V'){ ansSI = nmol*R*TK/Ppa; steps.push('V = nRT / P = ('+fmt(nmol,4)+' × 8.314 × '+fmt(TK,2)+') / '+fmt(Ppa,1)+'.'); }
+  if(solveFor==='n'){ ansSI = Ppa*Vm3/(R*TK); steps.push('n = PV / RT = ('+fmt(Ppa,1)+' × '+fmt(Vm3,6)+') / (8.314 × '+fmt(TK,2)+').'); }
+  if(solveFor==='T'){ ansSI = Ppa*Vm3/(nmol*R); steps.push('T = PV / nR = ('+fmt(Ppa,1)+' × '+fmt(Vm3,6)+') / ('+fmt(nmol,4)+' × 8.314).'); }
+  var mainU = VARS[solveFor].defU, mainVal;
+  var conv = [];
+  if(solveFor==='P'){ mainVal = ansSI/P2PA[mainU]; VARS.P.units.forEach(function(u){ conv.push({u:unitLabel(u), n:ansSI/P2PA[u]}); }); }
+  if(solveFor==='V'){ mainVal = ansSI/V2M3[mainU]; VARS.V.units.forEach(function(u){ conv.push({u:unitLabel(u), n:ansSI/V2M3[u]}); }); }
+  if(solveFor==='n'){ mainVal = ansSI/N2MOL[mainU]; VARS.n.units.forEach(function(u){ conv.push({u:unitLabel(u), n:ansSI/N2MOL[u]}); }); }
+  if(solveFor==='T'){ mainVal = fromK(ansSI,mainU); VARS.T.units.forEach(function(u){ conv.push({u:u, n:fromK(ansSI,u)}); }); }
+  steps.push('Answer in SI: <span class="mono">'+fmt(ansSI,6)+'</span> '+(solveFor==='P'?'Pa':solveFor==='V'?'m³':solveFor==='n'?'mol':'K')+'.');
+  document.getElementById('ig-val').textContent = fmt(mainVal,4)+' '+unitLabel(mainU);
+  document.getElementById('ig-lab').textContent = ansLabel;
+  document.getElementById('ig-units').innerHTML = conv.map(function(c){
+    return '<div><span class="u">'+c.u+'</span><span class="n">'+fmt(c.n,4)+'</span></div>';
+  }).join('');
+  document.getElementById('ig-steps').innerHTML = steps.map(function(s){ return '<li>'+s+'</li>'; }).join('');
+}
+buildFields(); calc();
+})();
+</script>
+</body>
+</html>
