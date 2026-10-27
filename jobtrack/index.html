@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Application Tracker | JobTrack</title>
+<meta name="description" content="Job application tracker: log every application, get smart follow-up reminders per stage, and track response rates, cover letters, and referrals. Free tool.">
+<link rel="canonical" href="https://study.fixoraa.tech/jobtrack/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Job Application Tracker | JobTrack">
+<meta property="og:description" content="Job application tracker: log every application, get smart follow-up reminders per stage, and track response rates, cover letters, and referrals. Free tool.">
+<meta property="og:url" content="https://study.fixoraa.tech/jobtrack/">
+<meta property="og:type" content="website">
+<script defer src="https://t.fixoraa.tech/track.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "JobTrack",
+      "url": "https://study.fixoraa.tech/jobtrack/",
+      "applicationCategory": "Career Tools",
+      "operatingSystem": "Web",
+      "description": "Job application tracker: log every application, get smart follow-up reminders per stage, and track response rates, cover letters, and referrals. Free tool.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long should I wait before following up on a job application?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seven days after applying is the standard window \u2014 it gives the recruiter a full week to triage applications. After a screening call, follow up in 5 days; after an interview, 3 days; after a final round or offer discussion, 2 days. The tracker above computes each due date automatically from the stage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I say in a follow-up email?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Keep it short: reference your last conversation, restate enthusiasm for the specific role, add one small piece of value (a relevant article or thought), and ask about the timeline. Never apologize for following up and never restate your whole resume \u2014 one polite nudge per stage is the norm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My response rate is under 10%. What is wrong?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With 20 or more applications, a sub-10% response rate usually signals a targeting or resume problem rather than bad luck. Check whether your applications genuinely match the postings' requirements, and make sure your resume mirrors the keywords employers use. Fix the targeting before increasing volume."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are cover letters still worth writing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but keep them short \u2014 three paragraphs: why this company, your two most relevant proof points with numbers, and a clear ask for a conversation. And log every version in the cover-letter log so you always know exactly what each employer received."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do referrals compare to cold applications?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Referred candidates get interviews at a multiple of the cold-application rate, which is why the tracker keeps referrals as a separate list. Ask specific, low-friction favors ('would you refer me for this role? I'll send a blurb'), always provide the blurb, and close the loop afterward."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data saved anywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Everything you enter is stored only in your own browser's local storage \u2014 nothing is uploaded or shared. If you clear your browser data or switch devices, the entries will not carry over, so export anything important periodically."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+
+:root{
+  --bg:#F4F3F2; --surface:#FFFFFF; --accent:#4E3B2A; --accent-ink:#FFFFFF;
+  --ink:#24272E; --muted:#606A76; --line:#DFDBD8;
+  --display:'Inter',serif; --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.fx-container{max-width:72rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+@media(min-width:640px){.fx-container{padding-left:1.5rem;padding-right:1.5rem}}
+/* ad utilities (for the verbatim ad snippets) */
+.no-print{}
+.mx-auto{margin-left:auto;margin-right:auto}.max-w-6xl{max-width:72rem}
+.px-4{padding-left:1rem;padding-right:1rem}.pt-4{padding-top:1rem}.pb-4{padding-bottom:1rem}
+@media(min-width:640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:scale-100{transform:scale(1)}}
+.text-center{text-align:center}.block{display:block}
+.text-\[10px\]{font-size:10px}.tracking-\[0\.18em\]{letter-spacing:.18em}.uppercase{text-transform:uppercase}
+.text-slate-400{color:#94a3b8}.mb-1\.5{margin-bottom:.375rem}
+.flex{display:flex}.justify-center{justify-content:center}.overflow-hidden{overflow:hidden}
+.origin-top{transform-origin:top}.scale-\[0\.44\]{transform:scale(.44)}.shrink-0{flex-shrink:0}
+/* header */
+.fx-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.fx-header-in{display:flex;align-items:center;gap:.9rem;padding:.8rem 0;flex-wrap:wrap}
+.fx-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink)}
+.fx-logo-tile{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-ink);
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.fx-brand{font-family:var(--display);font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.fx-nav{margin-left:auto;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.fx-btn{display:inline-block;padding:.55rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.92rem;
+  border:2px solid var(--accent);color:var(--accent);background:transparent;transition:all .18s ease;min-height:44px;line-height:1.5}
+.fx-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid{background:var(--accent);color:var(--accent-ink)}
+.fx-btn.solid:hover{filter:brightness(.94)}
+.fx-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:.3rem .8rem;white-space:nowrap}
+/* tool section */
+.tool-sec{padding:2.2rem 0 1rem}
+/* article */
+.article-sec{padding:2.5rem 0;max-width:46rem;margin:0 auto}
+.article-sec h2{font-family:var(--display);font-size:1.55rem;margin:2rem 0 .8rem;line-height:1.25;letter-spacing:-.01em}
+.article-sec h3{font-size:1.15rem;margin:1.5rem 0 .6rem}
+.article-sec p,.article-sec li{margin-bottom:.85rem;color:var(--ink)}
+.article-sec ul,.article-sec ol{padding-left:1.4rem;margin-bottom:1rem}
+.article-sec table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}
+.article-sec th,.article-sec td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left}
+.article-sec th{background:var(--surface);font-weight:700}
+/* faq */
+.faq-sec{padding:1rem 0 3rem;max-width:46rem;margin:0 auto}
+.faq-sec h2{font-family:var(--display);font-size:1.55rem;margin-bottom:1.2rem}
+.faq-sec details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:.7rem;overflow:hidden}
+.faq-sec summary{padding:1rem 1.2rem;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:44px}
+.faq-sec summary::-webkit-details-marker{display:none}
+.faq-sec summary::after{content:'+';font-size:1.4rem;color:var(--accent);flex-shrink:0}
+.faq-sec details[open] summary::after{content:'\2013'}
+.faq-sec details p{padding:0 1.2rem 1.1rem;color:var(--muted)}
+/* footer */
+.fx-footer{background:var(--surface);border-top:1px solid var(--line);padding:2.2rem 0;margin-top:1rem}
+.fx-footer .fx-brand{font-size:1.2rem}
+.fx-footer p{color:var(--muted);font-size:.95rem;max-width:44rem;margin:.5rem 0}
+.fx-footer nav{display:flex;gap:1.2rem;margin:1rem 0;flex-wrap:wrap}
+.fx-footer nav a{color:var(--accent);font-weight:600;text-decoration:none}
+.fx-footer nav a:hover{text-decoration:underline}
+.fx-credit{font-size:.9rem;color:var(--muted)}
+.fx-credit a{color:var(--accent);font-weight:700;text-decoration:none}
+@media(max-width:640px){.fx-brand{font-size:1.2rem}.tool-sec{padding:1.4rem 0 .6rem}}
+@media print{.no-print{display:none!important}}
+
+.jt-wrap{font-family:'Inter',Inter,system-ui,sans-serif;background:#F4F3F2;color:#24272E;padding:56px 20px 72px;}.jt-hero{max-width:900px;margin:0 auto 34px;text-align:center;}.jt-logo{width:76px;height:76px;margin:0 auto 18px;border-radius:22px;background:linear-gradient(135deg,#4E3B2A,#8a6f56);font-size:38px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(78,59,42,.25);}.jt-hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 12px;letter-spacing:-.02em;font-weight:800;line-height:1.1;}.jt-tag{font-size:18px;color:#606A76;margin:0;}.jt-card{max-width:900px;margin:0 auto 22px;background:#FFFFFF;border:1px solid #DFDBD8;border-radius:18px;padding:36px;box-shadow:0 20px 50px rgba(78,59,42,.08);background-image:repeating-linear-gradient(#FFFFFF,#FFFFFF 34px,#F4F3F2 35px);}.jt-card h2{font-size:21px;margin:0 0 6px;font-weight:800;}.jt-csub{color:#606A76;font-size:14.5px;margin:0 0 18px;}.jt-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:8px;}.jt-field label{display:block;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#606A76;margin-bottom:8px;}.jt-field input,.jt-field select{width:100%;padding:12px 13px;font-size:15px;border:2px solid #DFDBD8;border-radius:12px;font-family:inherit;color:#24272E;background:#fff;box-sizing:border-box;min-height:50px;}.jt-field input:focus,.jt-field select:focus{outline:none;border-color:#4E3B2A;}.jt-btn{padding:12px 22px;font-size:15px;font-weight:800;border-radius:12px;border:none;cursor:pointer;font-family:inherit;background:#4E3B2A;color:#fff;min-height:50px;white-space:nowrap;}.jt-btn.ghost{background:#fff;color:#4E3B2A;border:2px solid #4E3B2A;}.jt-tablewrap{overflow-x:auto;margin-top:14px;border:2px solid #DFDBD8;border-radius:14px;background:#fff;}.jt-table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px;}.jt-table th,.jt-table td{padding:11px 10px;border-bottom:1px solid #DFDBD8;text-align:left;white-space:nowrap;}.jt-table th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#606A76;background:#F4F3F2;}.jt-table tr:last-child td{border-bottom:none;}.jt-stage{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:800;background:#F4F3F2;border:1px solid #DFDBD8;}.jt-stage.hot{background:#FDECEA;border-color:#c0564f;color:#8f2f28;}.jt-due{font-weight:800;}.jt-due.over{color:#B91C1C;}.jt-del{background:none;border:none;color:#B91C1C;cursor:pointer;font-size:16px;padding:4px 8px;}.jt-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}.jt-stat{background:#fff;border:2px solid #DFDBD8;border-radius:14px;padding:18px;text-align:center;}.jt-stat .n{font-size:36px;font-weight:800;color:#4E3B2A;line-height:1.1;}.jt-stat .l{font-size:13px;color:#606A76;font-weight:600;margin-top:4px;}.jt-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px;}.jt-list li{background:#fff;border:2px solid #DFDBD8;border-radius:12px;padding:12px 16px;font-size:14.5px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;}.jt-list li strong{display:block;font-size:15px;}.jt-list li small{color:#606A76;}.jt-inline{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;}.jt-empty{color:#606A76;font-size:14.5px;padding:18px;text-align:center;}@media (max-width:700px){.jt-card{padding:24px 18px;}.jt-form{grid-template-columns:1fr 1fr;}.jt-inline{grid-template-columns:1fr;}.jt-stats{grid-template-columns:1fr 1fr;}.jt-wrap{padding:40px 14px 56px;}.jt-form .jt-btn{grid-column:1/-1;}}
+</style>
+</head>
+<body>
+<header class="fx-header">
+  <div class="fx-container fx-header-in">
+    <a class="fx-logo" href="https://fixoraa.tech" aria-label="JobTrack home">
+      <span class="fx-logo-tile" aria-hidden="true">📋</span>
+      <span class="fx-brand">JobTrack</span>
+    </a>
+    <nav class="fx-nav" aria-label="Site">
+      <a class="fx-btn" href="https://fixoraa.tech">Home</a>
+      <a class="fx-btn solid" href="https://fixoraa.tech">More Tools</a>
+      <span class="fx-badge" aria-label="Free forever">&#8734; Unlimited Free Usage</span>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="fx-container">
+  <section class="tool-sec tpl-ledger-lines" aria-label="JobTrack tool">
+<section class='jt-wrap'><div class='jt-hero'><div class='jt-logo' aria-hidden='true'>📋</div><h1>Job Application Tracker</h1><p class='jt-tag'>Every application logged, every follow-up timed, nothing slips.</p></div><div class='jt-card'><h2>Application pipeline</h2><p class='jt-csub'>Log each application. Follow-up due dates are computed automatically from the stage.</p><div class='jt-form'><div class='jt-field'><label for='jt-company'>Company</label><input id='jt-company' type='text' placeholder='Acme Inc'></div><div class='jt-field'><label for='jt-role'>Role</label><input id='jt-role' type='text' placeholder='Product Designer'></div><div class='jt-field'><label for='jt-stage'>Stage</label><select id='jt-stage'><option value='applied'>Applied</option><option value='screening'>Screening</option><option value='interview'>Interview</option><option value='final-round'>Final round</option><option value='final'>Final</option><option value='offer'>Offer</option><option value='rejected'>Rejected</option><option value='accepted'>Accepted</option></select></div><div class='jt-field'><label for='jt-date'>Date applied</label><input id='jt-date' type='date'></div><button class='jt-btn' id='jt-add' type='button'>Add</button></div><div class='jt-tablewrap'><table class='jt-table'><thead><tr><th>Company</th><th>Role</th><th>Stage</th><th>Applied</th><th>Follow up by</th><th>Status</th><th></th></tr></thead><tbody id='jt-tbody'><tr><td colspan='7' class='jt-empty'>No applications yet — add your first one above.</td></tr></tbody></table></div><div class='jt-stats'><div class='jt-stat'><div class='n' id='jt-stat-total'>0</div><div class='l'>Total applications</div></div><div class='jt-stat'><div class='n' id='jt-stat-int'>0</div><div class='l'>Interviews landed</div></div><div class='jt-stat'><div class='n' id='jt-stat-rate'>0%</div><div class='l'>Response rate</div></div></div></div><div class='jt-card'><h2>Cover-letter log</h2><p class='jt-csub'>Keep track of which version went where — never send the same letter twice by accident.</p><div class='jt-inline'><div class='jt-field'><label for='jt-cl-company'>Company</label><input id='jt-cl-company' type='text' placeholder='Acme Inc'></div><div class='jt-field'><label for='jt-cl-note'>Version / note</label><input id='jt-cl-note' type='text' placeholder='v2 — design systems angle'></div><button class='jt-btn' id='jt-cl-add' type='button'>Log letter</button></div><ul class='jt-list' id='jt-cl-list'></ul></div><div class='jt-card'><h2>Referral tracker</h2><p class='jt-csub'>Referrals convert far better than cold applications. Track who is helping where.</p><div class='jt-inline' style='grid-template-columns:1fr 1fr 1fr auto'><div class='jt-field'><label for='jt-ref-name'>Referrer name</label><input id='jt-ref-name' type='text' placeholder='Jane Doe'></div><div class='jt-field'><label for='jt-ref-company'>Company</label><input id='jt-ref-company' type='text' placeholder='Acme Inc'></div><div class='jt-field'><label for='jt-ref-status'>Status</label><select id='jt-ref-status'><option>Contacted</option><option>Referred</option><option>Interviewing</option><option>Hired</option><option>Declined</option></select></div><button class='jt-btn' id='jt-ref-add' type='button'>Add</button></div><ul class='jt-list' id='jt-ref-list'></ul></div></section>
+  </section>
+  <article class="article-sec" aria-label="Guide">
+<h2>Why Job Searches Fail Without a Tracker</h2><p>Most job seekers run their search the way they run their inbox: a blur of tabs, half-remembered applications, and follow-ups that never happen. The cost is invisible but real. You forget which version of your resume went to which company. You miss the follow-up window after a promising screening call. You apply to the same company twice through different portals and look disorganized. And when a recruiter asks "where are you in your process?" you genuinely do not know.</p><p>A tracker fixes this with almost no effort. Every application becomes a row: company, role, stage, date. From that single habit flow three superpowers — <strong>timed follow-ups</strong> so no opportunity goes cold, <strong>response-rate data</strong> so you can tell whether your resume or your targeting is the problem, and <strong>a paper trail</strong> of cover letters and referrals so you never repeat or contradict yourself. The ledger above gives you all three in one place, saved in your browser as you go.</p><h2>The Follow-Up Timing Rules</h2><p>Follow-up timing is the highest-leverage habit in a job search, and most people get it wrong in both directions: they either never follow up, or they follow up the next morning and look desperate. The right cadence depends on the stage, because each stage has a different decision clock:</p><table><thead><tr><th>Stage</th><th>Follow up after</th><th>Why this timing</th></tr></thead><tbody><tr><td>Applied</td><td>7 days</td><td>Gives the recruiter a full week to triage the pile; earlier looks impatient</td></tr><tr><td>Screening</td><td>5 days</td><td>Screening decisions are usually fast — a nudge keeps you top of mind</td></tr><tr><td>Interview</td><td>3 days</td><td>Thank-you goes within 24h; the status check lands after the debrief</td></tr><tr><td>Final round</td><td>2 days</td><td>Decisions are imminent — polite urgency is appropriate</td></tr><tr><td>Offer</td><td>2 days</td><td>Keep momentum while you evaluate; silence reads as disinterest</td></tr><tr><td>Rejected / Accepted</td><td>—</td><td>No follow-up needed (though a gracious reply to rejections builds goodwill)</td></tr></tbody></table><p>The tracker computes each application's follow-up date automatically from its stage and flags anything overdue in red. Unknown or new stages default to 7 days — the safe general-purpose window.</p><h2>What to Say When You Follow Up</h2><p>The follow-up email has one job: restart the conversation without sounding needy. Keep it to four short parts — a warm opener referencing your last touchpoint, one line restating your enthusiasm for the specific role, one new piece of value (an article, a thought on their recent launch, a relevant win), and a simple question about timeline. Example:</p><p><em>"Hi [Name] — really enjoyed our conversation about the platform team's roadmap last Tuesday. I'm even more excited about the senior backend role after hearing about the migration project. I saw your team's post on the new API launch — congrats. Wanted to check if there's an updated timeline for next steps?"</em></p><p>Notice what it does not do: no apologizing for "bugging" them, no restating your whole resume, no ultimatums. One follow-up per stage is the norm; a second is acceptable after another full cycle passes. After that, move the row to rejected in your mind and keep the relationship warm — a surprising number of hires come from "not this role, but the next one."</p><h2>Reading Your Response Rate</h2><p>The stats row turns your search into data. Here is how to read it:</p><ul><li><strong>Response rate under 10%</strong> with 20+ applications usually means a targeting or resume problem, not a you problem. Your applications are not matching what the postings ask for — tighten the role fit before you send more.</li><li><strong>Good response rate but no interviews converting</strong> points at the screening call: your story, your salary expectations, or your availability may be misaligned.</li><li><strong>Interviews but no offers</strong> is an interview-skills signal — practice behavioral answers and case responses, not more applications.</li><li><strong>High response rate, slow pipeline</strong> means the machine works; you mostly need volume and patience.</li></ul><p>The fix is always in the data. Job seekers who track can distinguish "my resume needs work" from "I need to apply to 3x more roles" — and those are very different weeks of effort.</p><h2>The Cover-Letter Log: Small Habit, Big Payoff</h2><p>Two failure modes haunt cover letters. The first is sending a generic letter that mentions nothing specific — recruiters spot it instantly. The second is worse: tailoring letters but losing track, so you reference the wrong company or contradict your resume. The log solves the second problem completely: every version gets a one-line note ("v2 — design systems angle"), so you always know what each employer saw.</p><p>As for the first problem, the modern cover letter is short — three paragraphs. Paragraph one: the role and why this company specifically. Paragraph two: your two most relevant proof points, with numbers. Paragraph three: enthusiasm plus a clear ask for a conversation. Anything longer does not get read; anything vaguer does not get remembered.</p><h2>Referrals: The Channel Worth Tracking Separately</h2><p>Employee referrals consistently produce a disproportionate share of hires relative to their share of applications — referred candidates get interviews at multiples of the cold-application rate. That is why the tracker treats referrals as a first-class list rather than a footnote.</p><p>Work the referral list actively. For each target company, identify one or two real connections — former colleagues, alumni, people you have actually helped. The ask should be specific and low-friction: "Would you be comfortable referring me for the backend role? Happy to send a blurb you can forward." Always send the blurb: a two-sentence summary of your fit that they can paste into the referral form. And close the loop — tell referrers how it went, thank them regardless, and return the favor when you are on the inside.</p><h2>Pipeline Hygiene: The Weekly Review</h2><p>A tracker only works if it is current. Once a week — Friday afternoon works well — do a fifteen-minute review:</p><ul><li>Move every row to its true current stage. Be honest about rejections; a clean pipeline beats a hopeful one.</li><li>Send every due follow-up. The red flags in the table are your to-do list.</li><li>Check the stats. Is the response rate moving? Which channel (cold, referral, recruiter) is producing?</li><li>Prune dead rows. Applications older than 60 days with no response are rejections — archive them mentally and free the attention.</li><li>Set next week's target: a fixed number of new applications plus follow-ups, not "as many as I can."</li></ul><p>Fifteen minutes a week is the difference between a search that compounds and a search that just accumulates tabs.</p><h2>From Spreadsheet Chaos to a System</h2><p>You do not need a complicated CRM — you need consistency. Log every application the moment you submit it, update the stage the moment it changes, and let the follow-up dates tell you what to do each day. The data will show you what is working, the log will keep your story straight, and the referral list will remind you that the best channel is people, not portals. Start with the five applications you already have open in tabs right now — future you will be grateful.</p><h2>Staying Motivated Through Rejection</h2><p>Rejection is the default outcome of most applications — even strong candidates hear "no" far more than "yes." The tracker helps emotionally as well as practically: when every "no" is a row you can close, the search feels like progress instead of a void. Set process goals (applications sent, follow-ups completed, conversations started) rather than outcome goals (offers by Friday), because process goals are within your control every single day.</p><p>When a rejection stings, mine it. A polite reply — "Thanks for letting me know; if anything similar opens up I'd love to be considered" — keeps the door open and occasionally reverses the decision when the first-choice candidate drops out. Note what stage you reached: rejections after final rounds mean your positioning works and you need more at-bats; rejections at the application stage mean the resume or targeting needs attention. The data in your stats row makes this diagnosis honest instead of emotional.</p><p>Finally, protect your energy like the resource it is. Batch applications into focused sessions instead of dripping them across the day, take real days off from the search each week, and lean on the referral list — warm conversations restore morale faster than any portal ever will. A job search is a marathon measured in weeks, and the tracker is how you pace it.</p>
+  </article>
+  <section class="faq-sec" aria-label="Frequently asked questions">
+    <h2>Frequently asked questions</h2>
+<details><summary>How long should I wait before following up on a job application?</summary><p>Seven days after applying is the standard window — it gives the recruiter a full week to triage applications. After a screening call, follow up in 5 days; after an interview, 3 days; after a final round or offer discussion, 2 days. The tracker above computes each due date automatically from the stage.</p></details>
+<details><summary>What should I say in a follow-up email?</summary><p>Keep it short: reference your last conversation, restate enthusiasm for the specific role, add one small piece of value (a relevant article or thought), and ask about the timeline. Never apologize for following up and never restate your whole resume — one polite nudge per stage is the norm.</p></details>
+<details><summary>My response rate is under 10%. What is wrong?</summary><p>With 20 or more applications, a sub-10% response rate usually signals a targeting or resume problem rather than bad luck. Check whether your applications genuinely match the postings' requirements, and make sure your resume mirrors the keywords employers use. Fix the targeting before increasing volume.</p></details>
+<details><summary>Are cover letters still worth writing?</summary><p>Yes, but keep them short — three paragraphs: why this company, your two most relevant proof points with numbers, and a clear ask for a conversation. And log every version in the cover-letter log so you always know exactly what each employer received.</p></details>
+<details><summary>How do referrals compare to cold applications?</summary><p>Referred candidates get interviews at a multiple of the cold-application rate, which is why the tracker keeps referrals as a separate list. Ask specific, low-friction favors ('would you refer me for this role? I'll send a blurb'), always provide the blurb, and close the loop afterward.</p></details>
+<details><summary>Is my data saved anywhere?</summary><p>Everything you enter is stored only in your own browser's local storage — nothing is uploaded or shared. If you clear your browser data or switch devices, the entries will not carry over, so export anything important periodically.</p></details>
+  </section>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:300px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script>
+      (function(grnp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = grnp || {};
+      s.src = "\/\/peacefulbicycle.com\/bnXtVJsnd.GElF0oYVWQcY\/Qe\/mf9qu-ZqUtlZk\/PzTHcx1LM\/jWIZwkMTj\/U\/t-NrzmUnyOMsj\/AzydO\/Qx";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+      })({})
+      </script>
+    </div>
+  </div>
+</div>
+<footer class="fx-footer">
+  <div class="fx-container">
+    <div class="fx-brand">JobTrack</div>
+    <p>JobTrack logs your applications in a ledger-style pipeline, computes follow-up due dates per stage, and tracks response rates.</p>
+    <nav aria-label="Footer">
+      <a href="https://fixoraa.tech">Home</a>
+      <a href="https://fixoraa.tech">More Tools</a>
+    </nav>
+    <p class="fx-credit">Made by <a href="https://fixoraa.tech">Fixoraa</a> &middot; Free forever, no signup.</p>
+  </div>
+</footer>
+<script>
+function followUpDays(stage){var s=String(stage==null?'':stage).toLowerCase().trim();var m={'applied':7,'screening':5,'interview':3,'final-round':2,'final':2,'offer':2,'rejected':0,'accepted':0};return Object.prototype.hasOwnProperty.call(m,s)?m[s]:7;}
+if(typeof document!=='undefined'){document.addEventListener('DOMContentLoaded',function(){var wrap=document.querySelector('.jt-wrap');if(!wrap)return;function $(id){return document.getElementById(id);}var apps=[],letters=[],refs=[];function save(){try{if(typeof localStorage!=='undefined'){localStorage.setItem('jt-apps',JSON.stringify(apps));localStorage.setItem('jt-letters',JSON.stringify(letters));localStorage.setItem('jt-refs',JSON.stringify(refs));}}catch(e){}}function load(){try{if(typeof localStorage!=='undefined'){var a=localStorage.getItem('jt-apps');if(a)apps=JSON.parse(a);var l=localStorage.getItem('jt-letters');if(l)letters=JSON.parse(l);var r=localStorage.getItem('jt-refs');if(r)refs=JSON.parse(r);}}catch(e){}}function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}function fmtDate(dstr){if(!dstr)return '—';var p=dstr.split('-');if(p.length<3)return dstr;return p[1]+'/'+p[2]+'/'+p[0];}function addDays(dstr,days){var p=dstr.split('-');var d=new Date(parseInt(p[0],10),parseInt(p[1],10)-1,parseInt(p[2],10));d.setDate(d.getDate()+days);return d;}function fmtD(d){return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();}function daysLeft(due){var now=new Date();now.setHours(0,0,0,0);var t=new Date(due.getTime());t.setHours(0,0,0,0);return Math.round((t-now)/86400000);}function todayStr(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}function renderApps(){var tb=$('jt-tbody');if(!tb)return;tb.innerHTML='';if(!apps.length){tb.innerHTML='<tr><td colspan="7" class="jt-empty">No applications yet — add your first one above.</td></tr>';}apps.forEach(function(a,idx){var tr=document.createElement('tr');var due=addDays(a.date,followUpDays(a.stage));var dl=daysLeft(due);var status,cls='';if(a.stage==='rejected'||a.stage==='accepted'){status='Closed';}else if(dl<0){status='Overdue by '+(-dl)+'d';cls='over';}else if(dl===0){status='Follow up today';cls='over';}else{status=dl+'d left';}var hot=(dl<=1&&a.stage!=='rejected'&&a.stage!=='accepted')?' hot':'';tr.innerHTML='<td><strong>'+esc(a.company)+'</strong></td><td>'+esc(a.role)+'</td><td><span class="jt-stage'+hot+'">'+esc(a.stage)+'</span></td><td>'+fmtDate(a.date)+'</td><td class="jt-due '+cls+'">'+fmtD(due)+'</td><td class="jt-due '+cls+'">'+status+'</td>';var td=document.createElement('td');var b=document.createElement('button');b.className='jt-del';b.type='button';b.textContent='×';b.setAttribute('aria-label','Delete application');b.addEventListener('click',function(){apps.splice(idx,1);save();renderApps();});td.appendChild(b);tr.appendChild(td);tb.appendChild(tr);});var total=apps.length;var inter=apps.filter(function(a){return ['screening','interview','final-round','final'].indexOf(a.stage)!==-1;}).length;var resp=apps.filter(function(a){return a.stage!=='applied';}).length;var rate=total?Math.round(resp/total*100):0;var st=$('jt-stat-total'),si=$('jt-stat-int'),sr=$('jt-stat-rate');if(st)st.textContent=total;if(si)si.textContent=inter;if(sr)sr.textContent=rate+'%';}function renderLetters(){var ul=$('jt-cl-list');if(!ul)return;ul.innerHTML='';letters.forEach(function(l,idx){var li=document.createElement('li');var sp=document.createElement('span');sp.innerHTML='<strong>'+esc(l.company)+'</strong><small>'+esc(l.note||'—')+'</small>';var b=document.createElement('button');b.className='jt-del';b.type='button';b.textContent='×';b.setAttribute('aria-label','Delete entry');b.addEventListener('click',function(){letters.splice(idx,1);save();renderLetters();});li.appendChild(sp);li.appendChild(b);ul.appendChild(li);});}function renderRefs(){var ul=$('jt-ref-list');if(!ul)return;ul.innerHTML='';refs.forEach(function(r,idx){var li=document.createElement('li');var sp=document.createElement('span');sp.innerHTML='<strong>'+esc(r.name)+' → '+esc(r.company)+'</strong><small>'+esc(r.status)+'</small>';var b=document.createElement('button');b.className='jt-del';b.type='button';b.textContent='×';b.setAttribute('aria-label','Delete entry');b.addEventListener('click',function(){refs.splice(idx,1);save();renderRefs();});li.appendChild(sp);li.appendChild(b);ul.appendChild(li);});}var addBtn=$('jt-add');if(addBtn)addBtn.addEventListener('click',function(){var c=$('jt-company'),r=$('jt-role'),s=$('jt-stage'),dt=$('jt-date');var company=c?c.value.trim():'';if(!company){if(c)c.focus();return;}apps.unshift({company:company,role:role?r.value.trim():'',stage:s?s.value:'applied',date:dt&&dt.value?dt.value:todayStr()});if(c)c.value='';if(r)r.value='';save();renderApps();});var clAdd=$('jt-cl-add');if(clAdd)clAdd.addEventListener('click',function(){var c=$('jt-cl-company'),n=$('jt-cl-note');var company=c?c.value.trim():'';if(!company){if(c)c.focus();return;}letters.unshift({company:company,note:n?n.value.trim():''});if(c)c.value='';if(n)n.value='';save();renderLetters();});var refAdd=$('jt-ref-add');if(refAdd)refAdd.addEventListener('click',function(){var nm=$('jt-ref-name'),c=$('jt-ref-company'),s=$('jt-ref-status');var name=nm?nm.value.trim():'';if(!name){if(nm)nm.focus();return;}refs.unshift({name:name,company:c?c.value.trim():'',status:s?s.value:'Contacted'});if(nm)nm.value='';if(c)c.value='';save();renderRefs();});var dateEl=$('jt-date');if(dateEl&&!dateEl.value)dateEl.value=todayStr();load();renderApps();renderLetters();renderRefs();});}
+</script>
+</body>
+</html>
